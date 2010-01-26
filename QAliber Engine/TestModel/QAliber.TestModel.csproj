@@ -1,0 +1,152 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{21076058-52DA-46EC-ABE6-5E389CBED60C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QAliber.TestModel</RootNamespace>
+    <AssemblyName>QAliber.TestModel</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>QAliber.TestModel.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Binaries\Help\QAliber.TestModel.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssembliesHandler\AssembliesRetriever.cs" />
+    <Compile Include="Attributes\VisualPathAttribute.cs" />
+    <Compile Include="Enumerators.cs" />
+    <Compile Include="Eval\CodeEvaluator.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCases\BreakLoopTestCase.cs" />
+    <Compile Include="TestCases\RecoverTestCase.cs" />
+    <Compile Include="TestCases\TryTestCase.cs" />
+    <Compile Include="TestCases\ElseTestCase.cs" />
+    <Compile Include="TestCases\SetVariableTestCase.cs" />
+    <Compile Include="TestCases\WhileTestCase.cs" />
+    <Compile Include="TestCases\ForEachRowInTableTestCase.cs" />
+    <Compile Include="TestCases\WaitTestCase.cs" />
+    <Compile Include="TestCases\IfTestCase.cs" />
+    <Compile Include="TestCases\ForEachItemInListTestCase.cs" />
+    <Compile Include="TestCases\LoopTestCase.cs" />
+    <Compile Include="TestCases\FolderTestCase.cs" />
+    <Compile Include="TestCases\TestCase.cs" />
+    <Compile Include="TestController.cs" />
+    <Compile Include="TestScenario.cs" />
+    <Compile Include="TypeEditors\ComboDropDownTypeEditor.cs" />
+    <Compile Include="TypeEditors\OutputPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TypeEditors\OutputPropertiesForm.Designer.cs">
+      <DependentUpon>OutputPropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TypeEditors\OutputPropertiesTypeEditor.cs" />
+    <Compile Include="TypeEditors\VariablesWizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TypeEditors\VariablesWizardForm.Designer.cs">
+      <DependentUpon>VariablesWizardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Variables\BindingVariableList.cs" />
+    <Compile Include="Variables\DropDownLists.cs" />
+    <Compile Include="Variables\IVariable.cs" />
+    <Compile Include="Variables\ScenarioList.cs" />
+    <Compile Include="Variables\ScenarioTable.cs" />
+    <Compile Include="Variables\ScenarioVariable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TypeEditors\OutputPropertiesForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OutputPropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TypeEditors\VariablesWizardForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VariablesWizardForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenFolder.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RepeatHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\organizerHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="QAliber.TestModel.snk" />
+    <None Include="Resources\orgchartHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logger\QAliber.Logger.csproj">
+      <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
+      <Name>QAliber.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemotingModel\QAliber.RemotingModel.csproj">
+      <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
+      <Name>QAliber.RemotingModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BreakFolder.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Recover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Try.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

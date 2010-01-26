@@ -1,0 +1,85 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{357618F5-959D-4DAB-BCB6-63E1CEB556E6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QAliber.ImageHandling</RootNamespace>
+    <AssemblyName>QAliber.ImageHandling</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>QAliber.ImageHandling.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Binaries\QAliber.ImageHandling.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ImageComparer.cs" />
+    <Compile Include="OCRItem.cs" />
+    <Compile Include="PNM\BaseReaders\DataReader\ASCIIDataReader.cs" />
+    <Compile Include="PNM\BaseReaders\DataReader\BinaryDataReader.cs" />
+    <Compile Include="PNM\BaseReaders\DataReader\IPNMDataReader.cs" />
+    <Compile Include="PNM\BaseReaders\DataWriter\ASCIIDataWriter.cs" />
+    <Compile Include="PNM\BaseReaders\DataWriter\BinaryDataWriter.cs" />
+    <Compile Include="PNM\BaseReaders\DataWriter\IPNMDataWriter.cs" />
+    <Compile Include="PNM\PNM.cs" />
+    <Compile Include="PNM\PNMFactory.cs" />
+    <Compile Include="PNM\PNMReader\IPNMReader.cs" />
+    <Compile Include="PNM\PNMReader\PBMReader.cs" />
+    <Compile Include="PNM\PNMReader\PGMReader.cs" />
+    <Compile Include="PNM\PNMReader\PPMReader.cs" />
+    <Compile Include="PNM\PNMWriter\IPNMWriter.cs" />
+    <Compile Include="PNM\PNMWriter\PBMWriter.cs" />
+    <Compile Include="PNM\PNMWriter\PGMWriter.cs" />
+    <Compile Include="PNM\PNMWriter\PPMWriter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logger\QAliber.Logger.csproj">
+      <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
+      <Name>QAliber.Logger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="gocr048.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="QAliber.ImageHandling.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.TestModel", "QAliber.TestModel.csproj", "{21076058-52DA-46EC-ABE6-5E389CBED60C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.RemotingModel", "..\RemotingModel\QAliber.RemotingModel.csproj", "{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.Logger", "..\Logger\QAliber.Logger.csproj", "{14967935-0971-4882-9058-99B3D884651A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21076058-52DA-46EC-ABE6-5E389CBED60C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21076058-52DA-46EC-ABE6-5E389CBED60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21076058-52DA-46EC-ABE6-5E389CBED60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21076058-52DA-46EC-ABE6-5E389CBED60C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14967935-0971-4882-9058-99B3D884651A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14967935-0971-4882-9058-99B3D884651A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14967935-0971-4882-9058-99B3D884651A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14967935-0971-4882-9058-99B3D884651A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,199 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{993AE394-2F84-4D08-8DA2-636D3092A01E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QAliber.Repository.CommonTestCases</RootNamespace>
+    <AssemblyName>QAliber.Repository.CommonTestCases</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Binaries\Help\QAliber.Repository.CommonTestCases.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="UIAutomationTypes, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DB\QueryDatabase.cs" />
+    <Compile Include="Eval\CodeEvaluator.cs" />
+    <Compile Include="Excel\CreateTableFromRange.cs" />
+    <Compile Include="FileSystem\FileCompare.cs" />
+    <Compile Include="FileSystem\FilesRetrieve.cs" />
+    <Compile Include="FileSystem\FileSearch.cs" />
+    <Compile Include="FileSystem\FileRename.cs" />
+    <Compile Include="FileSystem\FileDelete.cs" />
+    <Compile Include="FileSystem\FileCopy.cs" />
+    <Compile Include="Macros\PlayMacroTestCase.cs" />
+    <Compile Include="Networking\Http\SendWebRequest.cs" />
+    <Compile Include="Networking\Http\SendPostWebRequest.cs" />
+    <Compile Include="Processes\WaitProcess.cs" />
+    <Compile Include="Processes\LogResources.cs" />
+    <Compile Include="Processes\KillProcess.cs" />
+    <Compile Include="Processes\StartProcess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Randomizers\GetRandomItemInList.cs" />
+    <Compile Include="Randomizers\GenerateRandomNumber.cs" />
+    <Compile Include="Registry\AddRegistryValue.cs" />
+    <Compile Include="Registry\VerifyRegistryValue.cs" />
+    <Compile Include="Registry\DeleteRegistryValue.cs" />
+    <Compile Include="ResourceMonitoring\StopPerfmon.cs" />
+    <Compile Include="ResourceMonitoring\StartPerfmon.cs" />
+    <Compile Include="Timers\StopTimerTestCase.cs" />
+    <Compile Include="Timers\StartTimerTestCase.cs" />
+    <Compile Include="Timers\TimersCollection.cs" />
+    <Compile Include="UITypeEditors\UIControlLocatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UITypeEditors\UIControlLocatorForm.Designer.cs">
+      <DependentUpon>UIControlLocatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UITypeEditors\UIControlTypeEditor.cs" />
+    <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
+    <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
+    <Compile Include="UI\Dialogs\DisplayInputBox.cs" />
+    <Compile Include="UI\Dialogs\DisplayMessageBox.cs" />
+    <Compile Include="UI\Dialogs\InputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\InputForm.Designer.cs">
+      <DependentUpon>InputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Images\CompareImages.cs" />
+    <Compile Include="UI\Images\LogImageOfControl.cs" />
+    <Compile Include="UI\Images\SaveImageFromControl.cs" />
+    <Compile Include="UI\Keyboard\SendKeystrokes.cs" />
+    <Compile Include="UI\Mouse\ClickMouse.cs" />
+    <Compile Include="UI\Mouse\DragMouse.cs" />
+    <Compile Include="UI\Mouse\MoveMouse.cs" />
+    <Compile Include="UI\Windows\ChangeWindowState.cs" />
+    <Compile Include="UI\Windows\WaitForControl.cs" />
+    <Compile Include="UI\Windows\ResizeWindow.cs" />
+    <Compile Include="UI\Windows\MoveWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UITypeEditors\UIControlLocatorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UIControlLocatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\InputForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>InputForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StartProcess.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FilesRetrieve.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ProcessRemove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Registry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dialog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Http.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crosshair.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bitmap.png" />
+    <Content Include="Resources\CrossIcon.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\expirationHS.png" />
+    <None Include="Resources\Registry.gif" />
+    <None Include="Resources\DataContainer_NewRecordHS.png" />
+    <None Include="Resources\Keyboard.png" />
+    <None Include="Resources\FileSearch.png" />
+    <None Include="Resources\FileRetrieve.bmp" />
+    <None Include="Resources\FileDelete.png" />
+    <None Include="Resources\FileCopy.png" />
+    <None Include="Resources\FileCompare.png" />
+    <None Include="Resources\File.png" />
+    <None Include="Resources\Mouse.png" />
+    <None Include="Resources\Excel.png" />
+    <None Include="Resources\DatabaseQuery.png" />
+    <None Include="Resources\Window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\QAliber Engine\Engine\QAliber.Engine.csproj">
+      <Project>{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}</Project>
+      <Name>QAliber.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\Logger\QAliber.Logger.csproj">
+      <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
+      <Name>QAliber.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\RemotingModel\QAliber.RemotingModel.csproj">
+      <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
+      <Name>QAliber.RemotingModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\TestModel\QAliber.TestModel.csproj">
+      <Project>{21076058-52DA-46EC-ABE6-5E389CBED60C}</Project>
+      <Name>QAliber.TestModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Test Developer\Recorder\QAliber.Recorder.csproj">
+      <Project>{3EC9A569-9AC3-408F-A081-47F21FEA3771}</Project>
+      <Name>QAliber.Recorder</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

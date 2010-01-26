@@ -1,0 +1,312 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8760D2CC-E8FF-432B-BBB7-CBDB0259EF43}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QAliber.Builder.Presentation</RootNamespace>
+    <AssemblyName>QAliber Test Builder</AssemblyName>
+    <ApplicationIcon>QAliberTarget.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=69c52b3db892d621, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\QAliber Engine\Engine\obj\Debug\Interop.SHDocVw.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="UIAutomationTypes, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\CommandsCollection.cs" />
+    <Compile Include="Commands\InsertCommand.cs" />
+    <Compile Include="Commands\RemoveCommand.cs" />
+    <Compile Include="Commands\PropertyChangedCommand.cs" />
+    <Compile Include="Commands\MoveDownCommand.cs" />
+    <Compile Include="Commands\MoveUpCommand.cs" />
+    <Compile Include="Commands\PasteCommand.cs" />
+    <Compile Include="Commands\CutCommand.cs" />
+    <Compile Include="Commands\CopyCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\TreeClipboard.cs" />
+    <Compile Include="CustomControls\MacrosPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\MacrosPanel.Designer.cs">
+      <DependentUpon>MacrosPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForms\BuilderOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForms\BuilderOptionsForm.Designer.cs">
+      <DependentUpon>BuilderOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForms\EditTableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForms\EditTableForm.Designer.cs">
+      <DependentUpon>EditTableForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\DockManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\DockManager.Designer.cs">
+      <DependentUpon>DockManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\QAliberTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\QAliberTreeView.Designer.cs">
+      <DependentUpon>QAliberTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\ExecutionContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ExecutionContainer.Designer.cs">
+      <DependentUpon>ExecutionContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForms\ListItemsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForms\ListItemsForm.Designer.cs">
+      <DependentUpon>ListItemsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CustomControls\MacrosPanel.resx">
+      <DependentUpon>MacrosPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForms\BuilderOptionsForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BuilderOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForms\EditTableForm.resx">
+      <DependentUpon>EditTableForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\DockManager.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DockManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\QAliberTreeView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>QAliberTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\ExecutionContainer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ExecutionContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForms\ListItemsForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ListItemsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\ScenarioControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScenarioControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\TabbedScenarioControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TabbedScenarioControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\TestCasesPanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TestCasesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\VariablesPanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VariablesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForms\MacroRecorderForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MacroRecorderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="CustomControls\ScenarioControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ScenarioControl.Designer.cs">
+      <DependentUpon>ScenarioControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TabbedScenarioControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\TabbedScenarioControl.Designer.cs">
+      <DependentUpon>TabbedScenarioControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TestCasesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\TestCasesPanel.Designer.cs">
+      <DependentUpon>TestCasesPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\VariablesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\VariablesPanel.Designer.cs">
+      <DependentUpon>VariablesPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForms\MacroRecorderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForms\MacroRecorderForm.Designer.cs">
+      <DependentUpon>MacroRecorderForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PauseHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StopHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OK.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\DataContainer_MoveNextHS.png" />
+    <None Include="Resources\copyToolStripButton.Image.png" />
+    <None Include="Resources\cutToolStripButton.Image.png" />
+    <None Include="Resources\deleteToolStripButton.Image.png" />
+    <None Include="Resources\moveDownToolStripButton.Image.png" />
+    <None Include="Resources\moveUpToolStripButton.Image.png" />
+    <None Include="Resources\newToolStripButton.Image.png" />
+    <None Include="Resources\openToolStripButton.Image.png" />
+    <None Include="Resources\pasteToolStripButton.Image.png" />
+    <None Include="Resources\redoToolStripButton.Image.png" />
+    <None Include="Resources\saveAllToolStripButton.Image.png" />
+    <None Include="Resources\saveToolStripButton.Image.png" />
+    <None Include="Resources\undoToolStripButton.Image.png" />
+    <Content Include="Help\HelpTranslator.xsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QAliberTarget.ico" />
+    <None Include="Resources\cubes.gif" />
+    <None Include="Resources\QAliber Builder Icon.ico" />
+    <None Include="Resources\Zoom.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SHDocVw">
+      <Guid>{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\QAliber Engine\Engine\ManagedInjector\ManagedInjector.vcproj">
+      <Project>{C29817A9-3696-421D-89BD-F66681657C37}</Project>
+      <Name>QAliberManagedInjector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\Engine\ManagedWinAPI\ManagedWinapi.csproj">
+      <Project>{FBD3EC1E-47E2-4D2D-81C9-D6506125A09A}</Project>
+      <Name>ManagedWinapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\Engine\QAliber.Engine.csproj">
+      <Project>{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}</Project>
+      <Name>QAliber.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\Logger\QAliber.Logger.csproj">
+      <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
+      <Name>QAliber.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\RemotingModel\QAliber.RemotingModel.csproj">
+      <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
+      <Name>QAliber.RemotingModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\TestModel\QAliber.TestModel.csproj">
+      <Project>{21076058-52DA-46EC-ABE6-5E389CBED60C}</Project>
+      <Name>QAliber.TestModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Test Developer\Recorder\QAliber.Recorder.csproj">
+      <Project>{3EC9A569-9AC3-408F-A081-47F21FEA3771}</Project>
+      <Name>QAliber.Recorder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Docking Controls\DockingControls.csproj">
+      <Project>{EF6553C4-D315-411E-A96A-54222363C5AB}</Project>
+      <Name>DockingControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

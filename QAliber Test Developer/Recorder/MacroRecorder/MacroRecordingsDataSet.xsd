@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MacroRecordingsDataSet" targetNamespace="http://tempuri.org/MacroRecordingsDataSet.xsd" xmlns:mstns="http://tempuri.org/MacroRecordingsDataSet.xsd" xmlns="http://tempuri.org/MacroRecordingsDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="MacroRecordingsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="MacroRecordingsDataSet" msprop:Generator_DataSetName="MacroRecordingsDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MacroEntries" msprop:Generator_UserTableName="MacroEntries" msprop:Generator_RowDeletedName="MacroEntriesRowDeleted" msprop:Generator_RowChangedName="MacroEntriesRowChanged" msprop:Generator_RowClassName="MacroEntriesRow" msprop:Generator_RowChangingName="MacroEntriesRowChanging" msprop:Generator_RowEvArgName="MacroEntriesRowChangeEvent" msprop:Generator_RowEvHandlerName="MacroEntriesRowChangeEventHandler" msprop:Generator_TableClassName="MacroEntriesDataTable" msprop:Generator_TableVarName="tableMacroEntries" msprop:Generator_RowDeletingName="MacroEntriesRowDeleting" msprop:Generator_TablePropName="MacroEntries">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_UserColumnName="Time" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInTable="TimeColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="X" msprop:Generator_UserColumnName="X" msprop:Generator_ColumnPropNameInRow="X" msprop:Generator_ColumnVarNameInTable="columnX" msprop:Generator_ColumnPropNameInTable="XColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="Y" msprop:Generator_UserColumnName="Y" msprop:Generator_ColumnPropNameInRow="Y" msprop:Generator_ColumnVarNameInTable="columnY" msprop:Generator_ColumnPropNameInTable="YColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="Action" msprop:Generator_UserColumnName="Action" msprop:Generator_ColumnPropNameInRow="Action" msprop:Generator_ColumnVarNameInTable="columnAction" msprop:Generator_ColumnPropNameInTable="ActionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Pressed" msprop:Generator_UserColumnName="Pressed" msprop:Generator_ColumnPropNameInRow="Pressed" msprop:Generator_ColumnVarNameInTable="columnPressed" msprop:Generator_ColumnPropNameInTable="PressedColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Key" msprop:Generator_UserColumnName="Key" msprop:Generator_ColumnPropNameInRow="Key" msprop:Generator_ColumnVarNameInTable="columnKey" msprop:Generator_ColumnPropNameInTable="KeyColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="OrigIndex" msprop:Generator_UserColumnName="OrigIndex" msprop:Generator_ColumnPropNameInRow="OrigIndex" msprop:Generator_ColumnVarNameInTable="columnOrigIndex" msprop:Generator_ColumnPropNameInTable="OrigIndexColumn" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
