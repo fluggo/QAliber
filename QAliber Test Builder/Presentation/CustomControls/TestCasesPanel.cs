@@ -123,6 +123,17 @@ namespace QAliber.Builder.Presentation
 			DialogResult dr = openFileDialog.ShowDialog();
 			if (dr == DialogResult.OK)
 			{
+				foreach (string file in openFileDialog.FileNames)
+				{
+					try
+					{
+						System.IO.File.Copy(file, TestController.Default.LocalAssemblyPath + "\\" + System.IO.Path.GetFileName(file), true);
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show("File : " + file + "\n" + ex.Message, "Error Copying Assembly", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
 				TestController.Default.UserFiles = openFileDialog.FileNames;
 				TestController.Default.RetrieveSupportedTypes();
 				FillTree();
