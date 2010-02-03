@@ -117,10 +117,18 @@ namespace QAliber.TestModel
 		{
 			get
 			{
-				string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\User Assemblies\";
-				if (!Directory.Exists(path))
-					Directory.CreateDirectory(path);
-				return path;
+				try
+				{
+					string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\User Assemblies\";
+					if (!Directory.Exists(path))
+						Directory.CreateDirectory(path);
+					return path;
+				}
+				catch (NullReferenceException)
+				{
+					//Designer workaround
+					return Environment.CurrentDirectory;
+				}
 			}
 		}
 
