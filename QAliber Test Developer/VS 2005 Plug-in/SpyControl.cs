@@ -136,12 +136,19 @@ namespace QAliber.VS2005.Plugin
 			treeView.Nodes.Add(node);
 			foreach (UIControlBase child in control.Children)
 			{
-				TreeNode newNode = new TreeNode(child.VisibleName);
-				newNode.Tag = child;
-				newNode.SelectedImageKey = newNode.ImageKey = GetImageIndexByControlType(child);
+				try
+				{
+					TreeNode newNode = new TreeNode(child.VisibleName);
+					newNode.Tag = child;
+					newNode.SelectedImageKey = newNode.ImageKey = GetImageIndexByControlType(child);
 
-				newNode.ContextMenuStrip = nodeContextMenu;
-				node.Nodes.Add(newNode);
+					newNode.ContextMenuStrip = nodeContextMenu;
+					node.Nodes.Add(newNode);
+				}
+				catch (Exception ex)
+				{
+					//TODO : report exception
+				}
 			}
 
 		}
