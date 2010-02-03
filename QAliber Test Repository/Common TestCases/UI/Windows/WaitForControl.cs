@@ -62,8 +62,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Windows
 				}
 				throw new ArgumentException("Could not understand control '" + control + "', please try to grab it with the control locator");
 			}
-			code += "return null;\n";
-			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+			code += "return c != null;\n";
+			bool res = (bool)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+			if (res)
+				actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			else
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 
 		}
 
