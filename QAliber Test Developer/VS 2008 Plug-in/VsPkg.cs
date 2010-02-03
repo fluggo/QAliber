@@ -32,7 +32,7 @@ namespace QAliber.VS2005.Plugin
 	// when you debug your package you want to register it in the experimental hive. This
 	// attribute specifies the registry root to use if no one is provided to regpkg.exe with
 	// the /root switch.
-	[DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\9.0")]
+	[DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\9.0Exp")]
 	// This attribute is used to register the informations needed to show the this package
 	// in the Help/About dialog of Visual Studio.
 	[InstalledProductRegistration(true, "#110", "#112", "1.0", IconResourceID = 400)]
