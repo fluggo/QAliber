@@ -42,7 +42,15 @@ namespace QAliber.TestModel
 		/// <param name="e"></param>
 		public virtual void Cleanup(Exception e) 
 		{
-			Log.Default.Error("Exception Caught", e.Message, EntryVerbosity.Internal);
+			if (e.InnerException != null)
+			{
+				Log.Default.Error(e.GetType().Name + " Caught", e.InnerException.Message, EntryVerbosity.Internal);
+			}
+			else
+			{
+				Log.Default.Error(e.GetType().Name + " Caught", e.Message, EntryVerbosity.Internal);
+			}
+			Log.Default.Info("Stack Trace", e.StackTrace, EntryVerbosity.Debug);
 			actualResult = TestCaseResult.Failed;
 		}
 		
