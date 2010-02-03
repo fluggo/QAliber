@@ -46,6 +46,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			table.Value = dataTable;
 			Scenario.Tables.Add(table);
 			conn.Close();
+
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			
 
 		}
