@@ -9,6 +9,7 @@ using QAliber.TestModel;
 using QAliber.Builder.Presentation;
 using Darwen.Windows.Forms.Controls.Docking;
 using QAliber.RemotingModel;
+using System.Diagnostics;
 
 namespace QAliber.Builder.Presentation
 {
@@ -219,10 +220,38 @@ namespace QAliber.Builder.Presentation
 
 		#endregion
 
-	   
+		#region Help
+		private void wikiHowToToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("http://qaliber.net/Wiki/index.php?title=Main_Page");
+		}
 
+		private void reportABugToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://sourceforge.net/tracker/?group_id=301143&atid=1269942");
+		}
 
-	   
+		private void getStartedToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("http://qaliber.net/Wiki/index.php?title=Quick_Start");
+		}
+
+		private void supportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://sourceforge.net/projects/qaliber/support");
+		}
+
+		private void requestATestCaseToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://sourceforge.net/projects/qaliber/forums/forum/1085020");
+		}
+
+		private void aboutQAliberToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("http://qaliber.net");
+		}
+		#endregion
+
 
 	}
 }

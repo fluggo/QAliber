@@ -50,6 +50,7 @@ namespace QAliber.Builder.Presentation
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.selectCategoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectBlueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectGreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +69,14 @@ namespace QAliber.Builder.Presentation
 			this.toggleBreakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.executionContainer = new QAliber.Builder.Presentation.ExecutionContainer();
-			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.wikiHowToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.getStartedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.reportABugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.requestATestCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutQAliberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.mainMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -263,6 +271,11 @@ namespace QAliber.Builder.Presentation
 			this.moveDownToolStripMenuItem.Text = "Move Down";
 			this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
 			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(186, 6);
+			// 
 			// selectCategoriesToolStripMenuItem
 			// 
 			this.selectCategoriesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -404,6 +417,15 @@ namespace QAliber.Builder.Presentation
 			// 
 			// helpToolStripMenuItem
 			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.getStartedToolStripMenuItem,
+			this.wikiHowToToolStripMenuItem,
+			this.toolStripSeparator7,
+			this.reportABugToolStripMenuItem,
+			this.requestATestCaseToolStripMenuItem,
+			this.supportToolStripMenuItem,
+			this.toolStripSeparator8,
+			this.aboutQAliberToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
@@ -416,10 +438,65 @@ namespace QAliber.Builder.Presentation
 			this.executionContainer.Size = new System.Drawing.Size(663, 501);
 			this.executionContainer.TabIndex = 2;
 			// 
-			// toolStripSeparator6
+			// wikiHowToToolStripMenuItem
 			// 
-			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(186, 6);
+			this.wikiHowToToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("wikiHowToToolStripMenuItem.Image")));
+			this.wikiHowToToolStripMenuItem.Name = "wikiHowToToolStripMenuItem";
+			this.wikiHowToToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.wikiHowToToolStripMenuItem.Text = "Wiki (How to)";
+			this.wikiHowToToolStripMenuItem.Click += new System.EventHandler(this.wikiHowToToolStripMenuItem_Click);
+			// 
+			// getStartedToolStripMenuItem
+			// 
+			this.getStartedToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("getStartedToolStripMenuItem.Image")));
+			this.getStartedToolStripMenuItem.Name = "getStartedToolStripMenuItem";
+			this.getStartedToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.getStartedToolStripMenuItem.Text = "Get Started...";
+			this.getStartedToolStripMenuItem.Click += new System.EventHandler(this.getStartedToolStripMenuItem_Click);
+			// 
+			// reportABugToolStripMenuItem
+			// 
+			this.reportABugToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportABugToolStripMenuItem.Image")));
+			this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
+			this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.reportABugToolStripMenuItem.Text = "Report a bug";
+			this.reportABugToolStripMenuItem.Click += new System.EventHandler(this.reportABugToolStripMenuItem_Click);
+			// 
+			// supportToolStripMenuItem
+			// 
+			this.supportToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("supportToolStripMenuItem.Image")));
+			this.supportToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.supportToolStripMenuItem.Text = "Support";
+			this.supportToolStripMenuItem.Click += new System.EventHandler(this.supportToolStripMenuItem_Click);
+			// 
+			// requestATestCaseToolStripMenuItem
+			// 
+			this.requestATestCaseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("requestATestCaseToolStripMenuItem.Image")));
+			this.requestATestCaseToolStripMenuItem.Name = "requestATestCaseToolStripMenuItem";
+			this.requestATestCaseToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.requestATestCaseToolStripMenuItem.Text = "Request a Test Case";
+			this.requestATestCaseToolStripMenuItem.Click += new System.EventHandler(this.requestATestCaseToolStripMenuItem_Click);
+			// 
+			// aboutQAliberToolStripMenuItem
+			// 
+			this.aboutQAliberToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutQAliberToolStripMenuItem.Image")));
+			this.aboutQAliberToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.aboutQAliberToolStripMenuItem.Name = "aboutQAliberToolStripMenuItem";
+			this.aboutQAliberToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.aboutQAliberToolStripMenuItem.Text = "About QAliber";
+			this.aboutQAliberToolStripMenuItem.Click += new System.EventHandler(this.aboutQAliberToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator7
+			// 
+			this.toolStripSeparator7.Name = "toolStripSeparator7";
+			this.toolStripSeparator7.Size = new System.Drawing.Size(171, 6);
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(171, 6);
 			// 
 			// MainForm
 			// 
@@ -482,6 +559,14 @@ namespace QAliber.Builder.Presentation
 		private System.Windows.Forms.ToolStripMenuItem selectOrangeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem selectPurpleToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private System.Windows.Forms.ToolStripMenuItem getStartedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem wikiHowToToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripMenuItem reportABugToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem requestATestCaseToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem supportToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripMenuItem aboutQAliberToolStripMenuItem;
 
 	}
 }
