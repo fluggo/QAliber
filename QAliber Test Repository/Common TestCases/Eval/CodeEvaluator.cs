@@ -22,7 +22,7 @@ namespace QAliber.Repository.CommonTestCases.Eval
 			cp.ReferencedAssemblies.Add("system.drawing.dll");
 			cp.ReferencedAssemblies.Add("system.windows.forms.dll");
 
-			//TODO : change path for deployment
+			//TODO : test for x86 , x64
 			cp.ReferencedAssemblies.Add(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll");
 			cp.ReferencedAssemblies.Add(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Reference Assemblies\Microsoft\Framework\v3.0\UIAutomationTypes.dll");
 			cp.ReferencedAssemblies.Add(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Reference Assemblies\Microsoft\Framework\v3.0\UIAutomationClient.dll");

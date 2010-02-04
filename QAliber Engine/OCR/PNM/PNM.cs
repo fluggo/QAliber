@@ -14,10 +14,9 @@ namespace QAliber.ImageHandling
 	{
 		public PNM()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}		
+			
+		}	
+	
 		public static System.Drawing.Image ReadPNM(string FilePath)
 		{			
 			char fchar;

@@ -45,8 +45,8 @@ namespace QAliber.VS2005.Plugin
 	[ProvideMenuResource(1000, 1)]
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow(typeof(SpyToolWindow))]
-	[ProvideOptionPage(typeof(QAliber.Recorder.RecorderConfig), "QAliber Test Developer", "Recorder", 101, 106, true)]
-	[ProvideOptionPage(typeof(QAliber.Engine.PlayerConfig), "QAliber Test Developer", "Player", 101, 106, true)]
+	//[ProvideOptionPage(typeof(QAliber.Recorder.RecorderConfig), "QAliber Test Developer", "Recorder", 101, 106, true)]
+	//[ProvideOptionPage(typeof(QAliber.VS2005.Plugin.Options.PlayerOptions), "QAliber Test Developer", "Player", 101, 106, true)]
 	[Guid(GuidList.guidUITestingPackagePkgString)]
 	public sealed class QAliberTestingPackage : Package, IVsInstalledProduct
 	{

@@ -134,7 +134,7 @@ namespace QAliber.Builder.Presentation
 						MessageBox.Show("File : " + file + "\n" + ex.Message, "Error Copying Assembly", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 				}
-				TestController.Default.UserFiles = openFileDialog.FileNames;
+				//TestController.Default.UserFiles = openFileDialog.FileNames;
 				TestController.Default.RetrieveSupportedTypes();
 				FillTree();
 

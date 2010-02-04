@@ -42,15 +42,15 @@ namespace QAliber.VS2005.Plugin.Commands
 				if (dr == DialogResult.No)
 					return false;
 			}
-			IVsPackage package = spyToolWin.Package as IVsPackage;
-			if (package != null)
-			{
-				object obj;
-				package.GetAutomationObject("QAliber Test Developer.Recorder", out obj);
-				RecorderConfig.Default = obj as RecorderConfig;
-				package.GetAutomationObject("QAliber Test Developer.Player", out obj);
-				PlayerConfig.Default = obj as PlayerConfig;
-			}
+			//IVsPackage package = spyToolWin.Package as IVsPackage;
+			//if (package != null)
+			//{
+			//	  object obj;
+			//	  package.GetAutomationObject("QAliber Test Developer.Recorder", out obj);
+			//	  RecorderConfig.Default = obj as RecorderConfig;
+			//	  package.GetAutomationObject("QAliber Test Developer.Player", out obj);
+			//	  PlayerConfig.Default = obj as PlayerConfig;
+			//}
 			RecorderConfig.Default.RootControl = spyToolWin.control.rootControl;
 			spyToolWin.control.notifyIcon.Visible = true;
 			spyToolWin.control.notifyIcon.ShowBalloonTip(60000);

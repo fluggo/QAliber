@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace QAliber.Engine
 {
-	public class PlayerConfig : Microsoft.VisualStudio.Shell.DialogPage
+	public class PlayerConfig //: Microsoft.VisualStudio.Shell.DialogPage
 	{
 		public PlayerConfig()
 		{

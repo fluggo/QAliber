@@ -191,7 +191,6 @@ namespace QAliber.Builder.Presentation
 			if (control != null)
 			{
 				//System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
-				//TODO : Invoke from GUI thread
 				if (control.InvokeRequired)
 					control.Invoke(new ExecutionStateChangedCallback(this.OnExecutionStateChanged), state);
 				else

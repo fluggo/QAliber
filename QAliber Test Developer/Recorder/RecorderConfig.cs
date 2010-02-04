@@ -6,7 +6,7 @@ using QAliber.Engine.Controls;
 
 namespace QAliber.Recorder
 {
-	public class RecorderConfig : Microsoft.VisualStudio.Shell.DialogPage
+	public class RecorderConfig //: Microsoft.VisualStudio.Shell.DialogPage
 	{
 		public RecorderConfig()
 		{

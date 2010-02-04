@@ -79,6 +79,9 @@
     <Compile Include="ImageViewer\ZoomPanControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Options\PlayerOptions.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SpyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -171,7 +174,7 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
-    <!-- TargetRegistryRoot>Software\Microsoft\VisualStudio\8.0Exp</TargetRegistryRoot -->
+    <TargetRegistryRoot>Software\Microsoft\VisualStudio\9.0Exp</TargetRegistryRoot>
     <UseVS2005MPF>true</UseVS2005MPF>
     <RegisterWithRanu>false</RegisterWithRanu>
     <RegisterOutputPackage>true</RegisterOutputPackage>
