@@ -81,7 +81,7 @@ namespace QAliber.Repository.CommonTestCases.DB
 		[DisplayName("3) XML Output File")]
 		[Category("Database")]
 		[Description("The xml file to store the sql query")]
-		[Editor(typeof(UITypeEditors.FileBrowseTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(UITypeEditors.FileSaveTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string OutFile
 		{
 			get { return outFile; }

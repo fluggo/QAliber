@@ -79,7 +79,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 		[DisplayName("2) Response File")]
 		[Category("Http")]
 		[Description("The file to store the web response to")]
-		[Editor(typeof(UITypeEditors.FileBrowseTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(UITypeEditors.FileSaveTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string File
 		{
 			get { return file; }

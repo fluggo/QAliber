@@ -87,7 +87,7 @@ namespace QAliber.Logger.Controls
 				if (res != null)
 					return res;
 				if (time >= last && time <= ((LogEntry)child.Tag).Time)
-					return child;
+					return child.PrevNode == null ? child : child.PrevNode;
 				last = ((LogEntry)child.Tag).Time;
 				
 			}

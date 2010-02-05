@@ -32,4 +32,31 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			return base.EditValue(context, provider, value);
 		}
 	}
+
+	public class FileSaveTypeEditor : UITypeEditor
+	{
+		public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+		{
+			if (context != null)
+			{
+				return System.Drawing.Design.UITypeEditorEditStyle.Modal;
+			}
+			return base.GetEditStyle(context);
+		}
+
+		public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
+		{
+			if (value is string)
+			{
+				SaveFileDialog dialog = new SaveFileDialog();
+				dialog.Title = "Choose File";
+				DialogResult result = dialog.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					return dialog.FileName;
+				}
+			}
+			return base.EditValue(context, provider, value);
+		}
+	}
 }

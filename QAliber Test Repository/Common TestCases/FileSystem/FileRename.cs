@@ -46,7 +46,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		[DisplayName("2) Renamed File")]
 		[Category("Files")]
 		[Description("The new file's name")]
-		[Editor(typeof(UITypeEditors.FileBrowseTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(UITypeEditors.FileSaveTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string DestFile
 		{
 			get { return destFile; }

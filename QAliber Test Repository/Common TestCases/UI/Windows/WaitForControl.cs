@@ -12,9 +12,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Windows
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
-	public class ClickMouse : TestCase
+	public class WaitForControl : TestCase
 	{
-		public ClickMouse()
+		public WaitForControl()
 		{
 			name = "Wait For Control";
 			icon = Properties.Resources.Window;

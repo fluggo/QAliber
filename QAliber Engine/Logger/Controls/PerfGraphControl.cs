@@ -21,7 +21,7 @@ namespace QAliber.Logger.Controls
 		{
 			if (Directory.Exists(logPath))
 			{
-				foreach (string csvFile in Directory.GetFiles(logPath, "*.csv"))
+				foreach (string csvFile in Directory.GetFiles(logPath, "*.csv", SearchOption.AllDirectories))
 				{
 					this.csvFile = csvFile;
 					FillCountersList();
@@ -58,7 +58,7 @@ namespace QAliber.Logger.Controls
 				while (line != null)
 				{
 					string[] fields = line.Split(',');
-					DateTime time = DateTime.Parse(fields[0].Trim('"'));
+					DateTime time = DateTime.Parse(fields[0].Trim('"'), new System.Globalization.CultureInfo("en-US"));
 					
 					for (int i = 1; i < fields.Length; i++)
 					{

@@ -76,6 +76,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 		public override void Body()
 		{
+			actualResult = TestCaseResult.Passed;
 			Bitmap image1 = Bitmap.FromFile(file1) as Bitmap;
 			Bitmap image2 = Bitmap.FromFile(file2) as Bitmap;
 			if (postDifference)

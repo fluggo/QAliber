@@ -32,11 +32,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			set { control = value; }
 		}
 
-		private string file;
+		private string file = "";
 
 		[Category("Image")]
 		[DisplayName("2) File To Save")]
-		[Editor(typeof(UITypeEditors.FileBrowseTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(UITypeEditors.FileSaveTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[Description("The file to save the image to (jpg format)")]
 		public string File
 		{

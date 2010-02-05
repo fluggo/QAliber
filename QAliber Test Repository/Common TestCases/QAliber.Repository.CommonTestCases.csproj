@@ -70,14 +70,15 @@
     </Compile>
     <Compile Include="Randomizers\GetRandomItemInList.cs" />
     <Compile Include="Randomizers\GenerateRandomNumber.cs" />
-    <Compile Include="Registry\AddRegistryValue.cs" />
-    <Compile Include="Registry\VerifyRegistryValue.cs" />
-    <Compile Include="Registry\DeleteRegistryValue.cs" />
+    <Compile Include="Resources\Registry\AddRegistryValue.cs" />
+    <Compile Include="Resources\Registry\VerifyRegistryValue.cs" />
+    <Compile Include="Resources\Registry\DeleteRegistryValue.cs" />
     <Compile Include="ResourceMonitoring\StopPerfmon.cs" />
     <Compile Include="ResourceMonitoring\StartPerfmon.cs" />
     <Compile Include="Timers\StopTimerTestCase.cs" />
     <Compile Include="Timers\StartTimerTestCase.cs" />
     <Compile Include="Timers\TimersCollection.cs" />
+    <Compile Include="UITypeEditors\MultipleSelectionTypeEditor.cs" />
     <Compile Include="UITypeEditors\UIControlLocatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +104,7 @@
     <Compile Include="UI\Mouse\DragMouse.cs" />
     <Compile Include="UI\Mouse\MoveMouse.cs" />
     <Compile Include="UI\Windows\ChangeWindowState.cs" />
+    <Compile Include="UI\Windows\GetPropertyFromControl.cs" />
     <Compile Include="UI\Windows\WaitForControl.cs" />
     <Compile Include="UI\Windows\ResizeWindow.cs" />
     <Compile Include="UI\Windows\MoveWindow.cs" />
