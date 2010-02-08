@@ -376,7 +376,7 @@ namespace QAliber.Builder.Presentation
 			{
 				ICommand command = new PasteCommand((QAliberTreeNode)scenarioTreeView.SelectedNode);
 				commandsHistory.Do(command);
-				//TODO : Go through target recursively nodes and update context menu and icons
+				//Go through target recursively nodes and update context menu and icons
 				foreach (QAliberTreeNode node in ((PasteCommand)command).insCommand.targetNodes)
 				{
 					UpdateContextMenusAndIconsRec(node);

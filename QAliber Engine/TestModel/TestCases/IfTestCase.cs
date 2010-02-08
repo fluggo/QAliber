@@ -41,6 +41,7 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			object conditionResult = null;
+			ifConditionValue = false;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Boolean, out conditionResult);
 			ifConditionValue = (bool)conditionResult;
 			if ((bool)conditionResult)

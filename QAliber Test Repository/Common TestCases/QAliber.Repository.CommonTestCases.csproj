@@ -70,9 +70,9 @@
     </Compile>
     <Compile Include="Randomizers\GetRandomItemInList.cs" />
     <Compile Include="Randomizers\GenerateRandomNumber.cs" />
-    <Compile Include="Resources\Registry\AddRegistryValue.cs" />
-    <Compile Include="Resources\Registry\VerifyRegistryValue.cs" />
-    <Compile Include="Resources\Registry\DeleteRegistryValue.cs" />
+    <Compile Include="Registry\AddRegistryValue.cs" />
+    <Compile Include="Registry\DeleteRegistryValue.cs" />
+    <Compile Include="Registry\VerifyRegistryValue.cs" />
     <Compile Include="ResourceMonitoring\StopPerfmon.cs" />
     <Compile Include="ResourceMonitoring\StartPerfmon.cs" />
     <Compile Include="Timers\StopTimerTestCase.cs" />
