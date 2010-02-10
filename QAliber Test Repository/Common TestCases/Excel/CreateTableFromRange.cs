@@ -37,13 +37,14 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 				";Extended Properties=Excel 8.0;");
 			OleDbCommand cmd = new OleDbCommand("SELECT * FROM " + rangeName, conn);
 			OleDbDataAdapter adapter = new OleDbDataAdapter(cmd);
-			QAliber.TestModel.Variables.ScenarioTable table = new QAliber.TestModel.Variables.ScenarioTable();
+			
 			DataTable dataTable = new DataTable();
 			conn.Open();
 
 			adapter.Fill(dataTable);
-			table.Name = rangeName;
-			table.Value = dataTable;
+			dataTable.TableName = "Table from Excel (" + sourceFile + ")";
+			QAliber.TestModel.Variables.ScenarioTable table = new QAliber.TestModel.Variables.ScenarioTable(rangeName, dataTable, this);
+			
 			Scenario.Tables.Add(table);
 			conn.Close();
 

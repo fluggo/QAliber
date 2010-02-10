@@ -11,6 +11,7 @@ using QAliber.RemotingModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.IO;
+using Darwen.Windows.Forms.Controls.TabbedDocuments;
 
 namespace QAliber.Builder.Presentation
 {
@@ -327,27 +328,7 @@ namespace QAliber.Builder.Presentation
 				}
 
 			}
-			//if (e.ChangedItem.PropertyDescriptor.PropertyType.Equals(typeof(string)))
-			//{
-
-			//	  if (e.ChangedItem.Value.ToString().Contains("$") &&
-			//		  !e.OldValue.ToString().Contains("$"))
-			//	  {
-			//		  try
-			//		  {
-			//			  QAliber.TestModel.TypeEditors.VariablesWizardForm form = new QAliber.TestModel.TypeEditors.VariablesWizardForm(testScenario);
-			//			  form.ShowDialog();
-			//			  e.ChangedItem.PropertyDescriptor.SetValue(
-			//				  ((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase, form.OutputString);
-			//		  }
-			//		  catch
-			//		  {
-			//			  int x = 1;
-			//		  }
-					
-			//	  }
-
-			//}
+						
 			OnScenarioChanged();
 		}
 

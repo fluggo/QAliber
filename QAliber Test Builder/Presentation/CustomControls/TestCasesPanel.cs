@@ -198,16 +198,5 @@ namespace QAliber.Builder.Presentation
 		#endregion
 
 		
-
-		
-
-	   
-
-		
-
-		
-
-
-		
 	}
 }

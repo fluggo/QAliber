@@ -180,6 +180,26 @@ namespace QAliber.Logger.Controls
 			menuStrip.Items.Add(fullScreenItem);
 		}
 
+		private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < listViewCounters.Items.Count; i++)
+			{
+				if (i >= 8)
+					listViewCounters.Items[i].Checked = false;
+				listViewCounters.Items[i].Checked = true;
+			}
+		}
+
+		private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < listViewCounters.Items.Count; i++)
+			{
+				listViewCounters.Items[i].Checked = false;
+			}
+		}
+
+		
+
 		private ToolStripMenuItem fullScreenItem = null;
 		private Control parent;
 		private List<DateTime> dateTimes = new List<DateTime>();
@@ -187,6 +207,8 @@ namespace QAliber.Logger.Controls
 		private string csvFile;
 		private Color[] graphColors = new Color[] { Color.Blue, Color.Green,
 			 Color.Red, Color.Orange, Color.Yellow, Color.Purple, Color.DarkBlue, Color.Black };
+
+	   
 
 	}
 

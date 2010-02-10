@@ -21,6 +21,8 @@ namespace QAliber.Builder.Presentation
 			InitColumns();
 		}
 
+		
+
 		private void InitColumns()
 		{
 			varsDataGridView.AutoGenerateColumns = false;

@@ -37,10 +37,14 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButtonPlot = new System.Windows.Forms.ToolStripButton();
 			this.zedGraphControl = new ZedGraph.ZedGraphControl();
+			this.contextMenuStripList = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.contextMenuStripList.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -64,6 +68,7 @@
 			// listViewCounters
 			// 
 			this.listViewCounters.CheckBoxes = true;
+			this.listViewCounters.ContextMenuStrip = this.contextMenuStripList;
 			this.listViewCounters.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewCounters.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.listViewCounters.GridLines = true;
@@ -129,6 +134,28 @@
 			this.zedGraphControl.Click += new System.EventHandler(this.zedGraphControl_Click);
 			this.zedGraphControl.ContextMenuBuilder += new ZedGraph.ZedGraphControl.ContextMenuBuilderEventHandler(this.zedGraphControl_ContextMenuBuilder);
 			// 
+			// contextMenuStripList
+			// 
+			this.contextMenuStripList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.selectAllToolStripMenuItem,
+			this.clearAllToolStripMenuItem});
+			this.contextMenuStripList.Name = "contextMenuStripList";
+			this.contextMenuStripList.Size = new System.Drawing.Size(229, 70);
+			// 
+			// selectAllToolStripMenuItem
+			// 
+			this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+			this.selectAllToolStripMenuItem.Text = "Select All (Maximum 8 Counters)";
+			this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+			// 
+			// clearAllToolStripMenuItem
+			// 
+			this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+			this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.clearAllToolStripMenuItem.Text = "Clear All";
+			this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
+			// 
 			// PerfGraphControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +169,7 @@
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.contextMenuStripList.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -155,5 +183,8 @@
 		private System.Windows.Forms.ToolStripLabel toolStripLabelCounters;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolStripButtonPlot;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStripList;
+		private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearAllToolStripMenuItem;
 	}
 }
