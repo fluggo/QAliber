@@ -74,13 +74,14 @@ namespace QAliber.Logger.Controls
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.nodeMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.copyThisMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.jumpNextErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.jumpPrevErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.countThisMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.countItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.countAllTheChildrenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.showLeavesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.jumpNextErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.splitContainerMain.Panel1.SuspendLayout();
 			this.splitContainerMain.Panel2.SuspendLayout();
 			this.splitContainerMain.SuspendLayout();
@@ -541,6 +542,7 @@ namespace QAliber.Logger.Controls
 			this.nodeMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.copyThisMessageToolStripMenuItem,
 			this.jumpNextErrorToolStripMenuItem,
+			this.jumpPrevErrorToolStripMenuItem,
 			this.toolStripSeparator8,
 			this.countThisMessageToolStripMenuItem,
 			this.countItemsToolStripMenuItem,
@@ -548,62 +550,70 @@ namespace QAliber.Logger.Controls
 			this.toolStripSeparator4,
 			this.showLeavesToolStripMenuItem});
 			this.nodeMenuStrip.Name = "nodeMenuStrip";
-			this.nodeMenuStrip.Size = new System.Drawing.Size(275, 170);
+			this.nodeMenuStrip.Size = new System.Drawing.Size(279, 192);
 			// 
 			// copyThisMessageToolStripMenuItem
 			// 
 			this.copyThisMessageToolStripMenuItem.Name = "copyThisMessageToolStripMenuItem";
 			this.copyThisMessageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.copyThisMessageToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.copyThisMessageToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.copyThisMessageToolStripMenuItem.Text = "Copy this message";
 			this.copyThisMessageToolStripMenuItem.Click += new System.EventHandler(this.copyThisMessageToolStripMenuItem_Click);
+			// 
+			// jumpNextErrorToolStripMenuItem
+			// 
+			this.jumpNextErrorToolStripMenuItem.Name = "jumpNextErrorToolStripMenuItem";
+			this.jumpNextErrorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+			this.jumpNextErrorToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+			this.jumpNextErrorToolStripMenuItem.Text = "Jump to Next Warning / Error";
+			this.jumpNextErrorToolStripMenuItem.Click += new System.EventHandler(this.jumpNextErrorToolStripMenuItem_Click);
+			// 
+			// jumpPrevErrorToolStripMenuItem
+			// 
+			this.jumpPrevErrorToolStripMenuItem.Name = "jumpPrevErrorToolStripMenuItem";
+			this.jumpPrevErrorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
+			this.jumpPrevErrorToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+			this.jumpPrevErrorToolStripMenuItem.Text = "Jump to Previous Warning / Error";
+			this.jumpPrevErrorToolStripMenuItem.Click += new System.EventHandler(this.jumpPrevErrorToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(275, 6);
 			// 
 			// countThisMessageToolStripMenuItem
 			// 
 			this.countThisMessageToolStripMenuItem.Name = "countThisMessageToolStripMenuItem";
-			this.countThisMessageToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.countThisMessageToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.countThisMessageToolStripMenuItem.Text = "Count this message";
 			this.countThisMessageToolStripMenuItem.Click += new System.EventHandler(this.countThisMessageToolStripMenuItem_Click);
 			// 
 			// countItemsToolStripMenuItem
 			// 
 			this.countItemsToolStripMenuItem.Name = "countItemsToolStripMenuItem";
-			this.countItemsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.countItemsToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.countItemsToolStripMenuItem.Text = "Count items at this tree level";
 			this.countItemsToolStripMenuItem.Click += new System.EventHandler(this.countItemsToolStripMenuItem_Click);
 			// 
 			// countAllTheChildrenToolStripMenuItem
 			// 
 			this.countAllTheChildrenToolStripMenuItem.Name = "countAllTheChildrenToolStripMenuItem";
-			this.countAllTheChildrenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.countAllTheChildrenToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.countAllTheChildrenToolStripMenuItem.Text = "Count all the children";
 			this.countAllTheChildrenToolStripMenuItem.Click += new System.EventHandler(this.countAllTheChildrenToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(271, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(275, 6);
 			// 
 			// showLeavesToolStripMenuItem
 			// 
 			this.showLeavesToolStripMenuItem.CheckOnClick = true;
 			this.showLeavesToolStripMenuItem.Name = "showLeavesToolStripMenuItem";
-			this.showLeavesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.showLeavesToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.showLeavesToolStripMenuItem.Text = "Show Leaves Only";
 			this.showLeavesToolStripMenuItem.Click += new System.EventHandler(this.showLeavesToolStripMenuItem_Click);
-			// 
-			// jumpNextErrorToolStripMenuItem
-			// 
-			this.jumpNextErrorToolStripMenuItem.Name = "jumpNextErrorToolStripMenuItem";
-			this.jumpNextErrorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
-			this.jumpNextErrorToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-			this.jumpNextErrorToolStripMenuItem.Text = "Jump to Next Warning / Error";
-			this.jumpNextErrorToolStripMenuItem.Click += new System.EventHandler(this.jumpNextErrorToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator8
-			// 
-			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(271, 6);
 			// 
 			// LogViewerControl
 			// 
@@ -690,6 +700,7 @@ namespace QAliber.Logger.Controls
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
 		private System.Windows.Forms.ToolStripMenuItem jumpNextErrorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripMenuItem jumpPrevErrorToolStripMenuItem;
 	}
 }
 

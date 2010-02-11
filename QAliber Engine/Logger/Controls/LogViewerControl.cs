@@ -85,6 +85,11 @@ namespace QAliber.Logger.Controls
 				jumpNextErrorToolStripMenuItem_Click(this, EventArgs.Empty);
 				return true;
 			}
+			else if (keyData == (Keys.Control | Keys.Up))
+			{
+				jumpPrevErrorToolStripMenuItem_Click(this, EventArgs.Empty);
+				return true;
+			}
 			else  if (keyData == (Keys.Control | Keys.C))
 			{
 				copyThisMessageToolStripMenuItem_Click(this, EventArgs.Empty);
@@ -356,6 +361,31 @@ namespace QAliber.Logger.Controls
 			visibleTree.SelectedNode = visibleTree.Nodes[0];
 		}
 
+		private void jumpPrevErrorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			TreeView visibleTree = logTree.Visible ? logTree : logTreeFiltered;
+			if (visibleTree.Nodes.Count == 0)
+				return;
+			TreeNode node = GetPrevNode(visibleTree.SelectedNode);
+			if (node == null)
+				node = visibleTree.Nodes[0];
+			do
+			{
+				if (node.Nodes.Count == 0 &&
+				   (node.ImageKey == "Error" || node.ImageKey == "Warning"))
+				{
+					node.EnsureVisible();
+					visibleTree.SelectedNode = node;
+					return;
+				}
+				node = GetPrevNode(node);
+			} while (node != null);
+			//MessageBox.Show("No next match was found", "Test case was not found");
+			visibleTree.SelectedNode = visibleTree.Nodes[0];
+		}
+
+		
+
 		private void videoPanelToolStripButton_Click(object sender, EventArgs e)
 		{
 			slideShowControl.BringToFront();
@@ -570,8 +600,6 @@ namespace QAliber.Logger.Controls
 		{
 			TreeNode newNode = null;
 			LogEntry logEntry;
-			bool hasWarnings = false;
-			bool hasErrors = false;
 			foreach (XmlNode node in xNode.ChildNodes)
 			{
 				
@@ -580,10 +608,7 @@ namespace QAliber.Logger.Controls
 					logEntry = GetEntry(node.FirstChild);
 					if (logEntry != null)
 					{
-						if (logEntry.Type == EntryType.Warning)
-							hasWarnings = true;
-						else if (logEntry.Type == EntryType.Error)
-							hasErrors = true;
+						
 
 						newNode = new TreeNode(logEntry.Message);
 						newNode.Tag = logEntry;
@@ -592,8 +617,13 @@ namespace QAliber.Logger.Controls
 						newNode.NodeFont = new Font(logTree.Font.Name, logTree.Font.Size, logEntry.Style.FontStyle);
 						newNode.SelectedImageKey = newNode.ImageKey = GetImageKeyByEntry(logEntry);
 						newNode.ContextMenuStrip = nodeMenuStrip;
+
 						tNodes.Add(newNode);
-						lastCreatedNode = newNode;
+						if (logEntry.Type == EntryType.Warning)
+							warningNodes.Push(newNode);
+						else if (logEntry.Type == EntryType.Error)
+							errorNodes.Push(newNode);
+
 						node.RemoveChild(node.FirstChild);
 						FillTreeRec(newNode.Nodes, node);
 						
@@ -601,18 +631,13 @@ namespace QAliber.Logger.Controls
 				}
 				else if (node.Name == "LogResult")
 				{
-					BubbleIconUp(lastCreatedNode, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText), hasWarnings, hasErrors);
+					BubbleIconUp(warningNodes, errorNodes, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
 				}
 				else
 				{
 					logEntry = GetEntry(node);
 					if (logEntry != null)
 					{
-						if (logEntry.Type == EntryType.Warning)
-							hasWarnings = true;
-						else if (logEntry.Type == EntryType.Error)
-							hasErrors = true;
-
 						newNode = new TreeNode(logEntry.Message);
 						newNode.BackColor = logEntry.Style.BackgroundColor;
 						newNode.ForeColor = logEntry.Style.ForegroundColor;
@@ -623,7 +648,11 @@ namespace QAliber.Logger.Controls
 
 						newNode.ContextMenuStrip = nodeMenuStrip;
 						tNodes.Add(newNode);
-						lastCreatedNode = newNode;
+						
+						if (logEntry.Type == EntryType.Warning)
+							warningNodes.Push(newNode);
+						else if (logEntry.Type == EntryType.Error)
+							errorNodes.Push(newNode);
 					}
 				}
 			}
@@ -680,22 +709,38 @@ namespace QAliber.Logger.Controls
 			}
 		}
 
-		private void BubbleIconUp(TreeNode node, TestCaseResult result, bool hasWarnings, bool hasErrors)
+		private void BubbleIconUp(Stack<TreeNode> wNodes, Stack<TreeNode> eNodes, TestCaseResult result)
 		{
 			int indexToSet = 4;//"Passed";
 			if (result == TestCaseResult.Failed)
 				indexToSet = 7;//"Error";
-			else if (hasErrors)
-				indexToSet = 6;//"PassedErrors";
-			else if (hasWarnings)
-				indexToSet = 5;//"PassedWarnings";
-
-			while (node.Parent != null)
+			
+			while (wNodes.Count > 0)
 			{
-				node = node.Parent;
-				if (node.ImageIndex >= indexToSet)
-					break;
-				node.SelectedImageIndex = node.ImageIndex = indexToSet;
+				TreeNode node = wNodes.Pop();
+				if (indexToSet < 5)//"PassedWarnings";
+					indexToSet = 5;
+				while (node.Parent != null)
+				{
+					node = node.Parent;
+					if (node.ImageIndex >= indexToSet)
+						break;
+					node.SelectedImageIndex = node.ImageIndex = indexToSet;
+				}
+			}
+
+			while (eNodes.Count > 0)
+			{
+				TreeNode node = eNodes.Pop();
+				if (indexToSet < 6)//"PassedErrors";
+					indexToSet = 6;
+				while (node.Parent != null)
+				{
+					node = node.Parent;
+					if (node.ImageIndex >= indexToSet)
+						break;
+					node.SelectedImageIndex = node.ImageIndex = indexToSet;
+				}
 			}
 			
 		}
@@ -713,6 +758,24 @@ namespace QAliber.Logger.Controls
 			if (node.Parent != null)
 				return node.Parent.NextNode;
 			return null;
+		}
+
+		private TreeNode GetPrevNode(TreeNode node)
+		{
+			if (node == null)
+				return null;
+			if (node.PrevNode == null)
+				return node.Parent;
+			else
+			{
+				node = node.PrevNode;
+				while (node.Nodes.Count > 0)
+				{
+					node = node.Nodes[node.Nodes.Count - 1];
+				}
+				return node;
+			}
+			
 		}
 
 		private Font BuildFont(string name, float size, int style)
@@ -745,23 +808,12 @@ namespace QAliber.Logger.Controls
 			return res;
 		}
 
-		
-		
+
+		private Stack<TreeNode> warningNodes = new Stack<TreeNode>();
+		private Stack<TreeNode> errorNodes = new Stack<TreeNode>();
 		private int counter;
 		private string filename;
-		private TreeNode lastCreatedNode;
 
-		
-
-		
-
-		
-
-		
-
-		
-
-		
 		
 		
 	}
