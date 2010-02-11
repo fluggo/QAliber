@@ -117,7 +117,7 @@ namespace QAliber.Builder.Presentation
 		private void CopyMacros()
 		{
 			ProcessStartInfo psi = new ProcessStartInfo("xcopy",
-			  string.Format("\"{0}\\*.macro\" \"{1}Macros\\\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, TestController.Default.LocalAssemblyPath));
+			  string.Format("\"{0}\\*.macro\" \"{1}\\Macros\\\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, TestController.Default.LocalAssemblyPath));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;
 			Process.Start(psi).WaitForExit(10000);
 		}
