@@ -50,10 +50,21 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 						Cursor = Cursors.Default;
 						btnCursor.BackgroundImage = Properties.Resources.Crosshair;
 						capturing = false;
-						UIAControl control = UIAControl.GetControlByType(capturedElement);
-						textBox.Text = control.CodePath;
-						labelTypeDyn.Text = control.UIType;
-						textBoxXY.Text = "(" + (int)(Cursor.Position.X - control.Layout.X) + ", " + (int)(Cursor.Position.Y - control.Layout.Y) + ")";
+						UIControlBase control = null;
+						if (radioButtonWeb.Checked)
+						{
+							control = Desktop.Web.GetControlFromCursor();
+						}
+						else
+						{
+							control = UIAControl.GetControlByType(capturedElement);
+						}
+						if (control != null)
+						{
+							textBox.Text = control.CodePath;
+							labelTypeDyn.Text = control.UIType;
+							textBoxXY.Text = "(" + (int)(Cursor.Position.X - control.Layout.X) + ", " + (int)(Cursor.Position.Y - control.Layout.Y) + ")";
+						}
 						break;
 					case 0x0200: //MouseMove
 						AutomationElement element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));

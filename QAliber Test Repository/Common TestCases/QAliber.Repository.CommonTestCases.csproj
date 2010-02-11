@@ -88,6 +88,7 @@
     <Compile Include="UITypeEditors\UIControlTypeEditor.cs" />
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
+    <Compile Include="UI\Dialogs\DisplayBalloonTip.cs" />
     <Compile Include="UI\Dialogs\DisplayInputBox.cs" />
     <Compile Include="UI\Dialogs\DisplayMessageBox.cs" />
     <Compile Include="UI\Dialogs\InputForm.cs">
@@ -95,6 +96,12 @@
     </Compile>
     <Compile Include="UI\Dialogs\InputForm.Designer.cs">
       <DependentUpon>InputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notifier.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notifier.Designer.cs">
+      <DependentUpon>Notifier.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Images\CompareImages.cs" />
     <Compile Include="UI\Images\LogImageOfControl.cs" />
@@ -122,6 +129,9 @@
     <EmbeddedResource Include="UI\Dialogs\InputForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>InputForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notifier.resx">
+      <DependentUpon>Notifier.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +163,7 @@
     <Content Include="Resources\CrossIcon.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\QAliberTarget.ico" />
     <None Include="Resources\expirationHS.png" />
     <None Include="Resources\Registry.gif" />
     <None Include="Resources\DataContainer_NewRecordHS.png" />

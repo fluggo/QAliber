@@ -55,7 +55,7 @@ namespace QAliber.TestModel.Variables
 			for (int i = 0; i < Count; i++)
 			{
 				T item = this[i];
-				if (item.Definer.Equals(testcase))
+				if (item.Definer != null && item.Definer.Equals(testcase))
 				{
 					this.RemoveAt(i);
 					return;

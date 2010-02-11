@@ -179,6 +179,13 @@ namespace QAliber.Repository.CommonTestCases.Properties {
 			}
 		}
 		
+		internal static System.Drawing.Icon QAliberTarget {
+			get {
+				object obj = ResourceManager.GetObject("QAliberTarget", resourceCulture);
+				return ((System.Drawing.Icon)(obj));
+			}
+		}
+		
 		internal static System.Drawing.Bitmap Registry {
 			get {
 				object obj = ResourceManager.GetObject("Registry", resourceCulture);

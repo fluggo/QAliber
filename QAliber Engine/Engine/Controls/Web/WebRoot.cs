@@ -155,6 +155,8 @@ namespace QAliber.Engine.Controls.Web
 		{
 			lock (this)
 			{
+				if (page == null)
+					BuildPages();
 				if (page != null)
 				{
 					IHTMLElement element = page.Document.elementFromPoint((int)pt.X - (int)page.Layout.Left, (int)pt.Y - (int)page.Layout.Top);

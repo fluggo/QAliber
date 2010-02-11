@@ -118,6 +118,26 @@ namespace QAliber.Builder.Presentation
 			DoDragDrop(e.Item, DragDropEffects.Move);
 		}
 
+		private void AfterDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			if (e.Node != null && e.Node.Nodes.Count == 0)
+			{
+				TestCase testcase = e.Node.Tag as TestCase;
+				if (testcase != null)
+				{
+					MainForm form = FindForm() as MainForm;
+					if (form != null)
+					{
+						ScenarioControl sc = form.executionContainer.dockManager.tabbedScenarioControl.tabbedDocumentControl.SelectedControl as ScenarioControl;
+						if (sc != null)
+						{
+							sc.AddTestCaseAfterCurrentNode(testcase);
+						}
+					}
+				}
+			}
+		}
+
 		private void addDllsToolStripButton_Click(object sender, EventArgs e)
 		{
 			DialogResult dr = openFileDialog.ShowDialog();
@@ -196,6 +216,8 @@ namespace QAliber.Builder.Presentation
 			FillTree();
 		}
 		#endregion
+
+		
 
 		
 	}

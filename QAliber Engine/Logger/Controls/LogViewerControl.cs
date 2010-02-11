@@ -78,6 +78,21 @@ namespace QAliber.Logger.Controls
 			}
 		}
 
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			if (keyData == (Keys.Control | Keys.Down))
+			{
+				jumpNextErrorToolStripMenuItem_Click(this, EventArgs.Empty);
+				return true;
+			}
+			else  if (keyData == (Keys.Control | Keys.C))
+			{
+				copyThisMessageToolStripMenuItem_Click(this, EventArgs.Empty);
+				return true;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
 		private TreeNode SelectNodeByDateRec(TreeNode node, DateTime time)
 		{
 			DateTime last = ((LogEntry)node.Tag).Time;
@@ -316,6 +331,29 @@ namespace QAliber.Logger.Controls
 				}
 			}
 
+		}
+
+		private void jumpNextErrorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			TreeView visibleTree = logTree.Visible ? logTree : logTreeFiltered;
+			if (visibleTree.Nodes.Count == 0)
+				return;
+			TreeNode node = GetNextNode(visibleTree.SelectedNode);
+			if (node == null)
+				node = visibleTree.Nodes[0];
+			do
+			{
+				if (node.Nodes.Count == 0 &&
+				   (node.ImageKey == "Error" || node.ImageKey == "Warning"))  
+				{
+					node.EnsureVisible();
+					visibleTree.SelectedNode = node;
+					return;
+				}
+				node = GetNextNode(node);
+			} while (node != null);
+			//MessageBox.Show("No next match was found", "Test case was not found");
+			visibleTree.SelectedNode = visibleTree.Nodes[0];
 		}
 
 		private void videoPanelToolStripButton_Click(object sender, EventArgs e)
@@ -662,6 +700,21 @@ namespace QAliber.Logger.Controls
 			
 		}
 
+		private TreeNode GetNextNode(TreeNode node)
+		{
+			if (node == null)
+				return null;
+			if (node.Nodes.Count > 0)
+				return node.Nodes[0];
+			if (node.NextNode != null)
+				return node.NextNode;
+			while (node.Parent != null && node.Parent.NextNode == null)
+				node = node.Parent;
+			if (node.Parent != null)
+				return node.Parent.NextNode;
+			return null;
+		}
+
 		private Font BuildFont(string name, float size, int style)
 		{
 			FontStyle fontStyle = FontStyle.Regular;
@@ -697,6 +750,8 @@ namespace QAliber.Logger.Controls
 		private int counter;
 		private string filename;
 		private TreeNode lastCreatedNode;
+
+		
 
 		
 

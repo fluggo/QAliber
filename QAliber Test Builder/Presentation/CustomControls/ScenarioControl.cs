@@ -47,16 +47,11 @@ namespace QAliber.Builder.Presentation
 				ScenarioChanged(this, new ScenarioChangedEventArgs(testScenario));
 		}
 
-		private void FillTreeRecursively(QAliberTreeNode node)
+		internal void AddTestCaseAfterCurrentNode(TestCase testcase)
 		{
-			FolderTestCase folderCase = node.Testcase as FolderTestCase;
-			if (folderCase != null)
+			if (scenarioTreeView.SelectedNode != null)
 			{
-				foreach (TestCase child in folderCase.Children)
-				{
-					QAliberTreeNode childNode = AddNode(node, child);
-					FillTreeRecursively(childNode);
-				}
+				AfterTypeDragEnded(null, new NodeDraggedEventArgs(new QAliberTreeNode(testcase), (QAliberTreeNode)scenarioTreeView.SelectedNode));
 			}
 		}
 
@@ -73,6 +68,19 @@ namespace QAliber.Builder.Presentation
 		internal void CheckNodeByColor(Color color, bool check)
 		{
 			CheckNodeByColorRecursively((QAliberTreeNode)scenarioTreeView.Nodes[0], color, check);
+		}
+
+		private void FillTreeRecursively(QAliberTreeNode node)
+		{
+			FolderTestCase folderCase = node.Testcase as FolderTestCase;
+			if (folderCase != null)
+			{
+				foreach (TestCase child in folderCase.Children)
+				{
+					QAliberTreeNode childNode = AddNode(node, child);
+					FillTreeRecursively(childNode);
+				}
+			}
 		}
 
 		private void CheckNodeByColorRecursively(QAliberTreeNode node, Color color, bool check)
@@ -167,12 +175,6 @@ namespace QAliber.Builder.Presentation
 				return res.ToArray();
 			}
 		}
-
-		//internal void SetNodeIDs()
-		//{
-		//	  nextID = 0;
-		//	  SetNodeIDsRec((QAliberTreeNode)scenarioTreeView.Nodes[0]);
-		//}
 
 		private void SetIconToNode(QAliberTreeNode node, TestCaseResult result)
 		{
@@ -272,7 +274,7 @@ namespace QAliber.Builder.Presentation
 			
 		}
 
-		private void AfterTypeDragEnded(object sender, NodeDraggedEventArgs e)
+		internal void AfterTypeDragEnded(object sender, NodeDraggedEventArgs e)
 		{
 			QAliberTreeNode node = e.SourceNode.Clone() as QAliberTreeNode;
 			TreeClipboard.Default.StoreInClipboard(new QAliberTreeNode[] { node }, false);
@@ -448,16 +450,6 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		private void playCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (scenarioTreeView.SelectedNode != null && scenarioTreeView.SelectedNode is QAliberTreeNode)
-			{
-			   
-				//SetNodeIDs();
-				TestController.Default.Run(((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase);
-			}
-		}
-
 		internal void SetBPToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (scenarioTreeView.SelectedNode != null)
@@ -479,6 +471,16 @@ namespace QAliber.Builder.Presentation
 					}
 					scenarioTreeView.SelectedNode = scenarioTreeView.SelectedNode.NextVisibleNode;
 				}
+			}
+		}
+
+		private void playCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (scenarioTreeView.SelectedNode != null && scenarioTreeView.SelectedNode is QAliberTreeNode)
+			{
+			   
+				//SetNodeIDs();
+				TestController.Default.Run(((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase);
 			}
 		}
 

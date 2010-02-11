@@ -186,32 +186,32 @@ namespace QAliber.TestModel
 
 			foreach (ScenarioVariable var in variables)
 			{
-				if (var.DefinedBy == "User")
+				//if (var.DefinedBy == "User")
 					variablesCopy.Add(new ScenarioVariable(
 						var.Name, var.Value.ToString(), null));
 			}
 
 			foreach (ScenarioList var in lists)
 			{
-				if (var.DefinedBy == "User")
-				{
+				//if (var.DefinedBy == "User")
+				//{
 					ICollection vals = var.Value as ICollection;
 					string[] copyList= new string[vals.Count];
 					vals.CopyTo(copyList, 0);
 					listsCopy.Add(new ScenarioList(
 						var.Name, copyList, null));
-				}
+				//}
 			}
 
 			foreach (ScenarioTable var in tables)
 			{
-				if (var.DefinedBy == "User")
-				{
+				//if (var.DefinedBy == "User")
+				//{
 					DataTable table = var.Value as DataTable;
 					DataTable copyTable = table.Copy();
 					tablesCopy.Add(new ScenarioTable(
 						var.Name, copyTable, null));
-				}
+				//}
 			}
 		}
 
@@ -225,7 +225,7 @@ namespace QAliber.TestModel
 			tables.ResetBindings();
 		}
 
-		public string ReplaceAllVars(string input)
+		internal string ReplaceAllVars(string input)
 		{
 			Regex regex = new Regex(@"\$([^\$\[\]]+)\$");
 			string res = regex.Replace(input, new MatchEvaluator(ReplaceVarForMatch));

@@ -23,11 +23,13 @@ namespace QAliber.Builder.Presentation
 		private void FillTree()
 		{
 			typesTreeView.Nodes.Clear();
-			ProcessStartInfo psi = new ProcessStartInfo("xcopy",
-			  string.Format("\"{0}\\*.macro\" \"{1}\\Macros\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, TestController.Default.LocalAssemblyPath));
-			psi.WindowStyle = ProcessWindowStyle.Hidden;
-			Process.Start(psi).WaitForExit(10000);
 			string path = TestController.Default.LocalAssemblyPath + @"Macros";
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
+
+			CopyMacros();
+
+			
 			watch.Reset();
 			watch.Start();
 			try
@@ -110,6 +112,14 @@ namespace QAliber.Builder.Presentation
 			if (node.Parent != null)
 				return node.Parent.NextNode;
 			return null;
+		}
+
+		private void CopyMacros()
+		{
+			ProcessStartInfo psi = new ProcessStartInfo("xcopy",
+			  string.Format("\"{0}\\*.macro\" \"{1}Macros\\\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, TestController.Default.LocalAssemblyPath));
+			psi.WindowStyle = ProcessWindowStyle.Hidden;
+			Process.Start(psi).WaitForExit(10000);
 		}
 
 		

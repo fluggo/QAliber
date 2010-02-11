@@ -119,6 +119,7 @@ namespace QAliber.TestModel
 			return res;
 		}
 
+		
 		private bool silent;
 		private List<AssemblyName> localAssemblies;
 		private List<AssemblyName> remoteAssemblies;

@@ -37,6 +37,8 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.labelTypeDyn = new System.Windows.Forms.Label();
 			this.btnOk = new System.Windows.Forms.Button();
 			this.textBoxXY = new System.Windows.Forms.TextBox();
+			this.radioButtonUIA = new System.Windows.Forms.RadioButton();
+			this.radioButtonWeb = new System.Windows.Forms.RadioButton();
 			this.SuspendLayout();
 			// 
 			// btnCursor
@@ -121,11 +123,35 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.textBoxXY.TabIndex = 9;
 			this.textBoxXY.Text = "(X,Y)";
 			// 
+			// radioButtonUIA
+			// 
+			this.radioButtonUIA.AutoSize = true;
+			this.radioButtonUIA.Checked = true;
+			this.radioButtonUIA.Location = new System.Drawing.Point(319, 84);
+			this.radioButtonUIA.Name = "radioButtonUIA";
+			this.radioButtonUIA.Size = new System.Drawing.Size(89, 17);
+			this.radioButtonUIA.TabIndex = 10;
+			this.radioButtonUIA.TabStop = true;
+			this.radioButtonUIA.Text = "UIAutomation";
+			this.radioButtonUIA.UseVisualStyleBackColor = true;
+			// 
+			// radioButtonWeb
+			// 
+			this.radioButtonWeb.AutoSize = true;
+			this.radioButtonWeb.Location = new System.Drawing.Point(424, 84);
+			this.radioButtonWeb.Name = "radioButtonWeb";
+			this.radioButtonWeb.Size = new System.Drawing.Size(102, 17);
+			this.radioButtonWeb.TabIndex = 11;
+			this.radioButtonWeb.Text = "Internet Explorer";
+			this.radioButtonWeb.UseVisualStyleBackColor = true;
+			// 
 			// UIControlLocatorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(538, 150);
+			this.Controls.Add(this.radioButtonWeb);
+			this.Controls.Add(this.radioButtonUIA);
 			this.Controls.Add(this.textBoxXY);
 			this.Controls.Add(this.btnOk);
 			this.Controls.Add(this.labelTypeDyn);
@@ -155,5 +181,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private System.Windows.Forms.Label labelTypeDyn;
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.TextBox textBoxXY;
+		private System.Windows.Forms.RadioButton radioButtonUIA;
+		private System.Windows.Forms.RadioButton radioButtonWeb;
 	}
 }

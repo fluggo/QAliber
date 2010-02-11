@@ -122,6 +122,7 @@ namespace QAliber.Builder.Presentation
 			this.typesTreeView.SelectedImageIndex = 0;
 			this.typesTreeView.Size = new System.Drawing.Size(314, 465);
 			this.typesTreeView.TabIndex = 1;
+			this.typesTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.AfterDoubleClick);
 			this.typesTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.typesTreeView_MouseDown);
 			this.typesTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.AfterDragStarted);
 			// 

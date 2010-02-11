@@ -43,9 +43,12 @@ namespace QAliber.Logger.Controls
 			this.groupBoxRemarks = new System.Windows.Forms.GroupBox();
 			this.richTextBoxRemarks = new System.Windows.Forms.RichTextBox();
 			this.groupBoxPicture = new System.Windows.Forms.GroupBox();
+			this.pictureBox = new QAliber.Logger.Controls.ZoomPanControl();
 			this.toolStripPicture = new System.Windows.Forms.ToolStrip();
 			this.zoomPicture = new System.Windows.Forms.ToolStripButton();
 			this.panPicture = new System.Windows.Forms.ToolStripButton();
+			this.slideShowControl = new QAliber.Logger.Controls.SlideshowControl();
+			this.perfGraphControl = new QAliber.Logger.Controls.PerfGraphControl();
 			this.toolStripMain = new System.Windows.Forms.ToolStrip();
 			this.infoFilter = new System.Windows.Forms.ToolStripButton();
 			this.warningFilter = new System.Windows.Forms.ToolStripButton();
@@ -62,6 +65,9 @@ namespace QAliber.Logger.Controls
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.processFilter = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.videoPanelToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.resourcesGraphToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.refreshToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -73,12 +79,8 @@ namespace QAliber.Logger.Controls
 			this.countAllTheChildrenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.showLeavesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pictureBox = new QAliber.Logger.Controls.ZoomPanControl();
-			this.slideShowControl = new QAliber.Logger.Controls.SlideshowControl();
-			this.perfGraphControl = new QAliber.Logger.Controls.PerfGraphControl();
-			this.videoPanelToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.resourcesGraphToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+			this.jumpNextErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.splitContainerMain.Panel1.SuspendLayout();
 			this.splitContainerMain.Panel2.SuspendLayout();
 			this.splitContainerMain.SuspendLayout();
@@ -88,10 +90,10 @@ namespace QAliber.Logger.Controls
 			this.splitContainerRight.SuspendLayout();
 			this.groupBoxRemarks.SuspendLayout();
 			this.groupBoxPicture.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.toolStripPicture.SuspendLayout();
 			this.toolStripMain.SuspendLayout();
 			this.nodeMenuStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// logTree
@@ -263,6 +265,21 @@ namespace QAliber.Logger.Controls
 			this.groupBoxPicture.TabStop = false;
 			this.groupBoxPicture.Text = "Picture";
 			// 
+			// pictureBox
+			// 
+			this.pictureBox.BackColor = System.Drawing.SystemColors.Window;
+			this.pictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox.ImageFile = null;
+			this.pictureBox.Location = new System.Drawing.Point(3, 41);
+			this.pictureBox.Name = "pictureBox";
+			this.pictureBox.PanLocation = new System.Drawing.Point(0, 0);
+			this.pictureBox.Size = new System.Drawing.Size(478, 505);
+			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pictureBox.TabIndex = 0;
+			this.pictureBox.TabStop = false;
+			this.pictureBox.Zoom = 1F;
+			// 
 			// toolStripPicture
 			// 
 			this.toolStripPicture.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -298,6 +315,24 @@ namespace QAliber.Logger.Controls
 			this.panPicture.Size = new System.Drawing.Size(23, 22);
 			this.panPicture.Text = "Pan";
 			this.panPicture.Click += new System.EventHandler(this.panPicture_Click);
+			// 
+			// slideShowControl
+			// 
+			this.slideShowControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.slideShowControl.Location = new System.Drawing.Point(0, 0);
+			this.slideShowControl.Name = "slideShowControl";
+			this.slideShowControl.Size = new System.Drawing.Size(484, 549);
+			this.slideShowControl.TabIndex = 2;
+			this.slideShowControl.Visible = false;
+			// 
+			// perfGraphControl
+			// 
+			this.perfGraphControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.perfGraphControl.Location = new System.Drawing.Point(0, 0);
+			this.perfGraphControl.Name = "perfGraphControl";
+			this.perfGraphControl.Size = new System.Drawing.Size(484, 549);
+			this.perfGraphControl.TabIndex = 2;
+			this.perfGraphControl.Visible = false;
 			// 
 			// toolStripMain
 			// 
@@ -449,6 +484,33 @@ namespace QAliber.Logger.Controls
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
 			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
 			// 
+			// videoPanelToolStripButton
+			// 
+			this.videoPanelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.videoPanelToolStripButton.Enabled = false;
+			this.videoPanelToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("videoPanelToolStripButton.Image")));
+			this.videoPanelToolStripButton.ImageTransparentColor = System.Drawing.Color.White;
+			this.videoPanelToolStripButton.Name = "videoPanelToolStripButton";
+			this.videoPanelToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.videoPanelToolStripButton.ToolTipText = "Video Panel";
+			this.videoPanelToolStripButton.Click += new System.EventHandler(this.videoPanelToolStripButton_Click);
+			// 
+			// resourcesGraphToolStripButton
+			// 
+			this.resourcesGraphToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.resourcesGraphToolStripButton.Enabled = false;
+			this.resourcesGraphToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("resourcesGraphToolStripButton.Image")));
+			this.resourcesGraphToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.resourcesGraphToolStripButton.Name = "resourcesGraphToolStripButton";
+			this.resourcesGraphToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.resourcesGraphToolStripButton.ToolTipText = "Resources Graph Panel";
+			this.resourcesGraphToolStripButton.Click += new System.EventHandler(this.resourcesGraphToolStripButton_Click);
+			// 
+			// toolStripSeparator7
+			// 
+			this.toolStripSeparator7.Name = "toolStripSeparator7";
+			this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+			// 
 			// refreshToolStripButton
 			// 
 			this.refreshToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -478,114 +540,70 @@ namespace QAliber.Logger.Controls
 			// 
 			this.nodeMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.copyThisMessageToolStripMenuItem,
+			this.jumpNextErrorToolStripMenuItem,
+			this.toolStripSeparator8,
 			this.countThisMessageToolStripMenuItem,
 			this.countItemsToolStripMenuItem,
 			this.countAllTheChildrenToolStripMenuItem,
 			this.toolStripSeparator4,
 			this.showLeavesToolStripMenuItem});
 			this.nodeMenuStrip.Name = "nodeMenuStrip";
-			this.nodeMenuStrip.Size = new System.Drawing.Size(213, 120);
+			this.nodeMenuStrip.Size = new System.Drawing.Size(275, 170);
 			// 
 			// copyThisMessageToolStripMenuItem
 			// 
 			this.copyThisMessageToolStripMenuItem.Name = "copyThisMessageToolStripMenuItem";
-			this.copyThisMessageToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.copyThisMessageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyThisMessageToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
 			this.copyThisMessageToolStripMenuItem.Text = "Copy this message";
 			this.copyThisMessageToolStripMenuItem.Click += new System.EventHandler(this.copyThisMessageToolStripMenuItem_Click);
 			// 
 			// countThisMessageToolStripMenuItem
 			// 
 			this.countThisMessageToolStripMenuItem.Name = "countThisMessageToolStripMenuItem";
-			this.countThisMessageToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.countThisMessageToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
 			this.countThisMessageToolStripMenuItem.Text = "Count this message";
 			this.countThisMessageToolStripMenuItem.Click += new System.EventHandler(this.countThisMessageToolStripMenuItem_Click);
 			// 
 			// countItemsToolStripMenuItem
 			// 
 			this.countItemsToolStripMenuItem.Name = "countItemsToolStripMenuItem";
-			this.countItemsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.countItemsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
 			this.countItemsToolStripMenuItem.Text = "Count items at this tree level";
 			this.countItemsToolStripMenuItem.Click += new System.EventHandler(this.countItemsToolStripMenuItem_Click);
 			// 
 			// countAllTheChildrenToolStripMenuItem
 			// 
 			this.countAllTheChildrenToolStripMenuItem.Name = "countAllTheChildrenToolStripMenuItem";
-			this.countAllTheChildrenToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.countAllTheChildrenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
 			this.countAllTheChildrenToolStripMenuItem.Text = "Count all the children";
 			this.countAllTheChildrenToolStripMenuItem.Click += new System.EventHandler(this.countAllTheChildrenToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(209, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(271, 6);
 			// 
 			// showLeavesToolStripMenuItem
 			// 
 			this.showLeavesToolStripMenuItem.CheckOnClick = true;
 			this.showLeavesToolStripMenuItem.Name = "showLeavesToolStripMenuItem";
-			this.showLeavesToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.showLeavesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
 			this.showLeavesToolStripMenuItem.Text = "Show Leaves Only";
 			this.showLeavesToolStripMenuItem.Click += new System.EventHandler(this.showLeavesToolStripMenuItem_Click);
 			// 
-			// pictureBox
+			// jumpNextErrorToolStripMenuItem
 			// 
-			this.pictureBox.BackColor = System.Drawing.SystemColors.Window;
-			this.pictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox.ImageFile = null;
-			this.pictureBox.Location = new System.Drawing.Point(3, 41);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.PanLocation = new System.Drawing.Point(0, 0);
-			this.pictureBox.Size = new System.Drawing.Size(478, 505);
-			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.pictureBox.TabIndex = 0;
-			this.pictureBox.TabStop = false;
-			this.pictureBox.Zoom = 1F;
+			this.jumpNextErrorToolStripMenuItem.Name = "jumpNextErrorToolStripMenuItem";
+			this.jumpNextErrorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+			this.jumpNextErrorToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+			this.jumpNextErrorToolStripMenuItem.Text = "Jump to Next Warning / Error";
+			this.jumpNextErrorToolStripMenuItem.Click += new System.EventHandler(this.jumpNextErrorToolStripMenuItem_Click);
 			// 
-			// slideShowControl
+			// toolStripSeparator8
 			// 
-			this.slideShowControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.slideShowControl.Location = new System.Drawing.Point(0, 0);
-			this.slideShowControl.Name = "slideShowControl";
-			this.slideShowControl.Size = new System.Drawing.Size(484, 549);
-			this.slideShowControl.TabIndex = 2;
-			this.slideShowControl.Visible = false;
-			// 
-			// perfGraphControl
-			// 
-			this.perfGraphControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.perfGraphControl.Location = new System.Drawing.Point(0, 0);
-			this.perfGraphControl.Name = "perfGraphControl";
-			this.perfGraphControl.Size = new System.Drawing.Size(484, 549);
-			this.perfGraphControl.TabIndex = 2;
-			this.perfGraphControl.Visible = false;
-			// 
-			// videoPanelToolStripButton
-			// 
-			this.videoPanelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.videoPanelToolStripButton.Enabled = false;
-			this.videoPanelToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("videoPanelToolStripButton.Image")));
-			this.videoPanelToolStripButton.ImageTransparentColor = System.Drawing.Color.White;
-			this.videoPanelToolStripButton.Name = "videoPanelToolStripButton";
-			this.videoPanelToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.videoPanelToolStripButton.ToolTipText = "Video Panel";
-			this.videoPanelToolStripButton.Click += new System.EventHandler(this.videoPanelToolStripButton_Click);
-			// 
-			// resourcesGraphToolStripButton
-			// 
-			this.resourcesGraphToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.resourcesGraphToolStripButton.Enabled = false;
-			this.resourcesGraphToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("resourcesGraphToolStripButton.Image")));
-			this.resourcesGraphToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.resourcesGraphToolStripButton.Name = "resourcesGraphToolStripButton";
-			this.resourcesGraphToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.resourcesGraphToolStripButton.ToolTipText = "Resources Graph Panel";
-			this.resourcesGraphToolStripButton.Click += new System.EventHandler(this.resourcesGraphToolStripButton_Click);
-			// 
-			// toolStripSeparator7
-			// 
-			this.toolStripSeparator7.Name = "toolStripSeparator7";
-			this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(271, 6);
 			// 
 			// LogViewerControl
 			// 
@@ -608,12 +626,12 @@ namespace QAliber.Logger.Controls
 			this.groupBoxRemarks.ResumeLayout(false);
 			this.groupBoxPicture.ResumeLayout(false);
 			this.groupBoxPicture.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.toolStripPicture.ResumeLayout(false);
 			this.toolStripPicture.PerformLayout();
 			this.toolStripMain.ResumeLayout(false);
 			this.toolStripMain.PerformLayout();
 			this.nodeMenuStrip.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -670,6 +688,8 @@ namespace QAliber.Logger.Controls
 		private System.Windows.Forms.ToolStripButton videoPanelToolStripButton;
 		private System.Windows.Forms.ToolStripButton resourcesGraphToolStripButton;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripMenuItem jumpNextErrorToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 	}
 }
 
