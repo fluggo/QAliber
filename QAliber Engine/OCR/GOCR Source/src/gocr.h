@@ -169,6 +169,7 @@ typedef struct job_s {
     int sumX,sumY,numC;  /* sum of all X,Y; num chars */
   } res;
   struct {    /* configuration */
+    int rgn;		/*display only chars and boxes values*/
     int cs;   /* critical grey value (pixel<cs => black pixel) */
               /* range: 0..255,  0 means autodetection */
     int spc;  /* spacewidth/dots (0 = autodetect); default value: 0 */

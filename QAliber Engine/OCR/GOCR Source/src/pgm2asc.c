@@ -2007,6 +2007,10 @@ int char_recognition( pix *pp, int mo){
       fprintf(stderr,"\n# code= %04lx %c",(long)cc,(char)((cc<255)?cc:'_')); 
       out_b(box2,pp,x0,y0,x1-x0+1,y1-y0+1,cs);
     }
+	if(JOB->cfg.rgn == 1) { 
+      fprintf(stderr,"%c;(%d,%d,%d,%d)\n",(char)((cc<255)?cc:'_'),  box2->x0, box2->y0, box2->x1 - box2->x0 + 1, box2->y1 - box2->y0 + 1); 
+      
+    }
     progress(ii,pc); /* ii = 0..ni */
 
   } end_for_each(&(JOB->res.boxlist));

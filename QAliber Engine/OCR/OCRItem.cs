@@ -60,6 +60,55 @@ namespace QAliber.ImageHandling
 			return text;
 		}
 
+		/// <summary>
+		/// Return the rectangle of the text found in an image
+		/// </summary>
+		/// <param name="textToLook">The text to llook for in the image</param>
+		/// <returns>The rectangle in pixels of the text that was found (relative to the upper left corner of the image</returns>
+		public Rectangle GetTextArea(string textToLook)
+		{
+
+			ProcessStartInfo gocrStartInfo = new ProcessStartInfo(ocrPath + @"\gocr048", "\"" + startPath + @"\tmp.pgm"" -r");
+			gocrStartInfo.WorkingDirectory = ocrPath;
+			gocrStartInfo.RedirectStandardError = true;
+			gocrStartInfo.UseShellExecute = false;
+
+			Process gocrProcess = Process.Start(gocrStartInfo);
+			string line = gocrProcess.StandardError.ReadLine();
+			string text = "";
+			textToLook = textToLook.Replace(" ", "");
+			List<Rectangle> rects = new List<Rectangle>();
+			while (line != null)
+			{
+				string[] fields = line.Split(';');
+				if (fields.Length == 2)
+				{
+					text += fields[0];
+					string[] nums = fields[1].Trim('(', ')').Split(',');
+					rects.Add(new Rectangle(
+						int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]), int.Parse(nums[3])));
+
+				}
+				line = gocrProcess.StandardError.ReadLine();
+			}
+
+			gocrProcess.WaitForExit();
+			File.Delete(startPath + @"\tmp.pgm");
+
+			int index = text.IndexOf(textToLook);
+			if (index >= 0)
+			{
+				Rectangle res = rects[index];
+				for (int i = index + 1; i < index + textToLook.Length; i++)
+				{
+					res = Rectangle.Union(res, rects[i]);
+				}
+				return res;
+			}
+
+			return new Rectangle();
+		}
+
 		private static string ocrPath
 		{
 			get

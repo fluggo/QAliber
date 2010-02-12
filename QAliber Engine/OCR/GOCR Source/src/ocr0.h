@@ -31,7 +31,7 @@ wchar_t ocr0(struct box *box1, pix  *b, int cs);
 /* detect numbers */
 wchar_t ocr0n(ocr0_shared_t *sdata);
 
-static inline int sq(int x) { return x*x; } /* square */
+static _inline int sq(int x) { return x*x; } /* square */
 
 /*
  * go from vector j1 to vector j2 and measure maximum deviation of

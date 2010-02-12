@@ -230,6 +230,10 @@ static void process_arguments(job_t *job, int argn, char *argv[])
         job->cfg.unrec_marker = s1;
         i++;
         break;
+	  case 'r': /* output only chars and boxes */
+        job->cfg.rgn = 1;
+        i++;
+        break;
       default:
 	fprintf(stderr, "# unknown option use -h for help\n");
       }
@@ -363,7 +367,8 @@ int main(int argn, char *argv[]) {
 
     mark_end(&job);
   
-    print_output(&job);
+	if (job.cfg.rgn != 1)
+		print_output(&job);
 
     job_free(&job);
   
