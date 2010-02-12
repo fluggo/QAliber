@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\Binaries\QAliber.ImageHandling.XML</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageComparer.cs" />
+    <Compile Include="ImageFinder.cs" />
     <Compile Include="OCRItem.cs" />
     <Compile Include="PNM\BaseReaders\DataReader\ASCIIDataReader.cs" />
     <Compile Include="PNM\BaseReaders\DataReader\BinaryDataReader.cs" />
