@@ -111,7 +111,9 @@ namespace QAliber.Builder.Presentation
 
 			if (!Directory.Exists(Properties.Settings.Default.TestCasesAssemblyDir))
 			{
-				Properties.Settings.Default.TestCasesAssemblyDir = Environment.CurrentDirectory;
+				Properties.Settings.Default.TestCasesAssemblyDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\QAliber\\User Assemblies";
+				if (!Directory.Exists(Properties.Settings.Default.TestCasesAssemblyDir))
+					Directory.CreateDirectory(Properties.Settings.Default.TestCasesAssemblyDir);
 			}
 
 			if (!Directory.Exists(Properties.Settings.Default.LogLocation))

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 
+
 namespace QAliber.ImageHandling
 {
 	/// <summary>
@@ -32,7 +33,7 @@ namespace QAliber.ImageHandling
 		/// </remarks>
 		/// </summary>
 		/// <returns>(-1, -1) if no match was found, otherwise the location of the sub image within the main image</returns>
-		public Point Find()
+		public System.Windows.Rect Find()
 		{
 			Point[] points = new Point[(main.Width - sub.Width) * (main.Height - sub.Height)];
 			Stopwatch sw = new Stopwatch();
@@ -48,7 +49,7 @@ namespace QAliber.ImageHandling
 			}
 			List<Point> filteredList = new List<Point>();
 			//Color bgColor = FindBGColor();
-			Console.WriteLine("Find BG Color took : " + sw.ElapsedMilliseconds);
+			//Console.WriteLine("Find BG Color took : " + sw.ElapsedMilliseconds);
 			BitmapData mainData = main.LockBits(
 				new Rectangle(0, 0, main.Width, main.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			BitmapData subData = sub.LockBits(
@@ -87,14 +88,14 @@ namespace QAliber.ImageHandling
 							{
 								main.UnlockBits(mainData);
 								sub.UnlockBits(subData);
-								return new Point(-1, -1);
+								return new System.Windows.Rect(-1, -1, 0, 0);
 							}
 							if (points.Length == 1)
 							{
-								Console.WriteLine("Find exact match took : " + sw.ElapsedMilliseconds);
+							   // Console.WriteLine("Find exact match took : " + sw.ElapsedMilliseconds);
 								main.UnlockBits(mainData);
 								sub.UnlockBits(subData);
-								return points[0];
+								return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
 							}
 						//}
 					}
@@ -102,7 +103,7 @@ namespace QAliber.ImageHandling
 			}
 			main.UnlockBits(mainData);
 			sub.UnlockBits(subData);
-			return points[0];
+			return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
 		}
 
 

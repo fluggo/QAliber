@@ -50,16 +50,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			Bitmap mainImage =	QAliber.Engine.Controls.Desktop.UIA.GetImage();
 			Bitmap subImage = Bitmap.FromFile(file) as Bitmap;
 			ImageFinder imageFinder = new ImageFinder(mainImage, subImage);
-			System.Drawing.Point p = imageFinder.Find();
-			if (p.X < 0)
+			System.Windows.Rect r = imageFinder.Find();
+			if (r.X < 0)
 			{
 				Log.Default.Error("Couldn't find the image within the desktop");
 				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 			else
 			{
-				int x = p.X + subImage.Width / 2;
-				int y = p.Y + subImage.Height / 2;
+				int x = (int)(r.X + r.Width / 2);
+				int y = (int)(r.Y + r.Height / 2);
 				QAliber.Engine.Controls.Desktop.UIA.Click(button, new System.Windows.Point(x, y));
 				actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			}
