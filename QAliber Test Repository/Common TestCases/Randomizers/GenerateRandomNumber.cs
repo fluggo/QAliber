@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 
 
-namespace QAliber.Repository.CommonTestCases.Registry
+namespace QAliber.Repository.CommonTestCases.Randomizers
 {
 	/// <summary>
 	/// Generates a random number

@@ -14,7 +14,7 @@ using QAliber.TestModel;
 
 
 
-namespace QAliber.Repository.CommonTestCases.Registry
+namespace QAliber.Repository.CommonTestCases.Randomizers
 {
 	/// <summary>
 	/// Choose random item in a given list

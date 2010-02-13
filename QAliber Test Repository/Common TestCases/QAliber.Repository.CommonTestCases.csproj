@@ -88,7 +88,7 @@
     <Compile Include="UITypeEditors\UIControlTypeEditor.cs" />
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
-    <Compile Include="UI\Dialogs\DisplayBalloonTip.cs" />
+    <Compile Include="UI\Controls\ReadTextFromControl.cs" />
     <Compile Include="UI\Dialogs\DisplayInputBox.cs" />
     <Compile Include="UI\Dialogs\DisplayMessageBox.cs" />
     <Compile Include="UI\Dialogs\InputForm.cs">
@@ -97,13 +97,8 @@
     <Compile Include="UI\Dialogs\InputForm.Designer.cs">
       <DependentUpon>InputForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\Notifier.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Dialogs\Notifier.Designer.cs">
-      <DependentUpon>Notifier.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Images\CompareImages.cs" />
+    <Compile Include="UI\Images\ClickOnImage.cs" />
     <Compile Include="UI\Images\LogImageOfControl.cs" />
     <Compile Include="UI\Images\SaveImageFromControl.cs" />
     <Compile Include="UI\Keyboard\SendKeystrokes.cs" />
@@ -111,8 +106,8 @@
     <Compile Include="UI\Mouse\DragMouse.cs" />
     <Compile Include="UI\Mouse\MoveMouse.cs" />
     <Compile Include="UI\Windows\ChangeWindowState.cs" />
-    <Compile Include="UI\Windows\GetPropertyFromControl.cs" />
-    <Compile Include="UI\Windows\WaitForControl.cs" />
+    <Compile Include="UI\Controls\GetPropertyFromControl.cs" />
+    <Compile Include="UI\Controls\WaitForControl.cs" />
     <Compile Include="UI\Windows\ResizeWindow.cs" />
     <Compile Include="UI\Windows\MoveWindow.cs" />
   </ItemGroup>
@@ -129,9 +124,6 @@
     <EmbeddedResource Include="UI\Dialogs\InputForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>InputForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\Notifier.resx">
-      <DependentUpon>Notifier.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +179,10 @@
     <ProjectReference Include="..\..\QAliber Engine\Logger\QAliber.Logger.csproj">
       <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
       <Name>QAliber.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\OCR\QAliber.ImageHandling.csproj">
+      <Project>{357618F5-959D-4DAB-BCB6-63E1CEB556E6}</Project>
+      <Name>QAliber.ImageHandling</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\RemotingModel\QAliber.RemotingModel.csproj">
       <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>

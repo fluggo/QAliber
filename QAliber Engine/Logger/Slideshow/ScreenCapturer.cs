@@ -15,7 +15,7 @@ namespace QAliber.Logger.Slideshow
 		/// Captures the desktop
 		/// </summary>
 		/// <returns>The bitmap of the desktop</returns>
-		public static Bitmap Capture()
+		public static Bitmap Capture(bool withCursor)
 		{
 			int cursorX = 0, cursorY = 0;
 			Graphics g;
@@ -28,7 +28,9 @@ namespace QAliber.Logger.Slideshow
 			GDI32.BitBlt(hdcDest, 0, 0, GDI32.GetDeviceCaps(hdcSrc, 8),
 			GDI32.GetDeviceCaps(hdcSrc, 10), hdcSrc, 0, 0, 0x00CC0020);
 			Bitmap image = Image.FromHbitmap(new IntPtr(hBitmap));
-			Bitmap cursor = CaptureCursor(ref cursorX, ref cursorY);
+			Bitmap cursor = null;
+			if (withCursor)
+				cursor = CaptureCursor(ref cursorX, ref cursorY);
 			Cleanup(hBitmap, hdcSrc, hdcDest);
 			if (cursor != null)
 			{
@@ -39,6 +41,11 @@ namespace QAliber.Logger.Slideshow
 			}
 			
 			return image;
+		}
+
+		public static Bitmap Capture()
+		{
+			return Capture(true);
 		}
 
 		private static Bitmap CaptureCursor(ref int x, ref int y)

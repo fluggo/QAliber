@@ -768,6 +768,7 @@ namespace QAliber.Engine.Controls
 			{
 				SetFocus();
 				Point p = new Point(Layout.Left + rel.X, Layout.Top + rel.Y);
+				Logger.Log.Default.Info("Clicking mouse on control " + codePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.Click(button, p);
 			}
 		}
@@ -808,6 +809,7 @@ namespace QAliber.Engine.Controls
 			{
 				SetFocus();
 				Point p = new Point(Layout.Left + rel.X, Layout.Top + rel.Y);
+				Logger.Log.Default.Info("Double clicking mouse on control " + codePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.DoubleClick(button, p);
 			}
 		}
@@ -863,6 +865,7 @@ namespace QAliber.Engine.Controls
 				SetFocus();
 				Point p1 = new Point(Layout.Left + rel1.X, Layout.Top + rel1.Y);
 				Point p2 = new Point(Layout.Left + rel2.X, Layout.Top + rel2.Y);
+				Logger.Log.Default.Info("Dragging mouse on control " + codePath, "Button : " + button + " , From : " + rel1 + " To : " + rel2, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.DragMouse(button, p1, p2);
 			}
 		}
@@ -927,6 +930,7 @@ namespace QAliber.Engine.Controls
 			if (CheckExistence())
 			{
 				SetFocus();
+				Logger.Log.Default.Info("Sending keys to control " + codePath, "Keys : " + text, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.SendKeystrokes(text);
 			}
 		}

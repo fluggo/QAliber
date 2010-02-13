@@ -32,13 +32,20 @@ namespace QAliber.TestModel.TypeEditors
 				
 				comboBox.SelectedValueChanged += new EventHandler(ComboboxValueChanged);
 				comboBox.Leave += new EventHandler(ComboBoxLeave);
+				comboBox.GotFocus += new EventHandler(ComboBoxEnter);
 				comboBox.Items.AddRange(list.Items);
 				comboBox.Dock = DockStyle.Fill;
 
 				service.DropDownControl(comboBox);
+				
 				return value;
 			}
 			return base.EditValue(context, provider, value);
+		}
+
+		private void ComboBoxEnter(object sender, EventArgs e)
+		{
+			((ComboBox)sender).DroppedDown = true;
 		}
 
 		private void ComboBoxLeave(object sender, EventArgs e)
@@ -51,6 +58,7 @@ namespace QAliber.TestModel.TypeEditors
 		private void ComboboxValueChanged(object sender, EventArgs e)
 		{
 			list.Selected = ((ComboBox)sender).Text;
+			((ComboBox)sender).DroppedDown = false;
 			service.CloseDropDown();
 		}
 

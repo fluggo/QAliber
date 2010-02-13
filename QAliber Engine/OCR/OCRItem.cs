@@ -113,8 +113,15 @@ namespace QAliber.ImageHandling
 		{
 			get
 			{
-				object val = Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\QAlibers","OCRPath", "");
-				return val.ToString();
+				try
+				{
+					object val = Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\QAlibers", "OCRPath", "");
+					return val.ToString();
+				}
+				catch (NullReferenceException)
+				{
+					return Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+				}
 			}
 		}
 

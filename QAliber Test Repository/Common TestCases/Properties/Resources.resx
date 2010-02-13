@@ -169,9 +169,9 @@
   <data name="ProcessRemove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ProcessRemove.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="QAliberTarget" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <!--data name="QAliberTarget" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\QAliberTarget.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  </data>  -->
   <data name="Registry" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Registry.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

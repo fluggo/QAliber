@@ -8,11 +8,11 @@ using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.TestModel.TypeEditors;
 
-namespace QAliber.Repository.CommonTestCases.UI.Windows
+namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
    
 	[Serializable]
-	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
+	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class GetPropertyFromControl : TestCase
 	{
 		public GetPropertyFromControl()
