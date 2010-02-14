@@ -384,8 +384,6 @@ namespace QAliber.Logger.Controls
 			visibleTree.SelectedNode = visibleTree.Nodes[0];
 		}
 
-		
-
 		private void videoPanelToolStripButton_Click(object sender, EventArgs e)
 		{
 			slideShowControl.BringToFront();
@@ -623,7 +621,8 @@ namespace QAliber.Logger.Controls
 							warningNodes.Push(newNode);
 						else if (logEntry.Type == EntryType.Error)
 							errorNodes.Push(newNode);
-
+						else
+							infoNodes.Push(newNode);
 						node.RemoveChild(node.FirstChild);
 						FillTreeRec(newNode.Nodes, node);
 						
@@ -631,7 +630,7 @@ namespace QAliber.Logger.Controls
 				}
 				else if (node.Name == "LogResult")
 				{
-					BubbleIconUp(warningNodes, errorNodes, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
+					BubbleIconUp(infoNodes, warningNodes, errorNodes, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
 				}
 				else
 				{
@@ -648,11 +647,13 @@ namespace QAliber.Logger.Controls
 
 						newNode.ContextMenuStrip = nodeMenuStrip;
 						tNodes.Add(newNode);
-						
+
 						if (logEntry.Type == EntryType.Warning)
 							warningNodes.Push(newNode);
 						else if (logEntry.Type == EntryType.Error)
 							errorNodes.Push(newNode);
+						else
+							infoNodes.Push(newNode);
 					}
 				}
 			}
@@ -709,12 +710,24 @@ namespace QAliber.Logger.Controls
 			}
 		}
 
-		private void BubbleIconUp(Stack<TreeNode> wNodes, Stack<TreeNode> eNodes, TestCaseResult result)
+		private void BubbleIconUp(Stack<TreeNode> iNodes, Stack<TreeNode> wNodes, Stack<TreeNode> eNodes, TestCaseResult result)
 		{
 			int indexToSet = 4;//"Passed";
 			if (result == TestCaseResult.Failed)
 				indexToSet = 7;//"Error";
-			
+
+			while (iNodes.Count > 0)
+			{
+				TreeNode node = iNodes.Pop();
+				while (node.Parent != null)
+				{
+					node = node.Parent;
+					if (node.ImageIndex >= indexToSet)
+						break;
+					node.SelectedImageIndex = node.ImageIndex = indexToSet;
+				}
+			}
+
 			while (wNodes.Count > 0)
 			{
 				TreeNode node = wNodes.Pop();
@@ -808,7 +821,7 @@ namespace QAliber.Logger.Controls
 			return res;
 		}
 
-
+		private Stack<TreeNode> infoNodes = new Stack<TreeNode>();
 		private Stack<TreeNode> warningNodes = new Stack<TreeNode>();
 		private Stack<TreeNode> errorNodes = new Stack<TreeNode>();
 		private int counter;

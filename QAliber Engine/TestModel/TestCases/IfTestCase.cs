@@ -44,6 +44,7 @@ namespace QAliber.TestModel
 			ifConditionValue = false;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Boolean, out conditionResult);
 			ifConditionValue = (bool)conditionResult;
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			if ((bool)conditionResult)
 			{
 				Log.Default.Info(cSharpExpression + " = true");
@@ -52,7 +53,6 @@ namespace QAliber.TestModel
 			else
 			{
 				Log.Default.Info(cSharpExpression + " = false");
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 		}
 

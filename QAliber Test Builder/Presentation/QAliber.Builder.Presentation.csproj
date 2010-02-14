@@ -250,7 +250,6 @@
     </Content>
     <Content Include="QAliberTarget.ico" />
     <None Include="Resources\cubes.gif" />
-    <None Include="Resources\QAliber Builder Icon.ico" />
     <None Include="Resources\Zoom.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

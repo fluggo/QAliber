@@ -80,7 +80,6 @@
     <Content Include="gocr048.exe" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="QAliber.ImageHandling.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

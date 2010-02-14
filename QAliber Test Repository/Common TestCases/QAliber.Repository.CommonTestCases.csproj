@@ -81,6 +81,13 @@
     <Compile Include="Timers\StopTimerTestCase.cs" />
     <Compile Include="Timers\StartTimerTestCase.cs" />
     <Compile Include="Timers\TimersCollection.cs" />
+    <Compile Include="UITypeEditors\DesktopGrabberTypeEditor.cs" />
+    <Compile Include="UITypeEditors\DesktopMaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UITypeEditors\DesktopMaskForm.Designer.cs">
+      <DependentUpon>DesktopMaskForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UITypeEditors\MultipleSelectionTypeEditor.cs" />
     <Compile Include="UITypeEditors\UIControlLocatorForm.cs">
       <SubType>Form</SubType>
@@ -92,6 +99,7 @@
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
     <Compile Include="UI\Controls\ReadTextFromControl.cs" />
+    <Compile Include="UI\Dialogs\DisplayBalloonTip.cs" />
     <Compile Include="UI\Dialogs\DisplayInputBox.cs" />
     <Compile Include="UI\Dialogs\DisplayMessageBox.cs" />
     <Compile Include="UI\Dialogs\InputForm.cs">
@@ -99,6 +107,12 @@
     </Compile>
     <Compile Include="UI\Dialogs\InputForm.Designer.cs">
       <DependentUpon>InputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notifier.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notifier.Designer.cs">
+      <DependentUpon>Notifier.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Images\CompareImages.cs" />
     <Compile Include="UI\Images\ClickOnImage.cs" />
@@ -120,6 +134,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UITypeEditors\DesktopMaskForm.resx">
+      <DependentUpon>DesktopMaskForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UITypeEditors\UIControlLocatorForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>UIControlLocatorForm.cs</DependentUpon>
@@ -127,6 +144,9 @@
     <EmbeddedResource Include="UI\Dialogs\InputForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>InputForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notifier.resx">
+      <DependentUpon>Notifier.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +174,6 @@
     <None Include="Resources\circle.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Resources\Bitmap.png" />
     <Content Include="Resources\CrossIcon.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -79,9 +79,6 @@
     <Compile Include="ImageViewer\ZoomPanControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Options\PlayerOptions.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="SpyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

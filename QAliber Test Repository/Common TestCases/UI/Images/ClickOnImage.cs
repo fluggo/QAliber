@@ -25,7 +25,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		private string file = "";
 
 		[Category("Image")]
-		[Editor(typeof(QAliber.Repository.CommonTestCases.UITypeEditors.FileBrowseTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(QAliber.Repository.CommonTestCases.UITypeEditors.DesktopGrabberTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[DisplayName("Image File")]
 		[Description("The image to look for in the desktop (the image format must be bmp)")]
 		public string File
@@ -47,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 		public override void Body()
 		{
-			Bitmap mainImage =	QAliber.Engine.Controls.Desktop.UIA.GetImage();
+			Bitmap mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
 			Bitmap subImage = Bitmap.FromFile(file) as Bitmap;
 			ImageFinder imageFinder = new ImageFinder(mainImage, subImage);
 			System.Windows.Rect r = imageFinder.Find();

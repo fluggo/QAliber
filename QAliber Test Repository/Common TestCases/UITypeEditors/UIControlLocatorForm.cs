@@ -25,7 +25,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
 		[DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
-		static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
+		internal static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
 
 
 

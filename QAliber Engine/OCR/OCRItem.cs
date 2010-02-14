@@ -65,7 +65,7 @@ namespace QAliber.ImageHandling
 		/// </summary>
 		/// <param name="textToLook">The text to llook for in the image</param>
 		/// <returns>The rectangle in pixels of the text that was found (relative to the upper left corner of the image</returns>
-		public Rectangle GetTextArea(string textToLook)
+		public System.Windows.Rect GetTextArea(string textToLook)
 		{
 
 			ProcessStartInfo gocrStartInfo = new ProcessStartInfo(ocrPath + @"\gocr048", "\"" + startPath + @"\tmp.pgm"" -r");
@@ -77,7 +77,7 @@ namespace QAliber.ImageHandling
 			string line = gocrProcess.StandardError.ReadLine();
 			string text = "";
 			textToLook = textToLook.Replace(" ", "");
-			List<Rectangle> rects = new List<Rectangle>();
+			List<System.Windows.Rect> rects = new List<System.Windows.Rect>();
 			while (line != null)
 			{
 				string[] fields = line.Split(';');
@@ -85,7 +85,7 @@ namespace QAliber.ImageHandling
 				{
 					text += fields[0];
 					string[] nums = fields[1].Trim('(', ')').Split(',');
-					rects.Add(new Rectangle(
+					rects.Add(new System.Windows.Rect(
 						int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]), int.Parse(nums[3])));
 
 				}
@@ -98,15 +98,15 @@ namespace QAliber.ImageHandling
 			int index = text.IndexOf(textToLook);
 			if (index >= 0)
 			{
-				Rectangle res = rects[index];
+				System.Windows.Rect res = rects[index];
 				for (int i = index + 1; i < index + textToLook.Length; i++)
 				{
-					res = Rectangle.Union(res, rects[i]);
+					res = System.Windows.Rect.Union(res, rects[i]);
 				}
 				return res;
 			}
 
-			return new Rectangle();
+			return new System.Windows.Rect();
 		}
 
 		private static string ocrPath
