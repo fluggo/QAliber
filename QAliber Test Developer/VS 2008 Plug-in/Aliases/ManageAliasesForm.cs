@@ -54,7 +54,7 @@ namespace QAliber.VS2005.Plugin.Aliases
 			cSharpCodeText.AppendLine("using QAliber.Engine.Controls;");
 			cSharpCodeText.AppendLine("using QAliber.Engine.Controls.UIA;");
 			cSharpCodeText.AppendLine("using QAliber.Engine.Controls.Web;");
-			cSharpCodeText.AppendLine("using QAliber.Engine.Controls.WPF");
+			cSharpCodeText.AppendLine("using QAliber.Engine.Controls.WPF;");
 			cSharpCodeText.AppendLine();
 			cSharpCodeText.AppendLine("namespace " + openProject.Properties.Item("DefaultNamespace").Value.ToString());
 			cSharpCodeText.AppendLine("{");

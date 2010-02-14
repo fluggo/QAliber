@@ -31,6 +31,11 @@ namespace QAliber.VS2005.Plugin.Commands
 
 		private bool PrepareForRecording()
 		{
+			if (spyToolWin == null)
+			{
+				MessageBox.Show("Please open 'UI Control Browser' before recording", "Start UI Control Browser");
+				return false;
+			}
 			if (spyToolWin.control.rootControl is QAliber.Engine.Controls.WPF.WPFRoot)
 			{
 				MessageBox.Show("WPF recording is not yet implemented", "Record");
