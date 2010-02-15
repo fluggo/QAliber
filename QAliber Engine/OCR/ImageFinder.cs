@@ -48,7 +48,7 @@ namespace QAliber.ImageHandling
 				}
 			}
 			List<Point> filteredList = new List<Point>();
-			//Color bgColor = FindBGColor();
+			Color bgColor = FindBGColor();
 			//Console.WriteLine("Find BG Color took : " + sw.ElapsedMilliseconds);
 			BitmapData mainData = main.LockBits(
 				new Rectangle(0, 0, main.Width, main.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
@@ -66,9 +66,9 @@ namespace QAliber.ImageHandling
 						//Color expVal = sub.GetPixel(i, j);
 						subLoc = j * subData.Stride + i * 3;
 						Color expVal = Color.FromArgb(
-							(int)pSubBase[subLoc], (int)pSubBase[subLoc + 1], (int)pSubBase[subLoc + 2]);
-						//if (expVal != bgColor)
-						//{
+							(int)pSubBase[subLoc + 2], (int)pSubBase[subLoc + 1], (int)pSubBase[subLoc]);
+						if (expVal != bgColor)
+						{
 							filteredList.Clear();
 							for (int k = 0; k < points.Length; k++)
 							{
@@ -77,7 +77,7 @@ namespace QAliber.ImageHandling
 									//Color actVal = main.GetPixel(points[k].X + i, points[k].Y + j);
 									mainLoc = (points[k].Y + j) * mainData.Stride + (points[k].X + i) * 3;
 									Color actVal = Color.FromArgb(
-										   (int)pMainBase[mainLoc], (int)pMainBase[mainLoc + 1], (int)pMainBase[mainLoc + 2]);
+										   (int)pMainBase[mainLoc + 2], (int)pMainBase[mainLoc + 1], (int)pMainBase[mainLoc]);
 									
 									if (actVal == expVal)
 										filteredList.Add(points[k]);
@@ -97,7 +97,7 @@ namespace QAliber.ImageHandling
 								sub.UnlockBits(subData);
 								return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
 							}
-						//}
+						}
 					}
 				}
 			}

@@ -11,28 +11,27 @@ using QAliber.ImageHandling;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
-   
+
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
-	public class ClickOnImage : OperateOnImage
+	public class WriteOnImage : OperateOnImage
 	{
-		public ClickOnImage()
+		public WriteOnImage()
+			: base()
 		{
-			name = "Click On Image";
-			icon = Properties.Resources.Mouse;
-			actionType = QAliber.Engine.ControlActionType.Click;
-			button = MouseButtons.Left;
+			name = "Send Keys To Image";
+			icon = Properties.Resources.Keyboard;
+			actionType = QAliber.Engine.ControlActionType.Write;
+
 		}
 
-		[Category("Mouse")]
-		[DisplayName("Button")]
-		[Description("The mouse button to click")]
-		public MouseButtons Button
+		[Category("Keyboard")]
+		[Description("The keys to send to the image")]
+		public string Text 
 		{
-			get { return button; }
-			set { button = value; }
+			get { return keys; }
+			set { keys = value; }
 		}
-	
 	}
 
 

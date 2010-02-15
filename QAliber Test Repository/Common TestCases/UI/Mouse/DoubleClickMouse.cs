@@ -12,11 +12,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
-	public class MoveMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
+	public class DoubleClickMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
-		public MoveMouse()
+		public DoubleClickMouse()
 		{
-			name = "Move Mouse";
+			name = "Double Click Mouse";
 			icon = Properties.Resources.Mouse;
 		}
 
@@ -24,6 +24,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		
 		[Category("Mouse")]
+		[DisplayName("1) Control")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -34,18 +35,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		private Point point;
 
 		[Category("Mouse")]
+		[DisplayName("3) Coordinate")]
 		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected")]
 		public Point Coordinate
 		{
 			get { return point; }
 			set { point = value; }
 		}
+
+		private MouseButtons button = MouseButtons.Left;
+
+		[Category("Mouse")]
+		[DisplayName("2) Button")]
+		[Description("The mouse button to double click")]
+		public MouseButtons Button
+		{
+			get { return button; }
+			set { button = value; }
+		}
+	
 	
 		public override void Body()
 		{
 			string code = "UIControlBase c = " + control + ";\n";
-			code += "c.MoveMouseTo(new Point(" + point.X + ", " + point.Y + "));\n";
-			code += "return null;\n"; 
+			code += "c.DoubleClick(MouseButtons." + button + ", new Point(" + point.X + ", " + point.Y + "));\n";
+			code += "return null;\n";
 			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
 
 		}
@@ -54,7 +68,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		{
 			get
 			{
-				return "Moving mouse to path '" + control + "'";
+				return "Double clicking " +  button + " button mouse on path '" + control + "'";
 			}
 			set
 			{

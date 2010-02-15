@@ -11,28 +11,27 @@ using QAliber.ImageHandling;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
-   
+
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
-	public class ClickOnImage : OperateOnImage
+	public class DragFromImage : ClickOnImage
 	{
-		public ClickOnImage()
+		public DragFromImage()
+			: base()
 		{
-			name = "Click On Image";
-			icon = Properties.Resources.Mouse;
-			actionType = QAliber.Engine.ControlActionType.Click;
-			button = MouseButtons.Left;
+			name = "Drag From Image";
+			actionType = QAliber.Engine.ControlActionType.Drag;
+
 		}
 
 		[Category("Mouse")]
-		[DisplayName("Button")]
-		[Description("The mouse button to click")]
-		public MouseButtons Button
+		[DisplayName("Drag Offset")]
+		[Description("The offset in pixels (x offset, y offset) to do the drag")]
+		public System.Drawing.Size Offset 
 		{
-			get { return button; }
-			set { button = value; }
+			get { return dragOffset; }
+			set { dragOffset = value; }
 		}
-	
 	}
 
 

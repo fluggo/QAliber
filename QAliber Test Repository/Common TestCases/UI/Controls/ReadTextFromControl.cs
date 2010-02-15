@@ -50,6 +50,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			text = string.Empty;
 			StringBuilder code = new StringBuilder();
 			code.Append("UIControlBase c = " + control + ";\n");
 			code.Append("return c;\n");

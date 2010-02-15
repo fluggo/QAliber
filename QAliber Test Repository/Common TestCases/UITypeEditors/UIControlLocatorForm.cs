@@ -37,6 +37,14 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			}
 		}
 
+		public System.Windows.Point Coordinate
+		{
+			get
+			{
+				return coordinate;
+			}
+		}
+
 		protected override void WndProc(ref Message m)
 		{
 			if (capturing)
@@ -63,7 +71,8 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 						{
 							textBox.Text = control.CodePath;
 							labelTypeDyn.Text = control.UIType;
-							textBoxXY.Text = "(" + (int)(Cursor.Position.X - control.Layout.X) + ", " + (int)(Cursor.Position.Y - control.Layout.Y) + ")";
+							coordinate = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
+							textBoxXY.Text = coordinate.ToString();
 						}
 						break;
 					case 0x0200: //MouseMove
@@ -110,7 +119,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private Form form;
 		private bool capturing;
 		private AutomationElement capturedElement;
-
+		private System.Windows.Point coordinate;
 		
 
 		

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace QAliber.Logger.Slideshow
 {
@@ -20,13 +21,19 @@ namespace QAliber.Logger.Slideshow
 			int cursorX = 0, cursorY = 0;
 			Graphics g;
 			Rectangle r;
+			int width = 0;
+			foreach (Screen scr in Screen.AllScreens)
+			{
+				width += scr.Bounds.Width;
+			}
+			int height = Screen.PrimaryScreen.Bounds.Height;
+			//width and height also = GDI32.GetDeviceCaps(hdcSrc, 8), GDI32.GetDeviceCaps(hdcSrc, 10)
 			int hdcSrc = User32.GetWindowDC(User32.GetDesktopWindow()),
 			hdcDest = GDI32.CreateCompatibleDC(hdcSrc),
-			hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc,
-			GDI32.GetDeviceCaps(hdcSrc, 8), GDI32.GetDeviceCaps(hdcSrc, 10));
+			hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc, width, height);
 			GDI32.SelectObject(hdcDest, hBitmap);
-			GDI32.BitBlt(hdcDest, 0, 0, GDI32.GetDeviceCaps(hdcSrc, 8),
-			GDI32.GetDeviceCaps(hdcSrc, 10), hdcSrc, 0, 0, 0x00CC0020);
+			GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, 0x00CC0020);
+			//GDI32.GetDeviceCaps(hdcSrc, 8), GDI32.GetDeviceCaps(hdcSrc, 10)
 			Bitmap image = Image.FromHbitmap(new IntPtr(hBitmap));
 			Bitmap cursor = null;
 			if (withCursor)

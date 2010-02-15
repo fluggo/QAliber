@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace QAliber.Repository.CommonTestCases.UITypeEditors
 {
-	public class UIControlTypeEditor : UITypeEditor
+	public class DesktopGrabberTypeEditor : UITypeEditor
 	{
 		public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
 		{
@@ -21,24 +21,17 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		{
 			if (value is string)
 			{
-				
-				UIControlLocatorForm dialog = new UIControlLocatorForm();
-				if (dialog.ShowDialog() == DialogResult.OK)
-				{
-					if (context.Instance is ICoordinate)
-					{
-						((ICoordinate)context.Instance).Coordinate = dialog.Coordinate;
-					}
-					return dialog.ControlPath;
-				}
+				IntPtr mainHandle = UIControlLocatorForm.FindWindowByCaption(IntPtr.Zero, "QAliber Test Builder");
+				Form form = (Form)Form.FromHandle(mainHandle);
+				form.Visible = false;
+				DesktopMaskForm dialog = new DesktopMaskForm();
+				dialog.ShowDialog();
+				form.Visible = true;
+				return dialog.ImageFile;
 			}
 			return base.EditValue(context, provider, value);
 		}
 	}
 
-	public interface ICoordinate
-	{
-		System.Windows.Point Coordinate { get; set; }
-	}
-
+	
 }

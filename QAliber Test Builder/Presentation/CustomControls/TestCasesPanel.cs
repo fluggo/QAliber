@@ -60,6 +60,7 @@ namespace QAliber.Builder.Presentation
 					
 				}
 			}
+			this.typesTreeView.Sort();
 		}
 
 		private TreeNode FindByName(TreeNodeCollection nodes, string name)
@@ -214,6 +215,7 @@ namespace QAliber.Builder.Presentation
 		private void TestCasesPanel_Load(object sender, EventArgs e)
 		{
 			FillTree();
+			
 		}
 		#endregion
 

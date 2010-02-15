@@ -11,28 +11,18 @@ using QAliber.ImageHandling;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
-   
+
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
-	public class ClickOnImage : OperateOnImage
+	public class DoubleClickOnImage : ClickOnImage
 	{
-		public ClickOnImage()
+		public DoubleClickOnImage() : base()
 		{
-			name = "Click On Image";
-			icon = Properties.Resources.Mouse;
-			actionType = QAliber.Engine.ControlActionType.Click;
-			button = MouseButtons.Left;
+			name = "Double Click On Image";
+			actionType = QAliber.Engine.ControlActionType.DoubleClick;
 		}
 
-		[Category("Mouse")]
-		[DisplayName("Button")]
-		[Description("The mouse button to click")]
-		public MouseButtons Button
-		{
-			get { return button; }
-			set { button = value; }
-		}
-	
+
 	}
 
 

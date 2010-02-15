@@ -94,12 +94,14 @@ namespace QAliber.Engine.Win32
 			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 		}
 
+		
 		/// <summary>
 		/// Clicks the mouse
 		/// </summary>
 		/// <param name="button">The button to click</param>
 		/// <param name="point">The absolute point (desktop top left corener = 0,0) to click on</param>
-		public static void Click(MouseButtons button, Point point)
+		/// <param name="delayAfter">Should the action wait for 'delay after action' configuration </param>
+		public static void Click(MouseButtons button, Point point, bool delayAfter)
 		{
 			ManagedWinapi.InputBlocker inputBlocker = null;
 			if (PlayerConfig.Default.BlockUserInput)
@@ -114,23 +116,23 @@ namespace QAliber.Engine.Win32
 			{
 				case MouseButtons.Left:
 					InjectLowMouseInput(MouseEvents.LEFTDOWN, point);
-					System.Threading.Thread.Sleep(200);
+					System.Threading.Thread.Sleep(50);
 					InjectLowMouseInput(MouseEvents.LEFTUP, point);
 					break;
 				case MouseButtons.Middle:
 					InjectLowMouseInput(MouseEvents.MIDDLEDOWN, point);
-					System.Threading.Thread.Sleep(200);
+					System.Threading.Thread.Sleep(50);
 					InjectLowMouseInput(MouseEvents.MIDDLEUP, point);
 					break;
 				case MouseButtons.Right:
 					InjectLowMouseInput(MouseEvents.RIGHTDOWN, point);
-					System.Threading.Thread.Sleep(200);
+					System.Threading.Thread.Sleep(50);
 					InjectLowMouseInput(MouseEvents.RIGHTUP, point);
 					break;
 				case MouseButtons.XButton1:
 				case MouseButtons.XButton2:
 					InjectLowMouseInput(MouseEvents.XDOWN, point);
-					System.Threading.Thread.Sleep(200);
+					System.Threading.Thread.Sleep(50);
 					InjectLowMouseInput(MouseEvents.XUP, point);
 					break;
 				default:
@@ -138,7 +140,13 @@ namespace QAliber.Engine.Win32
 			}
 			if (PlayerConfig.Default.BlockUserInput && inputBlocker != null)
 				inputBlocker.Dispose();
-			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
+			if (delayAfter)
+				System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
+		}
+
+		public static void Click(MouseButtons button, Point point)
+		{
+			Click(button, point, true);
 		}
 
 		public static void Click(MouseButtons button)
@@ -158,23 +166,26 @@ namespace QAliber.Engine.Win32
 		/// <param name="point">The absolute point (desktop top left corener = 0,0) to click on</param>
 		public static void DoubleClick(MouseButtons button, Point point)
 		{
-			Click(button, point);
+			Click(button, point, false);
 			System.Threading.Thread.Sleep(200);
-			Click(button, point);
+			Click(button, point, false);
+			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 		}
 
 		public static void DoubleClick(MouseButtons button)
 		{
-			Click(button);
-			System.Threading.Thread.Sleep(100);
-			Click(button);
+			Click(button, new Point(0, 0), false);
+			System.Threading.Thread.Sleep(200);
+			Click(button, new Point(0, 0), false);
+			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 		}
 
 		public static void DoubleClick()
 		{
-			Click();
-			System.Threading.Thread.Sleep(100);
-			Click();
+			Click(MouseButtons.Left, new Point(0, 0), false);
+			System.Threading.Thread.Sleep(200);
+			Click(MouseButtons.Left, new Point(0, 0), false);
+			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 		}
 
 		/// <summary>

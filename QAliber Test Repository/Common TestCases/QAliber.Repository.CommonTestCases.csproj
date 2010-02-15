@@ -22,7 +22,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\</OutputPath>
+    <OutputPath>..\..\Binaries\User Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -116,10 +116,16 @@
     </Compile>
     <Compile Include="UI\Images\CompareImages.cs" />
     <Compile Include="UI\Images\ClickOnImage.cs" />
+    <Compile Include="UI\Images\WaitForImages.cs" />
+    <Compile Include="UI\Images\WriteOnImage.cs" />
+    <Compile Include="UI\Images\DragFromImage.cs" />
+    <Compile Include="UI\Images\OperateOnImage.cs" />
+    <Compile Include="UI\Images\DoubleClickOnImage.cs" />
     <Compile Include="UI\Images\LogImageOfControl.cs" />
     <Compile Include="UI\Images\SaveImageFromControl.cs" />
     <Compile Include="UI\Keyboard\SendKeystrokes.cs" />
     <Compile Include="UI\Mouse\ClickMouse.cs" />
+    <Compile Include="UI\Mouse\DoubleClickMouse.cs" />
     <Compile Include="UI\Mouse\DragMouse.cs" />
     <Compile Include="UI\Mouse\MoveMouse.cs" />
     <Compile Include="UI\Windows\ChangeWindowState.cs" />

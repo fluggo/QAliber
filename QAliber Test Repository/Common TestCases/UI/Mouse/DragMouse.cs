@@ -12,7 +12,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
-	public class DragMouse : TestCase
+	public class DragMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
 		public DragMouse()
 		{
@@ -37,7 +37,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		[Category("Mouse")]
 		[DisplayName("3) Top Left Coordiante")]
 		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected, to start the drag from")]
-		public Point TopLeftCoordinate
+		public Point Coordinate
 		{
 			get { return point1; }
 			set { point1 = value; }
@@ -79,7 +79,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		{
 			get
 			{
-				return "Dragging " + button + "button mouse on path '" + control + "'";
+				return "Dragging " + button + " button mouse on path '" + control + "'";
 			}
 			set
 			{

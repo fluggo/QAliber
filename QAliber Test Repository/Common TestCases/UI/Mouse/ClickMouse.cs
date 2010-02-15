@@ -12,7 +12,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
-	public class ClickMouse : TestCase
+	public class ClickMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
 		public ClickMouse()
 		{
@@ -68,7 +68,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		{
 			get
 			{
-				return "Clicking " +  button + "button mouse on path '" + control + "'";
+				return "Clicking " +  button + " button mouse on path '" + control + "'";
 			}
 			set
 			{
