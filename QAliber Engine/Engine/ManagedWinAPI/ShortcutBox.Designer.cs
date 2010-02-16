@@ -1,3 +1,4 @@
+ 
 namespace ManagedWinapi
 {
 	partial class ShortcutBox

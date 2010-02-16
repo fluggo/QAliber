@@ -1,3 +1,4 @@
+
 /*
  * ManagedWinapi - A collection of .NET components that wrap PInvoke calls to 
  * access native API by managed code. http://mwinapi.sourceforge.net/
@@ -79,7 +80,7 @@ namespace ManagedWinapi
 			{
 				lookupTable[i] = EscapableState.ALWAYS;
 			}
-			foreach (char c in "%()+^`{}~´")
+			foreach (char c in "%()+^`{}~ï¿½")
 			{
 				lookupTable[c] = EscapableState.BRACED_ONLY;
 			}

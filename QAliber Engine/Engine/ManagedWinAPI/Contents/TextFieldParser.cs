@@ -1,3 +1,4 @@
+
 /*
  * ManagedWinapi - A collection of .NET components that wrap PInvoke calls to 
  * access native API by managed code. http://mwinapi.sourceforge.net/
