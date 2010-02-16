@@ -67,6 +67,13 @@ namespace QAliber.TestModel.Properties {
 			}
 		}
 		
+		internal static System.Drawing.Bitmap Case {
+			get {
+				object obj = ResourceManager.GetObject("Case", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
 		internal static System.Drawing.Bitmap Clock {
 			get {
 				object obj = ResourceManager.GetObject("Clock", resourceCulture);
@@ -98,6 +105,13 @@ namespace QAliber.TestModel.Properties {
 		internal static System.Drawing.Bitmap Recover {
 			get {
 				object obj = ResourceManager.GetObject("Recover", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		internal static System.Drawing.Bitmap Switch {
+			get {
+				object obj = ResourceManager.GetObject("Switch", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
