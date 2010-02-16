@@ -1,3 +1,5 @@
+
+ 
 namespace Darwen.Windows.Forms.Controls.TabbedDocuments
 {
 	partial class TabbedDocumentControl

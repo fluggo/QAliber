@@ -1,3 +1,5 @@
+
+ 
 namespace Darwen.Windows.Forms.General
 {
 	partial class GradientFillUserControl

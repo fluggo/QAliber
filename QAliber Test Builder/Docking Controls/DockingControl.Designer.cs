@@ -1,3 +1,5 @@
+
+ 
 namespace Darwen.Windows.Forms.Controls.Docking
 {
 	partial class DockingControl
