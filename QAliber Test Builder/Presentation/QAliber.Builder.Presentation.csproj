@@ -245,6 +245,7 @@
     <None Include="Resources\saveAllToolStripButton.Image.png" />
     <None Include="Resources\saveToolStripButton.Image.png" />
     <None Include="Resources\undoToolStripButton.Image.png" />
+    <Content Include="COPYING.txt" />
     <Content Include="Help\HelpTranslator.xsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
