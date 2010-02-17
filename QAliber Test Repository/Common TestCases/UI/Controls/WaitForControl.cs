@@ -21,6 +21,8 @@ using System.Windows.Forms;
 using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
+using QAliber.Engine.Controls;
+using System.Diagnostics;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -63,26 +65,30 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	
 		public override void Body()
 		{
-			string cName, cId, code;
-
-			cName = ExtractNameFromCodePath();
-			if (cName != "")
-				code = "UIControlBase c = " + cName + ";\n";
-			else
+			string code;
+			bool res = false;
+			
+			code = "UIControlBase c = " + control + ";return c;\n";
+			Stopwatch watch = new Stopwatch();
+			
+			watch.Start();
+			while (watch.ElapsedMilliseconds < timeout)
 			{
-				cId = ExtractIDFromCodePath();
-				if (cId != "")
+				UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+			   
+				if (c != null)
 				{
-					code = "UIControlBase c = " + cId + ";\n";
+					res = true;
+					break;
 				}
-				throw new ArgumentException("Could not understand control '" + control + "', please try to grab it with the control locator");
 			}
-			code += "return c != null;\n";
-			bool res = (bool)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
 			if (res)
 				actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			else
+			{
+				LogFailedByExpectedResult("Control not found after " + timeout + " miliseconds",control);
 				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			}
 
 		}
 
@@ -98,31 +104,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			}
 		}
 
-		private string ExtractNameFromCodePath()
-		{
-			int index = control.LastIndexOf('[');
-			if (index < 0)
-				return "";
-			string lastIndexer = control.Substring(index).Trim('[', ']');
-			string parentControl = control.Substring(0, index);
-			string[] lastIndexerFields = lastIndexer.Split(',');
-			return string.Format("{0}.WaitForControlByName({1}, {2})",
-				parentControl, lastIndexerFields[0].Trim(), timeout.ToString());
-		}
+		//private string ExtractNameFromCodePath()
+		//{
+		//	  int index = control.LastIndexOf('[');
+		//	  if (index < 0)
+		//		  return "";
+		//	  string lastIndexer = control.Substring(index).Trim('[', ']');
+		//	  string parentControl = control.Substring(0, index);
+		//	  string[] lastIndexerFields = lastIndexer.Split(',');
+		//	  return string.Format("{0}.WaitForControlByName({1}, {2})",
+		//		  parentControl, lastIndexerFields[0].Trim(), timeout.ToString());
+		//}
 
-		private string ExtractIDFromCodePath()
-		{
-			int index = control.LastIndexOf('[');
-			if (index < 0)
-				return "";
-			string lastIndexer = control.Substring(index).Trim('[', ']');
-			string parentControl = control.Substring(0, index);
-			string[] lastIndexerFields = lastIndexer.Split(',');
-			if (lastIndexerFields.Length == 3)
-				return string.Format("{0}.WaitForControlByID({1}, {2})",
-					parentControl, lastIndexerFields[2].Trim(), timeout.ToString());
-			return "";
-		}
+		//private string ExtractIDFromCodePath()
+		//{
+		//	  int index = control.LastIndexOf('[');
+		//	  if (index < 0)
+		//		  return "";
+		//	  string lastIndexer = control.Substring(index).Trim('[', ']');
+		//	  string parentControl = control.Substring(0, index);
+		//	  string[] lastIndexerFields = lastIndexer.Split(',');
+		//	  if (lastIndexerFields.Length == 3)
+		//		  return string.Format("{0}.WaitForControlByID({1}, {2})",
+		//			  parentControl, lastIndexerFields[2].Trim(), timeout.ToString());
+		//	  return "";
+		//}
 
 	}
 
