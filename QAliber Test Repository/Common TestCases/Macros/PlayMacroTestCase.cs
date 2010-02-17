@@ -27,7 +27,7 @@ using QAliber.TestModel;
 namespace QAliber.Repository.CommonTestCases.Macros
 {
 	/// <summary>
-	/// Play a macro file recrded by QAliber
+	/// Play a macro (low-level recording) file recroded by QAliber
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Macros")]

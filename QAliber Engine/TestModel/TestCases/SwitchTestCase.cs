@@ -10,7 +10,7 @@ using QAliber.TestModel.Attributes;
 namespace QAliber.TestModel
 {
 	/// <summary>
-	/// Performs an if condition on a given expression
+	/// Evaluates switch case on a given expression
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Conditions")]
@@ -29,7 +29,7 @@ namespace QAliber.TestModel
 		/// <example>DateTime.Now; Note though the returning value will be DateTime it will be parsed to string</example>
 		/// <remarks>To learn more about C# syntax in expressions click &lt;a href="http://msdn.microsoft.com/en-us/library/aa691304(VS.71).aspx"&gt;here&lt;/a&gt;</remarks>
 		/// </summary>
-		[Category("Test Case Flow Control")]
+		[Category(" Switch")]
 		[DisplayName("C# Expression")]
 		[Description("a C# expression that return string (suround by quats or use ToString)")]
 		public string CSharpExpression
@@ -51,7 +51,7 @@ namespace QAliber.TestModel
 		{
 			get
 			{
-				return "switch '" + cSharpExpression + "'";
+				return "Switch on '" + cSharpExpression + "'";
 			}
 			set
 			{

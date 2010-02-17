@@ -24,7 +24,10 @@ using QAliber.Logger;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
-   
+
+	/// <summary>
+	/// Moves a top level window to the specified position
+	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
 	public class MoveWindow : TestCase
@@ -37,8 +40,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private string control = "";
 
-		
-		[Category("Window")]
+		/// <summary>
+		/// The window to move, make sure the 'UIType' in the locator dialog is 'UIAWindow'
+		/// </summary>
+		[Category(" Window")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -48,7 +53,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private Point point;
 
-		[Category("Window")]
+		/// <summary>
+		/// The coordinate in pixels, relative to the upper left corner of the desktop to move the window to
+		/// </summary>
+		[Category(" Window")]
 		[Description("The coordinate in pixels, relative to the upper left corner of the desktop to move the window to")]
 		public Point Coordinate
 		{

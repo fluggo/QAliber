@@ -29,6 +29,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
 	public class ChangeWindowState : TestCase
 	{
+		/// <summary>
+		/// Activate, minimize, maximize, restore or close the window 
+		/// </summary>
 		public ChangeWindowState()
 		{
 			name = "Change Window State";
@@ -37,8 +40,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private string control = "";
 
-		
-		[Category("Window")]
+		/// <summary>
+		/// The window to change, make sure the 'UIType' in the locator dialog is 'UIAWindow'
+		/// </summary>
+		[Category(" Window")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -48,7 +53,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private WindowOperationType opType;
 
-		[Category("Window")]
+		/// <summary>
+		/// The operation you want to perform on the window
+		/// </summary>
+		[Category(" Window")]
 		[Description("Select the operation you want to perform on the window")]
 		public WindowOperationType Operation
 		{

@@ -47,9 +47,9 @@ namespace QAliber.TestModel
 		/// The list to iterate on (excluding $)
 		/// </summary>
 		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
-		[Category("Test Case Flow Control")]
+		[Category("List")]
 		[DisplayName("List Name")]
-		[Description("The list to iterate on")]
+		[Description("The list to iterate on (excluding $)")]
 		public ListVariableDropDownList ListName
 		{
 			get { return listName; }

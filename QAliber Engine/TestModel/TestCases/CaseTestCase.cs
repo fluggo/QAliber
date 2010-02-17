@@ -10,8 +10,8 @@ using QAliber.TestModel.Attributes;
 namespace QAliber.TestModel
 {
 	/// <summary>
-	/// Executes its children if the last evaluated 
-	/// <preconditions>A previous if was evaluated</preconditions>
+	/// Executes its children if the evaluated switch equals this case
+	/// <preconditions>Must be a children of a 'Switch' test csae</preconditions>
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Conditions")]
@@ -42,7 +42,12 @@ namespace QAliber.TestModel
 
 		private string expectedCase;
 
+		/// <summary>
+		/// A text represnting the case to execute the children, if matching the evaluatred switch
+		/// </summary>
+		[Category("Case")]
 		[Description("The expected case matching the parent switch")]
+		[DisplayName("Expected Case")]
 		public string ExpectedCase
 		{
 			get { return expectedCase; }

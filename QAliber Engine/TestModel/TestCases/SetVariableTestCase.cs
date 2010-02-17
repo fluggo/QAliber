@@ -21,6 +21,7 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
+using QAliber.TestModel.Variables;
 
 namespace QAliber.TestModel
 {
@@ -67,14 +68,15 @@ namespace QAliber.TestModel
 			set { retType = value; }
 		}
 
-		private string varName;
+		private VariableDropDownList varName;
 
 		/// <summary>
 		/// The variable name
 		/// </summary>
+		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[Category(" Variables")]
 		[DisplayName("Variable Name")]
-		public string VariableName
+		public VariableDropDownList VariableName
 		{
 			get { return varName; }
 			set { varName = value; }
@@ -85,7 +87,7 @@ namespace QAliber.TestModel
 			object retVal = null;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, retType, out retVal);
 			Scenario.Variables.AddOrReplaceByName(new QAliber.TestModel.Variables.ScenarioVariable(
-				varName, retVal.ToString(), null));
+				varName.Selected, retVal.ToString(), null));
 
 		}
 

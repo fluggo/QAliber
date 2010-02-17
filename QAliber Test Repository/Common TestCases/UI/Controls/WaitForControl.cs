@@ -104,32 +104,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			}
 		}
 
-		//private string ExtractNameFromCodePath()
-		//{
-		//	  int index = control.LastIndexOf('[');
-		//	  if (index < 0)
-		//		  return "";
-		//	  string lastIndexer = control.Substring(index).Trim('[', ']');
-		//	  string parentControl = control.Substring(0, index);
-		//	  string[] lastIndexerFields = lastIndexer.Split(',');
-		//	  return string.Format("{0}.WaitForControlByName({1}, {2})",
-		//		  parentControl, lastIndexerFields[0].Trim(), timeout.ToString());
-		//}
-
-		//private string ExtractIDFromCodePath()
-		//{
-		//	  int index = control.LastIndexOf('[');
-		//	  if (index < 0)
-		//		  return "";
-		//	  string lastIndexer = control.Substring(index).Trim('[', ']');
-		//	  string parentControl = control.Substring(0, index);
-		//	  string[] lastIndexerFields = lastIndexer.Split(',');
-		//	  if (lastIndexerFields.Length == 3)
-		//		  return string.Format("{0}.WaitForControlByID({1}, {2})",
-		//			  parentControl, lastIndexerFields[2].Trim(), timeout.ToString());
-		//	  return "";
-		//}
-
 	}
 
 

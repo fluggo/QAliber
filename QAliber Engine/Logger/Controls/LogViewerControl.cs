@@ -592,14 +592,13 @@ namespace QAliber.Logger.Controls
 				else 
 					throw;
 			}
-
 			logTree.Nodes.Clear();
 
 			foreach (XmlNode node in xmlDoc.ChildNodes)
 			{
 				if (node.Name == "LogEntries")
 				{
-					FillTreeRec(logTree.Nodes, node);
+					FillTreeRec(logTree.Nodes, node, 0);
 				}
 				
 			}
@@ -609,7 +608,7 @@ namespace QAliber.Logger.Controls
 			resourcesGraphToolStripButton.Enabled = perfGraphControl.Visible;
 		}
 
-		private void FillTreeRec(TreeNodeCollection tNodes, XmlNode xNode)
+		private void FillTreeRec(TreeNodeCollection tNodes, XmlNode xNode, int resLevel)
 		{
 			TreeNode newNode = null;
 			LogEntry logEntry;
@@ -633,19 +632,20 @@ namespace QAliber.Logger.Controls
 
 						tNodes.Add(newNode);
 						if (logEntry.Type == EntryType.Warning)
-							warningNodes.Push(newNode);
+							warningNodes.Add(newNode);
 						else if (logEntry.Type == EntryType.Error)
-							errorNodes.Push(newNode);
+							errorNodes.Add(newNode);
 						else
-							infoNodes.Push(newNode);
+							infoNodes.Add(newNode);
 						node.RemoveChild(node.FirstChild);
-						FillTreeRec(newNode.Nodes, node);
+						FillTreeRec(newNode.Nodes, node, resLevel + 1);
 						
 					}
 				}
 				else if (node.Name == "LogResult")
 				{
-					BubbleIconUp(infoNodes, warningNodes, errorNodes, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
+					
+					BubbleIconUp(infoNodes, warningNodes, errorNodes, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText), resLevel);
 				}
 				else
 				{
@@ -664,11 +664,11 @@ namespace QAliber.Logger.Controls
 						tNodes.Add(newNode);
 
 						if (logEntry.Type == EntryType.Warning)
-							warningNodes.Push(newNode);
+							warningNodes.Add(newNode);
 						else if (logEntry.Type == EntryType.Error)
-							errorNodes.Push(newNode);
+							errorNodes.Add(newNode);
 						else
-							infoNodes.Push(newNode);
+							infoNodes.Add(newNode);
 					}
 				}
 			}
@@ -725,49 +725,64 @@ namespace QAliber.Logger.Controls
 			}
 		}
 
-		private void BubbleIconUp(Stack<TreeNode> iNodes, Stack<TreeNode> wNodes, Stack<TreeNode> eNodes, TestCaseResult result)
+		private void BubbleIconUp(List<TreeNode> iNodes, List<TreeNode> wNodes, List<TreeNode> eNodes, TestCaseResult result, int resLevel)
 		{
 			int indexToSet = 4;//"Passed";
 			if (result == TestCaseResult.Failed)
 				indexToSet = 7;//"Error";
 
-			while (iNodes.Count > 0)
+			for (int i = iNodes.Count - 1; i >= 0; i--)
 			{
-				TreeNode node = iNodes.Pop();
-				while (node.Parent != null)
+				TreeNode node = iNodes[i];
+				if (node.Level >= resLevel)
 				{
-					node = node.Parent;
-					if (node.ImageIndex >= indexToSet)
-						break;
-					node.SelectedImageIndex = node.ImageIndex = indexToSet;
+					iNodes.RemoveAt(i);
+
+					while (node.Parent != null)
+					{
+						node = node.Parent;
+						if (node.ImageIndex >= indexToSet)
+							break;
+						node.SelectedImageIndex = node.ImageIndex = indexToSet;
+					}
 				}
 			}
 
-			while (wNodes.Count > 0)
+			for (int i = wNodes.Count - 1; i >= 0; i--)
 			{
-				TreeNode node = wNodes.Pop();
-				if (indexToSet < 5)//"PassedWarnings";
-					indexToSet = 5;
-				while (node.Parent != null)
+				TreeNode node = wNodes[i];
+				if (node.Level >= resLevel)
 				{
-					node = node.Parent;
-					if (node.ImageIndex >= indexToSet)
-						break;
-					node.SelectedImageIndex = node.ImageIndex = indexToSet;
+					wNodes.RemoveAt(i);
+
+					if (indexToSet < 5)//"PassedWarnings";
+						indexToSet = 5;
+					while (node.Parent != null)
+					{
+						node = node.Parent;
+						if (node.ImageIndex >= indexToSet)
+							break;
+						node.SelectedImageIndex = node.ImageIndex = indexToSet;
+					}
 				}
 			}
 
-			while (eNodes.Count > 0)
+			for (int i = eNodes.Count - 1; i >= 0; i--)
 			{
-				TreeNode node = eNodes.Pop();
-				if (indexToSet < 6)//"PassedErrors";
-					indexToSet = 6;
-				while (node.Parent != null)
+				TreeNode node = eNodes[i];
+				if (node.Level >= resLevel)
 				{
-					node = node.Parent;
-					if (node.ImageIndex >= indexToSet)
-						break;
-					node.SelectedImageIndex = node.ImageIndex = indexToSet;
+					eNodes.RemoveAt(i);
+
+					if (indexToSet < 6)//"PassedErrors";
+						indexToSet = 6;
+					while (node.Parent != null)
+					{
+						node = node.Parent;
+						if (node.ImageIndex >= indexToSet)
+							break;
+						node.SelectedImageIndex = node.ImageIndex = indexToSet;
+					}
 				}
 			}
 			
@@ -836,9 +851,9 @@ namespace QAliber.Logger.Controls
 			return res;
 		}
 
-		private Stack<TreeNode> infoNodes = new Stack<TreeNode>();
-		private Stack<TreeNode> warningNodes = new Stack<TreeNode>();
-		private Stack<TreeNode> errorNodes = new Stack<TreeNode>();
+		private List<TreeNode> infoNodes = new List<TreeNode>();
+		private List<TreeNode> warningNodes = new List<TreeNode>();
+		private List<TreeNode> errorNodes = new List<TreeNode>();
 		private int counter;
 		private string filename;
 

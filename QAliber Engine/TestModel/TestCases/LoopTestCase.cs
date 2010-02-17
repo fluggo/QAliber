@@ -26,7 +26,7 @@ using QAliber.TestModel.Attributes;
 namespace QAliber.TestModel
 {
 	/// <summary>
-	/// Loop through this tes case's children X times
+	/// Loop through this test case's children N times
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Loops")]
@@ -43,7 +43,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The number of loops to run through all the children
 		/// </summary>
-		[Category("Test Case Flow Control")]
+		[Category("Loop")]
 		[DisplayName("Number Of Loops")]
 		[Description("The number of loops all the descendants will run")]
 		public int NumOfLoops

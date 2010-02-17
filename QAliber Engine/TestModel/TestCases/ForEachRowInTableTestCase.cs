@@ -27,6 +27,11 @@ using System.Data;
 
 namespace QAliber.TestModel
 {
+
+	/// <summary>
+	/// Iterates on a given table, row by row.
+	/// <preconditions>Table should exist</preconditions>
+	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Loops")]
 	public class ForEachRowInTableTestCase : FolderTestCase
@@ -39,10 +44,13 @@ namespace QAliber.TestModel
 
 		private TableVariableDropDownList tableName = new TableVariableDropDownList();
 
+		/// <summary>
+		/// The table to iterate on (excluding $)
+		/// </summary>
 		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
-		[Category("Test Case Flow Control")]
+		[Category(" Table")]
 		[DisplayName("Table Name")]
-		[Description("The table to iterate on")]
+		[Description("The table to iterate on (excluding $)")]
 		public TableVariableDropDownList TableName
 		{
 			get { return tableName; }

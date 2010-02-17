@@ -26,7 +26,7 @@ using QAliber.TestModel.Attributes;
 namespace QAliber.TestModel
 {
 	/// <summary>
-	/// Breaks N levels up from folders (including loops, if's and any test case that as children)
+	/// Breaks N levels up from folders (including loops, if's and any test case that has children)
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control")]

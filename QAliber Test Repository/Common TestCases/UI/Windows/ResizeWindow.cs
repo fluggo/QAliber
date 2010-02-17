@@ -24,7 +24,9 @@ using QAliber.Logger;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
-   
+	/// <summary>
+	/// Resizes a top level window to the specified size
+	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
 	public class ResizeWindow : TestCase
@@ -37,9 +39,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private string control = "";
 
-		
-		[Category("Window")]
+		/// <summary>
+		/// The window to resize, make sure the 'UIType' in the locator dialog is 'UIAWindow'
+		/// </summary>
+		[Category(" Window")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Description("The window to resize, make sure the 'UIType' is 'UIAWindow'")] 
 		public string Control
 		{
 			get { return control; }
@@ -48,7 +53,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private Size size;
 
-		[Category("Window")]
+		/// <summary>
+		/// The size in pixels to set the window"
+		/// </summary>
+		[Category(" Window")]
 		[Description("The size in pixels to set the window")]
 		public Size Size
 		{
@@ -70,7 +78,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		{
 			get
 			{
-				return"Resizing window '" + control + "' to size " + size;
+				return "Resizing window '" + control + "' to size " + size;
 			}
 			set
 			{
