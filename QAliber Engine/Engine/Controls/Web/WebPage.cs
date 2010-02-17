@@ -411,8 +411,15 @@ namespace QAliber.Engine.Controls.Web
 
 		public void ClearEvents()
 		{
-			ieInstance.DocumentComplete -= new DWebBrowserEvents2_DocumentCompleteEventHandler(ieInstance_DocumentComplete);
-			ieInstance.BeforeNavigate2 -= new DWebBrowserEvents2_BeforeNavigate2EventHandler(ieInstance_BeforeNavigate2);
+			try
+			{
+				ieInstance.DocumentComplete -= new DWebBrowserEvents2_DocumentCompleteEventHandler(ieInstance_DocumentComplete);
+				ieInstance.BeforeNavigate2 -= new DWebBrowserEvents2_BeforeNavigate2EventHandler(ieInstance_BeforeNavigate2);
+			}
+			catch (Exception)
+			{
+				//TODO : Find if removing events is necessary
+			}
 
 			BeforeNavigation = null;
 			AfterNavigation = null;
