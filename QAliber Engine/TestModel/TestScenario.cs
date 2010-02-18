@@ -26,6 +26,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using QAliber.TestModel.Variables;
 using System.Collections;
 using System.Data;
+using System.Runtime.Serialization;
 
 namespace QAliber.TestModel
 {
@@ -160,8 +161,12 @@ namespace QAliber.TestModel
 		{
 			TestScenario testScenario = null;
 			BinaryFormatter binFormatter = new BinaryFormatter();
+			binFormatter.Binder = new DeserializationBinder();
+			DeserializationBinder.errorTypes.Clear();
+			DeserializationBinder.errorIndex = 0;
 			using (StreamReader reader = new StreamReader(filename))
 			{
+				
 				testScenario = binFormatter.Deserialize(reader.BaseStream) as TestScenario;
 			}
 			if (testScenario != null)
@@ -203,7 +208,7 @@ namespace QAliber.TestModel
 			{
 				//if (var.DefinedBy == "User")
 					variablesCopy.Add(new ScenarioVariable(
-						var.Name, var.Value.ToString(), null));
+						var.Name, var.Value.ToString(), var.Definer));
 			}
 
 			foreach (ScenarioList var in lists)
@@ -214,7 +219,7 @@ namespace QAliber.TestModel
 					string[] copyList= new string[vals.Count];
 					vals.CopyTo(copyList, 0);
 					listsCopy.Add(new ScenarioList(
-						var.Name, copyList, null));
+						var.Name, copyList, var.Definer));
 				//}
 			}
 
@@ -225,7 +230,7 @@ namespace QAliber.TestModel
 					DataTable table = var.Value as DataTable;
 					DataTable copyTable = table.Copy();
 					tablesCopy.Add(new ScenarioTable(
-						var.Name, copyTable, null));
+						var.Name, copyTable, var.Definer));
 				//}
 			}
 		}
@@ -349,5 +354,32 @@ namespace QAliber.TestModel
 		private BindingVariableList<ScenarioVariable> variablesCopy;
 		private BindingVariableList<ScenarioList> listsCopy;
 		private BindingVariableList<ScenarioTable> tablesCopy;
+	}
+
+	sealed class DeserializationBinder : SerializationBinder
+	{
+		public override Type BindToType(string assemblyName, string typeName)
+		{
+			try
+			{
+				
+				Type t = Type.GetType(String.Format("{0}, {1}",
+				typeName, assemblyName));
+				if (t != null)
+				{
+					return t;
+				}
+				errorTypes.Add(typeName);
+				return typeof(QAliber.TestModel.TestCases.LoadErrorTestCase);
+			}
+			catch
+			{
+				return typeof(QAliber.TestModel.TestCases.LoadErrorTestCase);
+			}
+		}
+
+		internal static List<string> errorTypes = new List<string>();
+		internal static int errorIndex = 0;
+
 	}
 }

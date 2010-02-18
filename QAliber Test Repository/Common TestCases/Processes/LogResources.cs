@@ -26,7 +26,7 @@ using System.Diagnostics;
 
 
 
-namespace QAliber.Repository.CommonTestCases.FileSystem
+namespace QAliber.Repository.CommonTestCases.Processes
 {
 	/// <summary>
 	/// Logs CPU, memory and virtual memory of a process to the test log

@@ -49,6 +49,7 @@ namespace QAliber.Logger.Controls
 
 		private void FillCountersList()
 		{
+			listViewCounters.Clear();
 			using (StreamReader csvReader = new StreamReader(csvFile))
 			{
 				string line = csvReader.ReadLine();

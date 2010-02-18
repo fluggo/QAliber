@@ -330,6 +330,22 @@ namespace QAliber.TestModel
 			set { description = value; }
 		}
 
+		protected string originalPath;
+
+		/// <summary>
+		/// The description of the test csae, the description will be logged as a remark by the QAliber runner.
+		/// A good practice is to set it according to the parameters the user chosen for the test case
+		/// </summary>
+		[Category("Test Case Details")]
+		[Description("The origin of the test case")]
+		[DisplayName("Repository Location")]
+		[ReadOnly(true)]
+		public virtual string RepositoryLocation
+		{
+			get { return originalPath; }
+			set { originalPath = value; }
+		}
+
 		protected TestCaseResult expectedResult = TestCaseResult.None;
 
 		/// <summary>

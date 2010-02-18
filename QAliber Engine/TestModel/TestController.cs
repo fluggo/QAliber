@@ -232,8 +232,8 @@ namespace QAliber.TestModel
 		/// </summary>
 		public void Stop()
 		{
-			TestCase.ExitTotally = true;
 			Log.Default.Warning("Automatic run was aborted by the user", "", EntryVerbosity.Internal);
+			TestCase.ExitTotally = true;
 			new Thread(new ThreadStart(StopAsync)).Start();
 		}
 

@@ -26,7 +26,7 @@ using System.Diagnostics;
 
 
 
-namespace QAliber.Repository.CommonTestCases.FileSystem
+namespace QAliber.Repository.CommonTestCases.Processes
 {
 	/// <summary>
 	/// Kills a process

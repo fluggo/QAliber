@@ -38,6 +38,7 @@ namespace QAliber.Logger.Controls
 		{
 			this.logPath = logPath;
 			logPath += @"\Video\";
+			frameTimes.Clear();
 			if (Directory.Exists(logPath))
 			{
 				foreach (string picFile in Directory.GetFiles(logPath, "*.jpg"))

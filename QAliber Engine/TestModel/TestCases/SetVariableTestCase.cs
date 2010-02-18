@@ -68,7 +68,7 @@ namespace QAliber.TestModel
 			set { retType = value; }
 		}
 
-		private VariableDropDownList varName;
+		private VariableDropDownList varName = new VariableDropDownList();
 
 		/// <summary>
 		/// The variable name

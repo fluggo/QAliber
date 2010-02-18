@@ -38,7 +38,7 @@ namespace QAliber.Builder.Presentation
 		private void FillTree()
 		{
 			typesTreeView.Nodes.Clear();
-			string path = TestController.Default.LocalAssemblyPath + @"Macros";
+			string path = TestController.Default.LocalAssemblyPath + @"\\Macros";
 			if (!Directory.Exists(path))
 				Directory.CreateDirectory(path);
 

@@ -47,6 +47,10 @@ namespace QAliber.Builder.Presentation
 					{
 						path = attrs[0].Path;
 					}
+					if (path == "Hidden")
+					{
+						continue;
+					}
 					string[] folders = path.Split('\\');
 					TreeNodeCollection nodes = typesTreeView.Nodes;
 					foreach (string folder in folders)
@@ -60,6 +64,7 @@ namespace QAliber.Builder.Presentation
 						nodes = node.Nodes;
 					}
 					TreeNode leafNode = new TreeNode(testcase.Name);
+					testcase.RepositoryLocation = path + "\\" + testcase.Name;
 					leafNode.Tag = testcase;
 					leafNode.ContextMenuStrip = leafContextMenuStrip;
 					if (!typesImageList.Images.ContainsKey(testcase.Name))

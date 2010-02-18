@@ -112,6 +112,7 @@ namespace QAliber.Builder.Presentation
 			if (isInBP)
 			{
 				TestController.Default.ContinueFromBreakPoint();
+				isInBP = false;
 			}
 			TestController.Default.Stop();
 		}
