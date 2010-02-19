@@ -24,49 +24,55 @@ namespace QAliber.Recorder.MacroRecorder
 {
 	public class MacroDataTableConverter
 	{
-		public MacroDataTableConverter(List<MacroRecordEntry> rawEntries, MacroRecordingsDataSet.MacroEntriesDataTable dataTable)
+		public MacroDataTableConverter(MacroRecorder recorder, MacroRecordingsDataSet.MacroEntriesDataTable dataTable)
 		{
 			this.dataTable = dataTable;
-			this.rawEntries = rawEntries;
+			this.recorder = recorder;
 		}
 
 		public void ConvertToRaw()
 		{
-			List<MacroRecordEntry> newEntries = new List<MacroRecordEntry>();
+			recorder.Entries.Clear();
+			MacroRecordEntry newEntry;
+			Win32Input input;
 			foreach (MacroRecordingsDataSet.MacroEntriesRow row in dataTable)
 			{
+				input = new Win32Input();
+			   
 				if (row.IsActionNull()) // kb input
 				{
-					rawEntries[row.OrigIndex].Input.ki.wVk = (ushort)System.Windows.Input.KeyInterop.VirtualKeyFromKey(
+					input.type = 1;
+					input.ki = new KBInput();
+
+					input.ki.wVk = (ushort)System.Windows.Input.KeyInterop.VirtualKeyFromKey(
 						(System.Windows.Input.Key)Enum.Parse(typeof(System.Windows.Input.Key), row.Key));
-					rawEntries[row.OrigIndex].Input.ki.dwFlags |= (row.Pressed ? (uint)KBEvents.KEYUP : 0);
+					input.ki.dwFlags |= (row.Pressed ? (uint)KBEvents.KEYUP : 0);
 				}
 				else // mouse input
 				{
-					rawEntries[row.OrigIndex].Input.mi.dx = (int)(row.X * (65535f / (Screen.PrimaryScreen.Bounds.Width)));
-					rawEntries[row.OrigIndex].Input.mi.dy = (int)(row.Y * (65535f / Screen.PrimaryScreen.Bounds.Height));
+					input.type = 0;
+					input.mi = new MouseInput();
+					input.mi.dx = (int)(row.X * (65535f / (Screen.PrimaryScreen.Bounds.Width)));
+					input.mi.dy = (int)(row.Y * (65535f / Screen.PrimaryScreen.Bounds.Height));
 					int evt = (int)Enum.Parse(typeof(MouseEvents), row.Action);
 					evt |= (int)MouseEvents.ABSOLUTE;
-					rawEntries[row.OrigIndex].Input.mi.dwFlags = (uint)evt;
+					input.mi.dwFlags = (uint)evt;
 				}
-				rawEntries[row.OrigIndex].Time = row.Time;
-				newEntries.Add(rawEntries[row.OrigIndex]);
+				newEntry = new MacroRecordEntry(input, row.Time);
+				recorder.Entries.Add(newEntry);
+				
 			}
-			rawEntries.Clear();
-			foreach (MacroRecordEntry entry in newEntries)
-				rawEntries.Add(entry);
-			
 		}
 
 		public void ConvertToTable()
 		{
 			dataTable.Rows.Clear();
 			int i = 0;
-			foreach (MacroRecordEntry entry in rawEntries)
+			foreach (MacroRecordEntry entry in recorder.Entries)
 			{
 				MacroRecordingsDataSet.MacroEntriesRow row = (MacroRecordingsDataSet.MacroEntriesRow)dataTable.NewRow();
 				row.Time = (int)entry.Time;
-				row.OrigIndex = i;
+				//row.OrigIndex = i;
 				if (entry.Input.type == 0) //mouse input
 				{
 					row.X = (int)(entry.Input.mi.dx * Screen.PrimaryScreen.Bounds.Width / 65535f);
@@ -89,6 +95,6 @@ namespace QAliber.Recorder.MacroRecorder
 		}
 
 		private MacroRecordingsDataSet.MacroEntriesDataTable dataTable;
-		private List<MacroRecordEntry> rawEntries;
+		private MacroRecorder recorder;
 	}
 }

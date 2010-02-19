@@ -62,11 +62,11 @@ namespace QAliber.Recorder.MacroRecorder
 			msHook.Unhook();
 			watch.Stop();
 			recording = false;
-			//Removing the last 2 messages
-			if (macroEntries.Count > 2)
+			//Removing the last 5 messages
+			if (macroEntries.Count > 5)
 			{
-				int index = macroEntries.Count - 2;
-				macroEntries.RemoveRange(index, 2);
+				int index = macroEntries.Count - 5;
+				macroEntries.RemoveRange(index, 5);
 			}
 
 		}

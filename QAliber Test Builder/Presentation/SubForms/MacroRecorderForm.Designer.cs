@@ -58,10 +58,6 @@ namespace QAliber.Builder.Presentation.SubForms
 			this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonLoad = new System.Windows.Forms.ToolStripButton();
 			this.dataGridView = new System.Windows.Forms.DataGridView();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.macroRecordingsDataSet = new QAliber.Recorder.MacroRecorder.MacroRecordingsDataSet();
-			this.macroBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.timeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,12 +65,17 @@ namespace QAliber.Builder.Presentation.SubForms
 			this.Key = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.pressedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.origIndexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.macroBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.macroRecordingsDataSet = new QAliber.Recorder.MacroRecorder.MacroRecordingsDataSet();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.panelLow = new System.Windows.Forms.Panel();
 			this.btnOk = new System.Windows.Forms.Button();
+			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.macroRecordingsDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.macroBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.macroRecordingsDataSet)).BeginInit();
 			this.panelLow.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -206,27 +207,10 @@ namespace QAliber.Builder.Presentation.SubForms
 			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-			this.dataGridView.Size = new System.Drawing.Size(620, 497);
+			this.dataGridView.Size = new System.Drawing.Size(620, 467);
 			this.dataGridView.TabIndex = 1;
 			this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.Filter = "Macro Recordings|*.macro|All files|*.*";
-			// 
-			// saveFileDialog
-			// 
-			this.saveFileDialog.Filter = "Macro Recordings|*.macro|All files|*.*";
-			// 
-			// macroRecordingsDataSet
-			// 
-			this.macroRecordingsDataSet.DataSetName = "MacroRecordingsDataSet";
-			this.macroRecordingsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
-			// macroBindingSource
-			// 
-			this.macroBindingSource.DataMember = "MacroEntries";
-			this.macroBindingSource.DataSource = this.macroRecordingsDataSet;
+			this.dataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_RowsRemoved);
 			// 
 			// timeDataGridViewTextBoxColumn
 			// 
@@ -275,6 +259,24 @@ namespace QAliber.Builder.Presentation.SubForms
 			this.origIndexDataGridViewTextBoxColumn.Name = "origIndexDataGridViewTextBoxColumn";
 			this.origIndexDataGridViewTextBoxColumn.Visible = false;
 			// 
+			// macroBindingSource
+			// 
+			this.macroBindingSource.DataMember = "MacroEntries";
+			this.macroBindingSource.DataSource = this.macroRecordingsDataSet;
+			// 
+			// macroRecordingsDataSet
+			// 
+			this.macroRecordingsDataSet.DataSetName = "MacroRecordingsDataSet";
+			this.macroRecordingsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.Filter = "Macro Recordings|*.macro|All files|*.*";
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.Filter = "Macro Recordings|*.macro|All files|*.*";
+			// 
 			// panelLow
 			// 
 			this.panelLow.Controls.Add(this.btnOk);
@@ -295,12 +297,21 @@ namespace QAliber.Builder.Presentation.SubForms
 			this.btnOk.UseVisualStyleBackColor = true;
 			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
+			// notifyIcon
+			// 
+			this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+			this.notifyIcon.BalloonTipText = "Press Ctrl+Alt+7 to stop it";
+			this.notifyIcon.BalloonTipTitle = "Macro is being recorded";
+			this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+			this.notifyIcon.Text = "Recorder";
+			this.notifyIcon.Visible = true;
+			// 
 			// MacroRecorderForm
 			// 
 			this.ClientSize = new System.Drawing.Size(620, 522);
-			this.Controls.Add(this.panelLow);
 			this.Controls.Add(this.dataGridView);
 			this.Controls.Add(this.toolStrip);
+			this.Controls.Add(this.panelLow);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "MacroRecorderForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -309,8 +320,8 @@ namespace QAliber.Builder.Presentation.SubForms
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.macroRecordingsDataSet)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.macroBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.macroRecordingsDataSet)).EndInit();
 			this.panelLow.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -341,5 +352,6 @@ namespace QAliber.Builder.Presentation.SubForms
 		private System.Windows.Forms.DataGridViewTextBoxColumn origIndexDataGridViewTextBoxColumn;
 		private System.Windows.Forms.Panel panelLow;
 		private System.Windows.Forms.Button btnOk;
+		private System.Windows.Forms.NotifyIcon notifyIcon;
 	}
 }

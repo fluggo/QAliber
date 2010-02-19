@@ -31,10 +31,32 @@ namespace QAliber.Builder.Presentation.SubForms
 		{
 			InitializeComponent();
 			InitDatagrid();
+			InitHotkeys();
 			openFileDialog.InitialDirectory = TestController.Default.RemoteAssemblyDirectory;
 			saveFileDialog.InitialDirectory = TestController.Default.RemoteAssemblyDirectory;
+			converter = new MacroDataTableConverter(recorder, table);
+
 		}
 
+		private void InitHotkeys()
+		{
+			try
+			{
+				
+				stopHotKey = new ManagedWinapi.Hotkey();
+				stopHotKey.Ctrl = true;
+				stopHotKey.Alt = true;
+				stopHotKey.KeyCode = Keys.D7;
+				stopHotKey.Enabled = true;
+				stopHotKey.HotkeyPressed += new EventHandler(StopHotKeyPressed);
+			}
+			catch (ManagedWinapi.HotkeyAlreadyInUseException)
+			{
+			}
+
+		}
+
+		
 		private void InitDatagrid()
 		{
 			macroBindingSource.DataSource = table;
@@ -55,7 +77,9 @@ namespace QAliber.Builder.Presentation.SubForms
 
 		private void toolStripButtonRecord_Click(object sender, EventArgs e)
 		{
-			QAliber.Engine.Win32.LowLevelInput.SendKeystrokes("({LWin}d)");
+			WindowState = FormWindowState.Minimized;
+			notifyIcon.Visible = true;
+			notifyIcon.ShowBalloonTip(60000);
 			recorder.Record();
 			toolStripButtonRecord.Enabled = false;
 			toolStripButtonPause.Enabled = true;
@@ -74,9 +98,10 @@ namespace QAliber.Builder.Presentation.SubForms
 		private void toolStripButtonStop_Click(object sender, EventArgs e)
 		{
 			recorder.Stop();
-
-			converter = new MacroDataTableConverter(recorder.Entries, table);
+			WindowState = FormWindowState.Normal;
+			Activate();
 			converter.ConvertToTable();
+			dataGridView.Refresh();
 			shouldSave = true;
 			toolStripButtonRecord.Enabled = true;
 			toolStripButtonPause.Enabled = false;
@@ -86,19 +111,24 @@ namespace QAliber.Builder.Presentation.SubForms
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
 		{
-			converter = new MacroDataTableConverter(recorder.Entries, table);
 			converter.ConvertToRaw();
+			WindowState = FormWindowState.Minimized;
 			recorder.Play();
-			converter.ConvertToTable();
-			
+			WindowState = FormWindowState.Normal;
+			Activate();
 		}
 
 		private void toolStripButtonSave_Click(object sender, EventArgs e)
 		{
-			if (saveFileDialog.ShowDialog() == DialogResult.OK)
+			if (converter != null)
 			{
-				recorder.Save(saveFileDialog.FileName);
-				shouldSave = false;
+				if (saveFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					converter.ConvertToRaw();
+					//converter.ConvertToTable();
+					recorder.Save(saveFileDialog.FileName);
+					shouldSave = false;
+				}
 			}
 		}
 
@@ -108,8 +138,9 @@ namespace QAliber.Builder.Presentation.SubForms
 			{
 				recorder.Load(openFileDialog.FileName);
 				shouldSave = false;
-				converter = new MacroDataTableConverter(recorder.Entries, table);
 				converter.ConvertToTable();
+				notifyIcon.Visible = false;
+				notifyIcon.ShowBalloonTip(0);
 				toolStripButtonRecord.Enabled = true;
 				toolStripButtonPause.Enabled = false;
 				toolStripButtonStop.Enabled = false;
@@ -118,6 +149,11 @@ namespace QAliber.Builder.Presentation.SubForms
 		}
 
 		private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+			shouldSave = true;
+		}
+
+		private void dataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
 		{
 			shouldSave = true;
 		}
@@ -138,20 +174,17 @@ namespace QAliber.Builder.Presentation.SubForms
 			Close();
 		}
 
+		private void StopHotKeyPressed(object sender, EventArgs e)
+		{
+			if (toolStripButtonStop.Enabled)
+				toolStripButtonStop_Click(this, EventArgs.Empty);
+		}
+
 		private bool shouldSave = false;
 		private MacroRecorder recorder = new MacroRecorder();
 		private MacroDataTableConverter converter;
 		private MacroRecordingsDataSet.MacroEntriesDataTable table = new MacroRecordingsDataSet.MacroEntriesDataTable();
-
-		
-
-	   
-
-		
-
-		
-
-		
+		ManagedWinapi.Hotkey stopHotKey;
 		
 
 		
