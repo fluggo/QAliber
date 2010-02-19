@@ -47,7 +47,7 @@ namespace QAliber.ImageHandling
 		/// Image formats should be 24bpp
 		/// </remarks>
 		/// </summary>
-		/// <returns>(-1, -1) if no match was found, otherwise the location of the sub image within the main image</returns>
+		/// <returns>(-1, -1, 0, 0) if no match was found, otherwise the rectangle of the sub image within the main image</returns>
 		public System.Windows.Rect Find()
 		{
 			Point[] points = new Point[(main.Width - sub.Width) * (main.Height - sub.Height)];
@@ -89,7 +89,6 @@ namespace QAliber.ImageHandling
 							{
 								if (points[k].X >= 0)
 								{
-									//Color actVal = main.GetPixel(points[k].X + i, points[k].Y + j);
 									mainLoc = (points[k].Y + j) * mainData.Stride + (points[k].X + i) * 3;
 									Color actVal = Color.FromArgb(
 										   (int)pMainBase[mainLoc + 2], (int)pMainBase[mainLoc + 1], (int)pMainBase[mainLoc]);
@@ -116,6 +115,7 @@ namespace QAliber.ImageHandling
 					}
 				}
 			}
+			
 			main.UnlockBits(mainData);
 			sub.UnlockBits(subData);
 			return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
