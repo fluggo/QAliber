@@ -82,11 +82,11 @@ namespace QAliber.Builder.Presentation
 
 		private void removeColumnToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (tableDataGridView.CurrentCell != null && tableDataGridView.CurrentCell.ColumnIndex >= 0)
+			if (columnIndexRightClicked >= 0)
 			{
-				//tableDataGridView.Columns.RemoveAt(tableDataGridView.CurrentCell.ColumnIndex);
-				table.Columns.RemoveAt(tableDataGridView.CurrentCell.ColumnIndex);
+				table.Columns.RemoveAt(columnIndexRightClicked);
 				tableDataGridView.Refresh();
+				
 			}
 		}
 
@@ -106,6 +106,44 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
+		private void tableDataGridView_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				columnIndexRightClicked = tableDataGridView.HitTest(e.X, e.Y).ColumnIndex;
+				if (columnIndexRightClicked >= 0)
+				{
+					removeColumnToolStripMenuItem.Visible = true;
+					removeColumnToolStripMenuItem.Text = "Remove Column '" + tableDataGridView.Columns[columnIndexRightClicked].HeaderText + "'";
+
+				}
+				else
+				{
+					removeColumnToolStripMenuItem.Visible = false;
+				}
+
+			}
+		}
+
+		private void tableDataGridView_Paint(object sender, PaintEventArgs e)
+		{
+			if (tableDataGridView.Columns.Count == 0)
+			{
+				string str = "Right click this grid to add / remove columns to the table";
+				SizeF size = e.Graphics.MeasureString(str, this.Font);
+				e.Graphics.DrawString(str, this.Font, Brushes.White, new PointF(
+					(tableDataGridView.Width - size.Width) / 2, (tableDataGridView.Height - size.Height) / 2));
+			}
+			else if (tableDataGridView.Rows.Count < 3)
+			{
+				string str = "To change the column names simply click on the column headers";
+				SizeF size = e.Graphics.MeasureString(str, this.Font);
+				e.Graphics.DrawString(str, this.Font, Brushes.White, new PointF(
+					(tableDataGridView.Width - size.Width) / 2, (tableDataGridView.Height - size.Height) / 2));
+			}
+		}
+
+	   
 		private void box_Leave(object sender, EventArgs e)
 		{
 			TextBox box = (TextBox)sender;
@@ -132,6 +170,12 @@ namespace QAliber.Builder.Presentation
 
 		private DataTable table;
 		private string columnHeaderChanging;
+		private int columnIndexRightClicked = -1;
+
+	   
+		
+
+		
 
 	   
 		

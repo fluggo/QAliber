@@ -267,6 +267,17 @@ namespace QAliber.Builder.Presentation
 		}
 		#endregion
 
+		private void findToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScenarioControl sc = executionContainer.dockManager.tabbedScenarioControl.tabbedDocumentControl.SelectedControl as ScenarioControl;
+			if (sc != null)
+			{
+				SubForms.FindForm form = new QAliber.Builder.Presentation.SubForms.FindForm(sc);
+				form.Show();
+			}
+			
+		}
+
 
 	}
 }

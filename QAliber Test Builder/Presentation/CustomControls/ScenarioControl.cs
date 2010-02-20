@@ -42,6 +42,19 @@ namespace QAliber.Builder.Presentation
 			get { return testScenario; }
 		}
 
+		public TestCase SelectedTestCase
+		{
+			get
+			{
+				if (scenarioTreeView.SelectedNode != null)
+				{
+					TestCase testcase = ((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase;
+					return testcase;
+				}
+				return null;
+			}
+		}
+
 		public void FillTree(TestScenario scenario)
 		{
 			scenarioTreeView.EnableComplexCheck = false;
@@ -83,6 +96,54 @@ namespace QAliber.Builder.Presentation
 		internal void CheckNodeByColor(Color color, bool check)
 		{
 			CheckNodeByColorRecursively((QAliberTreeNode)scenarioTreeView.Nodes[0], color, check);
+		}
+
+		internal void FindNextPropertyValuePair(string property, string val, bool exactMatch)
+		{
+			QAliberTreeNode currentNode = scenarioTreeView.SelectedNode != null ? (QAliberTreeNode)scenarioTreeView.SelectedNode : (QAliberTreeNode)scenarioTreeView.Nodes[0];
+			currentNode = currentNode.GetNextNode() as QAliberTreeNode;
+			while (currentNode != null) 
+			{
+				TestCase testcase = currentNode.Testcase;
+				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(testcase))
+				{
+					if (string.Compare(prop.DisplayName, property, true) == 0)
+					{
+						if ((exactMatch && string.Compare(prop.GetValue(testcase).ToString(), val) == 0)
+							|| (!exactMatch && prop.GetValue(testcase).ToString().ToLower().Contains(val.ToLower())))
+						{
+							scenarioTreeView.SelectedNode = currentNode;
+							currentNode.EnsureVisible();
+							return;
+						}
+					}
+				}
+				currentNode = currentNode.GetNextNode() as QAliberTreeNode;
+			} 
+		}
+
+		internal void FindPrevPropertyValuePair(string property, string val, bool exactMatch)
+		{
+			QAliberTreeNode currentNode = scenarioTreeView.SelectedNode != null ? (QAliberTreeNode)scenarioTreeView.SelectedNode : (QAliberTreeNode)scenarioTreeView.Nodes[0];
+			currentNode = currentNode.GetPrevNode() as QAliberTreeNode;
+			while (currentNode != null)
+			{
+				TestCase testcase = currentNode.Testcase;
+				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(testcase))
+				{
+					if (string.Compare(prop.DisplayName, property, true) == 0)
+					{
+						if ((exactMatch && string.Compare(prop.GetValue(testcase).ToString(), val) == 0)
+							|| (!exactMatch && prop.GetValue(testcase).ToString().ToLower().Contains(val.ToLower())))
+						{
+							scenarioTreeView.SelectedNode = currentNode;
+							currentNode.EnsureVisible();
+							return;
+						}
+					}
+				}
+				currentNode = currentNode.GetPrevNode() as QAliberTreeNode;
+			} 
 		}
 
 		private void FillTreeRecursively(QAliberTreeNode node)
@@ -131,24 +192,6 @@ namespace QAliber.Builder.Presentation
 			return null;
 
 		}
-
-		//private void SetNodeIDsRec(QAliberTreeNode node)
-		//{
-		//	  TestCase testcase = node.Testcase as TestCase;
-		//	  if (testcase != null)
-		//	  {
-		//		  string tcTypeName = testcase.GetType().FullName;
-		//		  if (testcaseIconsList.Images.ContainsKey(tcTypeName))
-		//			  node.ImageKey = node.SelectedImageKey = tcTypeName;
-		//		  testcase.ID = nextID;
-		//		  nextID++;
-		//		  foreach (QAliberTreeNode child in node.Nodes)
-		//		  {
-		//			  SetNodeIDsRec(child);
-		//		  }
-		//	  }
-
-		//}
 
 		private QAliberTreeNode AddNode(QAliberTreeNode node, TestCase testCase)
 		{
@@ -628,6 +671,8 @@ namespace QAliber.Builder.Presentation
 		private CommandsCollection commandsHistory = new CommandsCollection();
 		private TestScenario testScenario;
 
+
+	   
 	}
 
 	public class ScenarioChangedEventArgs : EventArgs

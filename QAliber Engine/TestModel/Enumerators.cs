@@ -95,7 +95,7 @@ namespace QAliber.TestModel
 
 		public override string ToString()
 		{
-			return "Video Options ...";
+			return string.Format("Enabled = {0} ; Interval = {1}", captureVideo, interval);
 		}
 	
 	

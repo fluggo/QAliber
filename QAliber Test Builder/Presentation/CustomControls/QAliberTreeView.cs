@@ -547,4 +547,52 @@ namespace QAliber.Builder.Presentation
 
 	}
 
+	static class TreenodeExtensions
+	{
+		public static TreeNode GetNextNode(this TreeNode node)
+		{
+			if (node == null)
+				return null;
+			if (node.Nodes.Count > 0)
+				return node.Nodes[0];
+			if (node.NextNode != null)
+				return node.NextNode;
+			while (node.Parent != null && node.Parent.NextNode == null)
+				node = node.Parent;
+			if (node.Parent != null)
+				return node.Parent.NextNode;
+			return null;
+		}
+
+		public static TreeNode GetPrevNode(this TreeNode node)
+		{
+			if (node == null)
+				return null;
+			if (node.PrevNode == null)
+				return node.Parent;
+			else
+			{
+				node = node.PrevNode;
+				while (node.Nodes.Count > 0)
+				{
+					node = node.Nodes[node.Nodes.Count - 1];
+				}
+				return node;
+			}
+
+		}
+	}
+
+
+
+}
+
+///Hack to get extension methods work in framework 2.0
+namespace System.Runtime.CompilerServices
+{
+	[AttributeUsage(AttributeTargets.Method)]
+	public sealed class ExtensionAttribute : Attribute
+	{
+		public ExtensionAttribute() { }
+	}
 }

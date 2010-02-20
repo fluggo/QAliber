@@ -87,6 +87,8 @@ namespace QAliber.Builder.Presentation
 			this.tableDataGridView.Name = "tableDataGridView";
 			this.tableDataGridView.Size = new System.Drawing.Size(424, 253);
 			this.tableDataGridView.TabIndex = 0;
+			this.tableDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tableDataGridView_MouseDown);
+			this.tableDataGridView.Paint += new System.Windows.Forms.PaintEventHandler(this.tableDataGridView_Paint);
 			this.tableDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableDataGridView_CellContentClick);
 			// 
 			// gridContextMenuStrip
@@ -95,19 +97,19 @@ namespace QAliber.Builder.Presentation
 			this.insertColumnToolStripMenuItem,
 			this.removeColumnToolStripMenuItem});
 			this.gridContextMenuStrip.Name = "gridContextMenuStrip";
-			this.gridContextMenuStrip.Size = new System.Drawing.Size(152, 48);
+			this.gridContextMenuStrip.Size = new System.Drawing.Size(164, 48);
 			// 
 			// insertColumnToolStripMenuItem
 			// 
 			this.insertColumnToolStripMenuItem.Name = "insertColumnToolStripMenuItem";
-			this.insertColumnToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+			this.insertColumnToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			this.insertColumnToolStripMenuItem.Text = "Insert Column";
 			this.insertColumnToolStripMenuItem.Click += new System.EventHandler(this.insertColumnToolStripMenuItem_Click);
 			// 
 			// removeColumnToolStripMenuItem
 			// 
 			this.removeColumnToolStripMenuItem.Name = "removeColumnToolStripMenuItem";
-			this.removeColumnToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+			this.removeColumnToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			this.removeColumnToolStripMenuItem.Text = "Remove Column";
 			this.removeColumnToolStripMenuItem.Click += new System.EventHandler(this.removeColumnToolStripMenuItem_Click);
 			// 
