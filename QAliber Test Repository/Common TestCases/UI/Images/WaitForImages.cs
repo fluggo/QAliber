@@ -85,7 +85,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 				rect = imageFinder.Find();
 				if (rect.X >= 0)
 				{
-					Log.Default.Info("Image was found at " + rect);
+					LogPassedByExpectedResult("Image was found at " + rect, "");
 					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 					return;
 				}
@@ -93,7 +93,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 				imageFinder = new ImageFinder(mainImage, subImage);
 			}
 
-			Log.Default.Error("Couldn't find the image within the desktop in the timeout given");
+			LogFailedByExpectedResult("Couldn't find the image within the desktop in the timeout given", "");
 			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 
 		}

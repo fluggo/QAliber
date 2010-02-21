@@ -58,7 +58,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			System.Windows.Rect r = imageFinder.Find();
 			if (r.X < 0)
 			{
-				Log.Default.Error("Couldn't find the image within the desktop");
+				LogFailedByExpectedResult("Couldn't find the image within the desktop", "");
 				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 			else

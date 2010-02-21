@@ -67,6 +67,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	
 		public override void Body()
 		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			string code = "UIAWindow w = " + control + " as UIAWindow;\n";
 			code += "w.Resize(" + size.Width + ", " + size.Height + ");\n";
 			code += "return null;\n";

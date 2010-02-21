@@ -50,6 +50,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 				else
 					key.DeleteValue(regVal);
 			}
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			
 		}
 

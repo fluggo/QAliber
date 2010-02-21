@@ -59,6 +59,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			}
 			generatedItem = i.Current.ToString();
 			Log.Default.Info("Item picked = '" + generatedItem + "'");
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private ListVariableDropDownList listName;

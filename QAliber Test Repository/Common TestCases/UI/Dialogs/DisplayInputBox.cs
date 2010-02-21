@@ -82,6 +82,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	
 		public override void Body()
 		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			InputForm inputForm = new InputForm(title, text);
 			inputForm.ShowDialog();
 			inputString = inputForm.Input;

@@ -83,6 +83,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	
 		public override void Body()
 		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			string code = "UIControlBase c = " + control + ";\n";
 			code += "c.Drag(MouseButtons." + button + ", new Point(" + point1.X + ", " + point1.Y + ")" + ", new Point(" + point2.X + ", " + point2.Y + "));\n";
 			code += "return null;\n";

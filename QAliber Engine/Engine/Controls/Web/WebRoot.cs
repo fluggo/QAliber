@@ -104,30 +104,25 @@ namespace QAliber.Engine.Controls.Web
 
 		private void BuildPages()
 		{
-			
-				
-				foreach (InternetExplorer ie in ieWindows)
+			foreach (InternetExplorer ie in ieWindows)
+			{
+				if (ie.Document is HTMLDocument)
 				{
-					if (ie.Document is HTMLDocument)
+					HTMLDocument doc = (HTMLDocument)ie.Document;
+					if (!string.IsNullOrEmpty(doc.title) && ie.Visible)
 					{
-						HTMLDocument doc = (HTMLDocument)ie.Document;
-						if (!string.IsNullOrEmpty(doc.title) && ie.Visible)
+						lock (this)
 						{
-							//AutomationElement matchingPage = RetrievePageByName(doc.title);
-							//if (matchingPage != null)
-							//{
-								lock (this)
-								{
-									ClearEvents();
-									page = new WebPage(ie, null);
-									page.BeforeNavigation += new EventHandler<NavigationEventArgs>(BeforeNavigationOfAnyPage);
-									page.AfterNavigation += new EventHandler<NavigationEventArgs>(AfterNavigationOfAnyPage);
-								}
-							//}
+							ClearEvents();
+							page = new WebPage(ie, null);
+							page.BeforeNavigation += new EventHandler<NavigationEventArgs>(BeforeNavigationOfAnyPage);
+							page.AfterNavigation += new EventHandler<NavigationEventArgs>(AfterNavigationOfAnyPage);
+							
 						}
+						return;
 					}
 				}
-			
+			}
 		}
 
 		private void BeforeNavigationOfAnyPage(object sender, NavigationEventArgs e)

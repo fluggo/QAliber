@@ -79,6 +79,7 @@
 			this.cmbFindProperty.Location = new System.Drawing.Point(15, 42);
 			this.cmbFindProperty.Name = "cmbFindProperty";
 			this.cmbFindProperty.Size = new System.Drawing.Size(172, 21);
+			this.cmbFindProperty.Sorted = true;
 			this.cmbFindProperty.TabIndex = 1;
 			this.cmbFindProperty.DropDown += new System.EventHandler(this.cmbFindProperty_DropDown);
 			// 

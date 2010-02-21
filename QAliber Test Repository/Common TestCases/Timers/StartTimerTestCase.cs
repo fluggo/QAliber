@@ -53,6 +53,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 		public override void Body()
 		{
 			TimersCollection.AddTimer(key);
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		public override string Description

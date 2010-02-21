@@ -391,10 +391,10 @@ namespace QAliber.Engine.Controls.Web
 		/// </summary>
 		/// <example>
 		/// <code>
-		///   Browser.This.CurrentPage.Navigate("www.amazon.com");
-		///   bool pageFound = Browser.This.WaitForPage("amazon", 30,true);
+		///   Desktop.Web.CurrentPage.Navigate("www.amazon.com");
+		///   bool pageFound = Desktop.Web.WaitForPage("amazon", 30,true);
 		///    if (pageFound)
-		///		   Browser.This.CurrentPage.SetFocus();
+		///		   Desktop.Web.CurrentPage.SetFocus();
 		/// </code>
 		/// </example>
 		public override void SetFocus()
@@ -465,9 +465,9 @@ namespace QAliber.Engine.Controls.Web
 		/// </summary>
 		/// <example>
 		/// <code>
-		///   if(!Browser.This.CurrentPage.IsFocused)
+		///   if(!Desktop.Web.CurrentPage.IsFocused)
 		///    {
-		///		   Browser.This.CurrentPage.SetFocus();
+		///		   Desktop.Web.CurrentPage.SetFocus();
 		///    }
 		/// </code>
 		/// </example>
@@ -487,7 +487,7 @@ namespace QAliber.Engine.Controls.Web
 		/// </summary>
 		/// <example>
 		/// <code>
-		/// int numOfForms = Browser.This.CurrentPage.NumberOfForms;
+		/// int numOfForms = Desktop.Web.CurrentPage.NumberOfForms;
 		/// </code>
 		/// </example>
 		[Category("Web Page")]
@@ -501,12 +501,12 @@ namespace QAliber.Engine.Controls.Web
 		/// </summary>
 		/// <example>
 		/// <code>
-		///  while (Browser.This.CurrentPage.ActiveElement.InnerText != "About Google")
+		///  while (Desktop.Web.CurrentPage.ActiveElement.InnerText != "About Google")
 		///    {
-		///		   Browser.This.CurrentPage.Write("{TAB}");
+		///		   Desktop.Web.CurrentPage.Write("{TAB}");
 		///		   System.Threading.Thread.Sleep(500);
 		///    }
-		///    Browser.This.CurrentPage.FocusedElement.Click();
+		///    Desktop.Web.CurrentPage.FocusedElement.Click();
 		/// </code>
 		/// </example>
 		/// <returrns>Current active WebControl</returrns>

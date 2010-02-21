@@ -76,6 +76,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 				}
 				while (count > 0); // any more data to read?
 			}
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string url;

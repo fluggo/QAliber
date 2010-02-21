@@ -62,6 +62,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 		public override void Body()
 		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			string code = "UIControlBase c = " + control + ";\n";
 			code += "c.GetImage().Save(@\"" + file + "\");\n";
 			code += "return null;\n";

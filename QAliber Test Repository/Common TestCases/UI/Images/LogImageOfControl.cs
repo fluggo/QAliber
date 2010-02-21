@@ -62,6 +62,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 		public override void Body()
 		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			string code = "UIControlBase c = " + control + ";\n";
 			code += "return c.GetImage();\n";
 			Bitmap image = (Bitmap)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);

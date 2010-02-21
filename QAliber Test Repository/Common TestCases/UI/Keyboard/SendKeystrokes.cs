@@ -79,6 +79,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 	
 		public override void Body()
 		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			string code = "UIControlBase c = " + control + ";\n";
 			code += "c.Write(\"" + keystrokes + "\");\n";
 			code += "return null;\n";

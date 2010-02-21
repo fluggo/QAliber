@@ -346,7 +346,7 @@ namespace QAliber.TestModel
 			set { originalPath = value; }
 		}
 
-		protected TestCaseResult expectedResult = TestCaseResult.None;
+		protected TestCaseResult expectedResult = TestCaseResult.Passed;
 
 		/// <summary>
 		/// The expected result for this test case, for support of both positive and negative tests in the same test case

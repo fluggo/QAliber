@@ -39,6 +39,7 @@ using QAliber.Engine;
 using QAliber.VS2005.Plugin.Commands;
 using QAliber.Engine.Win32;
 using QAliber.Engine.Controls.UIA;
+using QAliber.Engine.Controls.WPF;
 
 namespace QAliber.VS2005.Plugin
 {
@@ -305,19 +306,22 @@ namespace QAliber.VS2005.Plugin
 			if (control != null)
 			{
 				TrackSelection(control);
-				try
+				if (!(control is WebRoot || control is WPFRoot))
 				{
-					//Trying to get the layout, (an indication that the control exists
-					System.Windows.Rect dummy = control.Layout;
-					if (dummy == System.Windows.Rect.Empty)
-						throw new Exception("Layout is empty");
-				}
-				catch (Exception)
-				{
-					//Control does not exist, changing icon and disabling context menu
-					e.Node.SelectedImageKey = e.Node.ImageKey = "notexists.bmp";
-					e.Node.ContextMenuStrip = null;
-					treeView.Refresh();
+					try
+					{
+						//Trying to get the layout, (an indication that the control exists
+						System.Windows.Rect dummy = control.Layout;
+						if (dummy == System.Windows.Rect.Empty)
+							throw new Exception("Layout is empty");
+					}
+					catch (Exception)
+					{
+						//Control does not exist, changing icon and disabling context menu
+						e.Node.SelectedImageKey = e.Node.ImageKey = "notexists.bmp";
+						e.Node.ContextMenuStrip = null;
+						treeView.Refresh();
+					}
 				}
 				
 			}

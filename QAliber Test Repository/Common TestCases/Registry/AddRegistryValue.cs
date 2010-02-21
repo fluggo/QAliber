@@ -48,6 +48,8 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			string val = regkey.Substring(index + 1);
 
 			Microsoft.Win32.Registry.SetValue(key, val, regVal);
+
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string regkey = "";

@@ -65,8 +65,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			}
 			else
 			{
-				LogFailedByExpectedResult("Registry values are different", "Actual : " + realVal + "\nExpected : " + regVal);
-				
+			   LogFailedByExpectedResult("Registry values are different", "Actual : " + realVal + "\nExpected : " + regVal);
 			}
 			
 		}

@@ -14,9 +14,11 @@ AppSupportURL=http://www.qaliber.net/
 AppUpdatesURL=http://www.qaliber.net/
 CreateAppDir=no
 LicenseFile=..\QAliber Test Builder\Presentation\COPYING.txt
-OutputBaseFilename=setup
+OutputBaseFilename=QAliberTestSuiteSetup
 Compression=lzma
 SolidCompression=yes
+WizardImageFile=QAliberSetupLogo.bmp
+WizardSmallImageFile=QAliberLogo55.bmp
 
 [Types]
 Name: "full"; Description: "Full installation"
