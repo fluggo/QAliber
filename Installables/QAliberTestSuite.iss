@@ -50,7 +50,7 @@ Filename: "msiexec"; Parameters: "/x {{105E14C1-C2C6-486F-81B0-3217DFDA1086}"; W
 [Code]
 function IsVS2005Installed() : Boolean;
 begin
-   Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'Software\Microsoft\VisualStudio\8.0\InstallDir') or RegKeyExists(HKEY_LOCAL_MACHINE, 'Software\Wow6432Node\Microsoft\VisualStudio\8.0\InstallDir');
+   Result := RegValueExists(HKEY_LOCAL_MACHINE, 'Software\Microsoft\VisualStudio\8.0', 'InstallDir') or RegValueExists(HKEY_LOCAL_MACHINE, 'Software\Wow6432Node\Microsoft\VisualStudio\8.0', 'InstallDir');
 end;
 
 function IsVS2008Installed() : Boolean;
@@ -62,5 +62,6 @@ function IsVSInstalled() : Boolean;
 begin
     Result := IsVS2005Installed() or IsVS2008Installed();
 end;
+
 
 

@@ -25,6 +25,7 @@ using Microsoft.Win32;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio;
 
 namespace QAliber.VS2005.Plugin
 {
@@ -49,7 +50,7 @@ namespace QAliber.VS2005.Plugin
 	[DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\8.0Exp")]
 	// This attribute is used to register the informations needed to show the this package
 	// in the Help/About dialog of Visual Studio.
-	[InstalledProductRegistration(false, "#110", "#112", "1.0", IconResourceID = 400)]
+	[InstalledProductRegistration(true, "#110", "#112", "1.0", IconResourceID = 400)]
 	// In order be loaded inside Visual Studio in a machine that has not the VS SDK installed, 
 	// package needs to have a valid load key (it can be requested at 
 	// http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
@@ -62,7 +63,7 @@ namespace QAliber.VS2005.Plugin
 	//[ProvideOptionPage(typeof(QAliber.Recorder.RecorderConfig), "QAliber Test Developer", "Recorder", 101, 106, true)]
 	//[ProvideOptionPage(typeof(QAliber.Engine.PlayerConfig), "QAliber Test Developer", "Player", 101, 106, true)]
 	[Guid(GuidList.guidUITestingPackagePkgString)]
-	public sealed class QAliberTestingPackage : Package
+	public sealed class QAliberTestingPackage : Package, IVsInstalledProduct
 	{
 		const int bitmapResourceID = 300;
 		
@@ -175,6 +176,41 @@ namespace QAliber.VS2005.Plugin
 				mcs.AddCommand(menuStopRecord);
 			}
 		}
+		#endregion
+
+		#region IVsInstalledProduct Members
+
+		public int IdBmpSplash(out uint pIdBmp)
+		{
+			pIdBmp = 0;
+			return VSConstants.S_OK;
+		}
+
+		public int IdIcoLogoForAboutbox(out uint pIdIco)
+		{
+			pIdIco = 400;
+			return VSConstants.S_OK;
+		}
+
+		public int OfficialName(out string pbstrName)
+		{
+			pbstrName = "QAliber Visual Studio Plug In";
+			return VSConstants.S_OK;
+
+		}
+
+		public int ProductDetails(out string pbstrProductDetails)
+		{
+			pbstrProductDetails = "QAliber VS plug-in will allow you to create and deliver fast system tests, much like unit tests";
+			return VSConstants.S_OK;
+		}
+
+		public int ProductID(out string pbstrPID)
+		{
+			pbstrPID = "1.0";
+			return VSConstants.S_OK;
+		}
+
 		#endregion
 
 		private MenuCommand menuRecord;
