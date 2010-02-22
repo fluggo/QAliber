@@ -1072,11 +1072,12 @@ namespace QAliber.Engine.Controls
 	   
 		protected bool CheckExistence()
 		{
-			if (Layout == Rect.Empty)
+			if (Layout == Rect.Empty || Layout.X < -Layout.Width || Layout.Y < -Layout.Height)
 			{
 				QAliber.Logger.Log.Default.Error("Control '" + Name + "' was not found on screen", codePath, QAliber.Logger.EntryVerbosity.Internal);
 				return false;
 			}
+		   
 			if (!Enabled)
 				QAliber.Logger.Log.Default.Warning("Control '" + Name + "' is disabled", codePath, QAliber.Logger.EntryVerbosity.Internal);
 			return true;
