@@ -225,9 +225,9 @@ namespace QAliber.Builder.Presentation
 							control.debugPlayToolStripButton.Enabled = true;
 							control.pauseToolStripButton.Enabled = false;
 							control.stopToolStripButton.Enabled = false;
-							control.FindForm().WindowState = control.winState;
-							control.FindForm().Activate();
+							
 							control.statusToolStripLabel.Text = "Scenario Ended";
+							DelayedActivation();
 							break;
 						case ExecutionState.NotExecuted:
 							control.debugPlayToolStripButton.Enabled = true;
@@ -302,6 +302,7 @@ namespace QAliber.Builder.Presentation
 								lvc.Filename = logFile;
 								if (Properties.Settings.Default.ShowLogAfter)
 									control.dockManager.tabbedScenarioControl.tabbedDocumentControl.SelectedControl = lvc;
+								
 								return;
 							}
 						}
@@ -334,6 +335,23 @@ namespace QAliber.Builder.Presentation
 						control.statusToolStripLabel.Text = "Breakpoint Reached";
 						control.FindForm().WindowState = control.winState;
 					}
+			}
+		}
+
+		private void DelayedActivation()
+		{
+			new System.Threading.Thread(new System.Threading.ThreadStart(DelayedActivationWorker)).Start();
+		}
+
+		private void DelayedActivationWorker()
+		{
+			System.Threading.Thread.Sleep(500);
+			if (control.InvokeRequired)
+				control.Invoke(new System.Threading.ThreadStart(DelayedActivationWorker));
+			else
+			{
+				control.FindForm().WindowState = control.winState;
+				control.FindForm().Activate();
 			}
 		}
 	}

@@ -17,6 +17,7 @@ namespace QAliber.TestModel.TestCases
 			if (DeserializationBinder.errorIndex < DeserializationBinder.errorTypes.Count)
 			{
 				name += " " + DeserializationBinder.errorTypes[DeserializationBinder.errorIndex];
+				DeserializationBinder.errorIndex++;
 			}
 
 		}
