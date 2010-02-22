@@ -83,7 +83,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			string code = "UIControlBase c = " + control + ";\n";
 			code += "c.Write(\"" + keystrokes + "\");\n";
 			code += "return null;\n";
+			EventHandler<LogEventArgs> eventHandler = new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
+			Log.Default.BeforeErrorIsPosted += eventHandler;
 			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+			Log.Default.BeforeErrorIsPosted -= eventHandler;
 
 		}
 
@@ -97,6 +100,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			{
 				base.Description = value;
 			}
+		}
+
+		private void BeforeErrorIsPosted(object sender, LogEventArgs e)
+		{
+			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 		}
 
 	}
