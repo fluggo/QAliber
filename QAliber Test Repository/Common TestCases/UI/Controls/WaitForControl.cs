@@ -49,7 +49,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			set { control = value; }
 		}
 
-		private int timeout;
+		private int timeout = 1000;
 
 		[Category("Control")]
 		[DisplayName("2) Timeout")]
@@ -70,16 +70,23 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			
 			code = "UIControlBase c = " + control + ";return c;\n";
 			Stopwatch watch = new Stopwatch();
-			
+			string lastException = string.Empty;
 			watch.Start();
-			while (watch.ElapsedMilliseconds < timeout)
+			while (watch.ElapsedMilliseconds < timeout + 10)
 			{
-				UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
-			   
-				if (c != null)
+				try
 				{
-					res = true;
-					break;
+					UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+
+					if (c != null)
+					{
+						res = true;
+						break;
+					}
+				}
+				catch (Exception ex)
+				{
+					lastException = ex.Message;
 				}
 			}
 			if (res)
@@ -87,6 +94,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			else
 			{
 				LogFailedByExpectedResult("Control not found after " + timeout + " miliseconds",control);
+				if (lastException != string.Empty)
+				{
+					Log.Default.Warning("Exception caught", lastException, EntryVerbosity.Debug);
+				}
 				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 

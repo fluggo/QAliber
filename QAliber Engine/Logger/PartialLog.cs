@@ -35,20 +35,21 @@ namespace QAliber.Logger
 
 		public bool TryToFix()
 		{
-			CopyPartialLog();
-			int openEntries = CountOpenChildEntries();
-
-			using (StreamWriter writer = new StreamWriter(fullPath, true))
-			{
-				for (int i = 0; i < openEntries; i++)
-				{
-					writer.WriteLine("</ChildEntries>");
-
-				}
-				writer.WriteLine("</LogEntries>");
-			}
 			try
 			{
+				CopyPartialLog();
+				int openEntries = CountOpenChildEntries();
+
+				using (StreamWriter writer = new StreamWriter(fullPath, true))
+				{
+					for (int i = 0; i < openEntries; i++)
+					{
+						writer.WriteLine("</ChildEntries>");
+
+					}
+					writer.WriteLine("</LogEntries>");
+				}
+
 				XmlDocument xmlDoc = new XmlDocument();
 				xmlDoc.Load(fullPath);
 			}

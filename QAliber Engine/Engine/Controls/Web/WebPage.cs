@@ -72,8 +72,10 @@ namespace QAliber.Engine.Controls.Web
 		/// </example>
 		public WebControl FindByID(string tagName, string id)
 		{
-
-			IHTMLElement element = docInstance.getElementById(id);
+			IHTMLElement element = null;
+			
+			element = docInstance.getElementById(id);
+			
 			//if (element == null)
 			//{
 			//	  foreach (UIControlBase child in Children)

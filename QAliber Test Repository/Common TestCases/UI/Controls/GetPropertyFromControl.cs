@@ -83,6 +83,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			string code = "UIControlBase c = " + control + ";\n";
+			vals = "";
 			foreach (string item in list.SelectedItems)
 			{
 				string execCode = code + "return c." + item + ".ToString();";

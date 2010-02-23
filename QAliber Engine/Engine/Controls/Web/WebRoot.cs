@@ -104,27 +104,43 @@ namespace QAliber.Engine.Controls.Web
 
 		private void BuildPages()
 		{
+			
 			foreach (InternetExplorer ie in ieWindows)
 			{
-				if (ie.Document is HTMLDocument)
+				try
 				{
-					HTMLDocument doc = (HTMLDocument)ie.Document;
-					if (!string.IsNullOrEmpty(doc.title) && ie.Visible)
+					int i = 0;
+					while (ie.ReadyState != tagREADYSTATE.READYSTATE_INTERACTIVE && ie.ReadyState != tagREADYSTATE.READYSTATE_COMPLETE)
 					{
-						lock (this)
+						System.Threading.Thread.Sleep(1000);
+						i++;
+						if (i > 10)
+							break;
+					}
+					if (ie.Document is HTMLDocument)
+					{
+						
+						
+						HTMLDocument doc = (HTMLDocument)ie.Document;
+						if (!string.IsNullOrEmpty(doc.title) && ie.Visible)
 						{
-							ClearEvents();
-							page = new WebPage(ie, null);
-							page.BeforeNavigation += new EventHandler<NavigationEventArgs>(BeforeNavigationOfAnyPage);
-							page.AfterNavigation += new EventHandler<NavigationEventArgs>(AfterNavigationOfAnyPage);
-							
+							lock (this)
+							{
+								ClearEvents();
+								page = new WebPage(ie, null);
+								page.BeforeNavigation += new EventHandler<NavigationEventArgs>(BeforeNavigationOfAnyPage);
+								page.AfterNavigation += new EventHandler<NavigationEventArgs>(AfterNavigationOfAnyPage);
+
+							}
+							return;
 						}
-						return;
 					}
 				}
+				catch { }
 			}
 		}
 
+		
 		private void BeforeNavigationOfAnyPage(object sender, NavigationEventArgs e)
 		{
 			if (BeforeNavigationInAnyPage != null)
@@ -144,12 +160,12 @@ namespace QAliber.Engine.Controls.Web
 
 		private void ieWindows_WindowRevoked(int lCookie)
 		{
-			BuildPages();
+			new System.Threading.Thread(new System.Threading.ThreadStart(BuildPages)).Start();
 		}
 
 		private void ieWindows_WindowRegistered(int lCookie)
 		{
-			BuildPages();
+			new System.Threading.Thread(new System.Threading.ThreadStart(BuildPages)).Start();
 		}
 
 		#region IControlLocator Members
@@ -189,6 +205,6 @@ namespace QAliber.Engine.Controls.Web
 
 		private ShellWindows ieWindows = new ShellWindows();
 		private WebPage page;
-
+		
 	}
 }

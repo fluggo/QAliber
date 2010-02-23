@@ -116,6 +116,7 @@ namespace Darwen.Windows.Forms.Controls.TabbedDocuments
 
 			_menuStrip.Visible = true;
 
+			HighlightExpanderIfNeeded();
 			OnDocumentAdded(control);			 
 		}
 
@@ -198,6 +199,7 @@ namespace Darwen.Windows.Forms.Controls.TabbedDocuments
 				}
 			}
 
+			HighlightExpanderIfNeeded();
 			OnDocumentRemoved(control);
 		}
 
@@ -241,6 +243,12 @@ namespace Darwen.Windows.Forms.Controls.TabbedDocuments
 			{
 				base.OnPaintBackground(e);
 			}
+		}
+
+		protected override void OnSizeChanged(EventArgs e)
+		{
+			HighlightExpanderIfNeeded();
+			base.OnSizeChanged(e);
 		}
 
 		protected virtual void OnSelectedControlChanged()
@@ -333,6 +341,26 @@ namespace Darwen.Windows.Forms.Controls.TabbedDocuments
 					return null;
 				}
 			}
+		}
+
+		private void HighlightExpanderIfNeeded()
+		{
+			int hiddenCount = 0;
+			foreach (ToolStripItem item in _menuStrip.Items)
+			{
+				if (item.Bounds.X + item.Bounds.Width > Width)
+					hiddenCount++;
+				if (hiddenCount >= 1)
+				{
+					_activeFilesToolStripMenuItem.ForeColor = Color.Red;
+					_activeFilesToolStripMenuItem.Text = "7";
+					_activeFilesToolStripMenuItem.Font = new System.Drawing.Font("Marlett", 11.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+					return;
+				}
+			}
+			_activeFilesToolStripMenuItem.ForeColor = SystemColors.ControlText;
+			_activeFilesToolStripMenuItem.Text = "6";
+			_activeFilesToolStripMenuItem.Font = new System.Drawing.Font("Marlett", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
 		}
 
 		private void MakeVisible(Control control)

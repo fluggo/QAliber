@@ -576,36 +576,39 @@ namespace QAliber.Logger.Controls
 		private void FillTree()
 		{
 			logTree.BackColor = Color.White;
-			XmlDocument xmlDoc = new XmlDocument();
-			try
+			if (File.Exists(filename))
 			{
-				xmlDoc.Load(filename);
-			}
-			catch
-			{
-				PartialLog partLog = new PartialLog(filename);
-				if (partLog.TryToFix())
+				XmlDocument xmlDoc = new XmlDocument();
+				try
 				{
-					xmlDoc.Load(partLog.FixedPath);
-					logTree.BackColor = Color.LightYellow;
+					xmlDoc.Load(filename);
 				}
-				else 
-					throw;
-			}
-			logTree.Nodes.Clear();
+				catch
+				{
+					PartialLog partLog = new PartialLog(filename);
+					if (partLog.TryToFix())
+					{
+						xmlDoc.Load(partLog.FixedPath);
+						logTree.BackColor = Color.LightYellow;
+					}
+					else
+						throw;
+				}
+				logTree.Nodes.Clear();
 
-			foreach (XmlNode node in xmlDoc.ChildNodes)
-			{
-				if (node.Name == "LogEntries")
+				foreach (XmlNode node in xmlDoc.ChildNodes)
 				{
-					FillTreeRec(logTree.Nodes, node, 0);
+					if (node.Name == "LogEntries")
+					{
+						FillTreeRec(logTree.Nodes, node, 0);
+					}
+
 				}
-				
+				slideShowControl.Init(Path.GetDirectoryName(filename));
+				perfGraphControl.Init(Path.GetDirectoryName(filename));
+				videoPanelToolStripButton.Enabled = slideShowControl.Visible;
+				resourcesGraphToolStripButton.Enabled = perfGraphControl.Visible;
 			}
-			slideShowControl.Init(Path.GetDirectoryName(filename));
-			perfGraphControl.Init(Path.GetDirectoryName(filename));
-			videoPanelToolStripButton.Enabled = slideShowControl.Visible;
-			resourcesGraphToolStripButton.Enabled = perfGraphControl.Visible;
 		}
 
 		private void FillTreeRec(TreeNodeCollection tNodes, XmlNode xNode, int resLevel)
