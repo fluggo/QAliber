@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_03D3F76AF4B343A7AA9E002A3FAC6687"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0E81DB566F7A435D9A9F068E40BD5458"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -59,6 +65,24 @@
         {
         "MsmKey" = "8:_2C0E95B6412A4AD39B84DF36160F56C6"
         "OwnerKey" = "8:_3B0FE3CBA6B5FE321DA09334A8C3A2F6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2C943E961E6C45AF891AFB0C0D773E0B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_389543BE6EB4418FB63B66DF68815E34"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3B0861890FFC4063A9B635D03440D70F"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,6 +154,12 @@
         "Entry"
         {
         "MsmKey" = "8:_5F22431B857C4A90A2364671851423CC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5F9A9A47A4F04310881D49E5DD15594B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -231,13 +261,31 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_823CD26C29E94CF7ADE770E52B52B89E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8B88BD56D92E4C8DAFA52399F10C2134"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_A8300232AE634AD490175EE326F0C303"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_ABDB001E0A2148A882BD1F802B714750"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD95A6EBB00A402990D488006964884C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -622,6 +670,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_03D3F76AF4B343A7AA9E002A3FAC6687"
+            {
+            "SourcePath" = "8:..\\VS Templates\\CSharpTestCasesPackage.zip"
+            "TargetName" = "8:CSharpTestCasesPackage.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_036C50AD48474B1E820C121FC3DEE18E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_26C69A3C695DC145F0BE3FDC1044AD31"
             {
             "AssemblyRegister" = "3:1"
@@ -671,6 +739,66 @@
             "Register" = "3:4"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2C943E961E6C45AF891AFB0C0D773E0B"
+            {
+            "SourcePath" = "8:..\\VS Templates\\VBTestCasesPackage.zip"
+            "TargetName" = "8:VBTestCasesPackage.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_206999877132416291760E12577C9EC2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_389543BE6EB4418FB63B66DF68815E34"
+            {
+            "SourcePath" = "8:..\\VS Templates\\VBTestCase.zip"
+            "TargetName" = "8:VBTestCase.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_887845D7F92D45CDA33D4C915D21427B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3B0861890FFC4063A9B635D03440D70F"
+            {
+            "SourcePath" = "8:..\\VS Templates\\VBTestCase.zip"
+            "TargetName" = "8:VBTestCase.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_9ADDC8CBD5CF483F91D85A61F13D7425"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3B0FE3CBA6B5FE321DA09334A8C3A2F6"
@@ -755,6 +883,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5F9A9A47A4F04310881D49E5DD15594B"
+            {
+            "SourcePath" = "8:..\\VS Templates\\CSharpTestCase.zip"
+            "TargetName" = "8:CSharpTestCase.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_EBE3E95F633249D18A5C39BCC664FED4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7464316936E259C63E161C0632038BFB"
             {
             "AssemblyRegister" = "3:1"
@@ -815,6 +963,66 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_823CD26C29E94CF7ADE770E52B52B89E"
+            {
+            "SourcePath" = "8:..\\VS Templates\\CSharpTestCasesPackage.zip"
+            "TargetName" = "8:CSharpTestCasesPackage.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_833A3FD1DFEC484A8D394F80A8B1D3D3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A8300232AE634AD490175EE326F0C303"
+            {
+            "SourcePath" = "8:..\\VS Templates\\VBTestCasesPackage.zip"
+            "TargetName" = "8:VBTestCasesPackage.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_78971B4EDCB640048743C95123E0F3B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BD95A6EBB00A402990D488006964884C"
+            {
+            "SourcePath" = "8:..\\VS Templates\\CSharpTestCase.zip"
+            "TargetName" = "8:CSharpTestCase.zip"
+            "Tag" = "8:"
+            "Folder" = "8:_F22BA37A0B6D479DACA1C1F9779193A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BFBACD4C543CBB24FE0A2F579675A5A4"
@@ -1018,15 +1226,169 @@
                     "Property" = "8:_025185B79A344A83875E520643D75D28"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_777DA8DE92A14226A2CB829D84C67D9B"
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_C19D436D81374EDC983573767523C95F"
                             {
-                            "Name" = "8:ttt"
-                            "AlwaysCreate" = "11:TRUE"
-                            "Condition" = "8:FILEEXISTS1"
+                            "Name" = "8:Templates"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
                             "Transitive" = "11:FALSE"
-                            "Property" = "8:_B6C2968F67074E2A80209876372EC692"
+                            "Property" = "8:_8BFA218B479E45C1935CDBC8557AAFF3"
                                 "Folders"
                                 {
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_43E5B5D9151741D3B8FBA7E5D7421BD5"
+                                    {
+                                    "Name" = "8:ItemTemplates"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_1E89C21CAC6B4CF1BDB98F56B9BA0803"
+                                        "Folders"
+                                        {
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_9ADDC8CBD5CF483F91D85A61F13D7425"
+                                            {
+                                            "Name" = "8:Visual Basic"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_6956DE5A15D14B5597A487A462688FB2"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_EBE3E95F633249D18A5C39BCC664FED4"
+                                            {
+                                            "Name" = "8:Visual C#"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_973B5F461F0149C6984C2AA3561EB9FD"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_50F359E94C904C60BB9E8B2604123B48"
+                                    {
+                                    "Name" = "8:ProjectTemplates"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_FAF6410EF8AE4096BFCE4F696DAA27F0"
+                                        "Folders"
+                                        {
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_036C50AD48474B1E820C121FC3DEE18E"
+                                            {
+                                            "Name" = "8:Visual C#"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_399F9014E0BF4B5AA13F4C6E5BA16955"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_206999877132416291760E12577C9EC2"
+                                            {
+                                            "Name" = "8:Visual Basic"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_7ED7AB01986D461CAC3E59592F63D420"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_6DD8D17C15DC40C490AB2FE1CC3E79C4"
+                    {
+                    "Name" = "8:Visual Studio 2008"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_8E67C1348802430D8ADAB788DAC15CB0"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_4255C45007FC4A43AB9C466094EBB50E"
+                            {
+                            "Name" = "8:Templates"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_1C323EBF80CA44108888798E1276C81B"
+                                "Folders"
+                                {
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_4CE09A0C85124C74AEBB66B10E1B8459"
+                                    {
+                                    "Name" = "8:ProjectTemplates"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_B87C0687C49E4171B391EB1E5FFC730A"
+                                        "Folders"
+                                        {
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_78971B4EDCB640048743C95123E0F3B3"
+                                            {
+                                            "Name" = "8:Visual Basic"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_0DE01EA95C4647BA9693351386851F83"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_833A3FD1DFEC484A8D394F80A8B1D3D3"
+                                            {
+                                            "Name" = "8:Visual C#"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_AA4FEF5E9DAD4A759A67C3ACBF42E156"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_E73F07ED77F94AA09F0E7F3096778340"
+                                    {
+                                    "Name" = "8:ItemTemplates"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_2865ECF7C8294A67ABE7F9D3812BB377"
+                                        "Folders"
+                                        {
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_887845D7F92D45CDA33D4C915D21427B"
+                                            {
+                                            "Name" = "8:Visual Basic"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_7EF2C323720E4649A27B6E75E0F8FD4D"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_F22BA37A0B6D479DACA1C1F9779193A7"
+                                            {
+                                            "Name" = "8:Visual C#"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "Property" = "8:_0A118792141A445FB218BDCBF444CF66"
+                                                "Folders"
+                                                {
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1110,7 +1472,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QAliber Developer Standalone"
         "ProductCode" = "8:{D07EB533-D87F-4736-9A87-217A81AACA09}"
-        "PackageCode" = "8:{E7450985-4B53-4EBC-AA7E-846D54F62296}"
+        "PackageCode" = "8:{E112CF13-A23C-4866-979A-89E3234F43F1}"
         "UpgradeCode" = "8:{1B525FAD-DA66-4BC1-A66C-8F901AC3FFE2}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
