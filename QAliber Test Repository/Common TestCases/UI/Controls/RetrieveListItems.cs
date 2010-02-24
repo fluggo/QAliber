@@ -90,9 +90,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 				else if (c is HTMLSelect)
 				{
 					HTMLOption[] ops = ((HTMLSelect)c).Options;
-
+					listItems = new string[ops.Length];
 					for (int idx = 0; idx < ops.Length; idx++)
+					{
 						listItems[idx] = ops[idx].Text;
+					}
 
 					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 				}
