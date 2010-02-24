@@ -1102,7 +1102,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QAliber Test Builder"
         "ProductCode" = "8:{20D197D0-8E7B-42A5-B58E-8E510350F352}"
-        "PackageCode" = "8:{C0E3A7F1-27C7-42D8-A552-F25866DFEB14}"
+        "PackageCode" = "8:{F42F919F-2D32-4491-9A0E-CA9A8D407DEE}"
         "UpgradeCode" = "8:{57420986-055B-45EA-9A34-A27EE8E5D245}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"

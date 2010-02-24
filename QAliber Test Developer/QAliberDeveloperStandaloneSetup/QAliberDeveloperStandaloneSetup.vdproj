@@ -615,7 +615,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\QAliberDeveloperStandaloneSetup.msi"
+        "OutputFilename" = "8:..\\..\\Installables\\QAliberDeveloperStandaloneSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -625,6 +625,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.0"
+                    {
+                    "Name" = "8:.NET Framework 3.0 (x86)"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.0"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -1446,21 +1467,6 @@
         }
         "Locator"
         {
-            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_14A57AFE0CB64BCDB821C7C29DE27A8E"
-            {
-            "Name" = "8:Search for File1"
-            "Folder" = "8:[PersonalFolder]"
-            "Depth" = "2:4"
-            "FileName" = "8:CurrentSetting.vssettings"
-            "MinVesion" = "8:"
-            "MaxVersion" = "8:"
-            "MinSize" = "8:"
-            "MaxSize" = "8:"
-            "MinDate" = "8:"
-            "MaxDate" = "8:"
-            "Languages" = "8:"
-            "Property" = "8:FILEEXISTS1"
-            }
         }
         "MsiBootstrapper"
         {
@@ -1472,7 +1478,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QAliber Developer Standalone"
         "ProductCode" = "8:{D07EB533-D87F-4736-9A87-217A81AACA09}"
-        "PackageCode" = "8:{E112CF13-A23C-4866-979A-89E3234F43F1}"
+        "PackageCode" = "8:{1C30DC14-C4AC-4392-BE96-879E3125FC78}"
         "UpgradeCode" = "8:{1B525FAD-DA66-4BC1-A66C-8F901AC3FFE2}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
