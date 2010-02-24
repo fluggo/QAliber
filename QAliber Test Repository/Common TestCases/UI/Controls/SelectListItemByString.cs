@@ -91,8 +91,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 			   else if (c is HTMLSelect)
 			   {
-				   ((HTMLSelect)c).SelectItem(item);
-				   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				   HTMLOption selectedOp = ((HTMLSelect)c).SelectItem(item);
+				   if (selectedOp != null)
+					   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+
+				   else
+				   {
+					   actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					   Logger.Log.Default.Error("Item was not selected");
+				   }
+
 			   }
 
 			   else
