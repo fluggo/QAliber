@@ -60,6 +60,28 @@ namespace QAliber.Engine.Controls.Web
 			return null;
 		}
 
+		/// <summary>
+		/// Select an HTMLOption control in the list.
+		/// </summary>
+		/// <param name="index">string of the Text propery in the requested HTMLOption</param>
+		/// <example>
+		/// <code>
+		///    //On google preferences page:
+		///    HTMLSelect intfaceLang = Browser.This.CurrentPage.FindByName("SELECT", "hl") as HTMLSelect;
+		///    intfaceLang.SelectItem(2);
+		/// </code>
+		/// </example>
+		/// <returns>HTMLOption control</returns>
+		public HTMLOption SelectItem(int index)
+		{
+			if (index >= Options.Length)
+				QAliber.Logger.Log.Default.Error("Index out of bounds", "", QAliber.Logger.EntryVerbosity.Internal);
+
+			HTMLOption[] itemsArr = Options;
+			SelectedIndex = index;
+			return itemsArr[index];
+		}
+
 		#region props
 		/// <summary>
 		/// Get or Set the selected Index, Set is acting like SelectItem -> sets the HTMLOption in the index as selected.
