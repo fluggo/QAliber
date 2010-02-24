@@ -33,11 +33,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
-	public class SelectListItemByString : TestCase
+	public class SelectListItemByIdx : TestCase
 	{
-		public SelectListItemByString()
+		public SelectListItemByIdx()
 		{
-			name = "Select List Item By String";
+			name = "Select List Item By Index";
 			icon = Properties.Resources.Window;
 		}
 
@@ -53,15 +53,15 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			set { control = value; }
 		}
 
-		private string item;
+		private int index;
 
 		[Category("Control")]
-		[DisplayName("2) Item")]
-		[Description("Items (string) to select")]
-		public string Item
+		[DisplayName("2) Index")]
+		[Description("Index to select 0 is the first item")]
+		public int Index
 		{
-			get {return item;}
-			set { item = value; }
+			get {return index;}
+			set { index = value; }
 		}
 
 		
@@ -85,13 +85,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 				}
 			   if (c is UIAComboBox || c is UIAListBox)
 			   {
-				   ((Engine.Patterns.ISelector)c).Select(item);
+				   ((Engine.Patterns.ISelector)c).Select(index);
 				   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			   }
 
 			   else if (c is HTMLSelect)
 			   {
-				   ((HTMLSelect)c).SelectItem(item);
+				   ((HTMLSelect)c).SelectItem(index);
 				   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			   }
 
