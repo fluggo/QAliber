@@ -634,12 +634,8 @@ namespace QAliber.Logger.Controls
 						newNode.ContextMenuStrip = nodeMenuStrip;
 
 						tNodes.Add(newNode);
-						if (logEntry.Type == EntryType.Warning)
-							warningNodes.Add(newNode);
-						else if (logEntry.Type == EntryType.Error)
-							errorNodes.Add(newNode);
-						else
-							infoNodes.Add(newNode);
+					   
+						currentTestCaseNodes.Add(newNode);
 						node.RemoveChild(node.FirstChild);
 						FillTreeRec(newNode.Nodes, node, resLevel + 1);
 						
@@ -647,8 +643,18 @@ namespace QAliber.Logger.Controls
 				}
 				else if (node.Name == "LogResult")
 				{
-					
-					BubbleIconUp(infoNodes, warningNodes, errorNodes, (TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText), resLevel);
+
+					BubbleIconUp((TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
+					nodesStack.Pop();
+					if (nodesStack.Count >	0)
+						currentTestCaseNodes = nodesStack.Peek();
+				}
+				else if (node.Name == "TestCase")
+				{
+
+					List<TreeNode> newList = new List<TreeNode>();
+					currentTestCaseNodes = newList;
+					nodesStack.Push(newList);
 				}
 				else
 				{
@@ -666,12 +672,7 @@ namespace QAliber.Logger.Controls
 						newNode.ContextMenuStrip = nodeMenuStrip;
 						tNodes.Add(newNode);
 
-						if (logEntry.Type == EntryType.Warning)
-							warningNodes.Add(newNode);
-						else if (logEntry.Type == EntryType.Error)
-							errorNodes.Add(newNode);
-						else
-							infoNodes.Add(newNode);
+						currentTestCaseNodes.Add(newNode);
 					}
 				}
 			}
@@ -728,65 +729,41 @@ namespace QAliber.Logger.Controls
 			}
 		}
 
-		private void BubbleIconUp(List<TreeNode> iNodes, List<TreeNode> wNodes, List<TreeNode> eNodes, TestCaseResult result, int resLevel)
+		private void BubbleIconUp(TestCaseResult result)
 		{
 			int indexToSet = 4;//"Passed";
 			if (result == TestCaseResult.Failed)
+			{
 				indexToSet = 7;//"Error";
-
-			for (int i = iNodes.Count - 1; i >= 0; i--)
-			{
-				TreeNode node = iNodes[i];
-				if (node.Level >= resLevel)
+				TreeNode firstNode = currentTestCaseNodes[0];
+				do
 				{
-					iNodes.RemoveAt(i);
-
-					while (node.Parent != null)
-					{
-						node = node.Parent;
-						if (node.ImageIndex >= indexToSet)
-							break;
-						node.SelectedImageIndex = node.ImageIndex = indexToSet;
-					}
-				}
+					if (firstNode.ImageIndex >= 7)
+						break;
+					firstNode.SelectedImageIndex = firstNode.ImageIndex = 7;
+					firstNode = firstNode.Parent;
+				} while (firstNode != null);
 			}
 
-			for (int i = wNodes.Count - 1; i >= 0; i--)
+			for (int i = 1; i < currentTestCaseNodes.Count; i++)
 			{
-				TreeNode node = wNodes[i];
-				if (node.Level >= resLevel)
+				int curIndexToSet = indexToSet;
+				TreeNode node = currentTestCaseNodes[i];
+
+				if (((LogEntry)node.Tag).Type == EntryType.Error)
+					curIndexToSet = Math.Max(6, indexToSet);
+				else if (((LogEntry)node.Tag).Type == EntryType.Warning)
+					curIndexToSet = 5;
+				else
+					curIndexToSet = 4;
+				while (node.Parent != null)
 				{
-					wNodes.RemoveAt(i);
-
-					if (indexToSet < 5)//"PassedWarnings";
-						indexToSet = 5;
-					while (node.Parent != null)
-					{
-						node = node.Parent;
-						if (node.ImageIndex >= indexToSet)
-							break;
-						node.SelectedImageIndex = node.ImageIndex = indexToSet;
-					}
+					node = node.Parent;
+					if (node.ImageIndex >= curIndexToSet)
+						break;
+					node.SelectedImageIndex = node.ImageIndex = curIndexToSet;
 				}
-			}
 
-			for (int i = eNodes.Count - 1; i >= 0; i--)
-			{
-				TreeNode node = eNodes[i];
-				if (node.Level >= resLevel)
-				{
-					eNodes.RemoveAt(i);
-
-					if (indexToSet < 6)//"PassedErrors";
-						indexToSet = 6;
-					while (node.Parent != null)
-					{
-						node = node.Parent;
-						if (node.ImageIndex >= indexToSet)
-							break;
-						node.SelectedImageIndex = node.ImageIndex = indexToSet;
-					}
-				}
 			}
 			
 		}
@@ -854,9 +831,8 @@ namespace QAliber.Logger.Controls
 			return res;
 		}
 
-		private List<TreeNode> infoNodes = new List<TreeNode>();
-		private List<TreeNode> warningNodes = new List<TreeNode>();
-		private List<TreeNode> errorNodes = new List<TreeNode>();
+		private List<TreeNode> currentTestCaseNodes;
+		private Stack<List<TreeNode>> nodesStack = new Stack<List<TreeNode>>();
 		private int counter;
 		private string filename;
 

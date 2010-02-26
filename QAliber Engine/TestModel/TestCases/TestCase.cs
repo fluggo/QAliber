@@ -575,7 +575,7 @@ namespace QAliber.TestModel
 		{
 			actualResult = TestCaseResult.None;
 			GetVariables();
-			Log.Default.IndentIn(name, Description);
+			Log.Default.IndentIn(name, Description, true);
 			if (videoOptions != null && videoOptions.CaptureVideo
 				&& !Logger.Slideshow.SlideshowRecorder.Default.IsCapturing)
 			{

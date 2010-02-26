@@ -354,7 +354,8 @@ namespace QAliber.Logger
 		/// </summary>
 		/// <param name="message">The message to show on the folder</param>
 		/// <param name="extra">An additional info to log</param>
-		public void IndentIn(string message, string extra)
+		/// <param name="isTestCase">For internal use, this should always be set to false</param>
+		public void IndentIn(string message, string extra, bool isTestCase)
 		{
 			if (enabled)
 			{
@@ -363,10 +364,23 @@ namespace QAliber.Logger
 				{
 					tabs += "\t";
 				}
+				if (isTestCase)
+					writer.WriteLine(tabs + "<TestCase>" + System.Security.SecurityElement.Escape(message) + "</TestCase>");
 				writer.WriteLine(tabs + "<ChildEntries>");
+				
 				indents++;
 				Info(message, extra);
 			}
+		}
+
+		/// <summary>
+		/// Creates a folder in the log (for structured report)
+		/// </summary>
+		/// <param name="message">The message to show on the folder</param>
+		/// <param name="extra">An additional info to log</param>
+		public void IndentIn(string message, string extra)
+		{
+			IndentIn(message, extra, false);
 		}
 
 		/// <summary>
