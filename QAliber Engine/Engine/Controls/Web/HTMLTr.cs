@@ -99,7 +99,19 @@ namespace QAliber.Engine.Controls.Web
 		public HTMLTd Cell(int index)
 		{
 			if (index <= NumberOfCells)
-				return new HTMLTd((IHTMLElement)((IHTMLTableRow)htmlElement).cells.item(null, index));
+			{
+				IHTMLElementCollection tblCells = ((IHTMLTableRow)htmlElement).cells;
+				HTMLTd[] cellArr = new HTMLTd[tblCells.length];
+				//for (int idx = 0; idx < cellArr.Length; idx++)
+				//	  cellArr[idx] = Cell(idx);
+				int idx = 0;
+				foreach (IHTMLElement cel in tblCells)
+				{
+					cellArr[idx++] = new HTMLTd(cel);
+				}
+
+				return cellArr[index];
+			}
 
 			else
 				return null;

@@ -78,7 +78,13 @@ namespace QAliber.Engine.Controls.Web
 		public HTMLTr Row(int index)
 		{
 			IHTMLElementCollection tblRows = ((IHTMLTable)htmlElement).rows;
-			return new HTMLTr((IHTMLElement)tblRows.item(null, index));
+			HTMLTr[] rowsArr = new HTMLTr[tblRows.length];
+			int idx = 0;
+			foreach (IHTMLElement row in tblRows)
+			{
+				rowsArr[idx++] = new HTMLTr(row);
+			}
+			return rowsArr[index]; 
 		}
 
 	   
