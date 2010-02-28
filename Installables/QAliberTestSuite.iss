@@ -27,7 +27,7 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 [Components]
 Name: "installvs2005"; Description: "Install Visual Studio 2005 Plug-in (QAlibet Test Developer)"; Types: full custom; Check: IsVS2005Installed
 Name: "installvs2008"; Description: "Install Visual Studio 2008 Plug-in (QAlibet Test Developer)"; Types: full custom; Check: IsVS2008Installed
-Name: "installdevsa"; Description: "Install Standalone QAlibet Test Developer (For use with express editions)"; Types: full custom; Check: IsVSNotInstalled
+Name: "installdevsa"; Description: "Install Standalone QAlibet Test Developer (For use with VS express editions)"; Types: full custom; Check: IsVSNotInstalled
 Name: "installbuilder"; Description: "Install QAliber Test Builder"; Types: full custom;
 
 
@@ -68,6 +68,7 @@ function IsVSNotInstalled() : Boolean;
 begin
     Result := not (IsVS2005Installed() or IsVS2008Installed());
 end;
+
 
 
 
