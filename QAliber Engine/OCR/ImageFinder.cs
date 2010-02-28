@@ -78,7 +78,6 @@ namespace QAliber.ImageHandling
 				{
 					for (int j = 0; j < sub.Height; j++)
 					{
-						//Color expVal = sub.GetPixel(i, j);
 						subLoc = j * subData.Stride + i * 3;
 						Color expVal = Color.FromArgb(
 							(int)pSubBase[subLoc + 2], (int)pSubBase[subLoc + 1], (int)pSubBase[subLoc]);
