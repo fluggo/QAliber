@@ -28,5 +28,21 @@ namespace QAliber.Engine.Controls.Web
 	public class HTMLUl: WebControl
 	{
 		public HTMLUl(IHTMLElement element) : base(element) { }
+
+		public List<HTMLLi> Items
+		{
+
+			get
+			{
+				List<HTMLLi> items = new List<HTMLLi>();
+				foreach (UIControlBase item in this.Children)
+				{
+					if (((WebControl)item).TagName.ToLower() == "li")
+						items.Add((HTMLLi)item);
+				}
+
+				return items;
+			}		  
+		}
 	}
 }

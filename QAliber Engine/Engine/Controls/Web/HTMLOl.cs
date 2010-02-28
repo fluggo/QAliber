@@ -12,11 +12,14 @@
  * You should have received a copy of the GNU General Public License
  * along with QAliber.	If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using mshtml;
+using System.Threading;
+using System.ComponentModel;
+
 namespace QAliber.Engine.Controls.Web
 {
 	/// <summary>
@@ -29,5 +32,21 @@ namespace QAliber.Engine.Controls.Web
 		public HTMLOl(IHTMLElement element)
 			: base(element)
 		{ }
+
+		public List<HTMLLi> Items
+		{
+			get
+			{
+				List<HTMLLi> items = new List<HTMLLi>();
+				foreach (UIControlBase item in this.Children)
+				{
+					if (((WebControl)item).TagName.ToLower() == "li")
+						items.Add((HTMLLi)item);
+				}
+
+				return items;
+			}
+		   
+		}
 	}
 }
