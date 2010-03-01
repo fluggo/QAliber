@@ -609,6 +609,8 @@ namespace QAliber.Engine.Controls.Web
 					return null;
 				//case "p":
 				//	  return new HTMLP(element);
+				case "textarea":
+					return new HTMLTextArea(element);
 				default:
 					return new HTMLTag(element);
 			}

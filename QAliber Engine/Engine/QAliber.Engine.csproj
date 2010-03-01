@@ -82,6 +82,7 @@
     <Compile Include="Controls\UIA\UIAControl.cs" />
     <Compile Include="Controls\UIA\UIAWindow.cs" />
     <Compile Include="Controls\UIControlBase.cs" />
+    <Compile Include="Controls\Web\HTMLTextArea.cs" />
     <Compile Include="Controls\Web\WebPage.cs" />
     <Compile Include="Controls\Web\WebRoot.cs" />
     <Compile Include="Controls\WPF\WPFAUTHelpers.cs" />
