@@ -38,7 +38,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public SelectListItemByIdx()
 		{
 			name = "Select List Item By Index";
-			icon = Properties.Resources.Window;
+			icon = Properties.Resources.Combobox;
 		}
 
 		private string control = "";
@@ -46,6 +46,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		
 		[Category("Control")]
 		[DisplayName("1) Control")]
+		[Description("The control must be of type UIACombobox, UIAListBox or HTMLSelect")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -102,18 +103,18 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			   }
 
 			}
-				catch (Exception ex)
-				{
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw ex;
-				}
+			catch (Exception ex)
+			{
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw ex;
+			}
 		}
 
 		public override string Description
 		{
 			get
 			{
-				return "Select items from list control " + control;
+				return "Selecting " + index + " index from control '" + control + "'";
 			}
 			set
 			{

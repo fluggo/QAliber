@@ -35,6 +35,26 @@ Name: "installbuilder"; Description: "Install QAliber Test Builder"; Types: full
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
+;QAliber shared files
+Source: "..\Binaries\QAliber.Engine.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "QAliber.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=69C52B3DB892D621, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\QAliber.TestModel.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "QAliber.TestModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=AAC3B2E748180B41, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\QAliber.RemotingModel.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "QAliber.RemotingModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7CA69BFCD2253FEF, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\QAliber.Logger.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "QAliber.Logger, Version=1.0.0.0, Culture=neutral, PublicKeyToken=C4B865E92B70ED57, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\QAliber.ImageHandling.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "QAliber.ImageHandling, Version=1.0.0.0, Culture=neutral, PublicKeyToken=69C52B3DB892D621, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\QAliberManagedInjector.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "QAliberManagedInjector, Version=1.0.0.0, Culture=neutral, PublicKeyToken=F7C709BBC167CB3E, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+;QAliber CV dependencies
+Source: "..\Binaries\Emgu.CV.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722AB4438, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\Emgu.Util.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Emgu.Util, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722AB4438, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+;QAliber other dependencies
+Source: "..\Binaries\ManagedWinapi.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "ManagedWinapi, Version=0.3.0.0, Culture=neutral, PublicKeyToken=41EB0F6B4CCD675B, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\Microsoft.mshtml.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"; Flags: gacinstall sharedfile
+Source: "..\Binaries\ZedGraph.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02A83CBD123FCD60, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+;QAliber CV unmanaged dependencies
+Source: "..\Binaries\cv200.dll"; DestDir: "{sys}";
+Source: "..\Binaries\cxcore200.dll"; DestDir: "{sys}";
+;QAliber Documentation
+Source: "..\Binaries\*.XML"; DestDir: "{cf}\QAliber"
+
 Source: "QAliberTestBuilderSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall
 Source: "QAliberVS2005PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2005Installed
 Source: "QAliberVS2008PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2008Installed
@@ -68,6 +88,7 @@ function IsVSNotInstalled() : Boolean;
 begin
     Result := not (IsVS2005Installed() or IsVS2008Installed());
 end;
+
 
 
 

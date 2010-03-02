@@ -37,7 +37,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public RetrieveListItems()
 		{
 			name = "Retrieve List Items";
-			icon = Properties.Resources.Window;
+			icon = Properties.Resources.Combobox;
 		}
 
 		private string control = "";
@@ -45,6 +45,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		[Category("Control")]
 		[DisplayName("1) Control")]
+		[Description("The control must be of type UIACombobox, UIAListBox or HTMLSelect")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{

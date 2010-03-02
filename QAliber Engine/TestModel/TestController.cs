@@ -156,6 +156,7 @@ namespace QAliber.TestModel
 			RetrieveSupportedTypes();
 			scenario = TestScenario.Load(scenarioFile);
 			executionWorker = new Thread(new ThreadStart(ExecutionWorker));
+			executionWorker.SetApartmentState(ApartmentState.STA);
 			executionWorker.Start();
 			new Thread(new ThreadStart(RunAsync)).Start();
 		}
@@ -173,6 +174,7 @@ namespace QAliber.TestModel
 				{
 					scenario = tc.Scenario;
 					executionWorker = new Thread(new ThreadStart(ExecutionWorker));
+					executionWorker.SetApartmentState(ApartmentState.STA);
 					executionWorker.Start();
 				}
 				else

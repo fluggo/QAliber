@@ -19,6 +19,7 @@ using System.Text;
 using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using Emgu.CV;
 
 
 namespace QAliber.ImageHandling
@@ -34,10 +35,17 @@ namespace QAliber.ImageHandling
 		/// </summary>
 		/// <param name="main">The image to search</param>
 		/// <param name="sub">The partial image to look for in the 'main' image</param>
-		public ImageFinder(Bitmap main, Bitmap sub)
+		/// <param name="tolerance">The tolerance in percents that find will work above it</param>
+		public ImageFinder(Bitmap main, Bitmap sub, int tolerance)
 		{
 			this.main = main;
 			this.sub = sub;
+			maxTolerance = (double)tolerance / 100.0;
+		}
+
+		public ImageFinder(Bitmap main, Bitmap sub) : this(main, sub, 85)
+		{
+			
 		}
 
 		/// <summary>
@@ -50,105 +58,123 @@ namespace QAliber.ImageHandling
 		/// <returns>(-1, -1, 0, 0) if no match was found, otherwise the rectangle of the sub image within the main image</returns>
 		public System.Windows.Rect Find()
 		{
-			Point[] points = new Point[(main.Width - sub.Width) * (main.Height - sub.Height)];
-			Stopwatch sw = new Stopwatch();
-			sw.Start();
-			int offset = 0;
-			for (int i = 0; i < main.Width - sub.Width; i++)
-			{
-				offset = i * (main.Height - sub.Height);
-				for (int j = 0; j < main.Height - sub.Height; j++)
-				{
-					points[offset + j] = new Point(i, j);
-				}
-			}
-			List<Point> filteredList = new List<Point>();
-			Color bgColor = FindBGColor();
-			//Console.WriteLine("Find BG Color took : " + sw.ElapsedMilliseconds);
-			BitmapData mainData = main.LockBits(
-				new Rectangle(0, 0, main.Width, main.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
-			BitmapData subData = sub.LockBits(
-				new Rectangle(0, 0, sub.Width, sub.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
-			unsafe
-			{
-				Byte* pSubBase = (Byte*)subData.Scan0.ToPointer();
-				Byte* pMainBase = (Byte*)mainData.Scan0.ToPointer();
-				int subLoc, mainLoc;
-				for (int i = 0; i < sub.Width; i++)
-				{
-					for (int j = 0; j < sub.Height; j++)
-					{
-						subLoc = j * subData.Stride + i * 3;
-						Color expVal = Color.FromArgb(
-							(int)pSubBase[subLoc + 2], (int)pSubBase[subLoc + 1], (int)pSubBase[subLoc]);
-						if (expVal != bgColor)
-						{
-							filteredList.Clear();
-							for (int k = 0; k < points.Length; k++)
-							{
-								if (points[k].X >= 0)
-								{
-									mainLoc = (points[k].Y + j) * mainData.Stride + (points[k].X + i) * 3;
-									Color actVal = Color.FromArgb(
-										   (int)pMainBase[mainLoc + 2], (int)pMainBase[mainLoc + 1], (int)pMainBase[mainLoc]);
+			Image<Emgu.CV.Structure.Bgr, Byte> m = new Image<Emgu.CV.Structure.Bgr, Byte>(main);
+			Image<Emgu.CV.Structure.Bgr, Byte> s = new Image<Emgu.CV.Structure.Bgr, Byte>(sub);
+			Size resSize = new Size(m.Width - s.Width + 1, m.Height - s.Height + 1);
+			IntPtr resImage = CvInvoke.cvCreateImage(resSize, Emgu.CV.CvEnum.IPL_DEPTH.IPL_DEPTH_32F, 1);
+			double min = 0, max = 0;
+			Point minLoc = new Point(), maxLoc = new Point();
+			CvInvoke.cvMatchTemplate(m.Ptr, s.Ptr, resImage, Emgu.CV.CvEnum.TM_TYPE.CV_TM_CCOEFF_NORMED);
+			CvInvoke.cvMinMaxLoc(resImage, ref min, ref max, ref minLoc, ref maxLoc, IntPtr.Zero);
+			if (max < maxTolerance)
+				return new System.Windows.Rect(-1, -1, 0, 0);
+			else
+				return new System.Windows.Rect(maxLoc.X, maxLoc.Y, s.Width, s.Height);
+
+		}
+
+		//public System.Windows.Rect Find()
+		//{
+		//	  Point[] points = new Point[(main.Width - sub.Width) * (main.Height - sub.Height)];
+		//	  Stopwatch sw = new Stopwatch();
+		//	  sw.Start();
+		//	  int offset = 0;
+		//	  for (int i = 0; i < main.Width - sub.Width; i++)
+		//	  {
+		//		  offset = i * (main.Height - sub.Height);
+		//		  for (int j = 0; j < main.Height - sub.Height; j++)
+		//		  {
+		//			  points[offset + j] = new Point(i, j);
+		//		  }
+		//	  }
+		//	  List<Point> filteredList = new List<Point>();
+		//	  Color bgColor = FindBGColor();
+		//	  //Console.WriteLine("Find BG Color took : " + sw.ElapsedMilliseconds);
+		//	  BitmapData mainData = main.LockBits(
+		//		  new Rectangle(0, 0, main.Width, main.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+		//	  BitmapData subData = sub.LockBits(
+		//		  new Rectangle(0, 0, sub.Width, sub.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+		//	  unsafe
+		//	  {
+		//		  Byte* pSubBase = (Byte*)subData.Scan0.ToPointer();
+		//		  Byte* pMainBase = (Byte*)mainData.Scan0.ToPointer();
+		//		  int subLoc, mainLoc;
+		//		  for (int i = 0; i < sub.Width; i++)
+		//		  {
+		//			  for (int j = 0; j < sub.Height; j++)
+		//			  {
+		//				  subLoc = j * subData.Stride + i * 3;
+		//				  Color expVal = Color.FromArgb(
+		//					  (int)pSubBase[subLoc + 2], (int)pSubBase[subLoc + 1], (int)pSubBase[subLoc]);
+		//				  if (expVal != bgColor)
+		//				  {
+		//					  filteredList.Clear();
+		//					  for (int k = 0; k < points.Length; k++)
+		//					  {
+		//						  if (points[k].X >= 0)
+		//						  {
+		//							  mainLoc = (points[k].Y + j) * mainData.Stride + (points[k].X + i) * 3;
+		//							  Color actVal = Color.FromArgb(
+		//									 (int)pMainBase[mainLoc + 2], (int)pMainBase[mainLoc + 1], (int)pMainBase[mainLoc]);
 									
-									if (actVal == expVal)
-										filteredList.Add(points[k]);
-								}
-							}
-							points = filteredList.ToArray();
-							if (points.Length == 0)
-							{
-								main.UnlockBits(mainData);
-								sub.UnlockBits(subData);
-								return new System.Windows.Rect(-1, -1, 0, 0);
-							}
-							if (points.Length == 1)
-							{
-							   // Console.WriteLine("Find exact match took : " + sw.ElapsedMilliseconds);
-								main.UnlockBits(mainData);
-								sub.UnlockBits(subData);
-								return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
-							}
-						}
-					}
-				}
-			}
+		//							  if (actVal == expVal)
+		//								  filteredList.Add(points[k]);
+		//						  }
+		//					  }
+		//					  points = filteredList.ToArray();
+		//					  if (points.Length == 0)
+		//					  {
+		//						  main.UnlockBits(mainData);
+		//						  sub.UnlockBits(subData);
+		//						  return new System.Windows.Rect(-1, -1, 0, 0);
+		//					  }
+		//					  if (points.Length == 1)
+		//					  {
+		//						 // Console.WriteLine("Find exact match took : " + sw.ElapsedMilliseconds);
+		//						  main.UnlockBits(mainData);
+		//						  sub.UnlockBits(subData);
+		//						  return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
+		//					  }
+		//				  }
+		//			  }
+		//		  }
+		//	  }
 			
-			main.UnlockBits(mainData);
-			sub.UnlockBits(subData);
-			return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
-		}
+		//	  main.UnlockBits(mainData);
+		//	  sub.UnlockBits(subData);
+		//	  return new System.Windows.Rect(points[0].X, points[0].Y, sub.Width, sub.Height);
+		//}
 
 
-		private Color FindBGColor()
-		{
-			Dictionary<Color, int> colorsTable = new Dictionary<Color, int>();
-			for (int i = 0; i < sub.Width; i++)
-			{
-				for (int j = 0; j < sub.Height; j++)
-				{
-					Color c = sub.GetPixel(i, j);
-					if (colorsTable.ContainsKey(c))
-						colorsTable[c] = colorsTable[c] + 1;
-					else
-						colorsTable.Add(c, 1);
-				}
-			}
-			Color maxColor = Color.Black;
-			int maxCount = 0;
-			Dictionary<Color, int>.Enumerator it = colorsTable.GetEnumerator();
-			while (it.MoveNext())
-			{
-				if (it.Current.Value > maxCount)
-				{
-					maxCount = it.Current.Value;
-					maxColor = it.Current.Key;
-				}
-			}
-			return maxColor;
-		}
+		//private Color FindBGColor()
+		//{
+		//	  Dictionary<Color, int> colorsTable = new Dictionary<Color, int>();
+		//	  for (int i = 0; i < sub.Width; i++)
+		//	  {
+		//		  for (int j = 0; j < sub.Height; j++)
+		//		  {
+		//			  Color c = sub.GetPixel(i, j);
+		//			  if (colorsTable.ContainsKey(c))
+		//				  colorsTable[c] = colorsTable[c] + 1;
+		//			  else
+		//				  colorsTable.Add(c, 1);
+		//		  }
+		//	  }
+		//	  Color maxColor = Color.Black;
+		//	  int maxCount = 0;
+		//	  Dictionary<Color, int>.Enumerator it = colorsTable.GetEnumerator();
+		//	  while (it.MoveNext())
+		//	  {
+		//		  if (it.Current.Value > maxCount)
+		//		  {
+		//			  maxCount = it.Current.Value;
+		//			  maxColor = it.Current.Key;
+		//		  }
+		//	  }
+		//	  return maxColor;
+		//}
 
+		double maxTolerance;
 		Bitmap main, sub;
 	}
 }

@@ -38,7 +38,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public SelectListItemByString()
 		{
 			name = "Select List Item By String";
-			icon = Properties.Resources.Window;
+			icon = Properties.Resources.Combobox;
 		}
 
 		private string control = "";
@@ -46,6 +46,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		
 		[Category("Control")]
 		[DisplayName("1) Control")]
+		[Description("The control must be of type UIACombobox, UIAListBox or HTMLSelect")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -57,7 +58,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		[Category("Control")]
 		[DisplayName("2) Item")]
-		[Description("Items (string) to select")]
+		[Description("Item (string) to select")]
 		public string Item
 		{
 			get {return item;}
@@ -106,7 +107,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			   else
 			   {
 				   actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				   throw new InvalidOperationException("Control is not list type control");
+				   throw new InvalidOperationException("Control is not a list type");
 			   }
 
 			}
@@ -121,7 +122,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		{
 			get
 			{
-				return "Select items from list control " + control;
+				return "Selecting '" + item + "' item from control '" + control + "'";
 			}
 			set
 			{
