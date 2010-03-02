@@ -46,6 +46,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
+    <Reference Include="tessnet2_32, Version=2.0.4.0, Culture=neutral, PublicKeyToken=1550524b5ba07e29, processorArchitecture=x86" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -79,10 +80,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="gocr048.exe" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="QAliber.ImageHandling.snk" />
+    <Content Include="tessdata\eng.DangAmbigs" />
+    <Content Include="tessdata\eng.freq-dawg" />
+    <Content Include="tessdata\eng.inttemp" />
+    <Content Include="tessdata\eng.normproto" />
+    <Content Include="tessdata\eng.pffmtable" />
+    <Content Include="tessdata\eng.unicharset" />
+    <Content Include="tessdata\eng.user-words" />
+    <Content Include="tessdata\eng.word-dawg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -34,7 +34,20 @@ namespace QAliber.ImageHandling
 		/// <param name="image">The bitmap to read from</param>
 		public OCRItem(Bitmap image)
 		{
-			PNM.WritePNM(startPath + @"\tmp.pgm", image);
+			imageToRead = new Bitmap(image.Width * 2, image.Height * 2);
+
+			//use a graphics object to draw the resized image into the bitmap
+			using (Graphics graphics = Graphics.FromImage(imageToRead))
+			{
+				//set the resize quality modes to high quality
+				graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+				graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+				graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+				//draw the image into the target bitmap
+				graphics.DrawImage(image, 0, 0, imageToRead.Width, imageToRead.Height);
+			}
+
+			
 			
 		}
 
@@ -42,11 +55,9 @@ namespace QAliber.ImageHandling
 		/// Initializes a new instance of OCRItem
 		/// </summary>
 		/// <param name="filename">The image file to read from</param>
-		public OCRItem(string filename)
+		public OCRItem(string filename) : this((Bitmap)Bitmap.FromFile(filename))
 		{
-			Image image = Bitmap.FromFile(filename);
-			PNM.WritePNM(startPath + @"\tmp.pgm", image);
-
+			
 		}
 
 		/// <summary>
@@ -61,20 +72,32 @@ namespace QAliber.ImageHandling
 		public string ProcessImage()
 		{
 
-			ProcessStartInfo gocrStartInfo = new ProcessStartInfo(ocrPath + @"\gocr048", "\"" + startPath + @"\tmp.pgm""");
-			gocrStartInfo.WorkingDirectory = ocrPath;
-			gocrStartInfo.RedirectStandardOutput = true;
-			gocrStartInfo.UseShellExecute = false;
+			tessnet2.Tesseract ocr = new tessnet2.Tesseract();
 
-			Process gocrProcess = Process.Start(gocrStartInfo);
-			string text = gocrProcess.StandardOutput.ReadToEnd();
-			gocrProcess.WaitForExit();
-
-			File.Delete(startPath + @"\tmp.pgm");
-
-			return text;
+			if (allowedChars != string.Empty)
+			{
+				ocr.SetVariable("tessedit_char_whitelist", allowedChars);
+			}
+			ocr.Init(ocrPath + @"\tessdata", "eng", false); 
+			List<tessnet2.Word> result = ocr.DoOCR(imageToRead, Rectangle.Empty);
+			StringBuilder builder = new StringBuilder();
+			int lastLine = 1;
+			foreach (tessnet2.Word word in result)
+			{
+				if (word.Confidence < 255.0 * (120.0 - accuracy) / 100.0)
+				{
+					if (lastLine < word.LineIndex)
+					{
+						builder.Append("\n");
+						lastLine = word.LineIndex;
+					}
+					builder.Append(word.Text + " ");
+				}
+			}
+			return builder.ToString();
 		}
 
+		
 		/// <summary>
 		/// Return the rectangle of the text found in an image
 		/// </summary>
@@ -82,46 +105,57 @@ namespace QAliber.ImageHandling
 		/// <returns>The rectangle in pixels of the text that was found (relative to the upper left corner of the image</returns>
 		public System.Windows.Rect GetTextArea(string textToLook)
 		{
+			tessnet2.Tesseract ocr = new tessnet2.Tesseract();
 
-			ProcessStartInfo gocrStartInfo = new ProcessStartInfo(ocrPath + @"\gocr048", "\"" + startPath + @"\tmp.pgm"" -r");
-			gocrStartInfo.WorkingDirectory = ocrPath;
-			gocrStartInfo.RedirectStandardError = true;
-			gocrStartInfo.UseShellExecute = false;
-
-			Process gocrProcess = Process.Start(gocrStartInfo);
-			string line = gocrProcess.StandardError.ReadLine();
-			string text = "";
-			textToLook = textToLook.Replace(" ", "");
-			List<System.Windows.Rect> rects = new List<System.Windows.Rect>();
-			while (line != null)
+			ocr.Init(ocrPath + @"\tessdata", "eng", false);
+			List<tessnet2.Word> result = ocr.DoOCR(imageToRead, Rectangle.Empty);
+			StringBuilder builder = new StringBuilder();
+			int lastLine = 1;
+			foreach (tessnet2.Word word in result)
 			{
-				string[] fields = line.Split(';');
-				if (fields.Length == 2)
+				if (lastLine < word.LineIndex)
 				{
-					text += fields[0];
-					string[] nums = fields[1].Trim('(', ')').Split(',');
-					rects.Add(new System.Windows.Rect(
-						int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]), int.Parse(nums[3])));
-
+					builder.Append("\n");
+					lastLine = word.LineIndex;
 				}
-				line = gocrProcess.StandardError.ReadLine();
+				builder.Append(word.Text + " ");
+				
 			}
-
-			gocrProcess.WaitForExit();
-			File.Delete(startPath + @"\tmp.pgm");
-
-			int index = text.IndexOf(textToLook);
-			if (index >= 0)
+			string text = builder.ToString();
+			int minTop = int.MaxValue, minLeft = int.MaxValue, maxBottom = 0, maxRight = 0;
+			if (text.Contains(textToLook))
 			{
-				System.Windows.Rect res = rects[index];
-				for (int i = index + 1; i < index + textToLook.Length; i++)
+				foreach (tessnet2.Word word in result)
 				{
-					res = System.Windows.Rect.Union(res, rects[i]);
+					if (textToLook.Contains(word.Text))
+					{
+						minTop = Math.Min(minTop, word.Top);
+						minLeft = Math.Min(minLeft, word.Left);
+						maxBottom = Math.Max(maxBottom, word.Bottom);
+						maxRight = Math.Max(maxRight, word.Right);
+					}
 				}
-				return res;
 			}
+			return new System.Windows.Rect(minTop, minLeft, maxRight - minLeft, maxBottom - minTop);
+		}
 
-			return new System.Windows.Rect();
+	   
+		/// <summary>
+		/// The accuracy in percents (0 - 100) of each word recognition (if the word is recognized below the given accuracy it will be omitted)
+		/// </summary>
+		public int Accuracy
+		{
+			get { return accuracy; }
+			set { accuracy = value; }
+		}
+
+		/// <summary>
+		/// The allowed chars the ocr will attempt to recognize (e.g. to recognize digits only set it to "0123456789")
+		/// </summary>
+		public string AllowedChars
+		{
+			get { return allowedChars; }
+			set { allowedChars = value; }
 		}
 
 		private static string ocrPath
@@ -147,6 +181,10 @@ namespace QAliber.ImageHandling
 				return Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 			}
 		}
+
+		private Bitmap imageToRead;
+		private int accuracy = 0;
+		private string allowedChars = string.Empty;
 
 	   
 

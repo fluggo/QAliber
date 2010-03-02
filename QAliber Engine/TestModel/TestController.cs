@@ -180,6 +180,7 @@ namespace QAliber.TestModel
 				else
 				{
 					executionWorker = new Thread(new ParameterizedThreadStart(TestExecutionWorker));
+					executionWorker.SetApartmentState(ApartmentState.STA);
 					executionWorker.Start(testcase);
 				}
 				new Thread(new ThreadStart(RunAsync)).Start();
@@ -392,6 +393,8 @@ namespace QAliber.TestModel
 					res = res.Replace("user", EscapeString(Environment.UserName));
 				if (logStructure.Contains("domain"))
 					res = res.Replace("domain", EscapeString(Environment.UserDomainName));
+				if (logStructure.Contains("scenario"))
+					res = res.Replace("scenario", EscapeString(scenario.RootTestCase.Name));
 				res = DateTime.Now.ToString(res);
 				path = Path.Combine(Path.GetFullPath(logPath), res);
 				if (!Directory.Exists(path))
