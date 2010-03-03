@@ -610,7 +610,7 @@ namespace QAliber.Engine.Controls
 				for (int i = 0; i < properties.Length; i++)
 				{
 					PropertyDescriptor prop = props.Find(properties[i], true);
-					if (prop == null || !prop.GetValue(control).Equals(values[i]))
+					if (prop == null || prop.GetValue(control)== null || !prop.GetValue(control).Equals(values[i]))
 					{
 						allMatch = false;
 						break;
