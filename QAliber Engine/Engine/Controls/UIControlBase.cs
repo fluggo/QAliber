@@ -335,6 +335,8 @@ namespace QAliber.Engine.Controls
 					}
 					System.Threading.Thread.Sleep(50);
 				}
+				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {3}",
+					name, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				return null;
 			}
 		}
@@ -404,6 +406,8 @@ namespace QAliber.Engine.Controls
 					}
 					System.Threading.Thread.Sleep(50);
 				}
+				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
+					name, id, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				return null;
 			}
 		}
@@ -441,6 +445,8 @@ namespace QAliber.Engine.Controls
 					}
 					System.Threading.Thread.Sleep(50);
 				}
+				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
+					name, className, id, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				return null;
 			}
 		}

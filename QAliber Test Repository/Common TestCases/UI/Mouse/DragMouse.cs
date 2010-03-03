@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
+using QAliber.Engine.Controls;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -84,13 +85,22 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			string code = "UIControlBase c = " + control + ";\n";
-			code += "c.Drag(MouseButtons." + button + ", new Point(" + point1.X + ", " + point1.Y + ")" + ", new Point(" + point2.X + ", " + point2.Y + "));\n";
-			code += "return null;\n";
-			EventHandler<LogEventArgs> eventHandler = new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
-			Log.Default.BeforeErrorIsPosted += eventHandler;
-			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
-			Log.Default.BeforeErrorIsPosted -= eventHandler;
+
+			try
+			{
+				string code = "UIControlBase c = " + control + ";\nreturn c;\n";
+				UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+				if (c == null)
+				{
+					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					return;
+				}
+				c.Drag(button, point1, point2);
+			}
+			catch (System.Reflection.TargetInvocationException)
+			{
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			}
 
 
 		}
@@ -107,10 +117,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			}
 		}
 
-		private void BeforeErrorIsPosted(object sender, LogEventArgs e)
-		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-		}
+	   
 	}
 
 

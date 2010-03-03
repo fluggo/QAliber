@@ -1,0 +1,24 @@
+1/3/10
+---------
+
+Test Builder
+	New test cases to deal with combo boxes
+	
+Engine
+	New improved algorithm for finding images
+	Html UL, OL now have items property	
+
+Fixed Bugs
+	Log displayed un-necessary errors
+	HTMLTable , fix rows by index and cells by index (HtmlTr)
+	
+
+3/3/10
+---------
+
+Test Builder
+	Fixed 'object reference' log error when control is not found, to more descriptive error
+	Added 'scenario' configuration for log folder structure
+
+Engine
+	Replaced gocr with tesseract ocr
