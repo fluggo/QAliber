@@ -13,12 +13,14 @@ Fixed Bugs
 	HTMLTable , fix rows by index and cells by index (HtmlTr)
 	
 
-3/3/10
+4/3/10
 ---------
 
 Test Builder
 	Fixed 'object reference' log error when control is not found, to more descriptive error
 	Added 'scenario' configuration for log folder structure
+	Fixed a bug in while test case re-evaluation
 
 Engine
+	Fixed a bug in FindByProperty of null references
 	Replaced gocr with tesseract ocr

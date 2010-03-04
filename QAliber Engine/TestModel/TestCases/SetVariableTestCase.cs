@@ -85,6 +85,7 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			object retVal = null;
+			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, retType, out retVal);
 			Scenario.Variables.AddOrReplaceByName(new QAliber.TestModel.Variables.ScenarioVariable(
 				varName.Selected, retVal.ToString(), null));

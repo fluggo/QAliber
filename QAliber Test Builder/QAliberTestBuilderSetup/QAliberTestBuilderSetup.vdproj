@@ -171,6 +171,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BB7311C0BAF368EC193396402BBB2A5B"
+        "OwnerKey" = "8:_2797CCAF97BD402993706E997F6553A4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BB7311C0BAF368EC193396402BBB2A5B"
+        "OwnerKey" = "8:_A1F939861A82677231A7D0EAE1A86E2E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C8EC196ADD8B8238A663C47A0C498737"
         "OwnerKey" = "8:_3B88C62B1811826567EF962042351888"
         "MsmSig" = "8:_UNDEFINED"
@@ -293,6 +305,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_FCF2D2909B4048E79B62B76B151EC66E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BB7311C0BAF368EC193396402BBB2A5B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -794,6 +812,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BB7311C0BAF368EC193396402BBB2A5B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:tessnet2_32, Version=2.0.4.0, Culture=neutral, PublicKeyToken=1550524b5ba07e29, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_BB7311C0BAF368EC193396402BBB2A5B"
+                    {
+                    "Name" = "8:tessnet2_32.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:tessnet2_32.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A04D9C9A545648F3AF95D347F1DDB5A2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C8EC196ADD8B8238A663C47A0C498737"
             {
             "AssemblyRegister" = "3:1"
@@ -1116,7 +1165,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QAliber Test Builder"
         "ProductCode" = "8:{20D197D0-8E7B-42A5-B58E-8E510350F352}"
-        "PackageCode" = "8:{D671377D-CD11-4526-BBF8-42AC4E7F6BD9}"
+        "PackageCode" = "8:{D8E6B726-8154-4B58-AC14-F20B8A6180FC}"
         "UpgradeCode" = "8:{57420986-055B-45EA-9A34-A27EE8E5D245}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
