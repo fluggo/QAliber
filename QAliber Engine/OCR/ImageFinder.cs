@@ -60,18 +60,26 @@ namespace QAliber.ImageHandling
 		{
 			Image<Emgu.CV.Structure.Bgr, Byte> m = new Image<Emgu.CV.Structure.Bgr, Byte>(main);
 			Image<Emgu.CV.Structure.Bgr, Byte> s = new Image<Emgu.CV.Structure.Bgr, Byte>(sub);
-			Size resSize = new Size(m.Width - s.Width + 1, m.Height - s.Height + 1);
-			IntPtr resImage = CvInvoke.cvCreateImage(resSize, Emgu.CV.CvEnum.IPL_DEPTH.IPL_DEPTH_32F, 1);
-			double min = 0, max = 0;
-			Point minLoc = new Point(), maxLoc = new Point();
-			CvInvoke.cvMatchTemplate(m.Ptr, s.Ptr, resImage, Emgu.CV.CvEnum.TM_TYPE.CV_TM_CCOEFF_NORMED);
-			CvInvoke.cvMinMaxLoc(resImage, ref min, ref max, ref minLoc, ref maxLoc, IntPtr.Zero);
-			if (max < maxTolerance)
+			Image<Emgu.CV.Structure.Gray, float> r = m.MatchTemplate(s, Emgu.CV.CvEnum.TM_TYPE.CV_TM_CCOEFF_NORMED);
+			double[] min, max;
+			int width = s.Width, height = s.Height;
+			Point[] minLoc, maxLoc;
+			r.MinMax(out min, out max, out minLoc, out maxLoc);
+
+			m = null;
+			s = null;
+			r = null;
+
+			GC.Collect();
+			if (max[0] < maxTolerance)
 				return new System.Windows.Rect(-1, -1, 0, 0);
 			else
-				return new System.Windows.Rect(maxLoc.X, maxLoc.Y, s.Width, s.Height);
+				return new System.Windows.Rect(maxLoc[0].X, maxLoc[0].Y, width, height);
 
 		}
+
+
+		
 
 		//public System.Windows.Rect Find()
 		//{

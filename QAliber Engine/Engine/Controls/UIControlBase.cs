@@ -952,6 +952,7 @@ namespace QAliber.Engine.Controls
 			{
 				SetFocus();
 				Logger.Log.Default.Info("Sending keys to control " + codePath, "Keys : " + text, QAliber.Logger.EntryVerbosity.Internal);
+				//System.Threading.Thread.Sleep(200);
 				Win32.LowLevelInput.SendKeystrokes(text);
 			}
 		}

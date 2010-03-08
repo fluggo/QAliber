@@ -605,6 +605,7 @@ namespace QAliber.TestModel
 				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "End - " + name);
 			}
 			Log.Default.IndentOut();
+			System.Windows.Forms.Application.DoEvents();
 		}
 
 		private void UpdateIDs()

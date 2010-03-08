@@ -170,9 +170,10 @@ namespace QAliber.TestModel
 			TestCase tc = testcase as TestCase;
 			if (tc != null)
 			{
+				scenario = tc.Scenario;
 				if (tc.Scenario.RootTestCase.Equals(tc))
 				{
-					scenario = tc.Scenario;
+					
 					executionWorker = new Thread(new ThreadStart(ExecutionWorker));
 					executionWorker.SetApartmentState(ApartmentState.STA);
 					executionWorker.Start();
@@ -394,7 +395,10 @@ namespace QAliber.TestModel
 				if (logStructure.Contains("domain"))
 					res = res.Replace("domain", EscapeString(Environment.UserDomainName));
 				if (logStructure.Contains("scenario"))
-					res = res.Replace("scenario", EscapeString(scenario.RootTestCase.Name));
+				{
+					if (scenario != null)
+						res = res.Replace("scenario", EscapeString(scenario.RootTestCase.Name));
+				}
 				res = DateTime.Now.ToString(res);
 				path = Path.Combine(Path.GetFullPath(logPath), res);
 				if (!Directory.Exists(path))

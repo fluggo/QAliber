@@ -104,39 +104,48 @@ namespace QAliber.Engine.Controls.Web
 
 		private void BuildPages()
 		{
-			
-			foreach (InternetExplorer ie in ieWindows)
+			try
 			{
-				try
+				foreach (InternetExplorer ie in ieWindows)
 				{
-					int i = 0;
-					while (ie.ReadyState != tagREADYSTATE.READYSTATE_INTERACTIVE && ie.ReadyState != tagREADYSTATE.READYSTATE_COMPLETE)
+					try
 					{
-						System.Threading.Thread.Sleep(1000);
-						i++;
-						if (i > 10)
-							break;
-					}
-					if (ie.Document is HTMLDocument)
-					{
-						
-						
-						HTMLDocument doc = (HTMLDocument)ie.Document;
-						if (!string.IsNullOrEmpty(doc.title) && ie.Visible)
+						int i = 0;
+						while (ie.ReadyState != tagREADYSTATE.READYSTATE_INTERACTIVE && ie.ReadyState != tagREADYSTATE.READYSTATE_COMPLETE)
 						{
-							lock (this)
-							{
-								ClearEvents();
-								page = new WebPage(ie, null);
-								page.BeforeNavigation += new EventHandler<NavigationEventArgs>(BeforeNavigationOfAnyPage);
-								page.AfterNavigation += new EventHandler<NavigationEventArgs>(AfterNavigationOfAnyPage);
+							System.Threading.Thread.Sleep(1000);
+							i++;
+							if (i > 10)
+								break;
+						}
+						if (ie.Document is HTMLDocument)
+						{
 
+
+							HTMLDocument doc = (HTMLDocument)ie.Document;
+							if (!string.IsNullOrEmpty(doc.title) && ie.Visible)
+							{
+								lock (this)
+								{
+									ClearEvents();
+									page = new WebPage(ie, null);
+									page.BeforeNavigation += new EventHandler<NavigationEventArgs>(BeforeNavigationOfAnyPage);
+									page.AfterNavigation += new EventHandler<NavigationEventArgs>(AfterNavigationOfAnyPage);
+
+								}
+								return;
 							}
-							return;
 						}
 					}
+					catch { }
 				}
-				catch { }
+			}
+			catch (System.Runtime.InteropServices.InvalidComObjectException)
+			{
+				ieWindows = new ShellWindows();
+				ieWindows.WindowRegistered += new SHDocVw.DShellWindowsEvents_WindowRegisteredEventHandler(ieWindows_WindowRegistered);
+				ieWindows.WindowRevoked += new SHDocVw.DShellWindowsEvents_WindowRevokedEventHandler(ieWindows_WindowRevoked);
+				page = null;
 			}
 		}
 
@@ -160,6 +169,7 @@ namespace QAliber.Engine.Controls.Web
 
 		private void ieWindows_WindowRevoked(int lCookie)
 		{
+			//Todo : look how to implement multiple windows
 			new System.Threading.Thread(new System.Threading.ThreadStart(BuildPages)).Start();
 		}
 

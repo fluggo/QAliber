@@ -24,3 +24,16 @@ Test Builder
 Engine
 	Fixed a bug in FindByProperty of null references
 	Replaced gocr with tesseract ocr
+
+
+8/3/10
+---------
+
+Test Builder
+	Fixed a bug in setting log file for single test case run
+Engine
+	Fixed memory leak in finding images
+	Fixed a crash when closing all ie windows
+	Fixed a bug in initialization of web document
+	
+	

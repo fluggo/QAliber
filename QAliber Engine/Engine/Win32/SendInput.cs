@@ -33,6 +33,9 @@ namespace QAliber.Engine.Win32
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern uint SendInput(uint nInputs, ref Win32Input pInputs, int cbSize);
 
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern UInt32 SendInput(UInt32 numberOfInputs, Win32Input[] inputs, Int32 sizeOfInputStructure);
+
 		[DllImport("user32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
 		private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, Keys[] lpKeyState, StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
 
@@ -305,6 +308,7 @@ namespace QAliber.Engine.Win32
 							TapKey(c);
 						break;
 				}
+				
 			}
 			foreach (char pressedChar in pressedDownChars)
 			{
@@ -330,7 +334,8 @@ namespace QAliber.Engine.Win32
 			input.mi.dx = (int)(p.X * (65535f / Screen.PrimaryScreen.Bounds.Width));
 			input.mi.dy = (int)(p.Y * (65535f / Screen.PrimaryScreen.Bounds.Height));
 			input.mi.dwFlags = (uint)(evt | MouseEvents.ABSOLUTE);
-			SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+			SendInput(1, ref input, Marshal.SizeOf(input));
+			System.Windows.Forms.Application.DoEvents();
 			
 		}
 
@@ -344,7 +349,15 @@ namespace QAliber.Engine.Win32
 			input.ki.wVk = 0;
 			input.ki.wScan = unicodeChar;
 			input.ki.dwFlags = 4;
-			SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+			int i = 0;
+			while (SendInput(1, ref input, Marshal.SizeOf(input)) <= 0)
+			{
+				if (i > 40)
+					throw new TimeoutException("Could not press char " + unicodeChar);
+				System.Threading.Thread.Sleep(25);
+				i++;
+			}
+			System.Windows.Forms.Application.DoEvents();
 		}
 
 		private static void PressAnsiKey(char ansiChar)
@@ -360,7 +373,15 @@ namespace QAliber.Engine.Win32
 				input.ki.wVk = (ushort)KeyInterop.VirtualKeyFromKey(key);
 				input.ki.wScan = 0;
 				input.ki.dwFlags = 4;
-				SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+				int i = 0;
+				while (SendInput(1, ref input, Marshal.SizeOf(input)) <= 0)
+				{
+					if (i > 40)
+						throw new TimeoutException("Could not press char " + ansiChar);
+					System.Threading.Thread.Sleep(25);
+					i++;
+				}
+				System.Windows.Forms.Application.DoEvents();
 			}
 			catch (InvalidCastException)
 			{
@@ -378,7 +399,15 @@ namespace QAliber.Engine.Win32
 			input.ki.wVk = (ushort)KeyInterop.VirtualKeyFromKey(key);
 			input.ki.wScan = 0;
 			input.ki.dwFlags = 1;
-			SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+			int i = 0;
+			while (SendInput(1, ref input, Marshal.SizeOf(input)) <= 0)
+			{
+				if (i > 40)
+					throw new TimeoutException("Could not press char " + key);
+				System.Threading.Thread.Sleep(25);
+				i++;
+			}
+			System.Windows.Forms.Application.DoEvents();
 		}
 
 		private static void ReleaseKey(char unicodeChar)
@@ -391,7 +420,15 @@ namespace QAliber.Engine.Win32
 			input.ki.wVk = 0;
 			input.ki.wScan = unicodeChar;
 			input.ki.dwFlags = 6;
-			SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+			int i = 0;
+			while (SendInput(1, ref input, Marshal.SizeOf(input)) <= 0)
+			{
+				if (i > 40)
+					throw new TimeoutException("Could not press char " + unicodeChar);
+				System.Threading.Thread.Sleep(25);
+				i++;
+			}
+			System.Windows.Forms.Application.DoEvents();
 		}
 
 		private static void ReleaseAnsiKey(char ansiChar)
@@ -407,7 +444,15 @@ namespace QAliber.Engine.Win32
 				input.ki.wVk = (ushort)KeyInterop.VirtualKeyFromKey(key);
 				input.ki.wScan = 0;
 				input.ki.dwFlags = 6;
-				SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+				int i = 0;
+				while (SendInput(1, ref input, Marshal.SizeOf(input)) <= 0)
+				{
+					if (i > 40)
+						throw new TimeoutException("Could not press char " + ansiChar);
+					System.Threading.Thread.Sleep(25);
+					i++;
+				}
+				System.Windows.Forms.Application.DoEvents();
 			}
 			catch (InvalidCastException)
 			{
@@ -425,21 +470,31 @@ namespace QAliber.Engine.Win32
 			input.ki.wVk = (ushort)KeyInterop.VirtualKeyFromKey(key);
 			input.ki.wScan = 0;
 			input.ki.dwFlags = 3;
-			SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input)));
+			int i = 0;
+			while (SendInput(1, ref input, Marshal.SizeOf(typeof(Win32Input))) <= 0)
+			{
+				if (i > 40)
+					throw new TimeoutException("Could not press char " + key);
+				System.Threading.Thread.Sleep(25);
+				i++;
+			}
+			System.Windows.Forms.Application.DoEvents();
 		}
 
 		private static void TapKey(char unicodeChar)
 		{
 			PressKey(unicodeChar);
-			System.Threading.Thread.Sleep(50);
+			System.Threading.Thread.Sleep(15);
 			ReleaseKey(unicodeChar);
+			System.Threading.Thread.Sleep(50);
 		}
 
 		private static void TapExtendedKey(Key key)
 		{
 			PressExtendedKey(key);
-			System.Threading.Thread.Sleep(50);
+			System.Threading.Thread.Sleep(15);
 			ReleaseExtendedKey(key);
+			System.Threading.Thread.Sleep(10);
 		}
 
 		private static Key ParseKeyInBraces(string s, int startIndex, out int endIndex)

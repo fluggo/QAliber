@@ -429,9 +429,19 @@ namespace QAliber.Engine.Controls.Web
 
 		private void InitDocWorker()
 		{
-			this.docInstance = (HTMLDocument)ieInstance.Document;
-			this.htmlElement = docInstance.body;
-			this.controlStyle = htmlElement.style;
+			try
+			{
+				this.docInstance = (HTMLDocument)ieInstance.Document;
+				this.htmlElement = docInstance.body;
+				this.controlStyle = htmlElement.style;
+			}
+			catch (NullReferenceException)
+			{
+				System.Threading.Thread.Sleep(500);
+				this.htmlElement = docInstance.body;
+				if (htmlElement != null)
+					this.controlStyle = htmlElement.style;
+			}
 			
 		}
 

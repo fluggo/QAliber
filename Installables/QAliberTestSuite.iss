@@ -56,17 +56,23 @@ Source: "..\Binaries\cxcore200.dll"; DestDir: "{sys}"; Flags: sharedfile
 ;QAliber Documentation
 Source: "..\Binaries\*.XML"; DestDir: "{cf}\QAliber"
 
+Source: "vcredist_x86.exe"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall;
+
 Source: "QAliberTestBuilderSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall
 Source: "QAliberVS2005PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2005Installed
 Source: "QAliberVS2008PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2008Installed
 Source: "QAliberDeveloperStandaloneSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVSNotInstalled
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Run]
+Filename: "{win}\vcredist_x86.exe"; Parameters: "/q"; WorkingDir: "{win}"; StatusMsg: "Installing VC++ 2008 Redistributable..."
+
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberTestBuilderSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing QAliber Test Builder..."; Check: IsComponentSelected('installbuilder')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2005PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2005 Plug-in..."; Check: IsComponentSelected('installvs2005')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2008PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2008 Plug-in..."; Check: IsComponentSelected('installvs2008')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberDeveloperStandaloneSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing Standalone QAliber Developer..."; Check: IsComponentSelected('installdevsa')
+
 
 [UnInstallRun]
 Filename: "msiexec"; Parameters: "/x {{20D197D0-8E7B-42A5-B58E-8E510350F352}"; WorkingDir: "{win}"; StatusMsg: "Un-installing QAliber Test Builder..."; Check: IsComponentSelected('installbuilder')
@@ -89,6 +95,7 @@ function IsVSNotInstalled() : Boolean;
 begin
     Result := not (IsVS2005Installed() or IsVS2008Installed());
 end;
+
 
 
 
