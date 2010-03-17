@@ -21,6 +21,7 @@ using System.Windows.Automation;
 using QAliber.Engine.Controls.Web;
 using QAliber.Engine.Controls.UIA;
 using QAliber.Engine.Controls.WPF;
+using QAliber.Engine.Controls.Watin;
 
 namespace QAliber.Engine.Controls
 {
@@ -68,8 +69,20 @@ namespace QAliber.Engine.Controls
 			}
 		}
 
+		public static WatinRoot Watin
+		{
+			get
+			{
+				if (watinRoot == null)
+					watinRoot = new WatinRoot();
+				return watinRoot;
+			}
+		}
+
 		private static WPFRoot wpfRoot = null;
 		private static UIARoot uiaRoot = null;
 		private static WebRoot webRoot = null;
+		private static WatinRoot watinRoot = null;
 	}
 }
+

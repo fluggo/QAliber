@@ -142,6 +142,7 @@
     <None Include="Resources\Images_24bit.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\ImageViewer.datasource" />
     <None Include="Resources\crosshair.jpg" />
     <None Include="Resources\crosshair.bmp" />

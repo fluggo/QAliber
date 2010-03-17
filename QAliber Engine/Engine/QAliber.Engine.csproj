@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationClient, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="UIAutomationTypes, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WatiN.Core, Version=2.0.20.0, Culture=neutral, PublicKeyToken=d0c049742d9f7cc4, processorArchitecture=MSIL" />
     <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +83,11 @@
     <Compile Include="Controls\UIA\UIAControl.cs" />
     <Compile Include="Controls\UIA\UIAWindow.cs" />
     <Compile Include="Controls\UIControlBase.cs" />
+    <Compile Include="Controls\Watin\WatBrowser.cs" />
+    <Compile Include="Controls\Watin\WatFrame.cs" />
+    <Compile Include="Controls\Watin\WatinBaseControl.cs" />
+    <Compile Include="Controls\Watin\WatinControl.cs" />
+    <Compile Include="Controls\Watin\WatinRoot.cs" />
     <Compile Include="Controls\Web\HTMLTextArea.cs" />
     <Compile Include="Controls\Web\WebPage.cs" />
     <Compile Include="Controls\Web\WebRoot.cs" />

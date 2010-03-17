@@ -24,6 +24,7 @@ using System.Windows.Automation;
 
 using QAliber.Engine.Controls;
 using QAliber.Engine.Controls.Web;
+using QAliber.Engine.Controls.Watin;
 using System.Threading;
 
 using ManagedWinapi;
@@ -40,6 +41,7 @@ using QAliber.VS2005.Plugin.Commands;
 using QAliber.Engine.Win32;
 using QAliber.Engine.Controls.UIA;
 using QAliber.Engine.Controls.WPF;
+using QAliber.Engine.Controls.Watin;
 
 namespace QAliber.VS2005.Plugin
 {
@@ -140,7 +142,7 @@ namespace QAliber.VS2005.Plugin
 			stopHotkey.HotkeyPressed += new EventHandler(stopHotkey_HotkeyPressed);
 			stopHotkey.Enabled = true;
 		}
-
+	 
 		private void FillTree()
 		{
 			treeView.Nodes.Clear();
@@ -226,6 +228,11 @@ namespace QAliber.VS2005.Plugin
 			UIControlBase control = obj as UIControlBase;
 			if (control.Layout != System.Windows.Rect.Empty)
 			{
+				if (control.Layout.X == -1111) 
+				{
+					((WatinControl)control).Flash(4);
+					return;
+				}
 				control.SetFocus();
 
 				QAliber.Engine.Win32.GDI32.HighlightRectangleDesktop(
@@ -238,32 +245,55 @@ namespace QAliber.VS2005.Plugin
 			switch (control.UIType)
 			{
 				case "UIAButton":
+				case "Button":
+				case "Buttons":
 					return "button.bmp";
 				case "UIACheckBox":
+				case "CheckBox":
+				case "CheckBoxes":
 					return "checkbox.bmp";
 				case "UIAComboBox":
 					return "combobox.bmp";
 				case "HTMLDiv":
 				case "UIADocument":
 				case "UIAPane":
+				case "Div":
+				case "Para":
+				case "Form":
 					return "panel.bmp";
 				case "UIAEditBox":
+				case "TextField":
+				case "TextFields":
 					return "editbox.bmp";
 				case "UIALabel":
+				case "Label":
+				case "Labels":
 					return "label.bmp";
 				case "HTMLSelect":
 				case "UIAListBox":
 				case "UIAListItem":
+				case "SelectList":
+				case "SelectLists":
 					return "list.bmp";
 				case "UIAMenu":
 				case "UIAMenuItem":
 					return "menu.bmp";
 				case "UIARadioButton":
+				case "RadioButton":
+				case "RadioButtons":
 					return "radiobutton.bmp";
 				case "UIATab":
 				case "UIATabItem":
 					return "tab.bmp";
 				case "UIATable":
+				case "Table":
+				case "TableBody":
+				case "TableCell":
+				case "TableRow":
+				case "Tables":
+				case "TableBodies":
+				case "TableCells":
+				case "TableRows":
 					return "table.bmp";
 				case "UIATree":
 				case "UIATreeItem":
@@ -281,10 +311,25 @@ namespace QAliber.VS2005.Plugin
 						return "window.bmp";
 					}
 				case "WebPage":
-					return "browser.bmp";
+				case "WatBrowser":
+					try
+					{
+						string key = control.Process.MainModule.FileName;
+						if (!imageControls.Images.ContainsKey(key))
+							imageControls.Images.Add(key, Icon.ExtractAssociatedIcon(control.Process.MainModule.FileName));
+						return key;
+					}
+					catch
+					{
+						return "window.bmp";
+					}
 				case "HTMLImage":
+				case "Image":
+				case "Images":
 					return "image.bmp";
 				case "HTMLLink":
+				case "Link":
+				case "Links":
 					return "link.bmp";
 				default:
 					return "control.bmp";
@@ -295,8 +340,11 @@ namespace QAliber.VS2005.Plugin
 		#region Events
 		private void treeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
 		{
-			
-			FillTreeRec(e.Node, 2);
+			//UIControlBase control = e.Node.Tag as UIControlBase;
+			//if (control is WatBrowser)
+			//	  FillTreeRec(e.Node, 1);
+			//else
+				FillTreeRec(e.Node, 2);
 			
 		}
 
@@ -306,7 +354,7 @@ namespace QAliber.VS2005.Plugin
 			if (control != null)
 			{
 				TrackSelection(control);
-				if (!(control is WebRoot || control is WPFRoot))
+				if (!(control is WebRoot || control is WPFRoot || control is WatinRoot))
 				{
 					try
 					{
@@ -377,7 +425,6 @@ namespace QAliber.VS2005.Plugin
 					UIControlBase control = node.Tag as UIControlBase;
 					control.Refresh();
 					FillTreeRec(node, 2);
-
 				}
 			}
 
@@ -461,6 +508,9 @@ namespace QAliber.VS2005.Plugin
 					break;
 				case "WPF":
 					rootControl = Desktop.WPF;
+					break;
+				case "Watin":
+					rootControl = Desktop.Watin;
 					break;
 				default:
 					rootControl = Desktop.UIA;
@@ -585,13 +635,6 @@ namespace QAliber.VS2005.Plugin
 		private System.Collections.ArrayList mySelItems;
 		private IVsWindowFrame frame = null;
 		private SpyToolWindow parent;
-
-		
-		
-
-		
-
-		
 	}
 
 	class IDEDetector
