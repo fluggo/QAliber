@@ -234,9 +234,13 @@ namespace QAliber.Engine.Controls.Watin
 					rect.Bottom - rect.Top);
 
 				UIControlBase ances = parent.Parent;
-				while (!( ances is WatBrowser))
+
+				if (this.UIType.Contains("Table"))
 				{
-					ances = ances.Parent;
+					while (!(ances is WatBrowser))
+					{
+						ances = ances.Parent;
+					}
 				}
 
 				res.Offset(ances.Layout.Left, ances.Layout.Top);
