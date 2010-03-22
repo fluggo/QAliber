@@ -450,7 +450,7 @@ namespace QAliber.VS2005.Plugin
 				case "UI Automation":
 					rootControl = Desktop.UIA;
 					break;
-				case "Web":
+				case "Web (DOM)":
 					rootControl = Desktop.Web;
 					break;
 				case "WPF":

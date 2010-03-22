@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using QAliber.Engine.Controls;
+using System.Windows.Forms;
 
 namespace QAliber.Recorder
 {
@@ -69,6 +70,15 @@ namespace QAliber.Recorder
 			get { return keepRecordedTimings; }
 			set { keepRecordedTimings = value; }
 		}
+
+		private Control recordControl;
+
+		public Control RecordControl
+		{
+			get { return recordControl; }
+			set { recordControl = value; }
+		}
+
 
 		public static RecorderConfig Default
 		{

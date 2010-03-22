@@ -39,4 +39,11 @@ namespace QAliber.Engine
 		Drag,
 		Write
 	}
+
+	public enum AmbiguityResult
+	{
+		None,
+		Single,
+		Ambiguous
+	}
 }

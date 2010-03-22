@@ -56,6 +56,9 @@ namespace QAliber.Recorder
 				Desktop.Web.BeforeNavigationInAnyPage += new EventHandler<NavigationEventArgs>(PageBeforeNavigation);
 				Desktop.Web.AfterNavigationInAnyPage += new EventHandler<NavigationEventArgs>(PageAfterNavigation);
 			}
+
+			
+			
 			llkbHook.StartHook();
 			llMouseHook.StartHook();
 			entries.Clear();
@@ -153,7 +156,7 @@ namespace QAliber.Recorder
 			}
 
 		}
-		
+
 		#region Events
 		private void llMouseHook_MouseIntercepted(int msg, ManagedWinapi.Windows.POINT pt, int mouseData, int flags, int time, IntPtr dwExtraInfo, ref bool handled)
 		{
@@ -163,6 +166,7 @@ namespace QAliber.Recorder
 				case (int)Structures.MouseMessages.WM_LBUTTONDOWN:
 					threads.Add(new Thread(new ParameterizedThreadStart(CreateMouseEntry)));
 					lastIndex = threads.Count - 1;
+					threads[lastIndex].SetApartmentState(ApartmentState.STA);
 					threads[lastIndex].Start(
 						new MouseEntry(false, MouseButtons.Left, pt));
 					threads[lastIndex].Join();
@@ -171,6 +175,7 @@ namespace QAliber.Recorder
 				case (int)Structures.MouseMessages.WM_LBUTTONUP:
 					threads.Add(new Thread(new ParameterizedThreadStart(CreateMouseEntry)));
 					lastIndex = threads.Count - 1;
+					threads[lastIndex].SetApartmentState(ApartmentState.STA);
 					threads[lastIndex].Start(
 						new MouseEntry(true, MouseButtons.Left, pt));
 					threads[lastIndex].Join();
@@ -179,6 +184,7 @@ namespace QAliber.Recorder
 				case (int)Structures.MouseMessages.WM_MBUTTONDOWN:
 					threads.Add(new Thread(new ParameterizedThreadStart(CreateMouseEntry)));
 					lastIndex = threads.Count - 1;
+					threads[lastIndex].SetApartmentState(ApartmentState.STA);
 					threads[lastIndex].Start(
 						new MouseEntry(false, MouseButtons.Middle, pt));
 					threads[lastIndex].Join();
@@ -187,6 +193,7 @@ namespace QAliber.Recorder
 				case (int)Structures.MouseMessages.WM_MBUTTONUP:
 					threads.Add(new Thread(new ParameterizedThreadStart(CreateMouseEntry)));
 					lastIndex = threads.Count - 1;
+					threads[lastIndex].SetApartmentState(ApartmentState.STA);
 					threads[lastIndex].Start(
 						new MouseEntry(true, MouseButtons.Middle, pt));
 					threads[lastIndex].Join();
@@ -195,6 +202,7 @@ namespace QAliber.Recorder
 				case (int)Structures.MouseMessages.WM_RBUTTONDOWN:
 					threads.Add(new Thread(new ParameterizedThreadStart(CreateMouseEntry)));
 					lastIndex = threads.Count - 1;
+					threads[lastIndex].SetApartmentState(ApartmentState.STA);
 					threads[lastIndex].Start(
 						new MouseEntry(false, MouseButtons.Right, pt));
 					threads[lastIndex].Join();
@@ -203,6 +211,7 @@ namespace QAliber.Recorder
 				case (int)Structures.MouseMessages.WM_RBUTTONUP:
 					threads.Add(new Thread(new ParameterizedThreadStart(CreateMouseEntry)));
 					lastIndex = threads.Count - 1;
+					threads[lastIndex].SetApartmentState(ApartmentState.STA);
 					threads[lastIndex].Start(
 						new MouseEntry(true, MouseButtons.Right, pt));
 					threads[lastIndex].Join();
@@ -223,6 +232,7 @@ namespace QAliber.Recorder
 			IntPtr inputHandle = User32.GetKeyboardLayout(tid);
 			threads.Add(new Thread(new ParameterizedThreadStart(CreateKBEntry)));
 			int lastIndex = threads.Count - 1;
+			threads[lastIndex].SetApartmentState(ApartmentState.STA);
 			threads[lastIndex].Start(
 				new KBEntry(isUp, key, inputHandle));
 			threads[lastIndex].Join();
@@ -249,8 +259,6 @@ namespace QAliber.Recorder
 		private LowLevelKeyboardHook llkbHook;
 		private LowLevelMouseHook llMouseHook;
 
-
-		
 	}
 
 	public class MouseEntry
@@ -294,10 +302,6 @@ namespace QAliber.Recorder
 			get { return llEntry; }
 			set { llEntry = value; }
 		}
-	
-
-		
-	
 	
 	}
 

@@ -146,6 +146,8 @@ namespace QAliber.VS2005.Plugin
 		private void FillTree()
 		{
 			treeView.Nodes.Clear();
+			Cursor oldCursor = this.Cursor;
+			this.Cursor = Cursors.WaitCursor;
 			TreeNode node = new TreeNode("Desktop");
 			node.Tag = rootControl;
 			node.ContextMenuStrip = nodeContextMenu;
@@ -168,6 +170,7 @@ namespace QAliber.VS2005.Plugin
 					//TODO : report exception
 				}
 			}
+			this.Cursor = oldCursor;
 
 		}
 
@@ -412,6 +415,8 @@ namespace QAliber.VS2005.Plugin
 
 		private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			Cursor oldCursor = this.Cursor;
+			this.Cursor = Cursors.WaitCursor;
 			if (toolStripComboBoxSpyAs.Text == "WPF")
 			{
 				rootControl.Refresh();
@@ -427,7 +432,7 @@ namespace QAliber.VS2005.Plugin
 					FillTreeRec(node, 2);
 				}
 			}
-
+			this.Cursor = oldCursor;
 		}
 
 		private void winFormsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -502,15 +507,19 @@ namespace QAliber.VS2005.Plugin
 			{
 				case "UI Automation":
 					rootControl = Desktop.UIA;
+					toolStripRecord.Enabled = true;
 					break;
-				case "Web":
+				case "Web (DOM)":
 					rootControl = Desktop.Web;
+					toolStripRecord.Enabled = true;
 					break;
 				case "WPF":
 					rootControl = Desktop.WPF;
+					toolStripRecord.Enabled = false;
 					break;
-				case "Watin":
+				case "Web (Watin)":
 					rootControl = Desktop.Watin;
+					toolStripRecord.Enabled = false;
 					break;
 				default:
 					rootControl = Desktop.UIA;
@@ -558,8 +567,15 @@ namespace QAliber.VS2005.Plugin
 
 		private void RecordCommandInvoked(object sender, EventArgs e)
 		{
-			toolStripRecord.Enabled = false;
-			toolStripStop.Enabled = true;
+			if (toolStrip.InvokeRequired)
+			{
+				toolStrip.Invoke(new EventHandler(RecordCommandInvoked), sender, e);
+			}
+			else
+			{
+				toolStripRecord.Enabled = false;
+				toolStripStop.Enabled = true;
+			}
 		}
 
 		private void StopRecordCommandInvoked(object sender, EventArgs e)

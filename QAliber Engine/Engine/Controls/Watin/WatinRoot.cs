@@ -139,7 +139,7 @@ namespace QAliber.Engine.Controls.Watin
 							children.Add(new WatBrowser(browser));
 						}
 					}
-					 FireFox ffBrowser = null;
+					FireFox ffBrowser = null;
 					try
 					{
 						 ffBrowser = FireFox.AttachTo<FireFox>(WatiN.Core.Constraints.AnyConstraint.Instance, 2);
@@ -176,15 +176,18 @@ namespace QAliber.Engine.Controls.Watin
 
 		public UIControlBase GetControlFromPoint(Point pt)
 		{
+			
+			
 				//watin handles return active browser with index = 0
-				WatBrowser focusedBrowser = (WatBrowser) Children[0];
+				WatBrowser focusedBrowser = (WatBrowser)Children[0];
 				//get the abs bounds relative to the page top left
-				
-				WatinControl element = focusedBrowser.GetElementFromPoint((int)pt.X - (int) focusedBrowser.Layout.Left,(int) pt.Y -(int) focusedBrowser.Layout.Top);
-					if (element != null)
-						return element;
-		 
-			return null;
+
+				WatinControl element = focusedBrowser.GetElementFromPoint((int)pt.X - (int)focusedBrowser.Layout.Left, (int)pt.Y - (int)focusedBrowser.Layout.Top);
+				if (element != null)
+					return element;
+
+				return null;
+			
 		}
 
 		public UIControlBase GetFocusedElement()
@@ -193,7 +196,7 @@ namespace QAliber.Engine.Controls.Watin
 		  
 		}
 
-	   
+		
 		#endregion
 
 	  
@@ -202,4 +205,6 @@ namespace QAliber.Engine.Controls.Watin
 		List<UIControlBase> children;
 		FireFox ffBrowser;
 	}
+
+	public delegate UIControlBase LocatorDelegate(Point pt);
 }

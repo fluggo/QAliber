@@ -174,7 +174,12 @@ namespace QAliber.Engine.Controls.UIA
 						prefix = "Desktop.UIA";
 					else
 						prefix = parent.CodePath;
-					codePath = prefix + "[@\"" + Name + "\", @\"" + ClassName + "\", @\"" + ID + "\"]";
+					string tmpName = Name;
+					string tmpID = ID;
+					if (tmpName == "" && tmpID.StartsWith("UI"))
+						codePath = prefix + "[@\"" + tmpID + "\", " + IDIndex + "]";
+					else
+						codePath = prefix + "[@\"" + tmpName + "\", @\"" + ClassName + "\", @\"" + tmpID + "\"]";
 				}
 				return codePath;
 			}
@@ -257,6 +262,57 @@ namespace QAliber.Engine.Controls.UIA
 		{
 			get { return ClassName.StartsWith("WindowsForms"); }
 		}
+
+		[ReadOnly(true)]
+		[Category("Identifiers")]
+		[Description("The index of the ID to uniquely identify controls with same IDs among their siblings")]
+		[DisplayName("ID Index")]
+		public int IDIndex
+		{
+			get
+			{
+				if (idIndex == -1)
+				{
+					idIndex = 0;
+					UIControlBase p = Parent;
+					if (p != null)
+					{
+						List<UIControlBase> siblings = new List<UIControlBase>();
+						siblings.AddRange(p.Children);
+						if (siblings.Count > 0)
+						{
+							siblings.Sort(new IDControlSorter());
+							((UIAControl)siblings[0]).IDIndex = 0;
+							int tmpIndex = 0;
+							for (int i = 1; i < siblings.Count; i++)
+							{
+								UIAControl prevSibling = siblings[i - 1] as UIAControl;
+								UIAControl sibling = siblings[i] as UIAControl;
+								if (sibling != null)
+								{
+									if (sibling.ID == prevSibling.ID)
+										tmpIndex++;
+									else
+										tmpIndex = 0;
+									if (this.Layout.Equals(sibling.Layout) && this.Handle == sibling.Handle)
+										idIndex = tmpIndex;
+									else
+										sibling.IDIndex = tmpIndex;
+								}
+							}
+						}
+					}
+				}
+				return idIndex;
+			}
+			set
+			{
+				idIndex = value;
+			}
+		}
+
+		
+
 		#endregion
 
 		#region Methods
@@ -282,6 +338,7 @@ namespace QAliber.Engine.Controls.UIA
 		{
 			base.Refresh();
 			sao = null;
+			idIndex = -1;
 		}
 
 		/// <summary>
@@ -472,6 +529,7 @@ namespace QAliber.Engine.Controls.UIA
 		#region Private Fields
 		[NonSerialized]
 		protected AutomationElement automationElement;
+		protected int idIndex = -1;
 		[NonSerialized]
 		protected SystemAccessibleObject sao = null;
 

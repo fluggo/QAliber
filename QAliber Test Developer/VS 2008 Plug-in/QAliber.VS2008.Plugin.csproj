@@ -138,19 +138,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
-    <None Include="Resources\Images_32bit.bmp" />
-    <None Include="Resources\Images_24bit.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\ImageViewer.datasource" />
-    <None Include="Resources\crosshair.jpg" />
     <None Include="Resources\crosshair.bmp" />
     <None Include="Resources\circle.bmp" />
     <Content Include="Resources\CrossIcon.ico" />
     <Content Include="Resources\Package.ico" />
     <None Include="Resources\Stop.png" />
-    <None Include="Resources\RecordExplorer.PNG" />
     <None Include="Resources\Record.png" />
   </ItemGroup>
   <ItemGroup>

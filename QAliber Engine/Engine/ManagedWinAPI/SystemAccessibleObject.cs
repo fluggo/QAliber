@@ -75,6 +75,7 @@ namespace ManagedWinapi.Accessibility
 					}
 				}
 				catch (ArgumentException) { }
+				catch (InvalidCastException) { }
 			}
 			this.iacc = iacc;
 			this.childID = childID;

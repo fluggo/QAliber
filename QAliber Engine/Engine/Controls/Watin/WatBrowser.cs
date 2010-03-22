@@ -73,7 +73,12 @@ namespace QAliber.Engine.Controls.Watin
 
 		public override Process Process
 		{
-			get { return System.Diagnostics.Process.GetProcessById(pageWinElement.Current.ProcessId); }
+			get 
+			{
+				if (pageWinElement == null)
+					return null;
+				return System.Diagnostics.Process.GetProcessById(pageWinElement.Current.ProcessId); 
+			}
 		}
 
 		public override void SetFocus()
@@ -238,7 +243,7 @@ namespace QAliber.Engine.Controls.Watin
 				   INativeElement htmlElem2 =  frmEnum.Current.NativeDocument.ContainingFrameElement;
 				   if (sourceIdx == htmlElem2.GetElementSourceIndex())
 					{
-						htmlElem = frmEnum.Current.NativeDocument.ElementFromPoint(x - htmlElem2.GetElementBounds().Left, y - htmlElem2.GetElementBounds().Top);
+						htmlElem = frmEnum.Current.NativeDocument.ElementFromPoint(x - htmlElem2.GetAbsElementBounds().Left, y - htmlElem2.GetAbsElementBounds().Top);
 						wat = CreateWatinControl(htmlElem);
 						return wat;
 					}

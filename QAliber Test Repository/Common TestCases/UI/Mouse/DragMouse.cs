@@ -53,6 +53,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		[Category("Mouse")]
 		[DisplayName("3) Top Left Coordiante")]
 		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected, to start the drag from")]
+		[TypeConverter(typeof(ExpandableObjectConverter))]
 		public Point Coordinate
 		{
 			get { return point1; }

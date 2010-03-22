@@ -184,7 +184,7 @@ namespace QAliber.Engine.Controls.Watin
 
 				try
 				{
-					rect = docElement.NativeDocument.ContainingFrameElement.GetElementBounds(); 
+					rect = docElement.NativeDocument.ContainingFrameElement.GetAbsElementBounds(); 
 				}
 				catch (NotImplementedException e)//WatiN throw this for FireFox
 				{

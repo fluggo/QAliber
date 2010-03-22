@@ -63,7 +63,7 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				return parent.CodePath +"." + type ;
+				return parent.CodePath + "." + type;
 			}
 		}
 		/// <summary>
@@ -90,11 +90,11 @@ namespace QAliber.Engine.Controls.Watin
 			{
 				if (children == null)
 				{
-					if (parent is WatBrowser)
+					if (Parent is WatBrowser)
 						children = GetBrowserChilds();
-					if (parent is WatinControl)
+					if (Parent is WatinControl)
 						children = GetElementChilds();
-					else if (parent is WatFrame)
+					else if (Parent is WatFrame)
 						children = GetFrameChilds();
 				}
 				return children;
@@ -134,6 +134,13 @@ namespace QAliber.Engine.Controls.Watin
 			{
 				return type.ToString();
 			}
+		}
+
+		public override void Refresh()
+		{
+			codePath = string.Empty;
+			id = string.Empty;
+			children = null;
 		}
 
 		private List<UIControlBase> GetBrowserChilds()

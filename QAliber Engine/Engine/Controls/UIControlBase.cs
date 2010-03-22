@@ -124,7 +124,9 @@ namespace QAliber.Engine.Controls
 		/// The index of the child control among its siblings
 		/// </summary>
 		[Category("Identifiers")]
-		[Description("The index of the control, index and ID are unique")]
+		[Description("The index of the control")]
+		[DisplayName("Child Index")]
+		[ReadOnly(true)]
 		public virtual int Index
 		{
 			get
@@ -335,7 +337,7 @@ namespace QAliber.Engine.Controls
 					}
 					System.Threading.Thread.Sleep(50);
 				}
-				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {3}",
+				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
 					name, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				return null;
 			}
@@ -439,7 +441,7 @@ namespace QAliber.Engine.Controls
 					foreach (UIControlBase child in Children)
 					{
 						if (child.Name.ToLower() == name.ToLower() &&
-							child.ID.ToLower() == id.ToLower() &&
+							(id == null || child.ID.ToLower() == id.ToLower()) &&
 							child.ClassName.ToLower() == className.ToLower())
 							return child;
 					}
@@ -450,7 +452,31 @@ namespace QAliber.Engine.Controls
 				return null;
 			}
 		}
-		
+
+		public virtual QAliber.Engine.Controls.UIA.UIAControl this[string id, int idIndex]
+		{
+			get
+			{
+				if (this is QAliber.Engine.Controls.UIA.UIAControl)
+				{
+					Stopwatch watch = new Stopwatch();
+					watch.Start();
+					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+					{
+						children = null;
+						foreach (QAliber.Engine.Controls.UIA.UIAControl child in Children)
+						{
+							if (child.ID == id && child.IDIndex == idIndex)
+								return child;
+						}
+						System.Threading.Thread.Sleep(50);
+					}
+					QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
+						name, idIndex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
+				}
+				return null;
+			}
+		}
 		#endregion
 
 		#region Methods
@@ -742,6 +768,22 @@ namespace QAliber.Engine.Controls
 			return res;
 		}
 
+		public AmbiguityResult TestAmbiguity(string name, string classname, string id)
+		{
+			int matchCount = 0;
+			foreach (UIControlBase child in Children)
+			{
+				if (child.Name == name && child.ClassName == classname && child.ID == id)
+					matchCount++;
+				if (matchCount > 1)
+					return AmbiguityResult.Ambiguous;
+
+			}
+			if (matchCount == 0)
+				return AmbiguityResult.Single;
+			else
+				return AmbiguityResult.None;
+		}
 		/// <summary>
 		/// Simulate mouse click with the left button, at the center of the control
 		/// </summary>
@@ -1289,7 +1331,17 @@ namespace QAliber.Engine.Controls
 
 	}
 
-	
+	class IDControlSorter : IComparer<UIControlBase>
+	{
+		#region IComparer<UIControlBase> Members
+
+		public int Compare(UIControlBase x, UIControlBase y)
+		{
+			return string.Compare(x.ID, y.ID);
+		}
+
+		#endregion
+	}
 
 	
 }
