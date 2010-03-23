@@ -243,9 +243,11 @@ namespace QAliber.Engine.Controls.Watin
 				   INativeElement htmlElem2 =  frmEnum.Current.NativeDocument.ContainingFrameElement;
 				   if (sourceIdx == htmlElem2.GetElementSourceIndex())
 					{
-						htmlElem = frmEnum.Current.NativeDocument.ElementFromPoint(x - htmlElem2.GetAbsElementBounds().Left, y - htmlElem2.GetAbsElementBounds().Top);
-						wat = CreateWatinControl(htmlElem);
-						return wat;
+						WatFrame frameParent = new WatFrame(new WatinBaseControl(this, WatinBaseTypes.Frames), frmEnum.Current, sourceIdx);
+
+						//htmlElem = frmEnum.Current.NativeDocument.ElementFromPoint(x - htmlElem2.GetAbsElementBounds().Left, y - htmlElem2.GetAbsElementBounds().Top);
+						//wat = CreateWatinControl(htmlElem);
+						return frameParent.GetControlFromPoint(x,y);
 					}
 				}
 			}

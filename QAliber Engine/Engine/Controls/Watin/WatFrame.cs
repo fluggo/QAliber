@@ -26,12 +26,13 @@ using QAliber.Engine.Controls;
 using System.Threading;
 using System.Windows.Automation;
 using WatiN.Core;
+using WatiN.Core.Native;
 
 //http://www.koders.com/csharp/fid36DB75029F9A8E6EDAD39C9C3B44F936A9F18A55.aspx?s=mdef%3Ainsert
 namespace QAliber.Engine.Controls.Watin
 {
-  
-	public class WatFrame : UIControlBase 
+
+	public class WatFrame : UIControlBase
 	{
 		#region Constructors
 		public WatFrame(WatinBaseControl parent, WatiN.Core.Frame element, int idx)
@@ -300,6 +301,303 @@ namespace QAliber.Engine.Controls.Watin
 		
 		#endregion
 
-	   
+
+
+		#region IControlLocator Members
+
+		public UIControlBase GetControlFromCursor()
+		{
+			throw new NotImplementedException();
+		}
+
+		public WatinControl GetControlFromPoint(int x , int y)
+		{
+		   INativeElement htmlElem = docElement.NativeDocument.ElementFromPoint(x - docElement.NativeDocument.ContainingFrameElement.GetAbsElementBounds().Left, y - docElement.NativeDocument.ContainingFrameElement.GetAbsElementBounds().Top);
+		   return CreateWatinControl(htmlElem);
+		}
+
+		public UIControlBase GetFocusedElement()
+		{
+			throw new NotImplementedException();
+		}
+
+		private WatinControl CreateWatinControl(INativeElement htmlElem)
+		{
+			Element watElem;
+			WatinBaseControl watBaseTypeElem;
+			int watElemIndex = 0;
+			int sourceIdx = htmlElem.GetElementSourceIndex();
+			string getByTag = htmlElem.TagName;
+
+			switch (getByTag)
+			{
+				case "AREA":
+					watElem = new Area( docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Areas);
+					IEnumerator<Area> areaEnum = docElement.Areas.GetEnumerator();
+
+					while (areaEnum.MoveNext())
+					{
+						if (areaEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+
+				case "INPUT":
+					string byType = htmlElem.GetAttributeValue("type");
+					switch (byType)
+					{
+						case "submit":
+						case "reset":
+						case "button":
+							watElem = new WatiN.Core.Button(docElement.DomContainer, htmlElem);
+							watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Buttons);
+							IEnumerator<WatiN.Core.Button> buttonEnum = docElement.Buttons.GetEnumerator();
+
+							while (buttonEnum.MoveNext())
+							{
+								if (buttonEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+									break;
+								watElemIndex++;
+							}
+							return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+
+						case "checkbox":
+							watElem = new WatiN.Core.CheckBox(docElement.DomContainer, htmlElem);
+							watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.CheckBoxes);
+							IEnumerator<WatiN.Core.CheckBox> cbEnum = docElement.CheckBoxes.GetEnumerator();
+
+							while (cbEnum.MoveNext())
+							{
+								if (cbEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+									break;
+								watElemIndex++;
+							}
+							return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+
+						case "file":
+							watElem = new FileUpload(docElement.DomContainer, htmlElem);
+							watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.FileUploads);
+							IEnumerator<FileUpload> fuEnum = docElement.FileUploads.GetEnumerator();
+
+							while (fuEnum.MoveNext())
+							{
+								if (fuEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+									break;
+								watElemIndex++;
+							}
+							return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+						case "hidden":
+						case "password":
+						case "text":
+						case "textarea":
+							watElem = new TextField(docElement.DomContainer, htmlElem);
+							watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.TextFields);
+							IEnumerator<TextField> tfEnum = docElement.TextFields.GetEnumerator();
+
+							while (tfEnum.MoveNext())
+							{
+								if (tfEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+									break;
+								watElemIndex++;
+							}
+							return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+						case "radio":
+							watElem = new WatiN.Core.RadioButton(docElement.DomContainer, htmlElem);
+							watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.RadioButtons);
+							IEnumerator<WatiN.Core.RadioButton> rbEnum = docElement.RadioButtons.GetEnumerator();
+
+							while (rbEnum.MoveNext())
+							{
+								if (rbEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+									break;
+								watElemIndex++;
+							}
+							return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+					}
+					break;
+				case "DIV":
+					watElem = new Div(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Divs);
+					IEnumerator<Div> divEnum = docElement.Divs.GetEnumerator();
+
+					while (divEnum.MoveNext())
+					{
+						if (divEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "FORM":
+					watElem = new WatiN.Core.Form(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Forms);
+					IEnumerator<WatiN.Core.Form> formEnum = docElement.Forms.GetEnumerator();
+
+					while (formEnum.MoveNext())
+					{
+						if (formEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "FRAME":
+				case "IFRAME":
+					//watFrame = new Frame(browser.DomContainer, htmlElem);
+					//watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Forms);
+					//IEnumerator<Form> formEnum = browser.Forms.GetEnumerator();
+
+					//while (formEnum.MoveNext())
+					//{
+					//	  if (formEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+					//		  break;
+					//	  watElemIndex++;
+					//}
+					//return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+					break;
+				case "IMG":
+					watElem = new Image(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Images);
+					IEnumerator<Image> imgEnum = docElement.Images.GetEnumerator();
+
+					while (imgEnum.MoveNext())
+					{
+						if (imgEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "LABLE":
+					watElem = new WatiN.Core.Label(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Labels);
+					IEnumerator<WatiN.Core.Label> lblEnum = docElement.Labels.GetEnumerator();
+
+					while (lblEnum.MoveNext())
+					{
+						if (lblEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "A":
+					watElem = new Link(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Links);
+					IEnumerator<Link> lnkEnum = docElement.Links.GetEnumerator();
+
+					while (lnkEnum.MoveNext())
+					{
+						if (lnkEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+
+				case "P":
+					watElem = new Para(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Paras);
+					IEnumerator<Para> paraEnum = docElement.Paras.GetEnumerator();
+
+					while (paraEnum.MoveNext())
+					{
+						if (paraEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "SELECT":
+					watElem = new SelectList(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.SelectLists);
+					IEnumerator<SelectList> slEnum = docElement.SelectLists.GetEnumerator();
+
+					while (slEnum.MoveNext())
+					{
+						if (slEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "SPAN":
+					watElem = new Span(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Spans);
+					IEnumerator<Span> spanEnum = docElement.Spans.GetEnumerator();
+
+					while (spanEnum.MoveNext())
+					{
+						if (spanEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "TBODY":
+					watElem = new TableBody(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.TableBodies);
+					IEnumerator<TableBody> tbEnum = docElement.TableBodies.GetEnumerator();
+
+					while (tbEnum.MoveNext())
+					{
+						if (tbEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "TD":
+					watElem = new TableCell(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.TableCells);
+					IEnumerator<TableCell> tdEnum = docElement.TableCells.GetEnumerator();
+
+					while (tdEnum.MoveNext())
+					{
+						if (tdEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "TR":
+					watElem = new TableRow(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.TableRows);
+					IEnumerator<TableRow> trEnum = docElement.TableRows.GetEnumerator();
+
+					while (trEnum.MoveNext())
+					{
+						if (trEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "TABLE":
+					watElem = new Table(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.Tables);
+					IEnumerator<Table> tableEnum = docElement.Tables.GetEnumerator();
+
+					while (tableEnum.MoveNext())
+					{
+						if (tableEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+				case "TEXTAREA":
+					watElem = new TextField(docElement.DomContainer, htmlElem);
+					watBaseTypeElem = new WatinBaseControl(this, WatinBaseTypes.TextFields);
+					IEnumerator<TextField> taEnum = docElement.TextFields.GetEnumerator();
+
+					while (taEnum.MoveNext())
+					{
+						if (taEnum.Current.NativeElement.GetElementSourceIndex() == sourceIdx)
+							break;
+						watElemIndex++;
+					}
+					return new WatinControl(watBaseTypeElem, watElem, watElemIndex);
+
+				default:
+					return null;
+
+
+			}
+
+			return null;
+		}
+
+		#endregion
 	}
 }
