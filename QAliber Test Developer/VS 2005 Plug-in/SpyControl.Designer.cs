@@ -216,11 +216,13 @@ namespace QAliber.VS2005.Plugin
 			// 
 			this.toolStripComboBoxSpyAs.Items.AddRange(new object[] {
 			"UI Automation",
-			"Web (DOM)"});
+			"Web (DOM)",
+			"Web (Watin)"});
 			this.toolStripComboBoxSpyAs.Name = "toolStripComboBoxSpyAs";
 			this.toolStripComboBoxSpyAs.Size = new System.Drawing.Size(121, 39);
 			this.toolStripComboBoxSpyAs.ToolTipText = "Spy & Record Controls Method";
 			this.toolStripComboBoxSpyAs.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSpyAs_SelectedIndexChanged);
+		  
 			// 
 			// notifyIcon
 			// 

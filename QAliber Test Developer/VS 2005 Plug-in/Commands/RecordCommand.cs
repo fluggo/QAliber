@@ -56,21 +56,20 @@ namespace QAliber.VS2005.Plugin.Commands
 				MessageBox.Show("WPF recording is not yet implemented", "Record");
 				return false;
 			}
+
+			if (spyToolWin.control.rootControl is QAliber.Engine.Controls.Watin.WatinRoot)
+			{
+				MessageBox.Show("WatiN recording is not yet implemented", "Record");
+				return false;
+			}
+
 			if (Statics.DTE.ActiveDocument == null)
 			{
 				DialogResult dr = MessageBox.Show("No active document is open in your solution, code generated will be copied to clipboard.\r\nAre you sure ?", "No Active Document", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (dr == DialogResult.No)
 					return false;
 			}
-			//IVsPackage package = spyToolWin.Package as IVsPackage;
-			//if (package != null)
-			//{
-			//	  object obj;
-			//	  package.GetAutomationObject("QAliber Test Developer.Recorder", out obj);
-			//	  RecorderConfig.Default = obj as RecorderConfig;
-			//	  package.GetAutomationObject("QAliber Test Developer.Player", out obj);
-			//	  PlayerConfig.Default = obj as PlayerConfig;
-			//}
+			
 			RecorderConfig.Default.RootControl = spyToolWin.control.rootControl;
 			spyToolWin.control.notifyIcon.Visible = true;
 			spyToolWin.control.notifyIcon.ShowBalloonTip(60000);

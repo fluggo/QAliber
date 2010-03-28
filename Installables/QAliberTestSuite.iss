@@ -50,6 +50,8 @@ Source: "..\Binaries\ManagedWinapi.dll"; DestDir: "{cf}\QAliber"; StrongAssembly
 Source: "..\Binaries\Microsoft.mshtml.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"; Flags: gacinstall sharedfile
 Source: "..\Binaries\ZedGraph.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02A83CBD123FCD60, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
 Source: "..\Binaries\tessnet2_32.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "tessnet2_32, Version=2.0.4.0, Culture=neutral, PublicKeyToken=1550524B5BA07E29, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+Source: "..\Binaries\Watin.Core.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Watin.Core, Version=2.0.20.0, Culture=neutral, PublicKeyToken=D0C049742D9F7CC4, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
+
 ;QAliber CV unmanaged dependencies
 Source: "..\Binaries\cv200.dll"; DestDir: "{sys}"; Flags: sharedfile
 Source: "..\Binaries\cxcore200.dll"; DestDir: "{sys}"; Flags: sharedfile
@@ -95,6 +97,7 @@ function IsVSNotInstalled() : Boolean;
 begin
     Result := not (IsVS2005Installed() or IsVS2008Installed());
 end;
+
 
 
 

@@ -41,7 +41,6 @@ using QAliber.VS2005.Plugin.Commands;
 using QAliber.Engine.Win32;
 using QAliber.Engine.Controls.UIA;
 using QAliber.Engine.Controls.WPF;
-using QAliber.Engine.Controls.Watin;
 
 namespace QAliber.VS2005.Plugin
 {
@@ -165,7 +164,7 @@ namespace QAliber.VS2005.Plugin
 					newNode.ContextMenuStrip = nodeContextMenu;
 					node.Nodes.Add(newNode);
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					//TODO : report exception
 				}
@@ -302,17 +301,6 @@ namespace QAliber.VS2005.Plugin
 				case "UIATreeItem":
 					return "treeview.bmp";
 				case "UIAWindow":
-					try
-					{
-						string key = control.Process.MainModule.FileName;
-						if (!imageControls.Images.ContainsKey(key))
-							imageControls.Images.Add(key, Icon.ExtractAssociatedIcon(control.Process.MainModule.FileName));
-						return key;
-					}
-					catch
-					{
-						return "window.bmp";
-					}
 				case "WebPage":
 				case "WatBrowser":
 					try
@@ -343,11 +331,8 @@ namespace QAliber.VS2005.Plugin
 		#region Events
 		private void treeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
 		{
-			//UIControlBase control = e.Node.Tag as UIControlBase;
-			//if (control is WatBrowser)
-			//	  FillTreeRec(e.Node, 1);
-			//else
-				FillTreeRec(e.Node, 2);
+			
+			FillTreeRec(e.Node, 2);
 			
 		}
 
@@ -567,15 +552,8 @@ namespace QAliber.VS2005.Plugin
 
 		private void RecordCommandInvoked(object sender, EventArgs e)
 		{
-			if (toolStrip.InvokeRequired)
-			{
-				toolStrip.Invoke(new EventHandler(RecordCommandInvoked), sender, e);
-			}
-			else
-			{
-				toolStripRecord.Enabled = false;
-				toolStripStop.Enabled = true;
-			}
+			toolStripRecord.Enabled = false;
+			toolStripStop.Enabled = true;
 		}
 
 		private void StopRecordCommandInvoked(object sender, EventArgs e)

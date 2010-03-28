@@ -211,13 +211,5 @@ namespace QAliber.VS2005.Plugin.Aliases
 		private EnvDTE.Project openProject;
 		private ProjectLanguage lang;
 
-		
-
-	   
-
-		
-		
-
-		
 	}
 }

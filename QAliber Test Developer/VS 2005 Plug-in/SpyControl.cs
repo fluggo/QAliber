@@ -24,6 +24,7 @@ using System.Windows.Automation;
 
 using QAliber.Engine.Controls;
 using QAliber.Engine.Controls.Web;
+using QAliber.Engine.Controls.Watin;
 using System.Threading;
 
 using ManagedWinapi;
@@ -40,6 +41,7 @@ using QAliber.VS2005.Plugin.Commands;
 using QAliber.Engine.Win32;
 using QAliber.Engine.Controls.UIA;
 using QAliber.Engine.Controls.WPF;
+
 
 namespace QAliber.VS2005.Plugin
 {
@@ -140,10 +142,12 @@ namespace QAliber.VS2005.Plugin
 			stopHotkey.HotkeyPressed += new EventHandler(stopHotkey_HotkeyPressed);
 			stopHotkey.Enabled = true;
 		}
-
+	 
 		private void FillTree()
 		{
 			treeView.Nodes.Clear();
+			Cursor oldCursor = this.Cursor;
+			this.Cursor = Cursors.WaitCursor;
 			TreeNode node = new TreeNode("Desktop");
 			node.Tag = rootControl;
 			node.ContextMenuStrip = nodeContextMenu;
@@ -161,11 +165,12 @@ namespace QAliber.VS2005.Plugin
 					newNode.ContextMenuStrip = nodeContextMenu;
 					node.Nodes.Add(newNode);
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					//TODO : report exception
 				}
 			}
+			this.Cursor = oldCursor;
 
 		}
 
@@ -226,6 +231,11 @@ namespace QAliber.VS2005.Plugin
 			UIControlBase control = obj as UIControlBase;
 			if (control.Layout != System.Windows.Rect.Empty)
 			{
+				if (control.Layout.X == -1111) 
+				{
+					((WatinControl)control).Flash(4);
+					return;
+				}
 				control.SetFocus();
 
 				QAliber.Engine.Win32.GDI32.HighlightRectangleDesktop(
@@ -238,37 +248,62 @@ namespace QAliber.VS2005.Plugin
 			switch (control.UIType)
 			{
 				case "UIAButton":
+				case "Button":
+				case "Buttons":
 					return "button.bmp";
 				case "UIACheckBox":
+				case "CheckBox":
+				case "CheckBoxes":
 					return "checkbox.bmp";
 				case "UIAComboBox":
 					return "combobox.bmp";
 				case "HTMLDiv":
 				case "UIADocument":
 				case "UIAPane":
+				case "Div":
+				case "Para":
+				case "Form":
 					return "panel.bmp";
 				case "UIAEditBox":
+				case "TextField":
+				case "TextFields":
 					return "editbox.bmp";
 				case "UIALabel":
+				case "Label":
+				case "Labels":
 					return "label.bmp";
 				case "HTMLSelect":
 				case "UIAListBox":
 				case "UIAListItem":
+				case "SelectList":
+				case "SelectLists":
 					return "list.bmp";
 				case "UIAMenu":
 				case "UIAMenuItem":
 					return "menu.bmp";
 				case "UIARadioButton":
+				case "RadioButton":
+				case "RadioButtons":
 					return "radiobutton.bmp";
 				case "UIATab":
 				case "UIATabItem":
 					return "tab.bmp";
 				case "UIATable":
+				case "Table":
+				case "TableBody":
+				case "TableCell":
+				case "TableRow":
+				case "Tables":
+				case "TableBodies":
+				case "TableCells":
+				case "TableRows":
 					return "table.bmp";
 				case "UIATree":
 				case "UIATreeItem":
 					return "treeview.bmp";
 				case "UIAWindow":
+				case "WebPage":
+				case "WatBrowser":
 					try
 					{
 						string key = control.Process.MainModule.FileName;
@@ -280,11 +315,13 @@ namespace QAliber.VS2005.Plugin
 					{
 						return "window.bmp";
 					}
-				case "WebPage":
-					return "browser.bmp";
 				case "HTMLImage":
+				case "Image":
+				case "Images":
 					return "image.bmp";
 				case "HTMLLink":
+				case "Link":
+				case "Links":
 					return "link.bmp";
 				default:
 					return "control.bmp";
@@ -306,7 +343,7 @@ namespace QAliber.VS2005.Plugin
 			if (control != null)
 			{
 				TrackSelection(control);
-				if (!(control is WebRoot || control is WPFRoot))
+				if (!(control is WebRoot || control is WPFRoot || control is WatinRoot))
 				{
 					try
 					{
@@ -364,6 +401,8 @@ namespace QAliber.VS2005.Plugin
 
 		private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			Cursor oldCursor = this.Cursor;
+			this.Cursor = Cursors.WaitCursor;
 			if (toolStripComboBoxSpyAs.Text == "WPF")
 			{
 				rootControl.Refresh();
@@ -377,10 +416,9 @@ namespace QAliber.VS2005.Plugin
 					UIControlBase control = node.Tag as UIControlBase;
 					control.Refresh();
 					FillTreeRec(node, 2);
-
 				}
 			}
-
+			this.Cursor = oldCursor;
 		}
 
 		private void winFormsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -455,12 +493,19 @@ namespace QAliber.VS2005.Plugin
 			{
 				case "UI Automation":
 					rootControl = Desktop.UIA;
+					toolStripRecord.Enabled = true;
 					break;
 				case "Web (DOM)":
 					rootControl = Desktop.Web;
+					toolStripRecord.Enabled = true;
 					break;
 				case "WPF":
 					rootControl = Desktop.WPF;
+					toolStripRecord.Enabled = false;
+					break;
+				case "Web (Watin)":
+					rootControl = Desktop.Watin;
+					toolStripRecord.Enabled = false;
 					break;
 				default:
 					rootControl = Desktop.UIA;
@@ -585,13 +630,6 @@ namespace QAliber.VS2005.Plugin
 		private System.Collections.ArrayList mySelItems;
 		private IVsWindowFrame frame = null;
 		private SpyToolWindow parent;
-
-		
-		
-
-		
-
-		
 	}
 
 	class IDEDetector

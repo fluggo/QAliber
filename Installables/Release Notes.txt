@@ -1,7 +1,7 @@
 Known Limitations
 --------------------------
 
-Web automation works on a single page of internet explorer (no multi tabs or multi processes)
+Web DOM automation works on a single page of internet explorer (no multi tabs or multi processes)
 Calling code must run in STA apartment
 Memory leaks in tesseract OCR engine
 
@@ -45,3 +45,13 @@ Engine
 	Fixed a bug in initialization of web document
 	
 	
+28/3/10
+-----------
+
+Engine
+	WPF automation is merged with UI Automation, to see how to test WPF apps. see http://www.qaliber.net/Wiki/index.php?title=How_to_Test_WPF_%26_Silverlight
+	WatiN is integrated, with WatiN you can also test firefox, and in the future chrome
+	More unique identification in UI automation
+	A few bug-fixes
+
+
