@@ -19,7 +19,8 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyCopyrightAttribute("Copyright (c) QAlibers 2009")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
-[assembly:AssemblyKeyFile("D:\\Projects\\QAliberSVN\\qaliber\\QAliber Engine\\Engine\\ManagedInjector\\ManagedInjector.key")];
+[assembly:AssemblyKeyFile("ManagedInjector.key")];
+//[assembly:AssemblyKeyFile("D:\\Projects\\QAliberSVN\\qaliber\\QAliber Engine\\Engine\\ManagedInjector\\ManagedInjector.key")];
 
 
 
