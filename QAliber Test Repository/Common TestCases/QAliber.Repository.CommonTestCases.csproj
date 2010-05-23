@@ -52,12 +52,15 @@
     <Compile Include="DB\QueryDatabase.cs" />
     <Compile Include="Eval\CodeEvaluator.cs" />
     <Compile Include="Excel\CreateTableFromRange.cs" />
+    <Compile Include="FileSystem\DirectoryDelete.cs" />
+    <Compile Include="FileSystem\DirectoryCreate.cs" />
     <Compile Include="FileSystem\FileCompare.cs" />
     <Compile Include="FileSystem\FilesRetrieve.cs" />
     <Compile Include="FileSystem\FileSearch.cs" />
     <Compile Include="FileSystem\FileRename.cs" />
     <Compile Include="FileSystem\FileDelete.cs" />
     <Compile Include="FileSystem\FileCopy.cs" />
+    <Compile Include="Macros\CallScenarioTestCase.cs" />
     <Compile Include="Macros\PlayMacroTestCase.cs" />
     <Compile Include="Networking\Http\SendWebRequest.cs" />
     <Compile Include="Networking\Http\SendPostWebRequest.cs" />
@@ -74,8 +77,10 @@
     <Compile Include="Randomizers\GetRandomItemInList.cs" />
     <Compile Include="Randomizers\GenerateRandomNumber.cs" />
     <Compile Include="Registry\AddRegistryValue.cs" />
-    <Compile Include="Registry\DeleteRegistryValue.cs" />
+    <Compile Include="Registry\DeleteRegistryKey.cs" />
     <Compile Include="Registry\VerifyRegistryValue.cs" />
+    <Compile Include="Registry\DeleteRegistryValue.cs" />
+    <Compile Include="Registry\VerifyRegistryKey.cs" />
     <Compile Include="ResourceMonitoring\StopPerfmon.cs" />
     <Compile Include="ResourceMonitoring\StartPerfmon.cs" />
     <Compile Include="Timers\StopTimerTestCase.cs" />

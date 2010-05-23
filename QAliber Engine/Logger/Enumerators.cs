@@ -29,7 +29,7 @@ namespace QAliber.Logger
 		/// </summary>
 		Event,
 		/// <summary>
-		/// Gereral information logging
+		/// General information logging
 		/// </summary>
 		Info,
 		/// <summary>

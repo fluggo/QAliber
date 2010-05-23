@@ -54,4 +54,11 @@ Engine
 	More unique identification in UI automation
 	A few bug-fixes
 
+23/5/10
+----------
 
+Test Builder
+	Feature req. 2999997
+	Feature req. 2999202
+	Feature req. 2999200
+	Feature req. 2997501

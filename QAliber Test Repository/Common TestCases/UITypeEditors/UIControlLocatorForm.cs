@@ -92,7 +92,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 						break;
 					case 0x0200: //MouseMove
 						AutomationElement element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));
-						if (!element.Equals(capturedElement))
+						if (element != null && !element.Equals(capturedElement))
 						{
 							GDI32.RedrawWindow(capturedElement);
 							GDI32.HighlightWindow(element);

@@ -23,9 +23,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("QAliber.Recorder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PHILIPS")]
+[assembly: AssemblyCompany("QAlibers")]
 [assembly: AssemblyProduct("QAliber.Recorder")]
-[assembly: AssemblyCopyright("Copyright © PHILIPS 2009")]
+[assembly: AssemblyCopyright("Copyright © QAlibers 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

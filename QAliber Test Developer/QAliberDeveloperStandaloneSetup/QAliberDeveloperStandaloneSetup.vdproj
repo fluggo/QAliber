@@ -40,12 +40,6 @@
         "Entry"
         {
         "MsmKey" = "8:_2C0E95B6412A4AD39B84DF36160F56C6"
-        "OwnerKey" = "8:_9C0DA057310E679190305573AA7E58E6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2C0E95B6412A4AD39B84DF36160F56C6"
         "OwnerKey" = "8:_3B0FE3CBA6B5FE321DA09334A8C3A2F6"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -112,13 +106,13 @@
         "Entry"
         {
         "MsmKey" = "8:_7464316936E259C63E161C0632038BFB"
-        "OwnerKey" = "8:_509F67297AF96BF58DBA049189C09326"
+        "OwnerKey" = "8:_6D65BBADBC5A4095BC4F7B8803BFB6AE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7464316936E259C63E161C0632038BFB"
-        "OwnerKey" = "8:_6D65BBADBC5A4095BC4F7B8803BFB6AE"
+        "OwnerKey" = "8:_509F67297AF96BF58DBA049189C09326"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -131,18 +125,6 @@
         {
         "MsmKey" = "8:_823CD26C29E94CF7ADE770E52B52B89E"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9C0DA057310E679190305573AA7E58E6"
-        "OwnerKey" = "8:_6D65BBADBC5A4095BC4F7B8803BFB6AE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9C0DA057310E679190305573AA7E58E6"
-        "OwnerKey" = "8:_F6FB6236E5489A0C68DA9AA7865438FD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -214,6 +196,18 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6D65BBADBC5A4095BC4F7B8803BFB6AE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F6FB6236E5489A0C68DA9AA7865438FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_78A2E6516DB3AAB6145761DE27B5EBC3"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -263,12 +257,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_26C69A3C695DC145F0BE3FDC1044AD31"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9C0DA057310E679190305573AA7E58E6"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -534,7 +522,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -689,37 +677,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9C0DA057310E679190305573AA7E58E6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9C0DA057310E679190305573AA7E58E6"
-                    {
-                    "Name" = "8:Interop.SHDocVw.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Interop.SHDocVw.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DD46A6E19806406C8B998C546814C715"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A8300232AE634AD490175EE326F0C303"
@@ -1141,7 +1098,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QAliber Developer Standalone"
         "ProductCode" = "8:{D07EB533-D87F-4736-9A87-217A81AACA09}"
-        "PackageCode" = "8:{8F07605A-CD6B-4FFF-9A99-0105D3225118}"
+        "PackageCode" = "8:{F10EA7AB-C44E-4139-91DC-FFC331F95DA8}"
         "UpgradeCode" = "8:{1B525FAD-DA66-4BC1-A66C-8F901AC3FFE2}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
