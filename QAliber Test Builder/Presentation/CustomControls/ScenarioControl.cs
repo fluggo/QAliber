@@ -334,7 +334,7 @@ namespace QAliber.Builder.Presentation
 
 		internal void AfterTypeDragEnded(object sender, NodeDraggedEventArgs e)
 		{
-			QAliberTreeNode node = e.SourceNode.Clone() as QAliberTreeNode;
+			QAliberTreeNode node = e.SourceNode.CompleteClone() as QAliberTreeNode;
 			TreeClipboard.Default.StoreInClipboard(new QAliberTreeNode[] { node }, false);
 			if (node != null)
 			{

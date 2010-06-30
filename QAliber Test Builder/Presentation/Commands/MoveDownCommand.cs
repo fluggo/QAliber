@@ -48,7 +48,7 @@ namespace QAliber.Builder.Presentation.Commands
 					treeView.SelectedNode = sourceNode;
 					treeView.cancelMultiSelection = false;
 				}
-				storedNode = new CommandInfo(sourceNode);
+				storedNode = new CommandInfo(sourceNode, false);
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace QAliber.Builder.Presentation.Commands
 					}
 					
 				}
-				storedNode = new CommandInfo(nodeToFind);
+				storedNode = new CommandInfo(nodeToFind, false);
 			}
 		}
 
@@ -96,7 +96,7 @@ namespace QAliber.Builder.Presentation.Commands
 					}
 					
 				}
-				storedNode = new CommandInfo(nodeToFind);
+				storedNode = new CommandInfo(nodeToFind, false);
 			}
 		}
 

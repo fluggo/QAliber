@@ -29,6 +29,7 @@ Name: "installvs2005"; Description: "Install Visual Studio 2005 Plug-in (QAlibet
 Name: "installvs2008"; Description: "Install Visual Studio 2008 Plug-in (QAlibet Test Developer)"; Types: full custom; Check: IsVS2008Installed
 Name: "installdevsa"; Description: "Install Standalone QAlibet Test Developer (For use with VS express editions)"; Types: full custom; Check: IsVSNotInstalled
 Name: "installbuilder"; Description: "Install QAliber Test Builder"; Types: full custom;
+Name: "installrunner"; Description: "Install QAliber Test Runner"; Types: full custom;
 
 
 [Languages]
@@ -52,15 +53,13 @@ Source: "..\Binaries\ZedGraph.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName:
 Source: "..\Binaries\tessnet2_32.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "tessnet2_32, Version=2.0.4.0, Culture=neutral, PublicKeyToken=1550524B5BA07E29, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
 Source: "..\Binaries\Watin.Core.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Watin.Core, Version=2.0.20.0, Culture=neutral, PublicKeyToken=D0C049742D9F7CC4, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
 Source: "..\Binaries\Watin\Interop.SHDocVw.dll"; DestDir: "{cf}\QAliber"; StrongAssemblyName: "Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=DB7CFD3ACB5AD44E, ProcessorArchitecture=MSIL"; Flags: gacinstall sharedfile
-
 ;QAliber CV unmanaged dependencies
 Source: "..\Binaries\cv200.dll"; DestDir: "{sys}"; Flags: sharedfile
 Source: "..\Binaries\cxcore200.dll"; DestDir: "{sys}"; Flags: sharedfile
 ;QAliber Documentation
 Source: "..\Binaries\*.XML"; DestDir: "{cf}\QAliber"
-
 Source: "vcredist_x86.exe"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall;
-
+;QAliber Setups
 Source: "QAliberTestBuilderSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall
 Source: "QAliberVS2005PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2005Installed
 Source: "QAliberVS2008PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2008Installed
@@ -98,6 +97,7 @@ function IsVSNotInstalled() : Boolean;
 begin
     Result := not (IsVS2005Installed() or IsVS2008Installed());
 end;
+
 
 
 

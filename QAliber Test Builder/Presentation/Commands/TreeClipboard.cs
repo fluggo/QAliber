@@ -69,7 +69,7 @@ namespace QAliber.Builder.Presentation.Commands
 				List<QAliberTreeNode> resList = new List<QAliberTreeNode>();
 				foreach (QAliberTreeNode node in nodes)
 				{
-					resList.Add((QAliberTreeNode)node.Clone());
+					resList.Add((QAliberTreeNode)node.CompleteClone());
 				}
 				clipNodes = resList.ToArray();
 			}

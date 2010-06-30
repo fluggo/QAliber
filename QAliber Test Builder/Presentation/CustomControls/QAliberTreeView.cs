@@ -491,9 +491,9 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		public override object Clone()
+		public object CompleteClone()
 		{
-			QAliberTreeNode newNode = base.Clone() as QAliberTreeNode;
+			QAliberTreeNode newNode = Clone() as QAliberTreeNode;
 			newNode.Testcase = Testcase.Clone() as TestCase;
 			UpdateTags(newNode, newNode.Testcase);
 			newNode.NonHighlightForeColor = newNode.ForeColor = newNode.Testcase.Color;

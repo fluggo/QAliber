@@ -46,7 +46,7 @@ namespace QAliber.Logger
 	/// <summary>
 	/// How a message is treated
 	/// </summary>
-	internal enum BodyType
+	public enum BodyType
 	{
 		Text,
 		Picture,

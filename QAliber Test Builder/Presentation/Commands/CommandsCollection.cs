@@ -53,6 +53,7 @@ namespace QAliber.Builder.Presentation.Commands
 		public void Do(ICommand command)
 		{
 			command.Do();
+			
 			undoStack.Push(command);
 			redoStack.Clear();
 		}
@@ -77,21 +78,26 @@ namespace QAliber.Builder.Presentation.Commands
 			}
 		}
 
-		private Stack<ICommand> undoStack = new Stack<ICommand>();
-		private Stack<ICommand> redoStack = new Stack<ICommand>();
+		private CyclicStack<ICommand> undoStack = new CyclicStack<ICommand>(maxHistory);
+		private CyclicStack<ICommand> redoStack = new CyclicStack<ICommand>(maxHistory);
 
-		private const int maxHistory = 20;
+		private const int maxHistory = 10;
 
 	}
 
 	public class CommandInfo
 	{
-		public CommandInfo(QAliberTreeNode node)
+		public CommandInfo(QAliberTreeNode node, bool shouldClone)
 		{
-			CloneAndStore(node);
+			CloneAndStore(node, shouldClone);
 		}
 
-		private void CloneAndStore(QAliberTreeNode node)
+		public CommandInfo(QAliberTreeNode node) : this(node, true)
+		{
+			
+		}
+
+		private void CloneAndStore(QAliberTreeNode node, bool shouldClone)
 		{
 			QAliberTreeNode parent = node;
 			while (parent != null)
@@ -99,7 +105,8 @@ namespace QAliber.Builder.Presentation.Commands
 				indices.Insert(0, parent.Index);
 				parent = parent.Parent as QAliberTreeNode;
 			}
-			this.node = node.Clone() as QAliberTreeNode;
+			if (shouldClone)
+				this.node = node.CompleteClone() as QAliberTreeNode;
 			
 		}
 
@@ -132,13 +139,7 @@ namespace QAliber.Builder.Presentation.Commands
 				
 				
 			}
-			//if (a.Indices.Count > b.Indices.Count)
-			//	  return;
-			//else 
-			//{
-			//	  if (a.Indices[a.Indices.Count - 1] < b.Indices[a.Indices.Count - 1])
-			//		  b.Indices[a.Indices.Count - 1]--;
-			//}
+			
 		}
 
 		public static void IncreaseIndices(List<CommandInfo> infos)
@@ -159,13 +160,7 @@ namespace QAliber.Builder.Presentation.Commands
 
 
 			}
-			//if (a.Indices.Count > b.Indices.Count)
-			//	  return;
-			//else 
-			//{
-			//	  if (a.Indices[a.Indices.Count - 1] < b.Indices[a.Indices.Count - 1])
-			//		  b.Indices[a.Indices.Count - 1]--;
-			//}
+			
 		}
 
 		private static List<CommandInfo> GetSameLevelList(List<CommandInfo> infos, int startIndex, out int endIndex)
@@ -200,5 +195,54 @@ namespace QAliber.Builder.Presentation.Commands
 			set { node = value; }
 		}
 	}
+
+	class CyclicStack<T>
+	{
+		public CyclicStack(int capacity)
+		{
+			this.capacity = capacity;
+			collection = new List<T>();
+		}
+
+		public void Push(T item)
+		{
+			if (collection.Count > capacity)
+			{
+				collection.RemoveAt(0);
+			
+			}
+			collection.Add(item);
+		}
+
+		public T Pop()
+		{
+			if (collection.Count == 0)
+			{
+				return default(T);
+			}
+			T res = collection[collection.Count - 1];
+			collection.RemoveAt(collection.Count - 1);
+			return res;
+		}
+
+		public int Capacity
+		{
+			get { return capacity; }
+		}
+
+		public int Count
+		{
+			get { return collection.Count; }
+		}
+
+		public void Clear()
+		{
+			collection.Clear();
+		}
+
+		private int capacity;
+		private List<T> collection;
+	}
+
 }
 

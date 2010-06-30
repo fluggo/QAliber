@@ -107,6 +107,8 @@ namespace QAliber.Builder.Presentation.SubForms
 			toolStripButtonPause.Enabled = false;
 			toolStripButtonStop.Enabled = false;
 			toolStripButtonPlay.Enabled = true;
+			notifyIcon.Visible = false;
+			notifyIcon.ShowBalloonTip(0);
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)

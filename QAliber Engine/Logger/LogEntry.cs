@@ -28,7 +28,7 @@ namespace QAliber.Logger
 	[Serializable]
 	public class LogEntry
 	{
-		internal LogEntry()
+		public LogEntry()
 		{
 			xmlSerializer = new XmlSerializer(GetType());
 			link = "";
@@ -97,7 +97,7 @@ namespace QAliber.Logger
 		/// <summary>
 		/// How the message is treated (text, picture, link)
 		/// </summary>
-		internal BodyType Body
+		public BodyType Body
 		{
 			get { return bodyType; }
 			set { bodyType = value; }

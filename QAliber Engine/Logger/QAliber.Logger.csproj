@@ -36,9 +36,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="QAliber.RemotingModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7ca69bfcd2253fef, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL" />
@@ -62,6 +64,7 @@
     <Compile Include="Controls\SlideshowControl.Designer.cs">
       <DependentUpon>SlideshowControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WebLogTreeView.cs" />
     <Compile Include="Controls\ZoomPanControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -81,12 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="QAliber.Logger.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RemotingModel\QAliber.RemotingModel.csproj">
-      <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
-      <Name>QAliber.RemotingModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\LogViewerControl.resx">
