@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{21076058-52DA-46EC-ABE6-5E389CBED60C}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCases\BreakLoopTestCase.cs" />
     <Compile Include="TestCases\CaseTestCase.cs" />
+    <Compile Include="TestCases\DeleteGlobalVariables.cs" />
     <Compile Include="TestCases\LoadErrorTestCase.cs" />
     <Compile Include="TestCases\SwitchTestCase.cs" />
     <Compile Include="TestCases\RecoverTestCase.cs" />
