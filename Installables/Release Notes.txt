@@ -62,3 +62,12 @@ Test Builder
 	Feature req. 2999202
 	Feature req. 2999200
 	Feature req. 2997501
+
+15/8/10
+----------
+Several cahnges in the engine were made to improve run stability.
+New common Test Case, for deleting variables during run time.
+Add parameter to enable output of found search string.
+Added HTMLButton elementto Web Dom controls (bug ID: 2970685 )
+Show macro files only in play macro selection (bug ID: 2946563)
+

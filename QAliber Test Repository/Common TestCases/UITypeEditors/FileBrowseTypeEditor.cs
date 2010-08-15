@@ -37,6 +37,9 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			if (value is string)
 			{
 				OpenFileDialog dialog = new OpenFileDialog();
+				if (context.Instance is QAliber.Repository.CommonTestCases.Macros.PlayMacroTestCase)
+					dialog.Filter = "macro files (*.macro) | *.macro";
+				   
 				dialog.Title = "Choose File";
 				DialogResult result = dialog.ShowDialog();
 				if (result == DialogResult.OK)
