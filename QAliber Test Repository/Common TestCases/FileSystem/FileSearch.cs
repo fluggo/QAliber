@@ -57,6 +57,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 					{
 						if (Regex.Match(line, pattern).Success)
 						{
+							textOutput = line;
 							Log.Default.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
 							actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 							break;
@@ -66,6 +67,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 					{
 						if (line.Contains(pattern))
 						{
+							textOutput = line;
 							Log.Default.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
 							actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 							break;
@@ -121,6 +123,17 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		{
 			get { return useRegex; }
 			set { useRegex = value; }
+		}
+
+		private string textOutput;
+		/// <summary>
+		/// Will save the line containing the search text.
+		/// </summary>
+		[DisplayName("Get line of found text")]
+		[Category("Files")]
+		public string TextOutput
+		{
+			get { return textOutput; }
 		}
 	
 	
