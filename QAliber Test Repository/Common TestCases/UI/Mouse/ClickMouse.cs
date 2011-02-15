@@ -52,7 +52,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		[Category("Mouse")]
 		[DisplayName("3) Coordinate")]
-		[TypeConverter(typeof(ExpandableObjectConverter))]
+	//	  [TypeConverter(typeof(ExpandableObjectConverter))]
 		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected")]
 		public Point Coordinate
 		{
