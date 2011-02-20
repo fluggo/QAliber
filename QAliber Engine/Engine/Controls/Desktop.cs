@@ -16,12 +16,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Windows;
 using System.Windows.Automation;
+using System.Windows.Forms;
 using QAliber.Engine.Controls.Web;
 using QAliber.Engine.Controls.UIA;
 using QAliber.Engine.Controls.WPF;
 using QAliber.Engine.Controls.Watin;
+using QAliber.Engine.Win32;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls
 {
@@ -78,6 +81,66 @@ namespace QAliber.Engine.Controls
 				return watinRoot;
 			}
 		}
+
+		/// <summary>
+		/// Presses on the specifed button, at the current location and does not release it
+		/// </summary>
+		/// <param name="button">The button to press</param>
+		public static void MouseDown(MouseButtons button)
+		{
+			Log.Default.Info(string.Format("Pressing the mouse down for button {0}", button), "", EntryVerbosity.Internal);
+			switch (button)
+			{
+				case MouseButtons.Left:
+					LowLevelInput.InjectLowMouseInput(MouseEvents.LEFTDOWN, 
+						new Point(Cursor.Position.X, Cursor.Position.Y));
+					break;
+				case MouseButtons.Right:
+					LowLevelInput.InjectLowMouseInput(MouseEvents.RIGHTDOWN,
+					   new Point(Cursor.Position.X, Cursor.Position.Y));
+					break;
+				case MouseButtons.Middle:
+					LowLevelInput.InjectLowMouseInput(MouseEvents.MIDDLEDOWN,
+					   new Point(Cursor.Position.X, Cursor.Position.Y));
+					break;
+				case MouseButtons.None:
+				case MouseButtons.XButton1:
+				case MouseButtons.XButton2:
+					break;
+				
+			}
+			
+		}
+
+		/// <summary>
+		/// Release a pressed button
+		/// </summary>
+		/// <param name="button">The button to release</param>
+		public static void MouseUp(MouseButtons button)
+		{
+			Log.Default.Info(string.Format("Releasing the mouse for button {0}", button), "", EntryVerbosity.Internal);
+			switch (button)
+			{
+				case MouseButtons.Left:
+					LowLevelInput.InjectLowMouseInput(MouseEvents.LEFTUP,
+						new Point(Cursor.Position.X, Cursor.Position.Y));
+					break;
+				case MouseButtons.Right:
+					LowLevelInput.InjectLowMouseInput(MouseEvents.RIGHTUP,
+					   new Point(Cursor.Position.X, Cursor.Position.Y));
+					break;
+				case MouseButtons.Middle:
+					LowLevelInput.InjectLowMouseInput(MouseEvents.MIDDLEUP,
+					   new Point(Cursor.Position.X, Cursor.Position.Y));
+					break;
+				case MouseButtons.None:
+				case MouseButtons.XButton1:
+				case MouseButtons.XButton2:
+					break;
+
+			}
+		}
+
 
 		private static WPFRoot wpfRoot = null;
 		private static UIARoot uiaRoot = null;

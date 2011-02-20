@@ -487,9 +487,9 @@ namespace QAliber.Engine.Controls.Web
 		/// </code>
 		/// </example>
 		/// <param name="type"></param>
-		/// <param name="index"></param>
+		/// <param name="localIndex"></param>
 		/// <returns>If tag and index found return a WebControl, else return null</returns>
-		public virtual WebControl this[WebControlType type, int index]
+		public virtual WebControl this[WebControlType type, int localIndex]
 		{
 			get
 			{
@@ -501,7 +501,7 @@ namespace QAliber.Engine.Controls.Web
 				{
 					if (element.tagName.ToLower().Contains(type.ToString().ToLower()) || type== WebControlType.UNKNOWN)
 					{
-						if (idxCounter == index)
+						if (idxCounter == localIndex)
 							return GetControlByType(element);
 						else
 							idxCounter++;
@@ -514,7 +514,7 @@ namespace QAliber.Engine.Controls.Web
 		/// Retrive an HTML element by using the tag name, and index for unique identification.
 		/// </summary>
 		/// <param name="type">the Tag Name as it reflects in the properties</param>
-		/// <param name="index">The control Index property. The child order from
+		/// <param name="localIndex">The control Index property. The child order from
 		/// the father is constant, where the 1st is 1</param>
 		/// <example>
 		/// For this example assume IE is open on google.com
@@ -531,7 +531,7 @@ namespace QAliber.Engine.Controls.Web
 		/// </code>
 		/// </example>
 		/// <returns>WebControl if the control is found, null if not</returns>
-		public virtual WebControl this[string type, int index]
+		public new WebControl this[string type, int localIndex]
 		{
 			get
 			{
@@ -541,7 +541,7 @@ namespace QAliber.Engine.Controls.Web
 				{
 					if (element.tagName.ToLower().Contains(type.ToLower()))
 					{
-						if (idxCounter == index)
+						if (idxCounter == localIndex)
 							return GetControlByType(element);
 						else
 							idxCounter++;

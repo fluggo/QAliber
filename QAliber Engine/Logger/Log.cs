@@ -388,7 +388,12 @@ namespace QAliber.Logger
 		/// </summary>
 		public void IndentOut()
 		{
-			if (enabled && indents > 0)
+			IndentOut(false);
+		}
+
+		private void IndentOut(bool disposing)
+		{
+			if ((enabled || disposing) && indents > 0)
 			{
 				string tabs = "";
 				for (int i = 0; i < indents; i++)
@@ -433,7 +438,7 @@ namespace QAliber.Logger
 				lock (this)
 				{
 					while (indents > 0)
-						IndentOut();
+						IndentOut(true);
 					writer.WriteLine("</LogEntries>");
 					writer.Close();
 				}

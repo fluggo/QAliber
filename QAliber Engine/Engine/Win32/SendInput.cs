@@ -323,7 +323,7 @@ namespace QAliber.Engine.Win32
 
 		}
 
-		private static void InjectLowMouseInput(MouseEvents evt, Point p)
+		internal static void InjectLowMouseInput(MouseEvents evt, Point p)
 		{
 			Win32Input input = new Win32Input();
 			input.type = 0;

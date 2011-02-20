@@ -89,7 +89,7 @@ namespace QAliber.Engine.Controls.Watin
 				browser.ShowWindow(WatiN.Core.Native.Windows.NativeMethods.WindowShowStyle.Show);
 				browser.DomContainer.Body.Focus();
 			}
-			catch (Exception e)
+			catch
 			{
 			}
 		}

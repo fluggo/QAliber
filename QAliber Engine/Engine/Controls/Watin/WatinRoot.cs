@@ -76,6 +76,7 @@ namespace QAliber.Engine.Controls.Watin
 		/// Works better when URLs are long, needs only partial match.
 		/// </summary>
 		/// <param name="url"></param>
+		/// <param name="useRegex"></param>
 		/// <returns></returns>
 		public IE IE(string url,bool useRegex)
 		{
@@ -93,9 +94,9 @@ namespace QAliber.Engine.Controls.Watin
 		/// Get Watin.Core.IE browser, retrieved by index, the (Watin priority, we use WatiN.Core.IE.InternetExplorers() which retrives browsers by active priority
 		/// , e.g. focused tab is 0 ,last access has the lowest index)
 		/// </summary>
-		/// <param name="url"></param>
+		/// <param name="localIndex"></param>
 		/// <returns></returns>
-		public IE IE(int index)
+		public IE IE(int localIndex)
 		{
 			int ieIdx = 0;
 			int generalIdx = 0;
@@ -104,7 +105,7 @@ namespace QAliber.Engine.Controls.Watin
 			{
 				if (((WatBrowser)children[ieIdx]).BrowserType == browserType.IE)
 				{
-					if (ieIdx == index)
+					if (ieIdx == localIndex)
 						return (IE)((WatBrowser)children[ieIdx]).BrowserPage;
 					else
 						ieIdx++;
@@ -199,11 +200,7 @@ namespace QAliber.Engine.Controls.Watin
 		
 		#endregion
 
-	  
-
-
-		List<UIControlBase> children;
-		FireFox ffBrowser;
+		new List<UIControlBase> children;
 	}
 
 	public delegate UIControlBase LocatorDelegate(Point pt);

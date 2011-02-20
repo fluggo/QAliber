@@ -187,7 +187,7 @@ namespace QAliber.Engine.Controls.Watin
 				{
 					rect = docElement.NativeDocument.ContainingFrameElement.GetAbsElementBounds(); 
 				}
-				catch (NotImplementedException e)//WatiN throw this for FireFox
+				catch (NotImplementedException)//WatiN throw this for FireFox
 				{
 					return new Rect(-1112, 1, 0, 0);
 				}
@@ -296,8 +296,6 @@ namespace QAliber.Engine.Controls.Watin
 			get { return docElement; }
 			set { docElement = value; }
 		}
-//		  private WatinBaseControl parent;
-		private WatinBaseControl child;
 		
 		#endregion
 

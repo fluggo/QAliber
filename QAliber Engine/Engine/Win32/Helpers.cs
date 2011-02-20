@@ -20,8 +20,11 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Automation;
+using MessageBox = System.Windows.Forms.MessageBox;
+using Point = System.Windows.Point;
 
 namespace QAliber.Engine.Win32
 {
@@ -271,4 +274,28 @@ namespace QAliber.Engine.Win32
 
 
 	}
+
+	/// <summary>
+	/// Useful extension methods
+	/// </summary>
+	public static class Extensions
+	{
+		/// <summary>
+		/// Returns the x,y of the middle of the rectangle
+		/// </summary>
+		/// <param name="r"></param>
+		/// <returns></returns>
+		public static Point Middle(this Rect r)
+		{
+			return new Point(r.X + r.Width / 2, r.Y + r.Height / 2);	
+		}
+	}
+}
+
+namespace System.Runtime.CompilerServices
+{
+	/// <summary>
+	/// A hack to achieve extension methods in .NET FW 2.0
+	/// </summary>
+	public class ExtensionAttribute : Attribute { }
 }

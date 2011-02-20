@@ -178,6 +178,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\DataSources\PlayerConfig.datasource" />
     <None Include="QAliber.Engine.snk" />
   </ItemGroup>
