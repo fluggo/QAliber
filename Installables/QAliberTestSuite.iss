@@ -61,15 +61,18 @@ Source: "..\Binaries\*.XML"; DestDir: "{cf}\QAliber"
 Source: "vcredist_x86.exe"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall;
 ;QAliber Setups
 Source: "QAliberTestBuilderSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall
+Source: "QAliberAgentSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall;
 Source: "QAliberVS2005PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2005Installed
 Source: "QAliberVS2008PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2008Installed
 Source: "QAliberDeveloperStandaloneSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVSNotInstalled
+
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Run]
 Filename: "{win}\vcredist_x86.exe"; Parameters: "/q"; WorkingDir: "{win}"; StatusMsg: "Installing VC++ 2008 Redistributable..."
 
+Filename: "msiexec"; Parameters: "/i ""{win}\QAliberAgentSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing QAliber Test Runner..."; Check: IsComponentSelected('installrunner')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberTestBuilderSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing QAliber Test Builder..."; Check: IsComponentSelected('installbuilder')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2005PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2005 Plug-in..."; Check: IsComponentSelected('installvs2005')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2008PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2008 Plug-in..."; Check: IsComponentSelected('installvs2008')
@@ -78,6 +81,7 @@ Filename: "msiexec"; Parameters: "/i ""{win}\QAliberDeveloperStandaloneSetup.msi
 
 [UnInstallRun]
 Filename: "msiexec"; Parameters: "/x {{20D197D0-8E7B-42A5-B58E-8E510350F352}"; WorkingDir: "{win}"; StatusMsg: "Un-installing QAliber Test Builder..."; Check: IsComponentSelected('installbuilder')
+Filename: "msiexec"; Parameters: "/x {{E64B588A-56D5-4061-A9E1-1C388C34B763}"; WorkingDir: "{win}"; StatusMsg: "Un-installing QAliber Test Runner..."; Check: IsComponentSelected('installrunner')
 Filename: "msiexec"; Parameters: "/x {{5CD9EE21-8C36-45BD-93AC-B090D2ED7A8F}"; WorkingDir: "{win}"; StatusMsg: "Un-installing VS 2005 Plug-in..."; Check: IsComponentSelected('installvs2005')
 Filename: "msiexec"; Parameters: "/x {{105E14C1-C2C6-486F-81B0-3217DFDA1086}"; WorkingDir: "{win}"; StatusMsg: "Un-installing VS 2008 Plug-in..."; Check: IsComponentSelected('installvs2008')
 Filename: "msiexec"; Parameters: "/x {{D07EB533-D87F-4736-9A87-217A81AACA09}"; WorkingDir: "{win}"; StatusMsg: "Un-installing Standalone QAliber Developer..."; Check: IsComponentSelected('installdevsa')
