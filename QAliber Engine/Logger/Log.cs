@@ -391,6 +391,9 @@ namespace QAliber.Logger
 			IndentOut(false);
 		}
 
+		/// <summary>
+		/// Close a floder
+		/// </summary>
 		private void IndentOut(bool disposing)
 		{
 			if ((enabled || disposing) && indents > 0)
