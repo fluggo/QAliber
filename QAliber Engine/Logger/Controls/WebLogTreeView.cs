@@ -16,6 +16,7 @@ namespace QAliber.Logger.Controls
 		private string filename;
 		private XmlDocument xmlDoc;
 
+		//
 		public WebLogTreeView()
 		{
 			iconLevels = new Dictionary<int, string>();
