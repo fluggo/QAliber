@@ -23,6 +23,12 @@ namespace QAliber.Runner
 
 		}
 
+		internal static bool DBAlive
+		{
+			get { return dbAlive && Properties.Settings.Default.UseDatabase; }
+			set { dbAlive = value; }
+		}
+
 		public void Run(int scheduleID, int scenarioID, string assemblyDir, string filename)
 		{
 			sink.lastErrors = null;
@@ -31,23 +37,28 @@ namespace QAliber.Runner
 			{
 				try
 				{
-					if (DAL.Data.Current.FindAgentByIP(DAL.Data.Current.AgentData.IP) == 0)
-						DAL.Data.Current.RegisterAgent();
-					QAliber.DAL.Data.Current.ChangeAgentStatus(QAliber.DAL.AgentStatusType.Running);
-					if (scheduleID > 0)
+					if (DBAlive)
 					{
-						scenarioID = DAL.Data.Current.GetScenarioByScheduleID(scheduleID);
+						if (DAL.Data.Current.FindAgentByIP(DAL.Data.Current.AgentData.IP) == 0)
+							DAL.Data.Current.RegisterAgent();
+						QAliber.DAL.Data.Current.ChangeAgentStatus(QAliber.DAL.AgentStatusType.Running);
+						if (scheduleID > 0)
+						{
+							scenarioID = DAL.Data.Current.GetScenarioByScheduleID(scheduleID);
+						}
+						else if (scenarioID > 0)
+						{
+							DAL.Data.Current.SetScenarioByID(scenarioID);
+						}
+						else
+						{
+							DAL.Data.Current.AddScenario(System.IO.Path.GetFileNameWithoutExtension(filename), filename,
+														 new System.IO.FileInfo(filename).LastWriteTime, "");
+							scenarioID = DAL.Data.Current.ScenarioData.ID;
+						}
+						DAL.Data.Current.AddRun(scheduleID, scenarioID,
+												TestController.Default.CreateLogDirectory() + @"\Run.qlog");
 					}
-					else if (scenarioID > 0)
-					{
-						DAL.Data.Current.SetScenarioByID(scenarioID);
-					}
-					else
-					{
-						DAL.Data.Current.AddScenario(System.IO.Path.GetFileNameWithoutExtension(filename), filename, new System.IO.FileInfo(filename).LastWriteTime, "");
-						scenarioID = DAL.Data.Current.ScenarioData.ID;
-					}
-					DAL.Data.Current.AddRun(scheduleID, scenarioID, TestController.Default.CreateLogDirectory() + @"\Run.qlog");
 				}
 				catch (System.Data.SqlClient.SqlException)
 				{
@@ -60,7 +71,9 @@ namespace QAliber.Runner
 					TestController.Default.Run("DownloadedScenario.scn");
 				}
 				else
+				{
 					TestController.Default.Run(filename);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -79,7 +92,9 @@ namespace QAliber.Runner
 			}
 		}
 
-		internal static bool DBAlive = true;
+		
+
+		private static bool dbAlive;
 		private NotifySink sink;
 	}
 

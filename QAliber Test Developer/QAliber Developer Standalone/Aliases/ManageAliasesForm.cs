@@ -38,6 +38,7 @@ namespace QAliber.VS2005.Plugin.Aliases
 		{
 			this.codePath = codePath;
 			this.uiType = type;
+			lang = Statics.Language;
 			//if (Statics.DTE.Solution.IsOpen)
 			//{
 			//	  foreach (Project proj in Statics.DTE.Solution.Projects)

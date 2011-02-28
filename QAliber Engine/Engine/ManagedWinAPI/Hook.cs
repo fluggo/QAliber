@@ -125,7 +125,7 @@ namespace ManagedWinapi.Hooks
 			}
 			else if (global)
 			{
-				hHook = SetWindowsHookEx(type, delegt, Marshal.GetHINSTANCE(typeof(Hook).Assembly.GetModules()[0]), 0);
+				hHook = SetWindowsHookEx(type, delegt, Process.GetCurrentProcess().MainModule.BaseAddress/*Marshal.GetHINSTANCE(typeof(Hook).Assembly.GetModules()[0])*/, 0);
 			}
 			else
 			{

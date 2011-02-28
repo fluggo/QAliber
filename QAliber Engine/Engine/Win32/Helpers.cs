@@ -292,10 +292,3 @@ namespace QAliber.Engine.Win32
 	}
 }
 
-namespace System.Runtime.CompilerServices
-{
-	/// <summary>
-	/// A hack to achieve extension methods in .NET FW 2.0
-	/// </summary>
-	public class ExtensionAttribute : Attribute { }
-}

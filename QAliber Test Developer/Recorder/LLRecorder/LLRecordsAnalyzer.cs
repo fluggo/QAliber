@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Diagnostics;
+
 namespace QAliber.Recorder
 {
 	public class LLRecordsAnalyzer

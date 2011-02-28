@@ -67,7 +67,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 					key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(regkey);
 					break;
 				case Microsoft.Win32.RegistryHive.DynData:
-					key = Microsoft.Win32.Registry.DynData.OpenSubKey(regkey);
+					key = Microsoft.Win32.Registry.PerformanceData.OpenSubKey(regkey);
 					break;
 				case Microsoft.Win32.RegistryHive.LocalMachine:
 					key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(regkey);

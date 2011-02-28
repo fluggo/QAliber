@@ -67,7 +67,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 					Microsoft.Win32.Registry.CurrentUser.DeleteSubKeyTree(regkey);
 					break;
 				case Microsoft.Win32.RegistryHive.DynData:
-					Microsoft.Win32.Registry.DynData.DeleteSubKeyTree(regkey);
+					Microsoft.Win32.Registry.PerformanceData.DeleteSubKeyTree(regkey);
 					break;
 				case Microsoft.Win32.RegistryHive.LocalMachine:
 					Microsoft.Win32.Registry.LocalMachine.DeleteSubKeyTree(regkey);

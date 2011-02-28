@@ -586,13 +586,3 @@ namespace QAliber.Builder.Presentation
 
 
 }
-
-///Hack to get extension methods work in framework 2.0
-namespace System.Runtime.CompilerServices
-{
-	[AttributeUsage(AttributeTargets.Method)]
-	public sealed class ExtensionAttribute : Attribute
-	{
-		public ExtensionAttribute() { }
-	}
-}

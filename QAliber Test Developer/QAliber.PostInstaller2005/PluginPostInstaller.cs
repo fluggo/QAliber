@@ -52,6 +52,11 @@ namespace QAliber.Developer.PostInstaller
 					if (string.IsNullOrEmpty(vsDir))
 						vsDir = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\9.0", "InstallDir", "");
 					break;
+				case "2010":
+					vsDir = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0", "InstallDir", "");
+					if (string.IsNullOrEmpty(vsDir))
+						vsDir = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\10.0", "InstallDir", "");
+					break;
 				default:
 					break;
 			}

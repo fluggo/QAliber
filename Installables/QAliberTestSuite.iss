@@ -27,6 +27,7 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 [Components]
 Name: "installvs2005"; Description: "Install Visual Studio 2005 Plug-in (QAlibet Test Developer)"; Types: full custom; Check: IsVS2005Installed
 Name: "installvs2008"; Description: "Install Visual Studio 2008 Plug-in (QAlibet Test Developer)"; Types: full custom; Check: IsVS2008Installed
+Name: "installvs2010"; Description: "Install Visual Studio 2010 Plug-in (QAlibet Test Developer)"; Types: full custom; Check: IsVS2010Installed
 Name: "installdevsa"; Description: "Install Standalone QAlibet Test Developer (For use with VS express editions)"; Types: full custom; Check: IsVSNotInstalled
 Name: "installbuilder"; Description: "Install QAliber Test Builder"; Types: full custom;
 Name: "installrunner"; Description: "Install QAliber Test Runner"; Types: full custom;
@@ -64,6 +65,7 @@ Source: "QAliberTestBuilderSetup.msi"; DestDir: "{win}"; Flags: ignoreversion de
 Source: "QAliberAgentSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall;
 Source: "QAliberVS2005PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2005Installed
 Source: "QAliberVS2008PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2008Installed
+Source: "QAliberVS2010PluginSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVS2010Installed
 Source: "QAliberDeveloperStandaloneSetup.msi"; DestDir: "{win}"; Flags: ignoreversion deleteafterinstall; Check: IsVSNotInstalled
 
 
@@ -76,6 +78,7 @@ Filename: "msiexec"; Parameters: "/i ""{win}\QAliberAgentSetup.msi"""; WorkingDi
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberTestBuilderSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing QAliber Test Builder..."; Check: IsComponentSelected('installbuilder')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2005PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2005 Plug-in..."; Check: IsComponentSelected('installvs2005')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2008PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2008 Plug-in..."; Check: IsComponentSelected('installvs2008')
+Filename: "msiexec"; Parameters: "/i ""{win}\QAliberVS2010PluginSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing VS 2010 Plug-in..."; Check: IsComponentSelected('installvs2010')
 Filename: "msiexec"; Parameters: "/i ""{win}\QAliberDeveloperStandaloneSetup.msi"""; WorkingDir: "{win}"; StatusMsg: "Installing Standalone QAliber Developer..."; Check: IsComponentSelected('installdevsa')
 
 
@@ -84,6 +87,7 @@ Filename: "msiexec"; Parameters: "/x {{20D197D0-8E7B-42A5-B58E-8E510350F352}"; W
 Filename: "msiexec"; Parameters: "/x {{E64B588A-56D5-4061-A9E1-1C388C34B763}"; WorkingDir: "{win}"; StatusMsg: "Un-installing QAliber Test Runner..."; Check: IsComponentSelected('installrunner')
 Filename: "msiexec"; Parameters: "/x {{5CD9EE21-8C36-45BD-93AC-B090D2ED7A8F}"; WorkingDir: "{win}"; StatusMsg: "Un-installing VS 2005 Plug-in..."; Check: IsComponentSelected('installvs2005')
 Filename: "msiexec"; Parameters: "/x {{105E14C1-C2C6-486F-81B0-3217DFDA1086}"; WorkingDir: "{win}"; StatusMsg: "Un-installing VS 2008 Plug-in..."; Check: IsComponentSelected('installvs2008')
+Filename: "msiexec"; Parameters: "/x {{8407F7A4-2DA0-4816-B693-37EFB5BC8A93}"; WorkingDir: "{win}"; StatusMsg: "Un-installing VS 2010 Plug-in..."; Check: IsComponentSelected('installvs2010')
 Filename: "msiexec"; Parameters: "/x {{D07EB533-D87F-4736-9A87-217A81AACA09}"; WorkingDir: "{win}"; StatusMsg: "Un-installing Standalone QAliber Developer..."; Check: IsComponentSelected('installdevsa')
 
 [Code]
@@ -95,6 +99,11 @@ end;
 function IsVS2008Installed() : Boolean;
 begin
    Result := RegValueExists(HKEY_LOCAL_MACHINE, 'Software\Microsoft\VisualStudio\9.0', 'InstallDir') or RegValueExists(HKEY_LOCAL_MACHINE, 'Software\Wow6432Node\Microsoft\VisualStudio\9.0', 'InstallDir');
+end;
+
+function IsVS2010Installed() : Boolean;
+begin
+   Result := RegValueExists(HKEY_LOCAL_MACHINE, 'Software\Microsoft\VisualStudio\10.0', 'InstallDir') or RegValueExists(HKEY_LOCAL_MACHINE, 'Software\Wow6432Node\Microsoft\VisualStudio\10.0', 'InstallDir');
 end;
 
 function IsVSNotInstalled() : Boolean;
