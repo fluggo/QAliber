@@ -89,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="sn -Ra &quot;$(TargetDir)\QAliberManagedInjector.dll&quot;  &quot;$(ProjectPath)\ManagedInjector.key&quot;"
+				CommandLine="sn -Ra &quot;$(TargetDir)\QAliberManagedInjector.dll&quot;  &quot;$(ProjectDir)\ManagedInjector.key&quot;"
 				ExcludedFromBuild="false"
 			/>
 		</Configuration>

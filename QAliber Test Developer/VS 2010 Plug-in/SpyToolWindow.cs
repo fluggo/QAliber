@@ -58,7 +58,7 @@ namespace QAliber.VS2005.Plugin
 			// while the Index is the offset in the bitmap strip. Each image in
 			// the strip being 16x16.
 			this.BitmapResourceID = 300;
-			this.BitmapIndex = 2;
+			this.BitmapIndex = 3;
 
 			 
 			control = new SpyControl(this);
