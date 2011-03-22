@@ -493,21 +493,26 @@ namespace QAliber.Engine.Controls.Web
 		{
 			get
 			{
-				IHTMLElementCollection elements = (IHTMLElementCollection)htmlElement.children;// new PropertyCondition(AutomationElement.IsControlElementProperty, true));
-				int idxCounter = 1;
-
-
-				foreach (IHTMLElement element in elements)
+				if (Exists)
 				{
-					if (element.tagName.ToLower().Contains(type.ToString().ToLower()) || type== WebControlType.UNKNOWN)
+					IHTMLElementCollection elements = (IHTMLElementCollection) htmlElement.children;
+						// new PropertyCondition(AutomationElement.IsControlElementProperty, true));
+					int idxCounter = 1;
+
+
+					foreach (IHTMLElement element in elements)
 					{
-						if (idxCounter == localIndex)
-							return GetControlByType(element);
-						else
-							idxCounter++;
+						if (element.tagName.ToLower().Contains(type.ToString().ToLower()) ||
+							type == WebControlType.UNKNOWN)
+						{
+							if (idxCounter == localIndex)
+								return GetControlByType(element);
+							else
+								idxCounter++;
+						}
 					}
 				}
-				return null;
+				return new WebNullControl();
 			}
 		}
 		/// <summary>
@@ -535,19 +540,23 @@ namespace QAliber.Engine.Controls.Web
 		{
 			get
 			{
-				IHTMLElementCollection elements = (IHTMLElementCollection)htmlElement.children;// new PropertyCondition(AutomationElement.IsControlElementProperty, true));
-				int idxCounter = 1;
-				foreach (IHTMLElement element in elements)
+				if (Exists)
 				{
-					if (element.tagName.ToLower().Contains(type.ToLower()))
+					IHTMLElementCollection elements = (IHTMLElementCollection) htmlElement.children;
+						// new PropertyCondition(AutomationElement.IsControlElementProperty, true));
+					int idxCounter = 1;
+					foreach (IHTMLElement element in elements)
 					{
-						if (idxCounter == localIndex)
-							return GetControlByType(element);
-						else
-							idxCounter++;
+						if (element.tagName.ToLower().Contains(type.ToLower()))
+						{
+							if (idxCounter == localIndex)
+								return GetControlByType(element);
+							else
+								idxCounter++;
+						}
 					}
 				}
-				return null;
+				return new WebNullControl();
 			}
 		}
 		#endregion

@@ -70,7 +70,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			code.Append("UIControlBase c = " + control + ";\n");
 			code.Append("return c;\n");
 			UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code.ToString());
-			if (c == null)
+			if (!c.Exists)
 				throw new ArgumentException("Couldn't retrieve control " + control);
 
 			if (c is QAliber.Engine.Patterns.IText)

@@ -153,7 +153,7 @@
     <None Include="Resources\Record.png" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetRegistryRoot>Software\Microsoft\VisualStudio\9.0</TargetRegistryRoot>
+    <TargetRegistryRoot>Software\Microsoft\VisualStudio\9.0Exp</TargetRegistryRoot>
     <UseVS2005MPF>true</UseVS2005MPF>
     <RegisterWithRanu>false</RegisterWithRanu>
     <RegisterOutputPackage>true</RegisterOutputPackage>

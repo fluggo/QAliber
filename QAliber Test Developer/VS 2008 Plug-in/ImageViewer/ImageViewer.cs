@@ -153,6 +153,15 @@ namespace QAliber.VS2005.Plugin
 			
 		}
 
+		private void CreateCodeForImageFind()
+		{
+			if (Statics.Language == ProjectLanguage.VB)
+				CreateCodeForImageFindVB();
+			else
+				CreateCodeForImageFindCS();
+		}
+
+		
 		private void CreateCodeForImageCompare(bool entire)
 		{
 			if (Statics.Language == ProjectLanguage.VB)
@@ -169,12 +178,37 @@ namespace QAliber.VS2005.Plugin
 				CreateCodeForReadingImageCS(entire);
 		}
 
+
+		private void CreateCodeForImageFindVB()
+		{
+			string resName = vbNS + ".Resources." + partResName;
+			StringBuilder code = new StringBuilder();
+			code.AppendLine(string.Format("Dim controla As UIControlBase = {0}", codePath));
+			code.AppendLine("Dim runtimeImage As System.Drawing.Bitmap = control.GetImage()");
+			code.AppendLine(string.Format("Dim imageFinder As New QAliber.ImageHandling.ImageFinder(runtimeImage, {0})", resName));
+			code.AppendLine("Dim rectFound As Rect = imageFinder.Find();");
+
+			codeRichTextBox.Text = code.ToString();
+		}
+
+		private void CreateCodeForImageFindCS()
+		{
+			string resName = "Properties.Resources." + partResName;
+			StringBuilder code = new StringBuilder();
+			code.AppendLine(string.Format("UIControlBase control = {0};", codePath));
+			code.AppendLine("System.Drawing.Bitmap runtimeImage = control.GetImage();");
+			code.AppendLine(string.Format("QAliber.ImageHandling.ImageFinder imageFinder = new QAliber.ImageHandling.ImageFinder(runtimeImage, {0});", resName));
+			code.AppendLine("Rect rectFound = imageFinder.Find();");
+
+			codeRichTextBox.Text = code.ToString();
+		}
+
 		private void CreateCodeForImageCompareCS(bool entire)
 		{
 			string resName = "Properties.Resources.";
 			resName += entire ? entireResName : partResName;
 			StringBuilder code = new StringBuilder();
-			code.AppendLine(string.Format("UIControlBase control = {0};" ,codePath));
+			code.AppendLine(string.Format("UIControlBase control = {0};", Recorder.RecordsDisplayer.ConvertCodePathToVB(codePath)));
 			if (!entire)
 			{
 				code.AppendLine(string.Format("Rect box = new Rect({0}, {1}, {2}, {3});",
@@ -354,11 +388,7 @@ namespace QAliber.VS2005.Plugin
 			CreateResourceFromImage(true);
 		}
 
-		private void linkGeenrateClickCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-
-		}
-
+		
 		private void linkGeneratePartialCompareCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			CreateCodeForImageCompare(false);
@@ -377,6 +407,11 @@ namespace QAliber.VS2005.Plugin
 		private void linkGenerateEntireReadCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			CreateCodeForReadingImage(true);
+		}
+
+		private void linkCreateVirtual_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			CreateCodeForImageFind();
 		}
 
 		private void copyToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -403,6 +438,8 @@ namespace QAliber.VS2005.Plugin
 		private string partResName = string.Empty;
 		private string vbNS = string.Empty;
 		private Rectangle partBox;
+
+	   
 
 	}
 }

@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\UINullControl.cs" />
     <Compile Include="Controls\Desktop.cs" />
     <Compile Include="Controls\IControlLocator.cs" />
     <Compile Include="Controls\UIA\UIAGroup.cs" />
@@ -180,7 +181,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Properties\DataSources\PlayerConfig.datasource" />
     <None Include="QAliber.Engine.snk" />
   </ItemGroup>

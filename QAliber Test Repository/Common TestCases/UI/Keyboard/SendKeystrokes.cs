@@ -86,7 +86,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			{
 				string code = "UIControlBase c = " + control + ";\nreturn c;\n";
 				UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
-				if (c == null)
+				if (!c.Exists)
 				{
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					return;

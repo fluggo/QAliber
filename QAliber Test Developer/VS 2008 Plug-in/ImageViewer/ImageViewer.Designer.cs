@@ -52,7 +52,6 @@ namespace QAliber.VS2005.Plugin
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.groupBoxPicture = new System.Windows.Forms.GroupBox();
-			this.zoomPanControl = new QAliber.VS2005.Plugin.ZoomPanControl();
 			this.toolStripPicture = new System.Windows.Forms.ToolStrip();
 			this.zoomPicture = new System.Windows.Forms.ToolStripButton();
 			this.panPicture = new System.Windows.Forms.ToolStripButton();
@@ -63,24 +62,24 @@ namespace QAliber.VS2005.Plugin
 			this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxTasks = new System.Windows.Forms.GroupBox();
 			this.linkGeneratePartialReadCode = new System.Windows.Forms.LinkLabel();
-			this.imageViewerBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.linkCreatePartialResource = new System.Windows.Forms.LinkLabel();
 			this.linkGenerateEntireReadCode = new System.Windows.Forms.LinkLabel();
 			this.linkCreateResourceEntire = new System.Windows.Forms.LinkLabel();
 			this.linkGenerateEntireCompareCode = new System.Windows.Forms.LinkLabel();
 			this.linkCreateVirtual = new System.Windows.Forms.LinkLabel();
 			this.linkGeneratePartialCompareCode = new System.Windows.Forms.LinkLabel();
-			this.linkGeenrateClickCode = new System.Windows.Forms.LinkLabel();
+			this.zoomPanControl = new QAliber.VS2005.Plugin.ZoomPanControl();
+			this.imageViewerBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.toolStrip.SuspendLayout();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.groupBoxPicture.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.zoomPanControl)).BeginInit();
 			this.toolStripPicture.SuspendLayout();
 			this.groupBoxCode.SuspendLayout();
 			this.contextMenuStrip.SuspendLayout();
 			this.groupBoxTasks.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.zoomPanControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageViewerBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -152,25 +151,6 @@ namespace QAliber.VS2005.Plugin
 			this.groupBoxPicture.TabIndex = 2;
 			this.groupBoxPicture.TabStop = false;
 			this.groupBoxPicture.Text = "Picture";
-			// 
-			// zoomPanControl
-			// 
-			this.zoomPanControl.BackColor = System.Drawing.SystemColors.Window;
-			this.zoomPanControl.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.zoomPanControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.zoomPanControl.ImageFile = null;
-			this.zoomPanControl.Location = new System.Drawing.Point(3, 41);
-			this.zoomPanControl.Name = "zoomPanControl";
-			this.zoomPanControl.PanLocation = new System.Drawing.Point(0, 0);
-			this.zoomPanControl.Size = new System.Drawing.Size(484, 353);
-			this.zoomPanControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.zoomPanControl.TabIndex = 0;
-			this.zoomPanControl.TabStop = false;
-			this.zoomPanControl.Zoom = 1F;
-			this.zoomPanControl.ZoomPanImage = null;
-			this.zoomPanControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.zoomPanControl_MouseMove);
-			this.zoomPanControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.zoomPanControl_MouseClick);
-			this.zoomPanControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.zoomPanControl_MouseUp);
 			// 
 			// toolStripPicture
 			// 
@@ -247,12 +227,12 @@ namespace QAliber.VS2005.Plugin
 			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.copyToClipboardToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(163, 26);
+			this.contextMenuStrip.Size = new System.Drawing.Size(175, 26);
 			// 
 			// copyToClipboardToolStripMenuItem
 			// 
 			this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
-			this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+			this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.copyToClipboardToolStripMenuItem.Text = "Copy To Clipboard";
 			this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
 			// 
@@ -265,7 +245,6 @@ namespace QAliber.VS2005.Plugin
 			this.groupBoxTasks.Controls.Add(this.linkGenerateEntireCompareCode);
 			this.groupBoxTasks.Controls.Add(this.linkCreateVirtual);
 			this.groupBoxTasks.Controls.Add(this.linkGeneratePartialCompareCode);
-			this.groupBoxTasks.Controls.Add(this.linkGeenrateClickCode);
 			this.groupBoxTasks.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxTasks.Location = new System.Drawing.Point(0, 0);
 			this.groupBoxTasks.Name = "groupBoxTasks";
@@ -285,10 +264,6 @@ namespace QAliber.VS2005.Plugin
 			this.linkGeneratePartialReadCode.TabStop = true;
 			this.linkGeneratePartialReadCode.Text = "Generate Code for Partial Image Reading (OCR)";
 			this.linkGeneratePartialReadCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGeneratePartialReadCode_LinkClicked);
-			// 
-			// imageViewerBindingSource
-			// 
-			this.imageViewerBindingSource.DataSource = typeof(QAliber.VS2005.Plugin.ImageViewer);
 			// 
 			// linkCreatePartialResource
 			// 
@@ -339,14 +314,15 @@ namespace QAliber.VS2005.Plugin
 			// linkCreateVirtual
 			// 
 			this.linkCreateVirtual.AutoSize = true;
+			this.linkCreateVirtual.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.imageViewerBindingSource, "PartialResName", true));
 			this.linkCreateVirtual.Enabled = false;
-			this.linkCreateVirtual.Location = new System.Drawing.Point(18, 78);
+			this.linkCreateVirtual.Location = new System.Drawing.Point(19, 104);
 			this.linkCreateVirtual.Name = "linkCreateVirtual";
-			this.linkCreateVirtual.Size = new System.Drawing.Size(211, 13);
+			this.linkCreateVirtual.Size = new System.Drawing.Size(193, 13);
 			this.linkCreateVirtual.TabIndex = 3;
 			this.linkCreateVirtual.TabStop = true;
-			this.linkCreateVirtual.Text = "Create Virtual Control  from Image Selection";
-			this.linkCreateVirtual.Visible = false;
+			this.linkCreateVirtual.Text = "Generate Code to Find Image Selection";
+			this.linkCreateVirtual.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkCreateVirtual_LinkClicked);
 			// 
 			// linkGeneratePartialCompareCode
 			// 
@@ -360,18 +336,28 @@ namespace QAliber.VS2005.Plugin
 			this.linkGeneratePartialCompareCode.Text = "Generate Code for Partial Image Compare";
 			this.linkGeneratePartialCompareCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGeneratePartialCompareCode_LinkClicked);
 			// 
-			// linkGeenrateClickCode
+			// zoomPanControl
 			// 
-			this.linkGeenrateClickCode.AutoSize = true;
-			this.linkGeenrateClickCode.Enabled = false;
-			this.linkGeenrateClickCode.Location = new System.Drawing.Point(18, 103);
-			this.linkGeenrateClickCode.Name = "linkGeenrateClickCode";
-			this.linkGeenrateClickCode.Size = new System.Drawing.Size(154, 13);
-			this.linkGeenrateClickCode.TabIndex = 4;
-			this.linkGeenrateClickCode.TabStop = true;
-			this.linkGeenrateClickCode.Text = "Generate Code for Simple Click";
-			this.linkGeenrateClickCode.Visible = false;
-			this.linkGeenrateClickCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGeenrateClickCode_LinkClicked);
+			this.zoomPanControl.BackColor = System.Drawing.SystemColors.Window;
+			this.zoomPanControl.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.zoomPanControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.zoomPanControl.ImageFile = null;
+			this.zoomPanControl.Location = new System.Drawing.Point(3, 41);
+			this.zoomPanControl.Name = "zoomPanControl";
+			this.zoomPanControl.PanLocation = new System.Drawing.Point(0, 0);
+			this.zoomPanControl.Size = new System.Drawing.Size(484, 353);
+			this.zoomPanControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.zoomPanControl.TabIndex = 0;
+			this.zoomPanControl.TabStop = false;
+			this.zoomPanControl.Zoom = 1F;
+			this.zoomPanControl.ZoomPanImage = null;
+			this.zoomPanControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.zoomPanControl_MouseMove);
+			this.zoomPanControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.zoomPanControl_MouseClick);
+			this.zoomPanControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.zoomPanControl_MouseUp);
+			// 
+			// imageViewerBindingSource
+			// 
+			this.imageViewerBindingSource.DataSource = typeof(QAliber.VS2005.Plugin.ImageViewer);
 			// 
 			// ImageViewer
 			// 
@@ -393,13 +379,13 @@ namespace QAliber.VS2005.Plugin
 			this.splitContainer.ResumeLayout(false);
 			this.groupBoxPicture.ResumeLayout(false);
 			this.groupBoxPicture.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.zoomPanControl)).EndInit();
 			this.toolStripPicture.ResumeLayout(false);
 			this.toolStripPicture.PerformLayout();
 			this.groupBoxCode.ResumeLayout(false);
 			this.contextMenuStrip.ResumeLayout(false);
 			this.groupBoxTasks.ResumeLayout(false);
 			this.groupBoxTasks.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.zoomPanControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageViewerBindingSource)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -423,7 +409,6 @@ namespace QAliber.VS2005.Plugin
 		private System.Windows.Forms.ToolStripButton selectPicture;
 		private System.Windows.Forms.LinkLabel linkCreatePartialResource;
 		private System.Windows.Forms.LinkLabel linkGeneratePartialCompareCode;
-		private System.Windows.Forms.LinkLabel linkGeenrateClickCode;
 		private System.Windows.Forms.LinkLabel linkCreateVirtual;
 		private System.Windows.Forms.LinkLabel linkCreateResourceEntire;
 		private System.Windows.Forms.GroupBox groupBoxCode;

@@ -78,7 +78,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 				{
 					UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
 
-					if (c != null)
+					if (c.Exists)
 					{
 						res = true;
 						break;

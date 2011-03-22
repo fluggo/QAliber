@@ -23,6 +23,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Reflection;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls
 {
@@ -47,7 +48,18 @@ namespace QAliber.Engine.Controls
 			}
 		}
 
-		
+		/// <summary>
+		/// Is the control exists ?
+		/// </summary>
+		[Browsable(false)]
+		public virtual bool Exists
+		{
+			get
+			{
+				return true;
+			}
+		}
+
 		/// <summary>
 		/// The visibility state of the control. Control is visble when exists on open process window
 		/// and not minimized. 
@@ -323,23 +335,27 @@ namespace QAliber.Engine.Controls
 		{
 			get
 			{
-				Stopwatch watch = new Stopwatch();
-				watch.Start();
-				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+				if (Exists)
 				{
-					children = null;
-					foreach (UIControlBase child in Children)
+					Stopwatch watch = new Stopwatch();
+					watch.Start();
+					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 					{
-						if (useRegex && Regex.Match(child.Name, name).Success)
-							return child;
-						if (!useRegex && name.ToLower() == child.Name.ToLower())
-							return child;
+						children = null;
+						foreach (UIControlBase child in Children)
+						{
+							if (useRegex && Regex.Match(child.Name, name).Success)
+								return child;
+							if (!useRegex && name.ToLower() == child.Name.ToLower())
+								return child;
+						}
+						System.Threading.Thread.Sleep(50);
 					}
-					System.Threading.Thread.Sleep(50);
+					QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
+																	 name, useRegex, CodePath), "",
+													   QAliber.Logger.EntryVerbosity.Internal);
 				}
-				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
-					name, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
-				return null;
+				return new UINullControl();
 			}
 		}
 		
@@ -391,26 +407,30 @@ namespace QAliber.Engine.Controls
 		{
 			get
 			{
-				Stopwatch watch = new Stopwatch();
-				watch.Start();
-				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+				if (Exists)
 				{
-					children = null;
-					foreach (UIControlBase child in Children)
+					Stopwatch watch = new Stopwatch();
+					watch.Start();
+					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 					{
-						if (useRegex && Regex.Match(child.Name, name).Success &&
-							Regex.Match(child.ID, id).Success)
-							return child;
-						if (!useRegex &&
-							name.ToLower() == child.Name.ToLower() &&
-							id.ToLower() == child.ID.ToLower())
-							return child;
+						children = null;
+						foreach (UIControlBase child in Children)
+						{
+							if (useRegex && Regex.Match(child.Name, name).Success &&
+								Regex.Match(child.ID, id).Success)
+								return child;
+							if (!useRegex &&
+								name.ToLower() == child.Name.ToLower() &&
+								id.ToLower() == child.ID.ToLower())
+								return child;
+						}
+						System.Threading.Thread.Sleep(50);
 					}
-					System.Threading.Thread.Sleep(50);
+					QAliber.Logger.Log.Default.Warning(
+						string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
+									  name, id, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				}
-				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
-					name, id, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
-				return null;
+				return new UINullControl();
 			}
 		}
 
@@ -433,23 +453,27 @@ namespace QAliber.Engine.Controls
 		{
 			get
 			{
-				Stopwatch watch = new Stopwatch();
-				watch.Start();
-				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+				if (Exists)
 				{
-					children = null;
-					foreach (UIControlBase child in Children)
+					Stopwatch watch = new Stopwatch();
+					watch.Start();
+					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 					{
-						if (child.Name.ToLower() == name.ToLower() &&
-							(id == null || child.ID.ToLower() == id.ToLower()) &&
-							child.ClassName.ToLower() == className.ToLower())
-							return child;
+						children = null;
+						foreach (UIControlBase child in Children)
+						{
+							if (child.Name.ToLower() == name.ToLower() &&
+								(id == null || child.ID.ToLower() == id.ToLower()) &&
+								child.ClassName.ToLower() == className.ToLower())
+								return child;
+						}
+						System.Threading.Thread.Sleep(50);
 					}
-					System.Threading.Thread.Sleep(50);
+					QAliber.Logger.Log.Default.Warning(
+						string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
+									  name, className, id, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				}
-				QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
-					name, className, id, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
-				return null;
+				return new UINullControl();
 			}
 		}
 
@@ -457,24 +481,28 @@ namespace QAliber.Engine.Controls
 		{
 			get
 			{
-				if (this is QAliber.Engine.Controls.UIA.UIAControl)
+				if (Exists)
 				{
-					Stopwatch watch = new Stopwatch();
-					watch.Start();
-					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+					if (this is QAliber.Engine.Controls.UIA.UIAControl)
 					{
-						children = null;
-						foreach (QAliber.Engine.Controls.UIA.UIAControl child in Children)
+						Stopwatch watch = new Stopwatch();
+						watch.Start();
+						while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 						{
-							if (child.ID == id && child.IDIndex == idIndex)
-								return child;
+							children = null;
+							foreach (QAliber.Engine.Controls.UIA.UIAControl child in Children)
+							{
+								if (child.ID == id && child.IDIndex == idIndex)
+									return child;
+							}
+							System.Threading.Thread.Sleep(50);
 						}
-						System.Threading.Thread.Sleep(50);
+						QAliber.Logger.Log.Default.Warning(
+							string.Format("Cannot find control [{0}, {1}] for control {2}",
+										  id, idIndex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 					}
-					QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
-						name, idIndex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 				}
-				return null;
+				return new UIANullControl();
 			}
 		}
 		#endregion
@@ -488,24 +516,43 @@ namespace QAliber.Engine.Controls
 		/// <returns>If a child with the given name appears within timeout then the child is returned, if timeout is reached null is returned</returns>
 		public virtual UIControlBase WaitForControlByName(string name, int timeout)
 		{
-			Stopwatch stopWatch = new Stopwatch();
 			int prevTimeout = PlayerConfig.Default.AutoWaitForControl;
+			bool prevLogState = Log.Default.Enabled;
+			string exceptionMessage = string.Empty;
 			PlayerConfig.Default.AutoWaitForControl = 100;
+			Log.Default.Enabled = false;
+			Stopwatch stopWatch = new Stopwatch();
+			UIControlBase resControl = null;
 			stopWatch.Start();
-			do
+			try
 			{
-				UIControlBase c = this[name];
-				if (c != null)
+				do
 				{
-					PlayerConfig.Default.AutoWaitForControl = prevTimeout;
-					return c;
-				}
-				System.Threading.Thread.Sleep(50);
-			} while (stopWatch.ElapsedMilliseconds < timeout);
-			stopWatch.Stop();
-			PlayerConfig.Default.AutoWaitForControl = prevTimeout;
-			QAliber.Logger.Log.Default.Warning("Wait timed out for the control '" + name + "'");
-			return null;
+					resControl = this[name];
+					if (resControl.Exists)
+					{
+						break;
+					}
+					System.Threading.Thread.Sleep(50);
+				} while (stopWatch.ElapsedMilliseconds < timeout);
+
+			}
+			catch (Exception ex)
+			{
+				exceptionMessage = ex.Message;
+			}
+			finally
+			{
+				stopWatch.Stop();
+				Log.Default.Enabled = prevLogState;
+				PlayerConfig.Default.AutoWaitForControl = prevTimeout;
+			}
+			if (resControl == null || !resControl.Exists)
+			{
+				Log.Default.Warning("Wait timed out for the control '" + name + "'", exceptionMessage,
+									EntryVerbosity.Internal);
+			}
+			return resControl;
 
 		}
 
@@ -517,24 +564,43 @@ namespace QAliber.Engine.Controls
 		/// <returns>If a child with the given name appears within timeout then the child is returned, if timeout is reached null is returned</returns>
 		public virtual UIControlBase WaitForControlByID(string id, int timeout)
 		{
-			Stopwatch stopWatch = new Stopwatch();
 			int prevTimeout = PlayerConfig.Default.AutoWaitForControl;
+			bool prevLogState = Log.Default.Enabled;
+			string exceptionMessage = string.Empty;
 			PlayerConfig.Default.AutoWaitForControl = 100;
+			Log.Default.Enabled = false;
+			Stopwatch stopWatch = new Stopwatch();
+			UIControlBase resControl = null;
 			stopWatch.Start();
-			do
+			try
 			{
-				UIControlBase c = this["", id, true];
-				if (c != null)
+				do
 				{
-					PlayerConfig.Default.AutoWaitForControl = prevTimeout;
-					return c;
-				}
-				System.Threading.Thread.Sleep(50);
-			} while (stopWatch.ElapsedMilliseconds < timeout);
-			stopWatch.Stop();
-			PlayerConfig.Default.AutoWaitForControl = prevTimeout;
-			QAliber.Logger.Log.Default.Warning("Wait timed out for the control '" + id + "'");
-			return null;
+					resControl = this["", id, true];
+					if (resControl.Exists)
+					{
+						break;
+					}
+					System.Threading.Thread.Sleep(50);
+				} while (stopWatch.ElapsedMilliseconds < timeout);
+				
+			}
+			catch (Exception ex)
+			{
+				exceptionMessage = ex.Message;
+			}
+			finally
+			{
+				stopWatch.Stop();
+				Log.Default.Enabled = prevLogState;
+				PlayerConfig.Default.AutoWaitForControl = prevTimeout;
+			}
+			if (resControl == null || !resControl.Exists)
+			{
+				Log.Default.Warning("Wait timed out for the control '" + id + "'", exceptionMessage,
+									EntryVerbosity.Internal);
+			}
+			return resControl;
 
 		}
 
