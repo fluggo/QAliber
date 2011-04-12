@@ -522,7 +522,7 @@ namespace QAliber.Engine.Controls
 			PlayerConfig.Default.AutoWaitForControl = 100;
 			Log.Default.Enabled = false;
 			Stopwatch stopWatch = new Stopwatch();
-			UIControlBase resControl = null;
+			UIControlBase resControl = new UINullControl();
 			stopWatch.Start();
 			try
 			{
@@ -570,7 +570,7 @@ namespace QAliber.Engine.Controls
 			PlayerConfig.Default.AutoWaitForControl = 100;
 			Log.Default.Enabled = false;
 			Stopwatch stopWatch = new Stopwatch();
-			UIControlBase resControl = null;
+			UIControlBase resControl = new UINullControl();
 			stopWatch.Start();
 			try
 			{

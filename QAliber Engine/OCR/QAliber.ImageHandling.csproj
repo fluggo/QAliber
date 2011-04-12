@@ -54,8 +54,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filters\BoxDetectorFilter.cs" />
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Filters\HuePassFilter.cs" />
     <Compile Include="ImageComparer.cs" />
     <Compile Include="ImageFinder.cs" />
+    <Compile Include="Filters\GreyThresholdFilter.cs" />
     <Compile Include="OCRItem.cs" />
     <Compile Include="PNM\BaseReaders\DataReader\ASCIIDataReader.cs" />
     <Compile Include="PNM\BaseReaders\DataReader\BinaryDataReader.cs" />
