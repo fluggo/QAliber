@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.Builder.Presentation", "..\QAliber Test Builder\Presentation\QAliber.Builder.Presentation.csproj", "{8760D2CC-E8FF-432B-BBB7-CBDB0259EF43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockingControls", "..\QAliber Test Builder\Docking Controls\DockingControls.csproj", "{EF6553C4-D315-411E-A96A-54222363C5AB}"
@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.Repository.CommonTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.Engine", "..\QAliber Engine\Engine\QAliber.Engine.csproj", "{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QAliberManagedInjector", "..\QAliber Engine\Engine\ManagedInjector\ManagedInjector.vcproj", "{C29817A9-3696-421D-89BD-F66681657C37}"
-EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QAliberTestBuilderSetup", "..\QAliber Test Builder\QAliberTestBuilderSetup\QAliberTestBuilderSetup.vdproj", "{A4612FA0-F7E0-4EA4-A00A-B83AD3B015CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedWinapi", "..\QAliber Engine\Engine\ManagedWinAPI\ManagedWinapi.csproj", "{FBD3EC1E-47E2-4D2D-81C9-D6506125A09A}"
@@ -26,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.ImageHandling", "..\QAliber Engine\OCR\QAliber.ImageHandling.csproj", "{357618F5-959D-4DAB-BCB6-63E1CEB556E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAliber.LogViewer", "..\QAliber Engine\QAliber.LogViewer\QAliber.LogViewer.csproj", "{F1927DA7-6DDD-4DF7-BF63-6EB54FEF7A1F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QAliberManagedInjector", "..\QAliber Engine\Engine\ManagedInjector\ManagedInjector.vcxproj", "{BC121AD2-9609-4A39-9F20-849C7C57C539}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,16 +107,6 @@ Global
 		{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}.Release|Win32.ActiveCfg = Release|Any CPU
-		{C29817A9-3696-421D-89BD-F66681657C37}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Debug|Win32.Build.0 = Debug|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Release|Any CPU.ActiveCfg = Release|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Release|Win32.ActiveCfg = Release|Win32
-		{C29817A9-3696-421D-89BD-F66681657C37}.Release|Win32.Build.0 = Release|Win32
 		{A4612FA0-F7E0-4EA4-A00A-B83AD3B015CD}.Debug|Any CPU.ActiveCfg = Debug
 		{A4612FA0-F7E0-4EA4-A00A-B83AD3B015CD}.Debug|Mixed Platforms.ActiveCfg = Debug
 		{A4612FA0-F7E0-4EA4-A00A-B83AD3B015CD}.Debug|Mixed Platforms.Build.0 = Debug
@@ -164,6 +154,16 @@ Global
 		{F1927DA7-6DDD-4DF7-BF63-6EB54FEF7A1F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F1927DA7-6DDD-4DF7-BF63-6EB54FEF7A1F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F1927DA7-6DDD-4DF7-BF63-6EB54FEF7A1F}.Release|Win32.ActiveCfg = Release|Any CPU
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Debug|Win32.Build.0 = Debug|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Release|Any CPU.ActiveCfg = Release|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Release|Win32.ActiveCfg = Release|Win32
+		{BC121AD2-9609-4A39-9F20-849C7C57C539}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
