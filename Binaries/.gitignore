@@ -1,0 +1,8 @@
+
+/ManagedInjector.*
+/ManagedWinapi*
+/Interop.SHDocVw.dll
+/DockingControls.*
+/QAliber*
+/Resources
+/Help
