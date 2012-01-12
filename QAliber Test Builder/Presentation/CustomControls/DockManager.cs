@@ -36,7 +36,7 @@ namespace QAliber.Builder.Presentation
 			MacrosPanel macroPanel = new MacrosPanel();
 			VariablesPanel varsPanel = new VariablesPanel(tabbedScenarioControl);
 			rightPanel.DockedControls.Add("Macros Repository", macroPanel);
-			rightPanel.DockedControls.Add("Test Cases Repository", tcPanel);
+			rightPanel.DockedControls.Add("Test Steps", tcPanel);
 			
 			
 			rightPanel.Tabbed = true;

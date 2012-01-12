@@ -83,7 +83,7 @@ namespace QAliber.Builder.Presentation
 			this.addDllsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.addDllsToolStripButton.Name = "addDllsToolStripButton";
 			this.addDllsToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.addDllsToolStripButton.Text = "Add Test cases from external Dlls";
+			this.addDllsToolStripButton.Text = "Add test cases from external DLL";
 			this.addDllsToolStripButton.Click += new System.EventHandler(this.addDllsToolStripButton_Click);
 			// 
 			// toolStripSeparator1
@@ -105,7 +105,7 @@ namespace QAliber.Builder.Presentation
 			this.findNextToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.findNextToolStripButton.Name = "findNextToolStripButton";
 			this.findNextToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.findNextToolStripButton.Text = "Find Next";
+			this.findNextToolStripButton.Text = "Find next";
 			this.findNextToolStripButton.Click += new System.EventHandler(this.AfterSearchSubmitted);
 			// 
 			// refreshToolStripButton
@@ -115,7 +115,7 @@ namespace QAliber.Builder.Presentation
 			this.refreshToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.refreshToolStripButton.Name = "refreshToolStripButton";
 			this.refreshToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.refreshToolStripButton.Text = "Check for Updates";
+			this.refreshToolStripButton.Text = "Check for updates";
 			this.refreshToolStripButton.ToolTipText = "Refresh";
 			this.refreshToolStripButton.Click += new System.EventHandler(this.refreshToolStripButton_Click);
 			// 
@@ -124,7 +124,7 @@ namespace QAliber.Builder.Presentation
 			this.dragToAddToolStripLabel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dragToAddToolStripLabel.ForeColor = System.Drawing.Color.DimGray;
 			this.dragToAddToolStripLabel.Name = "dragToAddToolStripLabel";
-			this.dragToAddToolStripLabel.Size = new System.Drawing.Size(144, 22);
+			this.dragToAddToolStripLabel.Size = new System.Drawing.Size(144, 13);
 			this.dragToAddToolStripLabel.Text = "To add an item simply drag it";
 			// 
 			// typesTreeView
@@ -137,10 +137,9 @@ namespace QAliber.Builder.Presentation
 			this.typesTreeView.SelectedImageIndex = 0;
 			this.typesTreeView.Size = new System.Drawing.Size(314, 465);
 			this.typesTreeView.TabIndex = 1;
-			
+			this.typesTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.AfterDragStarted);
 			this.typesTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.AfterDoubleClick);
 			this.typesTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.typesTreeView_MouseDown);
-			this.typesTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.AfterDragStarted);
 			// 
 			// typesImageList
 			// 
