@@ -186,10 +186,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\QAliber Test Developer\Recorder\QAliber.Recorder.csproj">
-      <Project>{3EC9A569-9AC3-408F-A081-47F21FEA3771}</Project>
-      <Name>QAliber.Recorder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logger\QAliber.Logger.csproj">
       <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
       <Name>QAliber.Logger</Name>
