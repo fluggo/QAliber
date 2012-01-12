@@ -444,6 +444,7 @@ namespace QAliber.Logger
 						IndentOut(true);
 					writer.WriteLine("</LogEntries>");
 					writer.Close();
+					writer = null;
 				}
 			}
 			catch { }
