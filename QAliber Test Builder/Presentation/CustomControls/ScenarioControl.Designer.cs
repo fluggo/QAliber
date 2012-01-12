@@ -75,6 +75,7 @@ namespace QAliber.Builder.Presentation
 			this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
@@ -115,8 +116,8 @@ namespace QAliber.Builder.Presentation
 			this.scenarioTreeView.SelectedNodes = new QAliber.Builder.Presentation.QAliberTreeNode[0];
 			this.scenarioTreeView.Size = new System.Drawing.Size(194, 487);
 			this.scenarioTreeView.TabIndex = 0;
-			this.scenarioTreeView.TestCaseDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterTypeDragEnded);
 			this.scenarioTreeView.NodeDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterDragEnded);
+			this.scenarioTreeView.TestCaseDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterTypeDragEnded);
 			this.scenarioTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.AfterCheckChanged);
 			this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AfterTreeNodeSelected);
 			// 
@@ -139,6 +140,7 @@ namespace QAliber.Builder.Presentation
 			this.testCasesPG.LineColor = System.Drawing.Color.White;
 			this.testCasesPG.Location = new System.Drawing.Point(0, 0);
 			this.testCasesPG.Name = "testCasesPG";
+			this.testCasesPG.PropertySort = System.Windows.Forms.PropertySort.Categorized;
 			this.testCasesPG.Size = new System.Drawing.Size(384, 487);
 			this.testCasesPG.TabIndex = 0;
 			this.testCasesPG.ViewBackColor = System.Drawing.Color.AliceBlue;
@@ -372,6 +374,7 @@ namespace QAliber.Builder.Presentation
 			this.Size = new System.Drawing.Size(582, 487);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.pgMenuStrip.ResumeLayout(false);
 			this.testCasesMenu.ResumeLayout(false);
