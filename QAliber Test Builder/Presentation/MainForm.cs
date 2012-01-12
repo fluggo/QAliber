@@ -140,6 +140,28 @@ namespace QAliber.Builder.Presentation
 				executionContainer.playToolStripButton_Click(sender, e);
 		}
 
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+			// BJC: I don't know why the subcontrols are interested in our opinion on this,
+			// but if it's one of the editing commands, we reject it unless the scenario
+			// control has focus (otherwise, we intercept Paste, etc.)
+
+			if( (keyData & Keys.Modifiers) == Keys.Control ) {
+				switch( keyData & Keys.KeyCode ) {
+					case Keys.C:
+					case Keys.V:
+					case Keys.X:
+					case Keys.Y:
+					case Keys.Z:
+						if( !executionContainer.dockManager.tabbedScenarioControl.ContainsFocus )
+							return false;
+
+						break;
+				}
+			}
+
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
 		private void toggleBreakpointToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ScenarioControl sc = executionContainer.dockManager.tabbedScenarioControl.tabbedDocumentControl.SelectedControl as ScenarioControl;
