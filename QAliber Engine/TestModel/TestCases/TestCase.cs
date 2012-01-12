@@ -208,27 +208,13 @@ namespace QAliber.TestModel
 			set { markedForExecution = value; }
 		}
 
-		protected bool exitOnError;
-
-		/// <summary>
-		/// Tells the QAliber Runner whether to quit the scenario, if this test case fails
-		/// </summary>
-		[Category("Test Case Flow Control")]
-		[DisplayName("Exit On Error?")]
-		[Description("Should the current test case stop the entire scenario if it fails ?")]
-		public bool ExitOnError
-		{
-			get { return exitOnError; }
-			set { exitOnError = value; }
-		}
-
-		protected bool exitBranchOnError;
+		protected bool exitBranchOnError = true;
 
 		/// <summary>
 		/// Tells the QAliber Runner whether to continue the scenario on the next branch, if this test case fails
 		/// </summary>
 		[Category("Test Case Flow Control")]
-		[DisplayName("Exit Current Branch On Error?")]
+		[DisplayName("Stop Parent on Fail")]
 		[Description("Should the current tree branch terminate if the current test case fails ?")]
 		public bool ExitBranchOnError
 		{
@@ -236,13 +222,27 @@ namespace QAliber.TestModel
 			set { exitBranchOnError = value; }
 		}
 	   
+		protected bool exitOnError;
+
+		/// <summary>
+		/// Tells the QAliber Runner whether to quit the scenario, if this test case fails
+		/// </summary>
+		[Category("Test Case Flow Control")]
+		[DisplayName("Stop All on Fail")]
+		[Description("Should the current test case stop the entire scenario if it fails ?")]
+		public bool ExitOnError
+		{
+			get { return exitOnError; }
+			set { exitOnError = value; }
+		}
+
 		protected int numOfRetries;
 
 		/// <summary>
 		/// Tells the QAliber Runner how many times to retry this test case, if this test case fails
 		/// </summary>
 		[Category("Test Case Flow Control")]
-		[DisplayName("Number Of Retries")]
+		[DisplayName("Number of Retries")]
 		[Description("How many times to retry in case of failure")]
 		public int NumOfRetries
 		{
