@@ -216,6 +216,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Stop Parent on Fail")]
 		[Description("Should the current tree branch terminate if the current test case fails ?")]
+		[DefaultValue(true)]
 		public bool ExitBranchOnError
 		{
 			get { return exitBranchOnError; }
@@ -230,6 +231,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Stop All on Fail")]
 		[Description("Should the current test case stop the entire scenario if it fails ?")]
+		[DefaultValue(false)]
 		public bool ExitOnError
 		{
 			get { return exitOnError; }
@@ -244,6 +246,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Number of Retries")]
 		[Description("How many times to retry in case of failure")]
+		[DefaultValue(0)]
 		public int NumOfRetries
 		{
 			get { return numOfRetries; }
@@ -258,6 +261,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Results")]
 		[DisplayName("Take Screenshot?")]
 		[Description("When to take a screenshot during the execution of the test case")]
+		[DefaultValue(TakeScreenshotOption.No)]
 		public TakeScreenshotOption ScreenshotOption
 		{
 			get { return screenshotOption; }
@@ -354,6 +358,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Results")]
 		[DisplayName("Expected Result")]
 		[Description("The expected result from this test case")]
+		[DefaultValue(TestCaseResult.Passed)]
 		public TestCaseResult ExpectedResult
 		{
 			get { return expectedResult; }
