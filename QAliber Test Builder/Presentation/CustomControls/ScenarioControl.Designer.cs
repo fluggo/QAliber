@@ -52,20 +52,10 @@ namespace QAliber.Builder.Presentation
 			this.pgMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.variablesWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.testCasesMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.playCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SetBPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.addFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripMenuCategorize = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripBlue = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripPurple = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +63,14 @@ namespace QAliber.Builder.Presentation
 			this.toolStripOrange = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripRed = new System.Windows.Forms.ToolStripMenuItem();
 			this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -164,112 +162,23 @@ namespace QAliber.Builder.Presentation
 			// testCasesMenu
 			// 
 			this.testCasesMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.playCurrentToolStripMenuItem,
+			this.SetBPToolStripMenuItem,
+			this.addFolderToolStripMenuItem,
+			this.toolStripSeparator3,
+			this.toolStripMenuCategorize,
+			this.toolStripSeparator2,
+			this.moveUpToolStripMenuItem,
+			this.moveDownToolStripMenuItem,
+			this.toolStripSeparator1,
 			this.cutToolStripMenuItem,
 			this.copyToolStripMenuItem,
 			this.pasteToolStripMenuItem,
 			this.deleteToolStripMenuItem,
-			this.toolStripSeparator1,
-			this.moveUpToolStripMenuItem,
-			this.moveDownToolStripMenuItem,
-			this.toolStripSeparator2,
-			this.undoToolStripMenuItem,
-			this.redoToolStripMenuItem,
-			this.toolStripSeparator3,
-			this.playCurrentToolStripMenuItem,
-			this.SetBPToolStripMenuItem,
-			this.toolStripSeparator4,
-			this.toolStripMenuCategorize,
 			this.toolStripSeparator5,
 			this.helpToolStripMenuItem});
 			this.testCasesMenu.Name = "testCasesMenu";
-			this.testCasesMenu.Size = new System.Drawing.Size(186, 320);
-			// 
-			// cutToolStripMenuItem
-			// 
-			this.cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
-			this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-			this.cutToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.cutToolStripMenuItem.Text = "Cut";
-			this.cutToolStripMenuItem.Click += new System.EventHandler(this.MenuCutClicked);
-			// 
-			// copyToolStripMenuItem
-			// 
-			this.copyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripMenuItem.Image")));
-			this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-			this.copyToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.copyToolStripMenuItem.Text = "Copy";
-			this.copyToolStripMenuItem.Click += new System.EventHandler(this.MenuCopyClicked);
-			// 
-			// pasteToolStripMenuItem
-			// 
-			this.pasteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripMenuItem.Image")));
-			this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.pasteToolStripMenuItem.Text = "Paste";
-			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.MenuPasteClicked);
-			// 
-			// deleteToolStripMenuItem
-			// 
-			this.deleteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deleteToolStripMenuItem.Image")));
-			this.deleteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.deleteToolStripMenuItem.Text = "Delete";
-			this.deleteToolStripMenuItem.Click += new System.EventHandler(this.MenuDeleteClicked);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
-			// 
-			// moveUpToolStripMenuItem
-			// 
-			this.moveUpToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("moveUpToolStripMenuItem.Image")));
-			this.moveUpToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-			this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.moveUpToolStripMenuItem.Text = "Move Up";
-			this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.MenuMoveUpClicked);
-			// 
-			// moveDownToolStripMenuItem
-			// 
-			this.moveDownToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("moveDownToolStripMenuItem.Image")));
-			this.moveDownToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-			this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.moveDownToolStripMenuItem.Text = "Move Down";
-			this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.MenuMoveDownClicked);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(182, 6);
-			// 
-			// undoToolStripMenuItem
-			// 
-			this.undoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("undoToolStripMenuItem.Image")));
-			this.undoToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-			this.undoToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.undoToolStripMenuItem.Text = "Undo";
-			this.undoToolStripMenuItem.Click += new System.EventHandler(this.MenuUndoClicked);
-			// 
-			// redoToolStripMenuItem
-			// 
-			this.redoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("redoToolStripMenuItem.Image")));
-			this.redoToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-			this.redoToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.redoToolStripMenuItem.Text = "Redo";
-			this.redoToolStripMenuItem.Click += new System.EventHandler(this.MenuRedoClicked);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(182, 6);
+			this.testCasesMenu.Size = new System.Drawing.Size(186, 292);
 			// 
 			// playCurrentToolStripMenuItem
 			// 
@@ -287,10 +196,17 @@ namespace QAliber.Builder.Presentation
 			this.SetBPToolStripMenuItem.Text = "Toggle Breakpoint";
 			this.SetBPToolStripMenuItem.Click += new System.EventHandler(this.SetBPToolStripMenuItem_Click);
 			// 
-			// toolStripSeparator4
+			// addFolderToolStripMenuItem
 			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(182, 6);
+			this.addFolderToolStripMenuItem.Name = "addFolderToolStripMenuItem";
+			this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.addFolderToolStripMenuItem.Text = "Add Folder";
+			this.addFolderToolStripMenuItem.Click += new System.EventHandler(this.MenuAddFolderClicked);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(182, 6);
 			// 
 			// toolStripMenuCategorize
 			// 
@@ -352,6 +268,70 @@ namespace QAliber.Builder.Presentation
 			this.noneToolStripMenuItem.Text = "None";
 			this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(182, 6);
+			// 
+			// moveUpToolStripMenuItem
+			// 
+			this.moveUpToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("moveUpToolStripMenuItem.Image")));
+			this.moveUpToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
+			this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.moveUpToolStripMenuItem.Text = "Move Up";
+			this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.MenuMoveUpClicked);
+			// 
+			// moveDownToolStripMenuItem
+			// 
+			this.moveDownToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("moveDownToolStripMenuItem.Image")));
+			this.moveDownToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
+			this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.moveDownToolStripMenuItem.Text = "Move Down";
+			this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.MenuMoveDownClicked);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+			// 
+			// cutToolStripMenuItem
+			// 
+			this.cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
+			this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.cutToolStripMenuItem.Text = "Cut";
+			this.cutToolStripMenuItem.Click += new System.EventHandler(this.MenuCutClicked);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this.copyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripMenuItem.Image")));
+			this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.copyToolStripMenuItem.Text = "Copy";
+			this.copyToolStripMenuItem.Click += new System.EventHandler(this.MenuCopyClicked);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this.pasteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripMenuItem.Image")));
+			this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.pasteToolStripMenuItem.Text = "Paste";
+			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.MenuPasteClicked);
+			// 
+			// deleteToolStripMenuItem
+			// 
+			this.deleteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deleteToolStripMenuItem.Image")));
+			this.deleteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.deleteToolStripMenuItem.Text = "Delete";
+			this.deleteToolStripMenuItem.Click += new System.EventHandler(this.MenuDeleteClicked);
+			// 
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -394,15 +374,12 @@ namespace QAliber.Builder.Presentation
 		private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ImageList testcaseIconsList;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem playCurrentToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem SetBPToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip pgMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem variablesWizardToolStripMenuItem;
@@ -414,5 +391,6 @@ namespace QAliber.Builder.Presentation
 		private System.Windows.Forms.ToolStripMenuItem toolStripOrange;
 		private System.Windows.Forms.ToolStripMenuItem toolStripRed;
 		private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addFolderToolStripMenuItem;
 	}
 }

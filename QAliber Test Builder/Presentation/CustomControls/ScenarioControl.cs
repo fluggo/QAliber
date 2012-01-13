@@ -35,6 +35,8 @@ namespace QAliber.Builder.Presentation
 		public ScenarioControl()
 		{
 			InitializeComponent();
+			addFolderToolStripMenuItem.Image = new FolderTestCase().Icon;
+			addFolderToolStripMenuItem.ImageTransparentColor = Color.Fuchsia;
 		}
 
 		public TestScenario TestScenario
@@ -423,6 +425,21 @@ namespace QAliber.Builder.Presentation
 					UpdateContextMenusAndIconsRec(node);
 				}
 				OnScenarioChanged();
+			}
+		}
+
+		internal void MenuAddFolderClicked( object sender, EventArgs e ) {
+			// BJC: I object to this way of structuring menu handlers,
+			// but when in Rome...
+			if( scenarioTreeView.SelectedNode != null ) {
+				QAliberTreeNode node = new QAliberTreeNode( new FolderTestCase() { MarkedForExecution = true } );
+				SetIconToNode( node, TestCaseResult.None );
+				UpdateContextMenusAndIconsRec( node );
+
+				ICommand command = new InsertCommand( (QAliberTreeNode) scenarioTreeView.SelectedNode,
+					new QAliberTreeNode[] { node } );
+
+				commandsHistory.Do( command );
 			}
 		}
 
