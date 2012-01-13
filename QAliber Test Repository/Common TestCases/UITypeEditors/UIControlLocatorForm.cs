@@ -26,6 +26,7 @@ using QAliber.Engine.Controls;
 using System.IO;
 using System.Runtime.InteropServices;
 using QAliber.Engine.Controls.UIA;
+using System.Diagnostics;
 
 namespace QAliber.Repository.CommonTestCases.UITypeEditors
 {
@@ -70,6 +71,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				{
 					case 0x0202: { //LButtonUp
 						form.Visible = true;
+						_timer.Stop();
 						User32.ReleaseCapture();
 						GDI32.RedrawWindow(capturedElement);
 						Cursor = Cursors.Default;
@@ -94,32 +96,8 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 						break;
 					}
 					case 0x0200: { //MouseMove
-						// Simulate a mouse move over this point to activate any important mouseover behaviors
-						AutomationElement element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));
-
-						if( element != null ) {
-							if( !element.Equals( capturedElement ) )
-								GDI32.RedrawWindow(capturedElement);
-
-							UIControlBase control = UIAControl.GetControlByType(element);
-
-							if( control != null ) {
-								System.Windows.Point clientPoint = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
-
-								SendMessage( new HandleRef( this, (IntPtr) control.Handle ), 0x0200, (IntPtr) 0, (IntPtr) (((int) clientPoint.Y << 16) | (int) clientPoint.X) );
-							}
-						}
-
-						// Recapture element in case things have changed
-						element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));
-
-						if (element != null && !element.Equals(capturedElement))
-						{
-							GDI32.RedrawWindow(capturedElement);
-							GDI32.HighlightWindow(element);
-							capturedElement = element;
-						}
-
+						System.Windows.Point point = new System.Windows.Point( Cursor.Position.X, Cursor.Position.Y );
+						RecaptureElement( point );
 					}
 
 						break;
@@ -130,6 +108,62 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				}
 			}
 			base.WndProc(ref m);
+		}
+
+		private void HandleTimerTick( object sender, EventArgs e ) {
+			// Simulate a mouse move over this point to activate any important mouseover behaviors
+			System.Windows.Point point = new System.Windows.Point( Cursor.Position.X, Cursor.Position.Y );
+
+			AutomationElement element = null;
+
+			try {
+				element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));
+			}
+			catch {
+			}
+
+			if( element != null ) {
+				/*if( !element.Equals( capturedElement ) )
+					GDI32.RedrawWindow(capturedElement);*/
+
+				UIControlBase control = UIAControl.GetControlByType(element);
+
+				if( control != null ) {
+					Debug.WriteLine( "Sending MOUSEMOVE" );
+					System.Windows.Point clientPoint = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
+
+					SendMessage( new HandleRef( this, (IntPtr) control.Handle ), 0x0200, (IntPtr) 0, (IntPtr) (((int) clientPoint.Y << 16) | (int) clientPoint.X) );
+				}
+
+				Debug.WriteLine( "Repainting highlight after MOUSEMOVE" );
+				GDI32.HighlightWindow(capturedElement);
+			}
+
+			RecaptureElement( point );
+		}
+
+		private void RecaptureElement( System.Windows.Point point ) {
+			AutomationElement element = null;
+
+			try {
+				// Recapture element in case things have changed
+				element = AutomationElement.FromPoint( point );
+			}
+			catch {
+			}
+
+			if (element != null && !element.Equals(capturedElement))
+			{
+				Debug.WriteLine( "Changing highlighted element" );
+
+				GDI32.RedrawWindow(capturedElement);
+				GDI32.HighlightWindow(element);
+				capturedElement = element;
+
+				// Restart the timer to give a second's delay before delivering the mouse move
+				_timer.Stop();
+				_timer.Start();
+			}
 		}
 
 		private void btnCursor_MouseDown(object sender, MouseEventArgs e)
@@ -158,7 +192,6 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private bool capturing;
 		private AutomationElement capturedElement;
 		private System.Windows.Point coordinate;
-		
 
 		
 	}

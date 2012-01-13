@@ -43,6 +43,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.btnCursor = new System.Windows.Forms.Button();
 			this.textBox = new System.Windows.Forms.TextBox();
 			this.labelHelp = new System.Windows.Forms.Label();
@@ -54,6 +55,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.textBoxXY = new System.Windows.Forms.TextBox();
 			this.radioButtonUIA = new System.Windows.Forms.RadioButton();
 			this.radioButtonWeb = new System.Windows.Forms.RadioButton();
+			this._timer = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			// 
 			// btnCursor
@@ -82,7 +84,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.labelHelp.Size = new System.Drawing.Size(388, 13);
 			this.labelHelp.TabIndex = 2;
 			this.labelHelp.Text = "Drag the crosshair icon to select the control you want to perform the operation o" +
-				"n";
+	"n";
 			// 
 			// labelPath
 			// 
@@ -160,6 +162,11 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.radioButtonWeb.Text = "Internet Explorer";
 			this.radioButtonWeb.UseVisualStyleBackColor = true;
 			// 
+			// _timer
+			// 
+			this._timer.Interval = 1000;
+			this._timer.Tick += new System.EventHandler(this.HandleTimerTick);
+			// 
 			// UIControlLocatorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -198,5 +205,6 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private System.Windows.Forms.TextBox textBoxXY;
 		private System.Windows.Forms.RadioButton radioButtonUIA;
 		private System.Windows.Forms.RadioButton radioButtonWeb;
+		private System.Windows.Forms.Timer _timer;
 	}
 }
