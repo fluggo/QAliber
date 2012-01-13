@@ -42,6 +42,8 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		[DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
 		internal static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
 
+		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+		internal static extern IntPtr SendMessage(HandleRef hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
 
 		public string ControlPath
@@ -66,7 +68,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			{
 				switch (m.Msg)
 				{
-					case 0x0202: //LButtonUp
+					case 0x0202: { //LButtonUp
 						form.Visible = true;
 						User32.ReleaseCapture();
 						GDI32.RedrawWindow(capturedElement);
@@ -90,14 +92,36 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 							textBoxXY.Text = coordinate.ToString();
 						}
 						break;
-					case 0x0200: //MouseMove
+					}
+					case 0x0200: { //MouseMove
+						// Simulate a mouse move over this point to activate any important mouseover behaviors
 						AutomationElement element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));
+
+						if( element != null ) {
+							if( !element.Equals( capturedElement ) )
+								GDI32.RedrawWindow(capturedElement);
+
+							UIControlBase control = UIAControl.GetControlByType(element);
+
+							if( control != null ) {
+								System.Windows.Point clientPoint = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
+
+								SendMessage( new HandleRef( this, (IntPtr) control.Handle ), 0x0200, (IntPtr) 0, (IntPtr) (((int) clientPoint.Y << 16) | (int) clientPoint.X) );
+							}
+						}
+
+						// Recapture element in case things have changed
+						element = AutomationElement.FromPoint(new System.Windows.Point(Cursor.Position.X, Cursor.Position.Y));
+
 						if (element != null && !element.Equals(capturedElement))
 						{
 							GDI32.RedrawWindow(capturedElement);
 							GDI32.HighlightWindow(element);
 							capturedElement = element;
 						}
+
+					}
+
 						break;
 					default:
 						break;
@@ -107,7 +131,6 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			}
 			base.WndProc(ref m);
 		}
-
 
 		private void btnCursor_MouseDown(object sender, MouseEventArgs e)
 		{
