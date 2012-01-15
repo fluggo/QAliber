@@ -66,6 +66,8 @@ namespace QAliber.Builder.Presentation
 			this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.selectCategoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectBlueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectGreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,8 +94,6 @@ namespace QAliber.Builder.Presentation
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutQAliberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.executionContainer = new QAliber.Builder.Presentation.ExecutionContainer();
-			this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.mainMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -132,7 +132,7 @@ namespace QAliber.Builder.Presentation
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
 			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
 			this.newToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.newToolStripMenuItem.Text = "New";
+			this.newToolStripMenuItem.Text = "&New";
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
 			// 
 			// loadToolStripMenuItem
@@ -141,7 +141,7 @@ namespace QAliber.Builder.Presentation
 			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
 			this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
 			this.loadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.loadToolStripMenuItem.Text = "Open";
+			this.loadToolStripMenuItem.Text = "&Open";
 			this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
@@ -155,24 +155,24 @@ namespace QAliber.Builder.Presentation
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.saveToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.saveToolStripMenuItem.Text = "Save";
+			this.saveToolStripMenuItem.Text = "&Save";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
 			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.saveAsToolStripMenuItem.Text = "Save as...";
+			this.saveAsToolStripMenuItem.Text = "Save &as...";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
 			// 
 			// saveAllToolStripMenuItem
 			// 
 			this.saveAllToolStripMenuItem.Image = global::QAliber.Builder.Presentation.Properties.Resources.SaveAll;
 			this.saveAllToolStripMenuItem.Name = "saveAllToolStripMenuItem";
-			this.saveAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-						| System.Windows.Forms.Keys.S)));
+			this.saveAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+			| System.Windows.Forms.Keys.S)));
 			this.saveAllToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.saveAllToolStripMenuItem.Text = "Save All";
+			this.saveAllToolStripMenuItem.Text = "Save A&ll";
 			this.saveAllToolStripMenuItem.Click += new System.EventHandler(this.saveAllToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
@@ -184,7 +184,7 @@ namespace QAliber.Builder.Presentation
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Text = "E&xit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
 			// editToolStripMenuItem
@@ -214,7 +214,7 @@ namespace QAliber.Builder.Presentation
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
 			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
 			this.undoToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.undoToolStripMenuItem.Text = "Undo";
+			this.undoToolStripMenuItem.Text = "&Undo";
 			this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
 			// 
 			// redoToolStripMenuItem
@@ -223,7 +223,7 @@ namespace QAliber.Builder.Presentation
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
 			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
 			this.redoToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.redoToolStripMenuItem.Text = "Redo";
+			this.redoToolStripMenuItem.Text = "&Redo";
 			this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
@@ -237,7 +237,7 @@ namespace QAliber.Builder.Presentation
 			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
 			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
 			this.cutToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.cutToolStripMenuItem.Text = "Cut";
+			this.cutToolStripMenuItem.Text = "Cu&t";
 			this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
 			// 
 			// copyToolStripMenuItem
@@ -246,7 +246,7 @@ namespace QAliber.Builder.Presentation
 			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
 			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
 			this.copyToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.copyToolStripMenuItem.Text = "Copy";
+			this.copyToolStripMenuItem.Text = "&Copy";
 			this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
 			// 
 			// pasteToolStripMenuItem
@@ -255,7 +255,7 @@ namespace QAliber.Builder.Presentation
 			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
 			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
 			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.pasteToolStripMenuItem.Text = "Paste";
+			this.pasteToolStripMenuItem.Text = "&Paste";
 			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
 			// 
 			// deleteToolStripMenuItem
@@ -264,7 +264,7 @@ namespace QAliber.Builder.Presentation
 			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
 			this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Delete)));
 			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.deleteToolStripMenuItem.Text = "Delete";
+			this.deleteToolStripMenuItem.Text = "&Delete";
 			this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
@@ -278,7 +278,7 @@ namespace QAliber.Builder.Presentation
 			this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
 			this.moveUpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
 			this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.moveUpToolStripMenuItem.Text = "Move Up";
+			this.moveUpToolStripMenuItem.Text = "Move &Up";
 			this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
 			// 
 			// moveDownToolStripMenuItem
@@ -287,13 +287,26 @@ namespace QAliber.Builder.Presentation
 			this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
 			this.moveDownToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
 			this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.moveDownToolStripMenuItem.Text = "Move Down";
+			this.moveDownToolStripMenuItem.Text = "Move Do&wn";
 			this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
 			this.toolStripSeparator6.Size = new System.Drawing.Size(200, 6);
+			// 
+			// findToolStripMenuItem
+			// 
+			this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+			this.findToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+			this.findToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.findToolStripMenuItem.Text = "&Find...";
+			this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator9
+			// 
+			this.toolStripSeparator9.Name = "toolStripSeparator9";
+			this.toolStripSeparator9.Size = new System.Drawing.Size(200, 6);
 			// 
 			// selectCategoriesToolStripMenuItem
 			// 
@@ -305,7 +318,7 @@ namespace QAliber.Builder.Presentation
 			this.selectPurpleToolStripMenuItem});
 			this.selectCategoriesToolStripMenuItem.Name = "selectCategoriesToolStripMenuItem";
 			this.selectCategoriesToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.selectCategoriesToolStripMenuItem.Text = "Select Categories";
+			this.selectCategoriesToolStripMenuItem.Text = "Select Cate&gories";
 			// 
 			// selectBlueToolStripMenuItem
 			// 
@@ -365,13 +378,13 @@ namespace QAliber.Builder.Presentation
 			// 
 			this.dockingWindowListMenuItem1.Name = "dockingWindowListMenuItem1";
 			this.dockingWindowListMenuItem1.Size = new System.Drawing.Size(125, 22);
-			this.dockingWindowListMenuItem1.Text = "Panels";
+			this.dockingWindowListMenuItem1.Text = "&Panels";
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-			this.optionsToolStripMenuItem.Text = "Options...";
+			this.optionsToolStripMenuItem.Text = "&Options...";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
 			// 
 			// runToolStripMenuItem
@@ -392,7 +405,7 @@ namespace QAliber.Builder.Presentation
 			this.playToolStripMenuItem.Image = global::QAliber.Builder.Presentation.Properties.Resources.DebugPlay;
 			this.playToolStripMenuItem.Name = "playToolStripMenuItem";
 			this.playToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-			this.playToolStripMenuItem.Text = "Play";
+			this.playToolStripMenuItem.Text = "&Play";
 			this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
 			// 
 			// pauseToolStripMenuItem
@@ -400,7 +413,7 @@ namespace QAliber.Builder.Presentation
 			this.pauseToolStripMenuItem.Image = global::QAliber.Builder.Presentation.Properties.Resources.Pause;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-			this.pauseToolStripMenuItem.Text = "Pause";
+			this.pauseToolStripMenuItem.Text = "P&ause";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
 			// 
 			// stopToolStripMenuItem
@@ -408,7 +421,7 @@ namespace QAliber.Builder.Presentation
 			this.stopToolStripMenuItem.Image = global::QAliber.Builder.Presentation.Properties.Resources.Stop;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
 			this.stopToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-			this.stopToolStripMenuItem.Text = "Stop";
+			this.stopToolStripMenuItem.Text = "&Stop";
 			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator5
@@ -422,7 +435,7 @@ namespace QAliber.Builder.Presentation
 			this.playFromServiceToolStripMenuItem.Name = "playFromServiceToolStripMenuItem";
 			this.playFromServiceToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
 			this.playFromServiceToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-			this.playFromServiceToolStripMenuItem.Text = "Play From Service";
+			this.playFromServiceToolStripMenuItem.Text = "Play From Ser&vice";
 			this.playFromServiceToolStripMenuItem.Click += new System.EventHandler(this.playFromServiceToolStripMenuItem_Click);
 			// 
 			// toggleBreakpointToolStripMenuItem
@@ -431,7 +444,7 @@ namespace QAliber.Builder.Presentation
 			this.toggleBreakpointToolStripMenuItem.Name = "toggleBreakpointToolStripMenuItem";
 			this.toggleBreakpointToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
 			this.toggleBreakpointToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-			this.toggleBreakpointToolStripMenuItem.Text = "Toggle Breakpoint";
+			this.toggleBreakpointToolStripMenuItem.Text = "Toggle &Breakpoint";
 			this.toggleBreakpointToolStripMenuItem.Click += new System.EventHandler(this.toggleBreakpointToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
@@ -453,14 +466,14 @@ namespace QAliber.Builder.Presentation
 			// 
 			this.getStartedToolStripMenuItem.Name = "getStartedToolStripMenuItem";
 			this.getStartedToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.getStartedToolStripMenuItem.Text = "Get Started...";
+			this.getStartedToolStripMenuItem.Text = "&Get Started...";
 			this.getStartedToolStripMenuItem.Click += new System.EventHandler(this.getStartedToolStripMenuItem_Click);
 			// 
 			// wikiHowToToolStripMenuItem
 			// 
 			this.wikiHowToToolStripMenuItem.Name = "wikiHowToToolStripMenuItem";
 			this.wikiHowToToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.wikiHowToToolStripMenuItem.Text = "Wiki (How to)";
+			this.wikiHowToToolStripMenuItem.Text = "&Wiki (How to)";
 			this.wikiHowToToolStripMenuItem.Click += new System.EventHandler(this.wikiHowToToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator7
@@ -472,14 +485,14 @@ namespace QAliber.Builder.Presentation
 			// 
 			this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
 			this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.reportABugToolStripMenuItem.Text = "Report a bug";
+			this.reportABugToolStripMenuItem.Text = "&Report a bug";
 			this.reportABugToolStripMenuItem.Click += new System.EventHandler(this.reportABugToolStripMenuItem_Click);
 			// 
 			// requestATestCaseToolStripMenuItem
 			// 
 			this.requestATestCaseToolStripMenuItem.Name = "requestATestCaseToolStripMenuItem";
 			this.requestATestCaseToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.requestATestCaseToolStripMenuItem.Text = "Request a Test Case";
+			this.requestATestCaseToolStripMenuItem.Text = "Re&quest a Test Case";
 			this.requestATestCaseToolStripMenuItem.Click += new System.EventHandler(this.requestATestCaseToolStripMenuItem_Click);
 			// 
 			// supportToolStripMenuItem
@@ -487,7 +500,7 @@ namespace QAliber.Builder.Presentation
 			this.supportToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.supportToolStripMenuItem.Text = "Support";
+			this.supportToolStripMenuItem.Text = "&Support";
 			this.supportToolStripMenuItem.Click += new System.EventHandler(this.supportToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator8
@@ -500,7 +513,7 @@ namespace QAliber.Builder.Presentation
 			this.aboutQAliberToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.aboutQAliberToolStripMenuItem.Name = "aboutQAliberToolStripMenuItem";
 			this.aboutQAliberToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.aboutQAliberToolStripMenuItem.Text = "About QAliber";
+			this.aboutQAliberToolStripMenuItem.Text = "&About QAliber";
 			this.aboutQAliberToolStripMenuItem.Click += new System.EventHandler(this.aboutQAliberToolStripMenuItem_Click);
 			// 
 			// executionContainer
@@ -510,19 +523,6 @@ namespace QAliber.Builder.Presentation
 			this.executionContainer.Name = "executionContainer";
 			this.executionContainer.Size = new System.Drawing.Size(663, 501);
 			this.executionContainer.TabIndex = 2;
-			// 
-			// findToolStripMenuItem
-			// 
-			this.findToolStripMenuItem.Name = "findToolStripMenuItem";
-			this.findToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-			this.findToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.findToolStripMenuItem.Text = "Find...";
-			this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator9
-			// 
-			this.toolStripSeparator9.Name = "toolStripSeparator9";
-			this.toolStripSeparator9.Size = new System.Drawing.Size(200, 6);
 			// 
 			// MainForm
 			// 
