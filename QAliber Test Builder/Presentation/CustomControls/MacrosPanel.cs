@@ -40,7 +40,15 @@ namespace QAliber.Builder.Presentation
 			typesTreeView.Nodes.Clear();
 			string path = TestController.Default.LocalAssemblyPath + @"\\Macros";
 			if (!Directory.Exists(path))
-				Directory.CreateDirectory(path);
+			{
+				try
+				{
+					Directory.CreateDirectory(path);
+				}
+				catch (Exception)
+				{
+				}
+			}
 
 			CopyMacros();
 
@@ -56,7 +64,7 @@ namespace QAliber.Builder.Presentation
 			}
 			catch (UnauthorizedAccessException)
 			{
-				MessageBox.Show("Problem retrieving macros, some directories were in accessible", "Unauthorized Access");
+				MessageBox.Show("Problem retrieving macros, some directories were inaccessible", "Unauthorized Access");
 			}
 			catch (TimeoutException)
 			{
