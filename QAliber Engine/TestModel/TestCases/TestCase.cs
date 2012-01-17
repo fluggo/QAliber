@@ -238,6 +238,17 @@ namespace QAliber.TestModel
 			set { exitOnError = value; }
 		}
 
+		private bool alwaysRun;
+
+		[Category("Test Case Flow Control")]
+		[DisplayName("Always Run")]
+		[Description("Run this step even if the folder has already failed.")]
+		[DefaultValue(false)]
+		public virtual bool AlwaysRun {
+			get { return alwaysRun; }
+			set { alwaysRun = value; }
+		}
+
 		protected int numOfRetries;
 
 		/// <summary>

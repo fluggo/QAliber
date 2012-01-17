@@ -55,11 +55,16 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			actualResult = TestCaseResult.Passed;
+			bool stopRunning = false;
+
 			foreach (TestCase child in children)
 			{
-				if (child.MarkedForExecution)
+				if( child.MarkedForExecution && (!stopRunning || child.AlwaysRun) )
 				{
 					child.Run();
+
+					if( stopRunning )
+						continue;
 					
 					if (child.ExpectedResult != TestCaseResult.None && child.ActualResult != child.ExpectedResult)
 					{
@@ -73,7 +78,7 @@ namespace QAliber.TestModel
 						if (child.ExitBranchOnError)
 						{
 							Log.Default.Info("Exiting from branch on error as requested");
-							break;
+							stopRunning = true;
 						}
 					}
 					if (branchesToBreak > 0)
@@ -82,7 +87,7 @@ namespace QAliber.TestModel
 						break;
 					}
 					if (exitTotally)
-						break;
+						stopRunning = true;
 					
 				}
 				
