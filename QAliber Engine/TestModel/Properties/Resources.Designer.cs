@@ -60,6 +60,13 @@ namespace QAliber.TestModel.Properties {
 			}
 		}
 		
+		internal static System.Drawing.Bitmap ApproveReject {
+			get {
+				object obj = ResourceManager.GetObject("ApproveReject", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
 		internal static System.Drawing.Bitmap BreakFolder {
 			get {
 				object obj = ResourceManager.GetObject("BreakFolder", resourceCulture);

@@ -217,7 +217,7 @@ namespace QAliber.TestModel
 		[DisplayName("Stop Parent on Fail")]
 		[Description("Should the current tree branch terminate if the current test case fails ?")]
 		[DefaultValue(true)]
-		public bool ExitBranchOnError
+		public virtual bool ExitBranchOnError
 		{
 			get { return exitBranchOnError; }
 			set { exitBranchOnError = value; }
