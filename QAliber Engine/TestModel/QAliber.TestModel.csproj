@@ -80,6 +80,7 @@
     <Compile Include="TestCases\BreakLoopTestCase.cs" />
     <Compile Include="TestCases\CaseTestCase.cs" />
     <Compile Include="TestCases\ActualTestCase.cs" />
+    <Compile Include="TestCases\CleanupTestCase.cs" />
     <Compile Include="TestCases\DeleteGlobalVariables.cs" />
     <Compile Include="TestCases\LoadErrorTestCase.cs" />
     <Compile Include="TestCases\SwitchTestCase.cs" />
@@ -190,6 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ApproveReject_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Edit_UndoHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

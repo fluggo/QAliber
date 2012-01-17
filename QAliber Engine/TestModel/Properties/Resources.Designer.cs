@@ -88,6 +88,13 @@ namespace QAliber.TestModel.Properties {
 			}
 		}
 		
+		internal static System.Drawing.Bitmap Edit_UndoHS {
+			get {
+				object obj = ResourceManager.GetObject("Edit_UndoHS", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
 		internal static System.Drawing.Bitmap Folder {
 			get {
 				object obj = ResourceManager.GetObject("Folder", resourceCulture);
