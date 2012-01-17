@@ -67,6 +67,7 @@ namespace QAliber.Builder.Presentation
 			FillTreeRecursively(node);
 			scenarioTreeView.EnableComplexCheck = true;
 			testScenario = scenario;
+			node.Expand();
 		}
 
 		public static event EventHandler<ScenarioChangedEventArgs> ScenarioChanged;
