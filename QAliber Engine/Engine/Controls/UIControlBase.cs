@@ -462,9 +462,12 @@ namespace QAliber.Engine.Controls
 						children = null;
 						foreach (UIControlBase child in Children)
 						{
-							if (child.Name.ToLower() == name.ToLower() &&
-								(id == null || child.ID.ToLower() == id.ToLower()) &&
-								child.ClassName.ToLower() == className.ToLower())
+							// BJC: For reasons I can't discern, the automation API returns names for
+							// controls that don't have any. For that reason, if name is an empty string,
+							// I'll skip searching on name
+							if ( (string.IsNullOrEmpty( name ) || child.Name.ToLowerInvariant() == name.ToLowerInvariant()) &&
+								(id == null || child.ID.ToLowerInvariant() == id.ToLowerInvariant()) &&
+								child.ClassName.ToLowerInvariant() == className.ToLowerInvariant())
 								return child;
 						}
 						System.Threading.Thread.Sleep(50);
