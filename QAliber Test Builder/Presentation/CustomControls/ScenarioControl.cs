@@ -37,6 +37,7 @@ namespace QAliber.Builder.Presentation
 			InitializeComponent();
 			addFolderToolStripMenuItem.Image = new FolderTestCase().Icon;
 			addFolderToolStripMenuItem.ImageTransparentColor = Color.Fuchsia;
+			addTestCaseToolStripMenuItem.Image = new ActualTestCase().Icon;
 		}
 
 		public TestScenario TestScenario
@@ -434,6 +435,20 @@ namespace QAliber.Builder.Presentation
 			// but when in Rome...
 			if( scenarioTreeView.SelectedNode != null ) {
 				QAliberTreeNode node = new QAliberTreeNode( new FolderTestCase() { MarkedForExecution = true } );
+				SetIconToNode( node, TestCaseResult.None );
+				UpdateContextMenusAndIconsRec( node );
+
+				ICommand command = new InsertCommand( (QAliberTreeNode) scenarioTreeView.SelectedNode,
+					new QAliberTreeNode[] { node } );
+
+				commandsHistory.Do( command );
+			}
+		}
+
+		internal void MenuAddTestCaseClicked( object sender, EventArgs e ) {
+			// BJC: As above
+			if( scenarioTreeView.SelectedNode != null ) {
+				QAliberTreeNode node = new QAliberTreeNode( new ActualTestCase() { MarkedForExecution = true } );
 				SetIconToNode( node, TestCaseResult.None );
 				UpdateContextMenusAndIconsRec( node );
 

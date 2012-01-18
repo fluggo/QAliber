@@ -46,7 +46,6 @@ namespace QAliber.Builder.Presentation
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScenarioControl));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.scenarioTreeView = new QAliber.Builder.Presentation.QAliberTreeView();
 			this.testcaseIconsList = new System.Windows.Forms.ImageList(this.components);
 			this.testCasesPG = new System.Windows.Forms.PropertyGrid();
 			this.pgMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -54,6 +53,7 @@ namespace QAliber.Builder.Presentation
 			this.testCasesMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.playCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SetBPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addTestCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripMenuCategorize = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +73,7 @@ namespace QAliber.Builder.Presentation
 			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.scenarioTreeView = new QAliber.Builder.Presentation.QAliberTreeView();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -97,27 +98,6 @@ namespace QAliber.Builder.Presentation
 			this.splitContainer.Size = new System.Drawing.Size(582, 487);
 			this.splitContainer.SplitterDistance = 194;
 			this.splitContainer.TabIndex = 0;
-			// 
-			// scenarioTreeView
-			// 
-			this.scenarioTreeView.AllowDrop = true;
-			this.scenarioTreeView.CheckBoxes = true;
-			this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.scenarioTreeView.EnableComplexCheck = true;
-			this.scenarioTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.scenarioTreeView.HideSelection = false;
-			this.scenarioTreeView.ImageIndex = 0;
-			this.scenarioTreeView.ImageList = this.testcaseIconsList;
-			this.scenarioTreeView.Location = new System.Drawing.Point(0, 0);
-			this.scenarioTreeView.Name = "scenarioTreeView";
-			this.scenarioTreeView.SelectedImageIndex = 0;
-			this.scenarioTreeView.SelectedNodes = new QAliber.Builder.Presentation.QAliberTreeNode[0];
-			this.scenarioTreeView.Size = new System.Drawing.Size(194, 487);
-			this.scenarioTreeView.TabIndex = 0;
-			this.scenarioTreeView.NodeDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterDragEnded);
-			this.scenarioTreeView.TestCaseDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterTypeDragEnded);
-			this.scenarioTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.AfterCheckChanged);
-			this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AfterTreeNodeSelected);
 			// 
 			// testcaseIconsList
 			// 
@@ -164,6 +144,7 @@ namespace QAliber.Builder.Presentation
 			this.testCasesMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.playCurrentToolStripMenuItem,
 			this.SetBPToolStripMenuItem,
+			this.addTestCaseToolStripMenuItem,
 			this.addFolderToolStripMenuItem,
 			this.toolStripSeparator3,
 			this.toolStripMenuCategorize,
@@ -178,7 +159,7 @@ namespace QAliber.Builder.Presentation
 			this.toolStripSeparator5,
 			this.helpToolStripMenuItem});
 			this.testCasesMenu.Name = "testCasesMenu";
-			this.testCasesMenu.Size = new System.Drawing.Size(186, 292);
+			this.testCasesMenu.Size = new System.Drawing.Size(186, 314);
 			// 
 			// playCurrentToolStripMenuItem
 			// 
@@ -195,6 +176,13 @@ namespace QAliber.Builder.Presentation
 			this.SetBPToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
 			this.SetBPToolStripMenuItem.Text = "Toggle Breakpoint";
 			this.SetBPToolStripMenuItem.Click += new System.EventHandler(this.SetBPToolStripMenuItem_Click);
+			// 
+			// addTestCaseToolStripMenuItem
+			// 
+			this.addTestCaseToolStripMenuItem.Name = "addTestCaseToolStripMenuItem";
+			this.addTestCaseToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.addTestCaseToolStripMenuItem.Text = "Add Test Case";
+			this.addTestCaseToolStripMenuItem.Click += new System.EventHandler(this.MenuAddTestCaseClicked);
 			// 
 			// addFolderToolStripMenuItem
 			// 
@@ -345,6 +333,27 @@ namespace QAliber.Builder.Presentation
 			this.helpToolStripMenuItem.Text = "Help...";
 			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
 			// 
+			// scenarioTreeView
+			// 
+			this.scenarioTreeView.AllowDrop = true;
+			this.scenarioTreeView.CheckBoxes = true;
+			this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.scenarioTreeView.EnableComplexCheck = true;
+			this.scenarioTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.scenarioTreeView.HideSelection = false;
+			this.scenarioTreeView.ImageIndex = 0;
+			this.scenarioTreeView.ImageList = this.testcaseIconsList;
+			this.scenarioTreeView.Location = new System.Drawing.Point(0, 0);
+			this.scenarioTreeView.Name = "scenarioTreeView";
+			this.scenarioTreeView.SelectedImageIndex = 0;
+			this.scenarioTreeView.SelectedNodes = new QAliber.Builder.Presentation.QAliberTreeNode[0];
+			this.scenarioTreeView.Size = new System.Drawing.Size(194, 487);
+			this.scenarioTreeView.TabIndex = 0;
+			this.scenarioTreeView.NodeDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterDragEnded);
+			this.scenarioTreeView.TestCaseDragged += new System.EventHandler<QAliber.Builder.Presentation.NodeDraggedEventArgs>(this.AfterTypeDragEnded);
+			this.scenarioTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.AfterCheckChanged);
+			this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AfterTreeNodeSelected);
+			// 
 			// ScenarioControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -392,5 +401,6 @@ namespace QAliber.Builder.Presentation
 		private System.Windows.Forms.ToolStripMenuItem toolStripRed;
 		private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem addFolderToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addTestCaseToolStripMenuItem;
 	}
 }
