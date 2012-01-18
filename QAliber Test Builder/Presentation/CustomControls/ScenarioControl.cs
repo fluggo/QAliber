@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.IO;
 using Darwen.Windows.Forms.Controls.TabbedDocuments;
+using System.Linq;
 
 namespace QAliber.Builder.Presentation
 {
@@ -320,6 +321,22 @@ namespace QAliber.Builder.Presentation
 		private void AfterTreeNodeSelected(object sender, TreeViewEventArgs e)
 		{
 			testCasesPG.SelectedObjects = SelectedTestCases;
+
+			// Scroll up to the top of the grid
+			GridItem root = testCasesPG.SelectedGridItem;
+
+			if( root == null )
+				return;
+
+			while( root.Parent != null )
+				root = root.Parent;
+
+			GridItem firstCategory = root.GridItems.Cast<GridItem>().OrderBy( g => g.Label ).FirstOrDefault();
+
+			if( firstCategory == null )
+				return;
+
+			firstCategory.Select();
 		}
 
 		private void AfterDragEnded(object sender, NodeDraggedEventArgs e)
