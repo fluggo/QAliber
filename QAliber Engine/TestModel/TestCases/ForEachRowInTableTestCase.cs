@@ -73,7 +73,7 @@ namespace QAliber.TestModel
 			{
 				for (int i = 0; i < dataTable.Columns.Count; i++)
 				{
-					scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable(tableName + ".CurrentRow." + dataTable.Columns[i].ColumnName, row[i].ToString(), this));
+					scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(tableName + ".CurrentRow." + dataTable.Columns[i].ColumnName, row[i].ToString(), this));
 				}
 				Log.Default.IndentIn("Iteration on row '" + j + "'");
 				base.Body();
@@ -101,7 +101,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		protected ScenarioTable table;
+		protected ScenarioVariable<DataTable> table;
 	
 	}
 	

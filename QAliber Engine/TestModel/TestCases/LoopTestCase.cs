@@ -56,7 +56,7 @@ namespace QAliber.TestModel
 		{
 			for (int i = 0; i < numOfLoops; i++)
 			{
-				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
+				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
 				Log.Default.IndentIn(name + " - Loop #" + (int)(i + 1));
 				base.Body();
 				Log.Default.IndentOut();

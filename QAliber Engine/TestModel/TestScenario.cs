@@ -35,9 +35,9 @@ namespace QAliber.TestModel
 	{
 		public TestScenario()
 		{
-			variables = new BindingVariableList<ScenarioVariable>();
-			lists = new BindingVariableList<ScenarioList>();
-			tables = new BindingVariableList<ScenarioTable>();
+			variables = new BindingVariableList<string>();
+			lists = new BindingVariableList<string[]>();
+			tables = new BindingVariableList<DataTable>();
 			rootTestCase = new FolderTestCase();
 			rootTestCase.Scenario = this;
 			rootTestCase.Name = "Unknown Scenario";
@@ -96,31 +96,28 @@ namespace QAliber.TestModel
 		#endregion
 
 		#region Global Variables
-		private BindingVariableList<ScenarioVariable> variables;
+		private BindingVariableList<string> variables;
 
 		[Browsable(false)]
-		[XmlIgnore]
-		public BindingVariableList<ScenarioVariable> Variables
+		public BindingVariableList<string> Variables
 		{
 			get { return variables; }
 			set { variables = value; }
 		}
 
-		private BindingVariableList<ScenarioList> lists;
+		private BindingVariableList<string[]> lists;
 
 		[Browsable(false)]
-		[XmlIgnore]
-		public BindingVariableList<ScenarioList> Lists
+		public BindingVariableList<string[]> Lists
 		{
 			get { return lists; }
 			set { lists = value; }
 		}
 
-		private BindingVariableList<ScenarioTable> tables;
+		private BindingVariableList<DataTable> tables;
 
 		[Browsable(false)]
-		[XmlIgnore]
-		public BindingVariableList<ScenarioTable> Tables
+		public BindingVariableList<DataTable> Tables
 		{
 			get { return tables; }
 			set { tables = value; }
@@ -200,49 +197,50 @@ namespace QAliber.TestModel
 
 		private void SaveUserVariables()
 		{
-			variablesCopy = new BindingVariableList<ScenarioVariable>();
-			listsCopy = new BindingVariableList<ScenarioList>();
-			tablesCopy = new BindingVariableList<ScenarioTable>();
+			variablesCopy = new BindingVariableList<string>();
+			listsCopy = new BindingVariableList<string[]>();
+			tablesCopy = new BindingVariableList<DataTable>();
 
-			foreach (ScenarioVariable var in variables)
+			foreach (ScenarioVariable<string> var in variables)
 			{
-				//if (var.DefinedBy == "User")
-					variablesCopy.Add(new ScenarioVariable(
-						var.Name, var.Value.ToString(), var.Definer));
+				variablesCopy.Add(new ScenarioVariable<string>(
+					var.Name, var.Value.ToString(), var.TestStep));
 			}
 
-			foreach (ScenarioList var in lists)
+			foreach (ScenarioVariable<string[]> var in lists)
 			{
-				//if (var.DefinedBy == "User")
-				//{
-					ICollection vals = var.Value as ICollection;
-					string[] copyList= new string[vals.Count];
-					vals.CopyTo(copyList, 0);
-					listsCopy.Add(new ScenarioList(
-						var.Name, copyList, var.Definer));
-				//}
+				ICollection vals = var.Value as ICollection;
+				string[] copyList= new string[vals.Count];
+				vals.CopyTo(copyList, 0);
+				listsCopy.Add(new ScenarioVariable<string[]>(
+					var.Name, copyList, var.TestStep));
 			}
 
-			foreach (ScenarioTable var in tables)
+			foreach (ScenarioVariable<DataTable> var in tables)
 			{
-				//if (var.DefinedBy == "User")
-				//{
-					DataTable table = var.Value as DataTable;
-					DataTable copyTable = table.Copy();
-					tablesCopy.Add(new ScenarioTable(
-						var.Name, copyTable, var.Definer));
-				//}
+				DataTable table = var.Value as DataTable;
+				DataTable copyTable = table.Copy();
+				tablesCopy.Add(new ScenarioVariable<DataTable>(
+					var.Name, copyTable, var.TestStep));
 			}
 		}
 
 		private void ReloadUserVariables()
 		{
-			variables = variablesCopy;
-			variables.ResetBindings();
-			lists = listsCopy;
-			lists.ResetBindings();
-			tables = tablesCopy;
-			tables.ResetBindings();
+			ReloadUserVariables( variables, variablesCopy );
+			ReloadUserVariables( lists, listsCopy );
+			ReloadUserVariables( tables, tablesCopy );
+		}
+
+		private void ReloadUserVariables<T>( BindingVariableList<T> list, BindingVariableList<T> savedList ) {
+			list.RaiseListChangedEvents = false;
+			list.Clear();
+
+			foreach( var variable in savedList )
+				list.Add( variable );
+
+			list.RaiseListChangedEvents = true;
+			list.ResetBindings();
 		}
 
 		internal string ReplaceAllVars(string input)
@@ -262,7 +260,7 @@ namespace QAliber.TestModel
 		private string ReplaceVarForMatch(Match match)
 		{
 			string key = match.Value.Trim('$');
-			ScenarioVariable var = variables[key];
+			var var = variables[key];
 			if (var != null)
 				return var.Value.ToString();
 			else
@@ -272,7 +270,7 @@ namespace QAliber.TestModel
 		private string ReplaceListForMatch(Match match)
 		{
 			string key = match.Groups[1].Value;
-			ScenarioList list = lists[key];
+			var list = lists[key];
 			if (lists != null)
 			{
 				IList val = list.Value as IList;
@@ -292,7 +290,7 @@ namespace QAliber.TestModel
 		private string ReplacePropertyForMatch(Match match)
 		{
 			string key = match.Groups[1].Value;
-			ScenarioList list = lists[key];
+			var list = lists[key];
 			if (lists != null)
 			{
 				IList val = list.Value as IList;
@@ -308,7 +306,7 @@ namespace QAliber.TestModel
 					
 				}
 			}
-			ScenarioTable table = tables[key];
+			var table = tables[key];
 			if (table != null)
 			{
 				DataTable val = table.Value as DataTable;
@@ -332,7 +330,7 @@ namespace QAliber.TestModel
 		private string ReplaceTableForMatch(Match match)
 		{
 			string key = match.Groups[1].Value;
-			ScenarioTable table = tables[key];
+			ScenarioVariable<DataTable> table = tables[key];
 			if (table != null)
 			{
 				DataTable dataTable = table.Value as DataTable;
@@ -351,9 +349,9 @@ namespace QAliber.TestModel
 		}
 		#endregion
 
-		private BindingVariableList<ScenarioVariable> variablesCopy;
-		private BindingVariableList<ScenarioList> listsCopy;
-		private BindingVariableList<ScenarioTable> tablesCopy;
+		private BindingVariableList<string> variablesCopy;
+		private BindingVariableList<string[]> listsCopy;
+		private BindingVariableList<DataTable> tablesCopy;
 	}
 
 	sealed class DeserializationBinder : SerializationBinder

@@ -171,21 +171,21 @@ namespace QAliber.TestModel.TypeEditors
 			varsListView.Items.Clear();
 			if (scenario.Variables != null)
 			{
-				foreach (ScenarioVariable var in scenario.Variables)
+				foreach (var var in scenario.Variables)
 				{
 					varsListView.Items.Add(var.Name, var.Name, "Variable");
 				}
 			}
 			if (scenario.Lists != null)
 			{
-				foreach (ScenarioList var in scenario.Lists)
+				foreach (var var in scenario.Lists)
 				{
 					varsListView.Items.Add(var.Name, var.Name, "List");
 				}
 			}
 			if (scenario.Tables != null)
 			{
-				foreach (ScenarioTable var in scenario.Tables)
+				foreach (var var in scenario.Tables)
 				{
 					varsListView.Items.Add(var.Name, var.Name, "Table");
 				}
@@ -237,7 +237,7 @@ namespace QAliber.TestModel.TypeEditors
 				Match match = listRegex.Match(varTextBox.Text);
 				if (match.Success)
 				{
-					ScenarioList list = scenario.Lists[match.Groups[1].Value];
+					ScenarioVariable<string[]> list = scenario.Lists[match.Groups[1].Value];
 					if (list != null)
 					{
 						int index = int.Parse(match.Groups[2].Value);
@@ -249,7 +249,7 @@ namespace QAliber.TestModel.TypeEditors
 				match = tableRegex.Match(varTextBox.Text);
 				if (match.Success)
 				{
-					ScenarioTable table = scenario.Tables[match.Groups[1].Value];
+					ScenarioVariable<DataTable> table = scenario.Tables[match.Groups[1].Value];
 					if (table != null)
 					{
 						int rowIndex = int.Parse(match.Groups[2].Value);

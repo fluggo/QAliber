@@ -114,9 +114,6 @@
     </Compile>
     <Compile Include="Variables\BindingVariableList.cs" />
     <Compile Include="Variables\DropDownLists.cs" />
-    <Compile Include="Variables\IVariable.cs" />
-    <Compile Include="Variables\ScenarioList.cs" />
-    <Compile Include="Variables\ScenarioTable.cs" />
     <Compile Include="Variables\ScenarioVariable.cs" />
   </ItemGroup>
   <ItemGroup>

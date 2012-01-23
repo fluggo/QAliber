@@ -92,8 +92,9 @@ namespace QAliber.Builder.Presentation
 			this.varsDataGridView.Name = "varsDataGridView";
 			this.varsDataGridView.Size = new System.Drawing.Size(537, 182);
 			this.varsDataGridView.TabIndex = 0;
-			this.varsDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.varsDataGridView_CellValueChanged);
 			this.varsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.varsDataGridView_CellContentClick);
+			this.varsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.HandleVariablesFormatting);
+			this.varsDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.varsDataGridView_CellValueChanged);
 			// 
 			// listsTabPage
 			// 
@@ -116,8 +117,8 @@ namespace QAliber.Builder.Presentation
 			this.listsDataGridView.Name = "listsDataGridView";
 			this.listsDataGridView.Size = new System.Drawing.Size(537, 182);
 			this.listsDataGridView.TabIndex = 0;
-			this.listsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.listsDataGridView_CellFormatting);
 			this.listsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listsDataGridView_CellContentClick);
+			this.listsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.HandleListsFormatting);
 			// 
 			// tablesTabPage
 			// 
@@ -141,6 +142,7 @@ namespace QAliber.Builder.Presentation
 			this.tablesDataGridView.Size = new System.Drawing.Size(537, 182);
 			this.tablesDataGridView.TabIndex = 1;
 			this.tablesDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablesDataGridView_CellContentClick);
+			this.tablesDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.HandleTablesFormatting);
 			// 
 			// VariablesPanel
 			// 

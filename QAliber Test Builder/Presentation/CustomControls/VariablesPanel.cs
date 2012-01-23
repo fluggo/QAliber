@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
@@ -62,7 +63,7 @@ namespace QAliber.Builder.Presentation
 			tableValColumn.DefaultCellStyle.NullValue = "Create New Table";
 
 			DataGridViewLinkColumn definedByColumn = new DataGridViewLinkColumn();
-			definedByColumn.DataPropertyName = "DefinedBy";
+			definedByColumn.DataPropertyName = "TestStep";
 			definedByColumn.HeaderText = "Defined By";
 
 			varsDataGridView.Columns.Add(nameColumn);
@@ -93,6 +94,25 @@ namespace QAliber.Builder.Presentation
 				Visible = false;
 		}
 
+		private void HandleVariablesFormatting( object sender, DataGridViewCellFormattingEventArgs e ) {
+			if( e.RowIndex < 0 || e.ColumnIndex == 0 || e.ColumnIndex == 1 )
+				return;
+
+			var variable = (ScenarioVariable<string>) varsDataGridView.Rows[e.RowIndex].DataBoundItem;
+
+			if( variable == null )
+				return;
+
+			if( e.ColumnIndex == 2 ) {
+				if( variable.TestStep == null )
+					e.Value = string.Empty;
+				else
+					e.Value = variable.TestStep.Name;
+
+				e.FormattingApplied = true;
+			}
+		}
+
 		private void listsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			if (e.ColumnIndex == 1 && e.RowIndex >= 0)
@@ -116,15 +136,37 @@ namespace QAliber.Builder.Presentation
 			}
 			else if (e.ColumnIndex == 2 && e.RowIndex >= 0)
 			{
-				string val = listsDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
-				System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(val, "[0-9]+");
-				if (match.Success)
-				{
+				var variable = (ScenarioVariable<string[]>) listsDataGridView.Rows[e.RowIndex].DataBoundItem;
+
+				if( variable != null && variable.TestStep != null ) {
 					if (sc != null && sc.TestScenario != null)
 					{
-						sc.SelectNodeByID(int.Parse(match.Value));
+						sc.SelectNodeByID( variable.TestStep.ID );
 					}
 				}
+			}
+		}
+
+		private void HandleListsFormatting( object sender, DataGridViewCellFormattingEventArgs e ) {
+			if( e.RowIndex < 0 || e.ColumnIndex == 0 )
+				return;
+
+			var variable = (ScenarioVariable<string[]>) listsDataGridView.Rows[e.RowIndex].DataBoundItem;
+
+			if( variable == null )
+				return;
+
+			if( e.ColumnIndex == 1 ) {
+				e.Value = "[" + string.Join( ", ", variable.Value ) + "]";
+				e.FormattingApplied = true;
+			}
+			else if( e.ColumnIndex == 2 ) {
+				if( variable.TestStep == null )
+					e.Value = string.Empty;
+				else
+					e.Value = variable.TestStep.Name;
+
+				e.FormattingApplied = true;
 			}
 		}
 
@@ -133,6 +175,10 @@ namespace QAliber.Builder.Presentation
 			if (e.ColumnIndex == 1 && e.RowIndex >= 0)
 			{
 				DataTable table = tablesDataGridView[e.ColumnIndex, e.RowIndex].Value as DataTable;
+
+				if( table == null )
+					table = new DataTable( "Table" );
+
 				EditTableForm form = new EditTableForm(table);
 				if (DialogResult.OK == form.ShowDialog())
 				{
@@ -150,6 +196,7 @@ namespace QAliber.Builder.Presentation
 			}
 			else if (e.ColumnIndex == 2 && e.RowIndex >= 0)
 			{
+
 				string val = tablesDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
 				System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(val, "[0-9]+");
 				if (match.Success)
@@ -159,6 +206,33 @@ namespace QAliber.Builder.Presentation
 						sc.SelectNodeByID(int.Parse(match.Value));
 					}
 				}
+			}
+		}
+
+		private void HandleTablesFormatting( object sender, DataGridViewCellFormattingEventArgs e ) {
+			if( e.RowIndex < 0 || e.ColumnIndex == 0 )
+				return;
+
+			var variable = (ScenarioVariable<DataTable>) tablesDataGridView.Rows[e.RowIndex].DataBoundItem;
+
+			if( variable == null )
+				return;
+
+			if( e.ColumnIndex == 1 ) {
+				e.Value = "[(" +
+					string.Join( ",", variable.Value.Columns.Cast<DataColumn>().Select( col => col.Caption ) ) + ")" +
+					string.Concat( variable.Value.Rows.Cast<DataRow>().Select( row =>
+						", (" + string.Join( ",", variable.Value.Columns.Cast<DataColumn>().Select(
+							col => row.Field<string>( col ) ) ) + ")" ) ) + "]";
+				e.FormattingApplied = true;
+			}
+			else if( e.ColumnIndex == 2 ) {
+				if( variable.TestStep == null )
+					e.Value = string.Empty;
+				else
+					e.Value = variable.TestStep.Name;
+
+				e.FormattingApplied = true;
 			}
 		}
 
@@ -188,18 +262,6 @@ namespace QAliber.Builder.Presentation
 					index++;
 
 				}
-			}
-		}
-
-		private void listsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			if (e.ColumnIndex == 1)
-			{
-				if (e.Value == null)
-					e.Value = "Create New List";
-				else
-					e.Value = "List Items";
-
 			}
 		}
 

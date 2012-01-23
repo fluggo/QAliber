@@ -55,7 +55,7 @@ namespace QAliber.TestModel.Variables
 		public override void Update(TestScenario scenario)
 		{
 			List<string> tmpList = new List<string>();
-			foreach (ScenarioList l in scenario.Lists)
+			foreach (var l in scenario.Lists)
 			{
 				tmpList.Add(l.Name);
 			}
@@ -70,7 +70,7 @@ namespace QAliber.TestModel.Variables
 		public override void Update(TestScenario scenario)
 		{
 			List<string> tmpList = new List<string>();
-			foreach (ScenarioTable t in scenario.Tables)
+			foreach (var t in scenario.Tables)
 			{
 				tmpList.Add(t.Name);
 			}
@@ -85,7 +85,7 @@ namespace QAliber.TestModel.Variables
 		public override void Update(TestScenario scenario)
 		{
 			List<string> tmpList = new List<string>();
-			foreach (ScenarioVariable v in scenario.Variables)
+			foreach (var v in scenario.Variables)
 			{
 				tmpList.Add(v.Name);
 			}

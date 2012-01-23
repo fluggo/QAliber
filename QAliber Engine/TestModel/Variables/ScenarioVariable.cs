@@ -20,104 +20,58 @@ using System.Data;
 using System.Collections;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace QAliber.TestModel.Variables
 {
-
-	
-
 	[Serializable]
-	public class ScenarioVariable : IVariable, INotifyPropertyChanged
-	{
-		public ScenarioVariable()
-		{
+	public sealed class ScenarioVariable<T> : INotifyPropertyChanged {
+		private string _name;
+		private T _value;
+		private TestCase _testStep;
 
+		public ScenarioVariable() {
 		}
 
-		protected ScenarioVariable(string name, TestCase definer)
-		{
-			this.name = name;
-			this.testCaseDefiner = definer;
-		}
-
-		public ScenarioVariable(string name, string initVal, TestCase definer)
-			: this(name, definer)
-		{
-			this.initVal = initVal;
+		public ScenarioVariable( string name, T value, TestCase testStep ) {
+			_name = name;
+			_value = value;
+			_testStep = testStep;
 		}
 
 		#region INotifyPropertyChanged Members
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		protected void NotifyPropertyChanged(string name)
-		{
-			
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(name));
+		private void NotifyPropertyChanged(string name) {
+			PropertyChangedEventHandler handler = PropertyChanged;
+
+			if( handler != null )
+				handler( this, new PropertyChangedEventArgs( name ) );
 		}
 
 		#endregion
 
-		protected string name;
-
-		public string Name
-		{
-			get { return name; }
-			set 
-			{ 
-				name = value;
+		public string Name {
+			get { return _name; }
+			set {
+				_name = value;
 				NotifyPropertyChanged("Name");
 			}
 		}
 
-
-		public TestCase Definer
-		{
-			get { return testCaseDefiner; }
+		[DisplayName("Defined By")]
+		[ReadOnly(true)]
+		public TestCase TestStep {
+			get { return _testStep; }
 		}
 
-	
-		private string initVal;
-
-		public object Value
-		{
-			get 
-			{
-				if (initVal == null)
-					initVal = "";
-				return initVal; 
-			}
-			set 
-			{
-				if (value == null)
-					return;
-				initVal = value.ToString();
+		public T Value {
+			get { return _value; }
+			set {
+				_value = value;
 				NotifyPropertyChanged("Value");
 			}
 		}
-
-		[DisplayName("Defined By")]
-		public virtual string DefinedBy
-		{
-			get
-			{
-				if (testCaseDefiner == null)
-					return "User";
-				else
-					return testCaseDefiner.Name + "(" + testCaseDefiner.ID + ")";
-			}
-		}
-
-		protected TestCase testCaseDefiner;
-
-
-		
 	}
-
-	
-
-	
-
-	
 }

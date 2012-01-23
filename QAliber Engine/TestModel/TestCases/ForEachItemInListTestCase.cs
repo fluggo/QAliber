@@ -69,7 +69,7 @@ namespace QAliber.TestModel
 			string[] vals = list.Value as string[];
 			foreach (string obj in vals)
 			{
-				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable(listName + ".Current", obj, this));
+				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
 				Log.Default.IndentIn("Iteration on item '" + obj.ToString() + "'");
 				base.Body();
 				Log.Default.IndentOut();
@@ -95,7 +95,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		protected ScenarioList list;
+		protected ScenarioVariable<string[]> list;
 	
 	}
 	

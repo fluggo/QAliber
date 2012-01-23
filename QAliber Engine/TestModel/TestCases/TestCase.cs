@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 using System.ComponentModel;
 using System.Xml.Serialization;
@@ -99,20 +100,23 @@ namespace QAliber.TestModel
 							ICollection list = val as ICollection;
 							if (list != null)
 							{
-								ScenarioList l = scenario.Lists[name];
+								string[] stringList = list.Cast<object>().Select(
+									obj => (obj == null) ? "(null)" : obj.ToString() ).ToArray();
+
+								ScenarioVariable<string[]> l = scenario.Lists[name];
 								if (l != null)
-									l.Value = list;
+									l.Value = stringList;
 								else
-									scenario.Lists.AddOrReplaceByName(new ScenarioList(name, list, this));
+									scenario.Lists.AddOrReplaceByName(new ScenarioVariable<string[]>(name, stringList, this));
 
 							}
 							else if (val != null)
 							{
-								ScenarioVariable v = scenario.Variables[name];
+								ScenarioVariable<string> v = scenario.Variables[name];
 								if (v != null)
 									v.Value = val.ToString();
 								else
-									scenario.Variables.AddOrReplaceByName(new ScenarioVariable(name, val.ToString(), this));
+									scenario.Variables.AddOrReplaceByName(new ScenarioVariable<string>(name, val.ToString(), this));
 							}
 
 						}
