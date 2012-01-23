@@ -44,52 +44,32 @@ namespace QAliber.Builder.Presentation
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.tableDataGridView = new System.Windows.Forms.DataGridView();
 			this.gridContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.insertColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.btnOk = new System.Windows.Forms.Button();
-			this.splitContainer.Panel1.SuspendLayout();
-			this.splitContainer.Panel2.SuspendLayout();
-			this.splitContainer.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.tableDataGridView)).BeginInit();
 			this.gridContextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// splitContainer
-			// 
-			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer.Name = "splitContainer";
-			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer.Panel1
-			// 
-			this.splitContainer.Panel1.Controls.Add(this.tableDataGridView);
-			// 
-			// splitContainer.Panel2
-			// 
-			this.splitContainer.Panel2.Controls.Add(this.btnCancel);
-			this.splitContainer.Panel2.Controls.Add(this.btnOk);
-			this.splitContainer.Size = new System.Drawing.Size(424, 287);
-			this.splitContainer.SplitterDistance = 253;
-			this.splitContainer.TabIndex = 0;
-			// 
 			// tableDataGridView
 			// 
 			this.tableDataGridView.AllowUserToOrderColumns = true;
+			this.tableDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.tableDataGridView.ContextMenuStrip = this.gridContextMenuStrip;
-			this.tableDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableDataGridView.Location = new System.Drawing.Point(0, 0);
+			this.tableDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.tableDataGridView.Location = new System.Drawing.Point(0, 1);
 			this.tableDataGridView.Name = "tableDataGridView";
-			this.tableDataGridView.Size = new System.Drawing.Size(424, 253);
+			this.tableDataGridView.Size = new System.Drawing.Size(424, 245);
 			this.tableDataGridView.TabIndex = 0;
-			this.tableDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tableDataGridView_MouseDown);
-			this.tableDataGridView.Paint += new System.Windows.Forms.PaintEventHandler(this.tableDataGridView_Paint);
 			this.tableDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableDataGridView_CellContentClick);
+			this.tableDataGridView.Paint += new System.Windows.Forms.PaintEventHandler(this.tableDataGridView_Paint);
+			this.tableDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tableDataGridView_MouseDown);
 			// 
 			// gridContextMenuStrip
 			// 
@@ -97,26 +77,27 @@ namespace QAliber.Builder.Presentation
 			this.insertColumnToolStripMenuItem,
 			this.removeColumnToolStripMenuItem});
 			this.gridContextMenuStrip.Name = "gridContextMenuStrip";
-			this.gridContextMenuStrip.Size = new System.Drawing.Size(164, 48);
+			this.gridContextMenuStrip.Size = new System.Drawing.Size(152, 48);
 			// 
 			// insertColumnToolStripMenuItem
 			// 
 			this.insertColumnToolStripMenuItem.Name = "insertColumnToolStripMenuItem";
-			this.insertColumnToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			this.insertColumnToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.insertColumnToolStripMenuItem.Text = "Insert Column";
 			this.insertColumnToolStripMenuItem.Click += new System.EventHandler(this.insertColumnToolStripMenuItem_Click);
 			// 
 			// removeColumnToolStripMenuItem
 			// 
 			this.removeColumnToolStripMenuItem.Name = "removeColumnToolStripMenuItem";
-			this.removeColumnToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			this.removeColumnToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.removeColumnToolStripMenuItem.Text = "Remove Column";
 			this.removeColumnToolStripMenuItem.Click += new System.EventHandler(this.removeColumnToolStripMenuItem_Click);
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.Location = new System.Drawing.Point(346, 2);
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new System.Drawing.Point(337, 252);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 1;
@@ -126,28 +107,30 @@ namespace QAliber.Builder.Presentation
 			// 
 			// btnOk
 			// 
-			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOk.Location = new System.Drawing.Point(257, 2);
+			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOk.Location = new System.Drawing.Point(255, 252);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(75, 23);
 			this.btnOk.TabIndex = 0;
-			this.btnOk.Text = "Ok";
+			this.btnOk.Text = "OK";
 			this.btnOk.UseVisualStyleBackColor = true;
 			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
 			// EditTableForm
 			// 
+			this.AcceptButton = this.btnOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(424, 287);
-			this.Controls.Add(this.splitContainer);
+			this.Controls.Add(this.tableDataGridView);
+			this.Controls.Add(this.btnOk);
+			this.Controls.Add(this.btnCancel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "EditTableForm";
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Edit Table";
-			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel2.ResumeLayout(false);
-			this.splitContainer.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.tableDataGridView)).EndInit();
 			this.gridContextMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -156,7 +139,6 @@ namespace QAliber.Builder.Presentation
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.DataGridView tableDataGridView;
