@@ -196,14 +196,12 @@ namespace QAliber.Builder.Presentation
 			}
 			else if (e.ColumnIndex == 2 && e.RowIndex >= 0)
 			{
+				var variable = (ScenarioVariable<string[]>) tablesDataGridView.Rows[e.RowIndex].DataBoundItem;
 
-				string val = tablesDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
-				System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(val, "[0-9]+");
-				if (match.Success)
-				{
+				if( variable != null && variable.TestStep != null ) {
 					if (sc != null && sc.TestScenario != null)
 					{
-						sc.SelectNodeByID(int.Parse(match.Value));
+						sc.SelectNodeByID( variable.TestStep.ID );
 					}
 				}
 			}
@@ -240,13 +238,12 @@ namespace QAliber.Builder.Presentation
 		{
 			if (e.ColumnIndex == 2 && e.RowIndex >= 0)
 			{
-				string val = varsDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
-				System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(val, "[0-9]+");
-				if (match.Success)
-				{
+				var variable = (ScenarioVariable<string[]>) varsDataGridView.Rows[e.RowIndex].DataBoundItem;
+
+				if( variable != null && variable.TestStep != null ) {
 					if (sc != null && sc.TestScenario != null)
 					{
-						sc.SelectNodeByID(int.Parse(match.Value));
+						sc.SelectNodeByID( variable.TestStep.ID );
 					}
 				}
 			}
