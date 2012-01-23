@@ -91,10 +91,6 @@ namespace QAliber.Repository.CommonTestCases.Timers
 			{
 				return "Stopping measuring time for '" + key + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	}

@@ -96,10 +96,6 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			{
 				return string.Format("Picking item from '{0}'", listName);
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	}
 

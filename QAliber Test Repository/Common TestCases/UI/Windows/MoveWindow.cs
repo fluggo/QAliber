@@ -81,10 +81,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			{
 				return "Moving window '" + control + "' to point " + point;
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

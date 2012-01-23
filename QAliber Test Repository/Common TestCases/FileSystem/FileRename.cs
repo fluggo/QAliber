@@ -74,10 +74,6 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			{
 				return "Renaming file '" + sourceFile + "' to '" + destFile + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

@@ -135,10 +135,6 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			{
 				return "Launching process '" + filename + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

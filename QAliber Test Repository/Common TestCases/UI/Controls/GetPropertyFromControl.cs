@@ -101,10 +101,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			{
 				return "Getting properties for control " + control;
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

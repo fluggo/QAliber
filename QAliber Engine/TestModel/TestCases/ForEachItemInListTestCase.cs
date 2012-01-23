@@ -89,10 +89,6 @@ namespace QAliber.TestModel
 			{
 				return "For Each Item In '" + listName + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		protected ScenarioVariable<string[]> list;

@@ -81,10 +81,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			{
 				return opType + " is performed on window '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

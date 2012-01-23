@@ -115,10 +115,6 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			{
 				return "Comparing '" + sourceFile + "' to '" + destFile + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

@@ -110,10 +110,6 @@ namespace QAliber.Repository.CommonTestCases.DB
 			{
 				return "Executing sql query '" + sqlQuery + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 

@@ -86,10 +86,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			{
 				return "Moving mouse to path '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

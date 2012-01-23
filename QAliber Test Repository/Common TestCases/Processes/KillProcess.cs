@@ -95,10 +95,6 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			{
 				return "Killing process '" + filename + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

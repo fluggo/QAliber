@@ -85,10 +85,6 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			{
 				return "Copying '" + sourceFile + "' to '" + destFile + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

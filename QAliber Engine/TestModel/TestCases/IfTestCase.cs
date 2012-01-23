@@ -77,10 +77,6 @@ namespace QAliber.TestModel
 			{
 				return "If '" + cSharpExpression + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		internal static bool ifConditionValue;

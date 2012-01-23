@@ -98,10 +98,6 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			{
 				return "Expecting registry value at '" + regkey + "' to be '" + regVal + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 

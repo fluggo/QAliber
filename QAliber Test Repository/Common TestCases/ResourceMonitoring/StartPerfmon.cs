@@ -83,10 +83,6 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 			{
 				return "Starting performance monitor for '" + perfname + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

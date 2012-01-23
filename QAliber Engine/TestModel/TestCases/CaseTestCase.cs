@@ -60,10 +60,6 @@ namespace QAliber.TestModel
 			{
 				return "Evaluating switch on '" + expectedCase + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	}
 	

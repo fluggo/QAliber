@@ -81,10 +81,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			{
 				return "Resizing window '" + control + "' to size " + size;
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

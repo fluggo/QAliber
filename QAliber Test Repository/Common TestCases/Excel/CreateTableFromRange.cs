@@ -102,11 +102,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		{
 			get
 			{
-				return "Retrieveing columns from '" + sourceFile + "'";
-			}
-			set
-			{
-				base.Description = value;
+				return "Retrieving columns from '" + sourceFile + "'";
 			}
 		}
 	

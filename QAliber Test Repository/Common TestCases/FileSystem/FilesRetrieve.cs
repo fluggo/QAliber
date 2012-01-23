@@ -97,10 +97,6 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			{
 				return "Retrieving files '" + pattern + "' from " + sourceDir;
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

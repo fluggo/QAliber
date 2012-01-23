@@ -104,10 +104,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			{
 				return "Waiting for image from file '" + file + "' for " + timeout + " miliseconds";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

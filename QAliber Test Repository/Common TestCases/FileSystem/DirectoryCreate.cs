@@ -63,11 +63,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		{
 			get
 			{
-				return "Deleting Direcotry '" + dirName + "'";
-			}
-			set
-			{
-				base.Description = value;
+				return "Deleting Directory '" + dirName + "'";
 			}
 		}
 	

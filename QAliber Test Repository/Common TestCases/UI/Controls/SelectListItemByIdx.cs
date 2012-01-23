@@ -116,10 +116,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			{
 				return "Selecting " + index + " index from control '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

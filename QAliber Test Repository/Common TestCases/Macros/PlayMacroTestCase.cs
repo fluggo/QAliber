@@ -68,10 +68,6 @@ namespace QAliber.Repository.CommonTestCases.Macros
 			{
 				return "Playing macro '" + filename + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

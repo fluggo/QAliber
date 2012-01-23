@@ -76,10 +76,6 @@ namespace QAliber.TestModel
 			{
 				return "Looping " + numOfLoops + " Times";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

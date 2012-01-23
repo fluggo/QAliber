@@ -56,10 +56,6 @@ namespace QAliber.TestModel
 			{
 				return "Performs else on last if's result";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	}
 	

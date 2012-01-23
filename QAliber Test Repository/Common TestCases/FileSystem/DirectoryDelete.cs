@@ -62,11 +62,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		{
 			get
 			{
-				return "Creating Direcotry '" + dirName + "'";
-			}
-			set
-			{
-				base.Description = value;
+				return "Creating Directory '" + dirName + "'";
 			}
 		}
 	

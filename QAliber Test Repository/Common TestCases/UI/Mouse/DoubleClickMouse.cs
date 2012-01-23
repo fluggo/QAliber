@@ -100,10 +100,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			{
 				return "Double clicking " +  button + " button mouse on path '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		

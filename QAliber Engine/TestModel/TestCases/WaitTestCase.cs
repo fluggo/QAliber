@@ -63,10 +63,6 @@ namespace QAliber.TestModel
 			{
 				return "Waiting For " + delay + " Milliseconds";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	}

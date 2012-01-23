@@ -97,10 +97,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			{
 				return string.Format("Looking for image to {0} on from file '{1}'", actionType, file);
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		protected ControlActionType actionType;

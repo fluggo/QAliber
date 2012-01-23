@@ -99,10 +99,6 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			{
 				return "Waiting for process '" + filename + "' to load within " + timeout + " miliseconds";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

@@ -95,10 +95,6 @@ namespace QAliber.TestModel
 			{
 				return "For Each Item In '" + tableName + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		protected ScenarioVariable<DataTable> table;

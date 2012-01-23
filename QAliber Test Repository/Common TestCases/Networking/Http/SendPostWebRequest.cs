@@ -143,10 +143,6 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 			{
 				return "Sending web request to '" + url + "' with data from '" + inFile + "' and storing it to '" + outFile + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

@@ -98,10 +98,6 @@ namespace QAliber.TestModel
 			{
 				return string.Format("Setting variable '{0}' to '{1}'", varName, cSharpExpression);
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

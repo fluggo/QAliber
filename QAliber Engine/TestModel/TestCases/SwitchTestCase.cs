@@ -53,10 +53,6 @@ namespace QAliber.TestModel
 			{
 				return "Switch on '" + cSharpExpression + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		internal static string switchConditionValue;

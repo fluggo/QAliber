@@ -100,10 +100,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 			{
 				return "Showing a balloon tip saying : '" + text + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		public override void Body()

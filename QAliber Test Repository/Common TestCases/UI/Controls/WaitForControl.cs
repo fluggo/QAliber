@@ -109,10 +109,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			{
 				return "Waiting for control " + control;
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

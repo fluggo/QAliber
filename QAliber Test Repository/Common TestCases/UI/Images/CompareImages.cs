@@ -136,10 +136,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			{
 				return "Comparing images for pathes '" + file1 + "' and '" + file2 + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

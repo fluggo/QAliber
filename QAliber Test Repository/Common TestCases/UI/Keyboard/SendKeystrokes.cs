@@ -106,10 +106,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			{
 				return "Sending the keys '" + keystrokes + "' to path '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 		

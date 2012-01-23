@@ -343,10 +343,10 @@ namespace QAliber.TestModel
 		/// </summary>
 		[Category("Test Case Details")]
 		[Description("The description of the test case")]
+		[XmlIgnore, ReadOnly(true)]
 		public virtual string Description
 		{
 			get { return description; }
-			set { description = value; }
 		}
 
 		protected string originalPath;

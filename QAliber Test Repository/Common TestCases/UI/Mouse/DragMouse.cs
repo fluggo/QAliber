@@ -112,10 +112,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			{
 				return "Dragging " + button + " button mouse on path '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	   

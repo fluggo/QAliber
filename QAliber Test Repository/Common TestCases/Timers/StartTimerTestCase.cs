@@ -62,10 +62,6 @@ namespace QAliber.Repository.CommonTestCases.Timers
 			{
 				return "Starting measuring time for '" + key + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	}

@@ -120,10 +120,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			{
 				return "Retrieve items from list control " + control;
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

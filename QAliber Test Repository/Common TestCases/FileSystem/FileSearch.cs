@@ -144,10 +144,6 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			{
 				return "Looking in file '" + sourceFile + "' for the pattern '" + pattern + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

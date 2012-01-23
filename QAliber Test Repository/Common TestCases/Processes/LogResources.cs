@@ -129,10 +129,6 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			{
 				return "Logging usage for process '" + filename + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

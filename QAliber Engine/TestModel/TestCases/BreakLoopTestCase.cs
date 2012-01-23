@@ -67,10 +67,6 @@ namespace QAliber.TestModel
 			{
 				return "Breaking " + numOfLoopsToBreak + " Levels Up The Tree";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

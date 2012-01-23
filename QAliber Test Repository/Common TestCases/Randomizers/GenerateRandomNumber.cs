@@ -112,10 +112,6 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			{
 				return string.Format("Generating number between {0} to {1} in {2} step", minVal, maxVal, step);
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

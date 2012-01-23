@@ -100,10 +100,6 @@ namespace QAliber.TestModel
 			{
 				return "While '" + cSharpExpression + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

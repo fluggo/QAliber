@@ -114,10 +114,6 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			{
 				return "Deleting registry key at '" + regkey + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 

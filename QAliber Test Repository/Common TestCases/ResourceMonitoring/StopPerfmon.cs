@@ -77,10 +77,6 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 			{
 				return "Stopping performance monitor for '" + perfname + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

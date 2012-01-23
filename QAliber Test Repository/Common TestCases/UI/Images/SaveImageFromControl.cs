@@ -76,10 +76,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			{
 				return "Saving image for path '" + control + "' to file '" + file + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

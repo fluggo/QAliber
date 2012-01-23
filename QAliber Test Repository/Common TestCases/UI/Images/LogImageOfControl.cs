@@ -76,10 +76,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			{
 				return "Logging image for path '" + control + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 
 	}

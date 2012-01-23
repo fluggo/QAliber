@@ -86,10 +86,6 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			{
 				return "Adding registry value '" + regVal + "' to path '" + regkey + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	

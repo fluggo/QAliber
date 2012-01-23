@@ -62,10 +62,6 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			{
 				return "Deleting file '" + sourceFile + "'";
 			}
-			set
-			{
-				base.Description = value;
-			}
 		}
 	
 	
