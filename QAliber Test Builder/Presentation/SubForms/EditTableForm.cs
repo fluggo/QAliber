@@ -56,13 +56,14 @@ namespace QAliber.Builder.Presentation
 		
 		private void btnOk_Click(object sender, EventArgs e)
 		{
+			table.AcceptChanges();
 			DialogResult = DialogResult.OK;
-			Close();
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
-			Close();
+			table.RejectChanges();
+			DialogResult = DialogResult.Cancel;
 		}
 
 		private void insertColumnToolStripMenuItem_Click(object sender, EventArgs e)
