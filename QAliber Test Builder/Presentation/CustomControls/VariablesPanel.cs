@@ -37,47 +37,11 @@ namespace QAliber.Builder.Presentation
 			InitColumns();
 		}
 
-		
-
 		private void InitColumns()
 		{
 			varsDataGridView.AutoGenerateColumns = false;
 			listsDataGridView.AutoGenerateColumns = false;
 			tablesDataGridView.AutoGenerateColumns = false;
-			
-			DataGridViewTextBoxColumn nameColumn = new DataGridViewTextBoxColumn();
-			nameColumn.DataPropertyName = "Name";
-			nameColumn.HeaderText = "Variable Name";
-
-			DataGridViewTextBoxColumn valColumn = new DataGridViewTextBoxColumn();
-			valColumn.DataPropertyName = "Value";
-			valColumn.HeaderText = "Value";
-
-			DataGridViewLinkColumn listValColumn = new DataGridViewLinkColumn();
-			listValColumn.DataPropertyName = "Value";
-			listValColumn.HeaderText = "List Values";
-			
-			DataGridViewLinkColumn tableValColumn = new DataGridViewLinkColumn();
-			tableValColumn.DataPropertyName = "Value";
-			tableValColumn.HeaderText = "Table Data";
-			tableValColumn.DefaultCellStyle.NullValue = "Create New Table";
-
-			DataGridViewLinkColumn definedByColumn = new DataGridViewLinkColumn();
-			definedByColumn.DataPropertyName = "TestStep";
-			definedByColumn.HeaderText = "Defined By";
-
-			varsDataGridView.Columns.Add(nameColumn);
-			varsDataGridView.Columns.Add(valColumn);
-			varsDataGridView.Columns.Add(definedByColumn);
-
-			listsDataGridView.Columns.Add((DataGridViewTextBoxColumn)nameColumn.Clone());
-			listsDataGridView.Columns.Add(listValColumn);
-			listsDataGridView.Columns.Add((DataGridViewLinkColumn)definedByColumn.Clone());
-
-			tablesDataGridView.Columns.Add((DataGridViewTextBoxColumn)nameColumn.Clone());
-			tablesDataGridView.Columns.Add(tableValColumn);
-			tablesDataGridView.Columns.Add((DataGridViewLinkColumn)definedByColumn.Clone());
-
 		}
 
 		private void tabbedDocumentControl_SelectedControlChanged(object sender, EventArgs e)
@@ -95,7 +59,8 @@ namespace QAliber.Builder.Presentation
 		}
 
 		private void HandleVariablesFormatting( object sender, DataGridViewCellFormattingEventArgs e ) {
-			if( e.RowIndex < 0 || e.ColumnIndex == 0 || e.ColumnIndex == 1 )
+			if( e.RowIndex < 0 || e.ColumnIndex == _variablesNameColumn.Index ||
+					e.ColumnIndex == _variablesValueColumn.Index )
 				return;
 
 			var variable = (ScenarioVariable<string>) varsDataGridView.Rows[e.RowIndex].DataBoundItem;
@@ -103,7 +68,7 @@ namespace QAliber.Builder.Presentation
 			if( variable == null )
 				return;
 
-			if( e.ColumnIndex == 2 ) {
+			if( e.ColumnIndex == _variablesTestStepColumn.Index ) {
 				if( variable.TestStep == null )
 					e.Value = string.Empty;
 				else
@@ -113,28 +78,14 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
+		private void HandleVariablesDefaultValues( object sender, DataGridViewRowEventArgs e ) {
+			e.Row.Cells[_variablesNameColumn.Index].Value = defaultVar;
+			e.Row.Cells[_variablesValueColumn.Index].Value = string.Empty;
+		}
+
 		private void listsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex == 1 && e.RowIndex >= 0)
-			{
-				ICollection list = listsDataGridView[e.ColumnIndex, e.RowIndex].Value as ICollection;
-				ListItemsForm form = new ListItemsForm(list);
-				if (DialogResult.OK == form.ShowDialog())
-				{
-					listsDataGridView[e.ColumnIndex, e.RowIndex].Value = form.Strings;
-					if (listsDataGridView[0, e.RowIndex].Value.ToString() == defaultVar)
-					{
-						listsDataGridView.CurrentCell = listsDataGridView[0, e.RowIndex];
-						listsDataGridView.BeginEdit(false);
-						SendKeys.SendWait(index.ToString());
-						listsDataGridView.EndEdit();
-						listsDataGridView.BeginEdit(true);
-						index++;
-					}
-					
-				}
-			}
-			else if (e.ColumnIndex == 2 && e.RowIndex >= 0)
+			if (e.ColumnIndex == _listsTestStepColumn.Index && e.RowIndex >= 0)
 			{
 				var variable = (ScenarioVariable<string[]>) listsDataGridView.Rows[e.RowIndex].DataBoundItem;
 
@@ -148,7 +99,7 @@ namespace QAliber.Builder.Presentation
 		}
 
 		private void HandleListsFormatting( object sender, DataGridViewCellFormattingEventArgs e ) {
-			if( e.RowIndex < 0 || e.ColumnIndex == 0 )
+			if( e.RowIndex < 0 || e.ColumnIndex == _listsNameColumn.Index )
 				return;
 
 			var variable = (ScenarioVariable<string[]>) listsDataGridView.Rows[e.RowIndex].DataBoundItem;
@@ -156,11 +107,11 @@ namespace QAliber.Builder.Presentation
 			if( variable == null )
 				return;
 
-			if( e.ColumnIndex == 1 ) {
+			if( e.ColumnIndex == _listsValueColumn.Index ) {
 				e.Value = "[" + string.Join( ", ", variable.Value ) + "]";
 				e.FormattingApplied = true;
 			}
-			else if( e.ColumnIndex == 2 ) {
+			else if( e.ColumnIndex == _listsTestStepColumn.Index ) {
 				if( variable.TestStep == null )
 					e.Value = string.Empty;
 				else
@@ -170,9 +121,14 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
+		private void HandleListsDefaultValues( object sender, DataGridViewRowEventArgs e ) {
+			e.Row.Cells[_listsNameColumn.Index].Value = defaultVar;
+			e.Row.Cells[_listsValueColumn.Index].Value = new string[0];
+		}
+
 		private void tablesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex == 1 && e.RowIndex >= 0)
+			if (e.ColumnIndex == _listsValueColumn.Index && e.RowIndex >= 0)
 			{
 				DataTable table = tablesDataGridView[e.ColumnIndex, e.RowIndex].Value as DataTable;
 
@@ -183,18 +139,9 @@ namespace QAliber.Builder.Presentation
 				if (DialogResult.OK == form.ShowDialog())
 				{
 					tablesDataGridView[e.ColumnIndex, e.RowIndex].Value = form.Table;
-					if (tablesDataGridView[0, e.RowIndex].Value.ToString() == defaultVar)
-					{
-						tablesDataGridView.CurrentCell = tablesDataGridView[0, e.RowIndex];
-						tablesDataGridView.BeginEdit(false);
-						SendKeys.SendWait(index.ToString());
-						tablesDataGridView.EndEdit();
-						tablesDataGridView.BeginEdit(true);
-						index++;
-					}
 				}
 			}
-			else if (e.ColumnIndex == 2 && e.RowIndex >= 0)
+			else if (e.ColumnIndex == _listsTestStepColumn.Index && e.RowIndex >= 0)
 			{
 				var variable = (ScenarioVariable<string[]>) tablesDataGridView.Rows[e.RowIndex].DataBoundItem;
 
@@ -208,7 +155,7 @@ namespace QAliber.Builder.Presentation
 		}
 
 		private void HandleTablesFormatting( object sender, DataGridViewCellFormattingEventArgs e ) {
-			if( e.RowIndex < 0 || e.ColumnIndex == 0 )
+			if( e.RowIndex < 0 || e.ColumnIndex == _tablesNameColumn.Index )
 				return;
 
 			var variable = (ScenarioVariable<DataTable>) tablesDataGridView.Rows[e.RowIndex].DataBoundItem;
@@ -216,7 +163,7 @@ namespace QAliber.Builder.Presentation
 			if( variable == null )
 				return;
 
-			if( e.ColumnIndex == 1 ) {
+			if( e.ColumnIndex == _tablesValueColumn.Index ) {
 				e.Value = "[(" +
 					string.Join( ",", variable.Value.Columns.Cast<DataColumn>().Select( col => col.Caption ) ) + ")" +
 					string.Concat( variable.Value.Rows.Cast<DataRow>().Select( row =>
@@ -224,7 +171,7 @@ namespace QAliber.Builder.Presentation
 							col => row.Field<string>( col ) ) ) + ")" ) ) + "]";
 				e.FormattingApplied = true;
 			}
-			else if( e.ColumnIndex == 2 ) {
+			else if( e.ColumnIndex == _tablesTestStepColumn.Index ) {
 				if( variable.TestStep == null )
 					e.Value = string.Empty;
 				else
@@ -234,9 +181,14 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
+		private void HandleTablesDefaultValues( object sender, DataGridViewRowEventArgs e ) {
+			e.Row.Cells[_tablesNameColumn.Index].Value = defaultVar;
+			e.Row.Cells[_tablesValueColumn.Index].Value = new DataTable( "Data Table" );
+		}
+
 		private void varsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex == 2 && e.RowIndex >= 0)
+			if (e.ColumnIndex == _variablesTestStepColumn.Index && e.RowIndex >= 0)
 			{
 				var variable = (ScenarioVariable<string[]>) varsDataGridView.Rows[e.RowIndex].DataBoundItem;
 
@@ -249,30 +201,8 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		private void varsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.ColumnIndex == 1 && varsDataGridView[1, e.RowIndex].Value != null)
-			{
-				if (varsDataGridView[0, e.RowIndex].Value == null)
-				{
-					varsDataGridView[0, e.RowIndex].Value = defaultVar + index.ToString();
-					index++;
-
-				}
-			}
-		}
-
-		
 		private ScenarioControl sc;
 		private TabbedScenarioControl tabbedScenarioControl;
-		private string defaultVar = "ChangeThisName";
-		private int index = 1;
-
-	   
-
-		
-
-	   
-		
+		private const string defaultVar = "ChangeThisName";
 	}
 }
