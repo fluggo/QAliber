@@ -33,9 +33,8 @@ namespace QAliber.TestModel
 		/// Try to recover from a general/specific error
 		/// <preconditions>A previous 'Try' test case was performed</preconditions>
 		/// </summary>
-		public RecoverTestCase()
+		public RecoverTestCase() : base( "Recover" )
 		{
-			name = "Recover";
 			icon = Properties.Resources.Recover;
 		}
 

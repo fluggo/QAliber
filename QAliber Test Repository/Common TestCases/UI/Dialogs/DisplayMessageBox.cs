@@ -37,9 +37,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Dialogs")]
 	public class DisplayMessageBox : TestCase
 	{
-		public DisplayMessageBox()
+		public DisplayMessageBox() : base( "Display Message Box" )
 		{
-			name = "Display Message Box";
 			icon = Properties.Resources.Dialog;
 		}
 

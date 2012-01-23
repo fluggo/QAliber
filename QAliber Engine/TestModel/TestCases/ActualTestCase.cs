@@ -32,22 +32,14 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control")]
 	public class ActualTestCase : FolderTestCase
 	{
-		public ActualTestCase()
+		public ActualTestCase() : base( "Test Case" )
 		{
-			name = "Test Case";
 			expectedResult = TestCaseResult.Passed;
 			icon = Properties.Resources.ApproveReject;
-			exitBranchOnError = false;
 		}
 
-		[DefaultValue(false)]
-		public override bool ExitBranchOnError {
-			get {
-				return base.ExitBranchOnError;
-			}
-			set {
-				base.ExitBranchOnError = value;
-			}
+		protected override bool ExitBranchOnErrorDefaultValue {
+			get { return false; }
 		}
 	}
 	

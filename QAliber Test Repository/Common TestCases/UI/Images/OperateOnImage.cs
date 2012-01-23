@@ -32,7 +32,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public abstract class OperateOnImage : TestCase
 	{
-		protected OperateOnImage()
+		protected OperateOnImage( string name ) : base( name )
 		{
 		}
 

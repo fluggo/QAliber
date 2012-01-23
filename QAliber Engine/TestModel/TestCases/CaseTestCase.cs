@@ -17,11 +17,9 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Conditions")]
 	public class CaseTestCase : FolderTestCase
 	{
-		public CaseTestCase()
+		public CaseTestCase() : base( "Case" )
 		{
-			name = "Case";
 			icon = Properties.Resources.Case;
-
 		}
 
 		public override void Body()

@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class FileCopy : global::QAliber.TestModel.TestCase
 	{
-		public FileCopy()
+		public FileCopy() : base( "Copy File" )
 		{
-			name = "Copy File";
 			icon = Properties.Resources.FileCopy;
 		}
 

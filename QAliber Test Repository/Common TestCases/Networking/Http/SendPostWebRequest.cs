@@ -29,9 +29,8 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Networking\Http")]
 	public class SendPostWebRequest : global::QAliber.TestModel.TestCase
 	{
-		public SendPostWebRequest()
+		public SendPostWebRequest() : base( "Send Post Web Request" )
 		{
-			name = "Send Post Web Request";
 			icon = Properties.Resources.Http;
 		}
 

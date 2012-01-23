@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// <summary>
 		/// Activate, minimize, maximize, restore or close the window 
 		/// </summary>
-		public ChangeWindowState()
+		public ChangeWindowState() : base( "Change Window State" )
 		{
-			name = "Change Window State";
 			icon = QAliber.Repository.CommonTestCases.Properties.Resources.Window;
 		}
 

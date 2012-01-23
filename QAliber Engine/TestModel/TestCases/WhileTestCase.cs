@@ -31,9 +31,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Loops")]
 	public class WhileTestCase : FolderTestCase
 	{
-		public WhileTestCase()
+		public WhileTestCase() : base( "While" )
 		{
-			name = "While";
 			icon = Properties.Resources.Loop;
 		}
 

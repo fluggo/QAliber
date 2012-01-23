@@ -32,11 +32,9 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control")]
 	public class BreakLoopTestCase : TestCase
 	{
-		public BreakLoopTestCase()
+		public BreakLoopTestCase() : base( "Cut Branches" )
 		{
-			name = "Cut Branches";
 			icon = Properties.Resources.BreakFolder;
-			
 		}
 
 		protected uint numOfLoopsToBreak = 1;

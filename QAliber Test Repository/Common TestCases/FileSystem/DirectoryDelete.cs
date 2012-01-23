@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class DirectoryCreate : global::QAliber.TestModel.TestCase
 	{
-		public DirectoryCreate()
+		public DirectoryCreate() : base( "Create Directory" )
 		{
-			name = "Create Directory";
 			icon = Properties.Resources.FileCopy;
 		}
 

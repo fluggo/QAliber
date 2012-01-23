@@ -33,9 +33,8 @@ namespace QAliber.Repository.CommonTestCases.Macros
 	[VisualPath(@"Macros")]
 	public class PlayMacroTestCase : TestCase
 	{
-		public PlayMacroTestCase()
+		public PlayMacroTestCase() : base( "Play Macro" )
 		{
-			name = "Play Macro";
 			icon = Properties.Resources.Macro;
 		}
 

@@ -32,12 +32,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	public class WriteOnImage : OperateOnImage
 	{
 		public WriteOnImage()
-			: base()
+			: base( "Send Keys To Image" )
 		{
-			name = "Send Keys To Image";
 			icon = Properties.Resources.Keyboard;
 			actionType = QAliber.Engine.ControlActionType.Write;
-
 		}
 
 		[Category("Keyboard")]

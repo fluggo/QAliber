@@ -30,9 +30,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public class LogImageOfControl : TestCase
 	{
-		public LogImageOfControl()
+		public LogImageOfControl() : base( "Log Image of Control" )
 		{
-			name = "Log Image Of Control";
 			icon = Properties.Resources.Bitmap;
 		}
 

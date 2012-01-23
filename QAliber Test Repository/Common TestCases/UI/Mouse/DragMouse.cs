@@ -30,9 +30,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
 	public class DragMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
-		public DragMouse()
+		public DragMouse() : base( "Drag Mouse" )
 		{
-			name = "Drag Mouse";
 			icon = Properties.Resources.Mouse;
 		}
 

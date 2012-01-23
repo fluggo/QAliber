@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class FilesRetrieve : global::QAliber.TestModel.TestCase
 	{
-		public FilesRetrieve()
+		public FilesRetrieve() : base( "Retrieve Files" )
 		{
-			name = "Retrieve Files";
 			icon = Properties.Resources.FileRetrieve;
 		}
 

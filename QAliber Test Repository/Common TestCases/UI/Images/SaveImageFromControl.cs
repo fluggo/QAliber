@@ -29,9 +29,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public class SaveImageFromControl : TestCase
 	{
-		public SaveImageFromControl()
+		public SaveImageFromControl() : base( "Save Image from Control" )
 		{
-			name = "Save Image From Control";
 			icon = Properties.Resources.Bitmap;
 		}
 

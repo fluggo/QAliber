@@ -32,11 +32,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class ReadTextFromControl : TestCase
 	{
-		public ReadTextFromControl()
+		public ReadTextFromControl() : base( "Read Text from Control" )
 		{
-			name = "Read Text From Control";
 			icon = Properties.Resources.Window;
-		   
 		}
 
 		private string control = "";

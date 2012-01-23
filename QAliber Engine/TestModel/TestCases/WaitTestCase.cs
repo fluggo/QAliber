@@ -32,9 +32,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"System\Timings")]
 	public class WaitTestCase : TestCase
 	{
-		public WaitTestCase()
+		public WaitTestCase() : base( "Wait" )
 		{
-			name = "Wait";
 			icon = Properties.Resources.Clock;
 		}
 

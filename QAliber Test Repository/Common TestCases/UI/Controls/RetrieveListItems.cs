@@ -34,9 +34,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class RetrieveListItems : TestCase
 	{
-		public RetrieveListItems()
+		public RetrieveListItems() : base( "Retrieve List Items" )
 		{
-			name = "Retrieve List Items";
 			icon = Properties.Resources.Combobox;
 		}
 

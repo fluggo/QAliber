@@ -40,9 +40,8 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Registry")]
 	public class VerifyRegistryValue : global::QAliber.TestModel.TestCase
 	{
-		public VerifyRegistryValue()
+		public VerifyRegistryValue() : base( "Verify Registry Value" )
 		{
-			name = "Verify Registry Value";
 			icon = Properties.Resources.Registry;
 		}
 

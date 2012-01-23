@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class DirectoryDelete : global::QAliber.TestModel.TestCase
 	{
-		public DirectoryDelete()
+		public DirectoryDelete() : base( "Delete Directory" )
 		{
-			name = "Delete Directory";
 			icon = Properties.Resources.FileDelete;
 		}
 

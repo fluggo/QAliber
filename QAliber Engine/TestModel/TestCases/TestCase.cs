@@ -39,7 +39,16 @@ namespace QAliber.TestModel
 	[Serializable]
 	public abstract class TestCase : ICloneable
 	{
-		
+		private string _defaultName;
+
+		protected TestCase( string name ) {
+			ExitBranchOnError = ExitBranchOnErrorDefaultValue;
+			AlwaysRun = AlwaysRunDefaultValue;
+
+			_defaultName = name;
+			Name = _defaultName;
+		}
+
 		#region Virtuals
 		/// <summary>
 		/// The entry point for all the initializations prior to running the test case
@@ -206,6 +215,7 @@ namespace QAliber.TestModel
 		/// Tells the QAliber Runner whether to run this tes case
 		/// </summary>
 		[Browsable(false)]
+		[DefaultValue(true)]
 		public bool MarkedForExecution
 		{
 			get { return markedForExecution; }
@@ -220,13 +230,36 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Stop Parent on Fail")]
 		[Description("Should the current tree branch terminate if the current test case fails ?")]
-		[DefaultValue(true)]
-		public virtual bool ExitBranchOnError
+		public bool ExitBranchOnError
 		{
 			get { return exitBranchOnError; }
 			set { exitBranchOnError = value; }
 		}
-	   
+
+		/// <summary>
+		/// Gets the default value of <see cref="ExitBranchOnError"/>.
+		/// </summary>
+		/// <value>The base class returns true. Override if you want to provide a different default.</value>
+		[Browsable(false), XmlIgnore]
+		protected virtual bool ExitBranchOnErrorDefaultValue {
+			get { return true; }
+		}
+
+		/// <summary>
+		/// Determines whether <see cref="ExitBranchOnError"/> has its default value.
+		/// </summary>
+		/// <returns>False if it has its default value, true otherwise.</returns>
+		public bool ShouldSerializeExitBranchOnError() {
+			return ExitBranchOnError != ExitBranchOnErrorDefaultValue;
+		}
+
+		/// <summary>
+		/// Resets <see cref="ExitBranchOnError"/> to its default value.
+		/// </summary>
+		public void ResetExitBranchOnError() {
+			ExitBranchOnError = ExitBranchOnErrorDefaultValue;
+		}
+
 		protected bool exitOnError;
 
 		/// <summary>
@@ -247,10 +280,33 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Always Run")]
 		[Description("Run this step even if the folder has already failed.")]
-		[DefaultValue(false)]
-		public virtual bool AlwaysRun {
+		public bool AlwaysRun {
 			get { return alwaysRun; }
 			set { alwaysRun = value; }
+		}
+
+		/// <summary>
+		/// Gets the default value of <see cref="AlwaysRun"/>.
+		/// </summary>
+		/// <value>The base class returns false. Override if you want to provide a different default.</value>
+		[Browsable(false), XmlIgnore]
+		protected virtual bool AlwaysRunDefaultValue {
+			get { return false; }
+		}
+
+		/// <summary>
+		/// Determines whether <see cref="AlwaysRun"/> has its default value.
+		/// </summary>
+		/// <returns>False if it has its default value, true otherwise.</returns>
+		public bool ShouldSerializeAlwaysRun() {
+			return AlwaysRun != AlwaysRunDefaultValue;
+		}
+
+		/// <summary>
+		/// Resets <see cref="AlwaysRun"/> to its default value.
+		/// </summary>
+		public void ResetAlwaysRun() {
+			AlwaysRun = AlwaysRunDefaultValue;
 		}
 
 		protected int numOfRetries;
@@ -337,7 +393,7 @@ namespace QAliber.TestModel
 		#endregion
 
 		#region Test Case Descriptors
-		protected string name;
+		private string name;
 
 		/// <summary>
 		/// The logical name of the test case
@@ -348,6 +404,21 @@ namespace QAliber.TestModel
 		{
 			get { return name; }
 			set { name = value; }
+		}
+
+		/// <summary>
+		/// Determines whether <see cref="Name"/> has its default value.
+		/// </summary>
+		/// <returns>False if it has its default value, true otherwise.</returns>
+		public bool ShouldSerializeName() {
+			return Name != _defaultName;
+		}
+
+		/// <summary>
+		/// Resets <see cref="Name"/> to its default value.
+		/// </summary>
+		public void ResetName() {
+			Name = _defaultName;
 		}
 
 		protected string description;

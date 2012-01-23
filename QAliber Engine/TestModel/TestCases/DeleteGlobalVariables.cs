@@ -40,9 +40,7 @@ namespace QAliber.TestModel
 	[VisualPath(@"Variables")]
 	public class DeleteGlobalVariables : TestCase
 	{
-		public DeleteGlobalVariables()
-		{
-			name = "Delete Variable";
+		public DeleteGlobalVariables() : base( "Delete Variable" ) {
 		}
 
 		public override void Body()

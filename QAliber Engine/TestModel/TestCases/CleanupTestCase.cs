@@ -32,22 +32,14 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control")]
 	public class CleanupTestCase : FolderTestCase
 	{
-		public CleanupTestCase()
+		public CleanupTestCase() : base( "Cleanup" )
 		{
-			name = "Cleanup";
 			expectedResult = TestCaseResult.Passed;
 			icon = Properties.Resources.Edit_UndoHS;
-			AlwaysRun = true;
 		}
 
-		[DefaultValue(true)]
-		public override bool AlwaysRun {
-			get {
-				return base.AlwaysRun;
-			}
-			set {
-				base.AlwaysRun = value;
-			}
+		protected override bool AlwaysRunDefaultValue {
+			get { return true; }
 		}
 	}
 

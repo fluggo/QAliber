@@ -31,9 +31,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public class DoubleClickOnImage : ClickOnImage
 	{
-		public DoubleClickOnImage() : base()
+		public DoubleClickOnImage() : base( "Double Click On Image" )
 		{
-			name = "Double Click On Image";
 			actionType = QAliber.Engine.ControlActionType.DoubleClick;
 		}
 

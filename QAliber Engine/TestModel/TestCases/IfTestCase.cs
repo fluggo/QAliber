@@ -31,9 +31,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Conditions")]
 	public class IfTestCase : FolderTestCase
 	{
-		public IfTestCase()
+		public IfTestCase() : base( "If" )
 		{
-			name = "If";
 			icon = Properties.Resources.If;
 		}
 

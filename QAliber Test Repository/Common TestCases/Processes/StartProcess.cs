@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Processes")]
 	public class StartProcess : global::QAliber.TestModel.TestCase
 	{
-		public StartProcess()
+		public StartProcess() : base( "Start Process" )
 		{
-			name = "Start Process";
 			icon = Properties.Resources.StartProcess;
 		}
 

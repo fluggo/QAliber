@@ -30,9 +30,7 @@ namespace QAliber.Repository.CommonTestCases.Macros
 	[VisualPath(@"Flow Control")]
 	public class CallScenarioTestCase : TestCase
 	{
-		public CallScenarioTestCase()
-		{
-			name = "Run Another Scenario";
+		public CallScenarioTestCase() : base( "Run Another Scenario" ) {
 		}
 
 		private string sourceFile = "";

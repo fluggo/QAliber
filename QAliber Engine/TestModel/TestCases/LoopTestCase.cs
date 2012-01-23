@@ -32,9 +32,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Loops")]
 	public class LoopTestCase : FolderTestCase
 	{
-		public LoopTestCase()
+		public LoopTestCase() : base( "Loop" )
 		{
-			name = "Loop";
 			icon = Properties.Resources.Loop;
 		}
 
@@ -57,7 +56,7 @@ namespace QAliber.TestModel
 			for (int i = 0; i < numOfLoops; i++)
 			{
 				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
-				Log.Default.IndentIn(name + " - Loop #" + (int)(i + 1));
+				Log.Default.IndentIn(Name + " - Loop #" + (int)(i + 1));
 				base.Body();
 				Log.Default.IndentOut();
 				if (exitTotally)

@@ -39,9 +39,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class FileSearch : global::QAliber.TestModel.TestCase
 	{
-		public FileSearch()
+		public FileSearch() : base( "Search File" )
 		{
-			name = "Search File";
 			icon = Properties.Resources.FileSearch;
 		}
 

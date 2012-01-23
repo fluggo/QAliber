@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Processes")]
 	public class KillProcess : global::QAliber.TestModel.TestCase
 	{
-		public KillProcess()
+		public KillProcess() : base( "Kill Process" )
 		{
-			name = "Kill Process";
 			icon = Properties.Resources.ProcessRemove;
 		}
 

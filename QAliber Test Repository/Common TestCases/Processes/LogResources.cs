@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Processes")]
 	public class LogResources : global::QAliber.TestModel.TestCase
 	{
-		public LogResources()
+		public LogResources() : base( "Log Process Resources" )
 		{
-			name = "Log Process Resources";
 			icon = Properties.Resources.StartProcess;
 		}
 

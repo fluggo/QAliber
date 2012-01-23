@@ -16,9 +16,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Conditions")]
 	public class SwitchTestCase : FolderTestCase
 	{
-		public SwitchTestCase()
+		public SwitchTestCase() : base( "Switch" )
 		{
-			name = "Switch";
 			icon = Properties.Resources.Switch;
 		}
 

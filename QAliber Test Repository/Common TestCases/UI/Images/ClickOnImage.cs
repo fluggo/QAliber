@@ -31,9 +31,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public class ClickOnImage : OperateOnImage
 	{
-		public ClickOnImage()
-		{
-			name = "Click On Image";
+		public ClickOnImage() : this( "Click on Image" ) {
+		}
+
+		protected ClickOnImage( string name ) : base( name ) {
 			icon = Properties.Resources.Mouse;
 			actionType = QAliber.Engine.ControlActionType.Click;
 			button = MouseButtons.Left;

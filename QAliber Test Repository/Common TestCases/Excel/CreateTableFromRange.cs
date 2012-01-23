@@ -38,9 +38,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Excel")]
 	public class CreateTableFromRange : global::QAliber.TestModel.TestCase
 	{
-		public CreateTableFromRange()
+		public CreateTableFromRange() : base( "Create Table from Range" )
 		{
-			name = "Create Table From Range";
 			icon = Properties.Resources.Excel;
 		}
 

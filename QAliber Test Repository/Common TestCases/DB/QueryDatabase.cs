@@ -34,9 +34,8 @@ namespace QAliber.Repository.CommonTestCases.DB
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Database")]
 	public class QueryDatabase : global::QAliber.TestModel.TestCase
 	{
-		public QueryDatabase()
+		public QueryDatabase() : base( "Query Database" )
 		{
-			name = "Query Database";
 			icon = Properties.Resources.DatabaseQuery;
 		}
 

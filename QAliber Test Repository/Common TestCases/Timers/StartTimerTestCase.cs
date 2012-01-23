@@ -31,9 +31,8 @@ namespace QAliber.Repository.CommonTestCases.Timers
 	[VisualPath(@"System\Timings")]
 	public class StartTimerTestCase : QAliber.TestModel.TestCase
 	{
-		public StartTimerTestCase()
+		public StartTimerTestCase() : base( "Start Timer" )
 		{
-			name = "Start Timer";
 			icon = Properties.Resources.Timing;
 		}
 

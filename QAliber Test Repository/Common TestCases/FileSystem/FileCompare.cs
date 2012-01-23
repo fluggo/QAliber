@@ -39,9 +39,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class FileCompare : global::QAliber.TestModel.TestCase
 	{
-		public FileCompare()
+		public FileCompare() : base( "Compare Files" )
 		{
-			name = "Compare Files";
 			icon = Properties.Resources.FileCompare;
 		}
 

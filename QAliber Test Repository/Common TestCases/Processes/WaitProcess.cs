@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Processes")]
 	public class WaitProcess : global::QAliber.TestModel.TestCase
 	{
-		public WaitProcess()
+		public WaitProcess() : base( "Wait for Process" )
 		{
-			name = "Wait For Process";
 			icon = Properties.Resources.StartProcess;
 		}
 

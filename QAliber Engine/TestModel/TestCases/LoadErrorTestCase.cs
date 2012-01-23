@@ -10,13 +10,12 @@ namespace QAliber.TestModel.TestCases
 	[VisualPath(@"Hidden")]
 	public class LoadErrorTestCase : TestCase, ISerializable
 	{
-		public LoadErrorTestCase()
+		public LoadErrorTestCase() : base( "Error Loading Type" )
 		{
-			name = "Error Loading Type";
 			icon = Properties.Resources.LoadError;
 			if (DeserializationBinder.errorIndex < DeserializationBinder.errorTypes.Count)
 			{
-				name += " " + DeserializationBinder.errorTypes[DeserializationBinder.errorIndex];
+				Name += " " + DeserializationBinder.errorTypes[DeserializationBinder.errorIndex];
 				DeserializationBinder.errorIndex++;
 			}
 

@@ -31,9 +31,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public class CompareImages : TestCase
 	{
-		public CompareImages()
+		public CompareImages() : base( "Compare Images" )
 		{
-			name = "Compare Images";
 			icon = Properties.Resources.Bitmap;
 		}
 

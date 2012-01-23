@@ -33,9 +33,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
 	public class WaitForImages : TestCase
 	{
-		public WaitForImages()
+		public WaitForImages() : base( "Wait for Image" )
 		{
-			name = "Wait For Image";
 			icon = Properties.Resources.Bitmap;
 		}
 

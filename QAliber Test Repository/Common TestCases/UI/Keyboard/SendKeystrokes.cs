@@ -39,9 +39,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Keyboard")]
 	public class SendKeystrokes : TestCase
 	{
-		public SendKeystrokes()
+		public SendKeystrokes() : base( "Send Keystrokes" )
 		{
-			name = "Send Keystrokes";
 			icon = Properties.Resources.Keyboard;
 		}
 

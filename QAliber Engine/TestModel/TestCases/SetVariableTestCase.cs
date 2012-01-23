@@ -32,9 +32,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Variables")]
 	public class SetVariableTestCase : TestCase
 	{
-		public SetVariableTestCase()
+		public SetVariableTestCase() : base( "Set Variable" )
 		{
-			name = "Set Variable";
 			icon = null;
 		}
 

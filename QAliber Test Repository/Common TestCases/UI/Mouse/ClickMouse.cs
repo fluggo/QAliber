@@ -30,9 +30,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
 	public class ClickMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
-		public ClickMouse()
+		public ClickMouse() : base( "Click Mouse" )
 		{
-			name = "Click Mouse";
 			icon = Properties.Resources.Mouse;
 		}
 

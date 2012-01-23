@@ -32,12 +32,12 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control")]
 	public class FolderTestCase : TestCase
 	{
-		public FolderTestCase()
-		{
-			name = "Folder";
+		public FolderTestCase() : this( "Folder" ) {
+		}
+
+		protected FolderTestCase( string name ) : base( name ) {
 			expectedResult = TestCaseResult.Passed;
 			icon = Properties.Resources.Folder;
-			
 		}
 
 		protected List<TestCase> children = new List<TestCase>();

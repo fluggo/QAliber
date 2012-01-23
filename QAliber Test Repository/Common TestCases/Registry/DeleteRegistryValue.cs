@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Registry")]
 	public class DeleteRegistryValue : global::QAliber.TestModel.TestCase
 	{
-		public DeleteRegistryValue()
+		public DeleteRegistryValue() : base( "Delete Registry Value" )
 		{
-			name = "Delete Registry Value";
 			icon = Properties.Resources.Registry;
 		}
 

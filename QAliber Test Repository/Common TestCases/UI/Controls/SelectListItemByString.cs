@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class SelectListItemByString : TestCase
 	{
-		public SelectListItemByString()
+		public SelectListItemByString() : base( "Select List Item by String" )
 		{
-			name = "Select List Item By String";
 			icon = Properties.Resources.Combobox;
 		}
 

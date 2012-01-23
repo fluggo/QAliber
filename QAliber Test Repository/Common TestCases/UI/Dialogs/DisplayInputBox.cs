@@ -37,9 +37,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Dialogs")]
 	public class DisplayInputBox : TestCase
 	{
-		public DisplayInputBox()
+		public DisplayInputBox() : base( "Display Input Box" )
 		{
-			name = "Display Input Box";
 			icon = Properties.Resources.Dialog;
 		}
 

@@ -38,9 +38,8 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Variables\Randomizers")]
 	public class GetRandomItemInListTestCase : global::QAliber.TestModel.TestCase
 	{
-		public GetRandomItemInListTestCase()
+		public GetRandomItemInListTestCase() : base( "Get Random Item in List" )
 		{
-			name = "Get Random Item In List";
 			icon = null;
 			listName = new ListVariableDropDownList();
 		}

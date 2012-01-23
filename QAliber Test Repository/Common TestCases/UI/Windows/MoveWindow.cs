@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
 	public class MoveWindow : TestCase
 	{
-		public MoveWindow()
+		public MoveWindow() : base( "Move Window" )
 		{
-			name = "Move Window";
 			icon = Properties.Resources.Window;
 		}
 

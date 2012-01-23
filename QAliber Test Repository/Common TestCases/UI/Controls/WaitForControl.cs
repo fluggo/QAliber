@@ -31,9 +31,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class WaitForControl : TestCase
 	{
-		public WaitForControl()
+		public WaitForControl() : base( "Wait for Control" )
 		{
-			name = "Wait For Control";
 			icon = Properties.Resources.Window;
 		}
 

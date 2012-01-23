@@ -40,9 +40,8 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Registry")]
 	public class DeleteRegistryKey : global::QAliber.TestModel.TestCase
 	{
-		public DeleteRegistryKey()
+		public DeleteRegistryKey() : base( "Delete Registry Key" )
 		{
-			name = "Delete Registry Key";
 			icon = Properties.Resources.Registry;
 		}
 

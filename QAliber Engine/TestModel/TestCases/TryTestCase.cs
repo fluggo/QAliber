@@ -29,9 +29,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Recovery")]
 	public class TryTestCase : FolderTestCase
 	{
-		public TryTestCase()
+		public TryTestCase() : base( "Try" )
 		{
-			name = "Try";
 			icon = Properties.Resources.Try;
 		}
 

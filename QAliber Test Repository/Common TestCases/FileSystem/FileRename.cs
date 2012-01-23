@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
 	public class FileRename : global::QAliber.TestModel.TestCase
 	{
-		public FileRename()
+		public FileRename() : base( "Rename File" )
 		{
-			name = "Rename File";
 			icon = Properties.Resources.File;
 		}
 

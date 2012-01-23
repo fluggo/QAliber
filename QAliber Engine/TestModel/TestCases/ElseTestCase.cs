@@ -33,11 +33,9 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Conditions")]
 	public class ElseTestCase : FolderTestCase
 	{
-		public ElseTestCase()
+		public ElseTestCase() : base( "Else" )
 		{
-			name = "Else";
 			icon = Properties.Resources.If;
-			
 		}
 
 		public override void Body()

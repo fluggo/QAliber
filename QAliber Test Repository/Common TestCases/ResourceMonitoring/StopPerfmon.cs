@@ -35,9 +35,7 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Resources Monitoring")]
 	public class StopPerfmon : global::QAliber.TestModel.TestCase
 	{
-		public StopPerfmon()
-		{
-			name = "Stop Performance Monitor";
+		public StopPerfmon() : base( "Stop Performance Monitor" ) {
 		}
 
 		public override void Body()

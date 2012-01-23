@@ -31,9 +31,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
 	public class ResizeWindow : TestCase
 	{
-		public ResizeWindow()
+		public ResizeWindow() : base( "Resize Window" )
 		{
-			name = "Resize Window";
 			icon = Properties.Resources.Window;
 		}
 

@@ -37,9 +37,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Dialogs")]
 	public class DisplayBalloonTip : TestCase
 	{
-		public DisplayBalloonTip()
+		public DisplayBalloonTip() : base( "Display Balloon Tip" )
 		{
-			name = "Display Balloon Tip";
 			icon = Properties.Resources.Dialog;
 		}
 

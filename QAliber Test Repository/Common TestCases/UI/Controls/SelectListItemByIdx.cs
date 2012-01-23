@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class SelectListItemByIdx : TestCase
 	{
-		public SelectListItemByIdx()
+		public SelectListItemByIdx() : base( "Select List Item by Index" )
 		{
-			name = "Select List Item By Index";
 			icon = Properties.Resources.Combobox;
 		}
 

@@ -34,9 +34,8 @@ namespace QAliber.TestModel
 	[VisualPath(@"Flow Control\Loops")]
 	public class ForEachTestCase : FolderTestCase
 	{
-		public ForEachTestCase()
+		public ForEachTestCase() : base( "For Each Item In List" )
 		{
-			name = "For Each Item In List";
 			icon = Properties.Resources.Loop;
 		}
 

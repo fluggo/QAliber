@@ -32,9 +32,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	public class DragFromImage : ClickOnImage
 	{
 		public DragFromImage()
-			: base()
+			: base( "Drag From Image" )
 		{
-			name = "Drag From Image";
 			actionType = QAliber.Engine.ControlActionType.Drag;
 
 		}

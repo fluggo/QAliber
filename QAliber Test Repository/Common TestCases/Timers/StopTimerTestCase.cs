@@ -33,9 +33,8 @@ namespace QAliber.Repository.CommonTestCases.Timers
 		/// Stops a timer
 		/// <precondtions>A previous 'Start Timer' with the same key was executed</precondtions>
 		/// </summary>
-		public StopTimerTestCase()
+		public StopTimerTestCase() : base( "Stop Timer" )
 		{
-			name = "Stop Timer";
 			icon = Properties.Resources.Timing;
 		}
 

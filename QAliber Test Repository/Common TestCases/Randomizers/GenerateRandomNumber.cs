@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Variables\Randomizers")]
 	public class GenerateRandomNumberTestCase : global::QAliber.TestModel.TestCase
 	{
-		public GenerateRandomNumberTestCase()
+		public GenerateRandomNumberTestCase() : base( "Generate Random Number" )
 		{
-			name = "Generate Random Number";
 			icon = null;
 		}
 

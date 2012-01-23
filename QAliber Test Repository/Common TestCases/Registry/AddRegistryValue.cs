@@ -35,9 +35,8 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Registry")]
 	public class AddRegistryValue : global::QAliber.TestModel.TestCase
 	{
-		public AddRegistryValue()
+		public AddRegistryValue() : base( "Add Registry Value" )
 		{
-			name = "Add Registry Value";
 			icon = Properties.Resources.Registry;
 		}
 

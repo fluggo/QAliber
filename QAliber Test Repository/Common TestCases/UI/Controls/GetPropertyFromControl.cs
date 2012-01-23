@@ -30,9 +30,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
 	public class GetPropertyFromControl : TestCase
 	{
-		public GetPropertyFromControl()
+		public GetPropertyFromControl() : base( "Get Property from Control" )
 		{
-			name = "Get Property From Control";
 			icon = Properties.Resources.Window;
 			list = new MultipleSelectionList();
 			list.Items.AddRange(
