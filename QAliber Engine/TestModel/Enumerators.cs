@@ -62,6 +62,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Results")]
 		[DisplayName("Record Video?")]
 		[Description("Do you want to record the entire automation ?")]
+		[DefaultValue(false)]
 		public bool CaptureVideo
 		{
 			get { return captureVideo; }
@@ -76,6 +77,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Results")]
 		[DisplayName("Video Capture Interval")]
 		[Description("What is the interval (in milliseconds) you want to capture the frames")]
+		[DefaultValue(1000)]
 		public int Interval
 		{
 			get 
@@ -95,9 +97,20 @@ namespace QAliber.TestModel
 
 		public override string ToString()
 		{
-			return string.Format("Enabled = {0} ; Interval = {1}", captureVideo, interval);
+			return string.Format("Enabled = {0} ; Interval = {1} ms", captureVideo, interval);
 		}
-	
-	
+
+		public override bool Equals( object obj ) {
+			VideoOptions other = obj as VideoOptions;
+
+			if( other == null )
+				return false;
+
+			return other.CaptureVideo == CaptureVideo && other.Interval == Interval;
+		}
+
+		public override int GetHashCode() {
+			return unchecked(Interval.GetHashCode() * CaptureVideo.GetHashCode());
+		}
 	}
 }

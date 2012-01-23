@@ -294,6 +294,21 @@ namespace QAliber.TestModel
 			set { videoOptions = value; }
 		}
 
+		/// <summary>
+		/// Determines whether <see cref="VideoOptions"/> has its default value.
+		/// </summary>
+		/// <returns>False if it has its default value, true otherwise.</returns>
+		public bool ShouldSerializeVideoOptions() {
+			return !VideoOptions.Equals( new VideoOptions() );
+		}
+
+		/// <summary>
+		/// Resets <see cref="VideoOptions"/> to its default value.
+		/// </summary>
+		public void ResetVideoOptions() {
+			VideoOptions = new VideoOptions();
+		}
+
 		[NonSerialized]
 		private bool hasBreakPoint;
 
