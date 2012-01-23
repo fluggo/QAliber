@@ -112,18 +112,6 @@ namespace QAliber.TestModel.Variables
 			base.OnListChanged(e);
 
 		}
-		protected override void RemoveItem(int index)
-		{
-			T obj = this[index];
-			if (obj.Definer != null && obj.Definer.OutputProperties != null)
-			{
-				if (obj.Definer.OutputProperties.ContainsKey(obj.Name))
-				{
-					obj.Definer.OutputProperties.Remove(obj.Name);
-				}
-			}
-			base.RemoveItem(index);
-		}
 		private string ChangeDuplicateNames(string name, int indexToIgnore)
 		{
 			string res = name;
