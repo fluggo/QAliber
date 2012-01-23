@@ -81,55 +81,6 @@ namespace QAliber.TestModel.TypeEditors
 			}
 		}
 
-		private void FillOutput()
-		{
-			testcase.Scenario.Lists.RemoveAllByTestCase(testcase);
-			testcase.Scenario.Variables.RemoveAllByTestCase(testcase);
-			output.Clear();
-			foreach (ListViewItem item in propsListView.Items)
-			{
-				if (item.Checked)
-				{
-					try
-					{
-						
-						string varName = string.Empty;
-						if (item.BackColor == Color.LightYellow)
-						{
-							QAliber.TestModel.Variables.ScenarioList sl = new QAliber.TestModel.Variables.ScenarioList(item.SubItems[1].Text, new string[] { }, testcase);
-							testcase.Scenario.Lists.AddOrReplace(sl);
-							output.Add(sl.Name, item.SubItems[0].Text);
-						}
-						else
-						{
-							QAliber.TestModel.Variables.ScenarioVariable sv = new QAliber.TestModel.Variables.ScenarioVariable(item.SubItems[1].Text, "", testcase);
-							testcase.Scenario.Variables.AddOrReplace(sv);
-							output.Add(sv.Name, item.SubItems[0].Text);
-						}
-					   
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show(ex.Message, "Error Storing Properties");
-					}
-
-				}
-				else
-				{
-					if (item.BackColor == Color.LightYellow)
-					{
-						testcase.Scenario.Lists.RemoveIfFound(
-							new QAliber.TestModel.Variables.ScenarioList(item.SubItems[1].Text, new string[] { }, testcase));
-					}
-					else
-					{
-						testcase.Scenario.Variables.RemoveIfFound(
-							new QAliber.TestModel.Variables.ScenarioVariable(item.SubItems[1].Text, "", testcase));
-					}
-				}
-			}
-		}
-
 		private string GetVarNameByPropDesc(string propDesc)
 		{
 			foreach (string key in output.Keys)
@@ -194,9 +145,7 @@ namespace QAliber.TestModel.TypeEditors
 
 		private void okButton_Click(object sender, EventArgs e)
 		{
-			FillOutput();
 			DialogResult = DialogResult.OK;
-			Close();
 		}
 		#endregion
 
