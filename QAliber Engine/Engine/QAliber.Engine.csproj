@@ -134,13 +134,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UITypeEditor\MSAAUITypeEditor.cs" />
-    <Compile Include="UITypeEditor\MSAAViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UITypeEditor\MSAAViewer.Designer.cs">
-      <DependentUpon>MSAAViewer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Web\HTMLBlock.cs" />
     <Compile Include="Controls\Web\HTMLBr.cs" />
     <Compile Include="Controls\Web\HTMLDiv.cs" />
@@ -179,10 +172,6 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UITypeEditor\MSAAViewer.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MSAAViewer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

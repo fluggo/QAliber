@@ -23,7 +23,6 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.ComponentModel;
 
-using ManagedWinapi.Accessibility;
 using ManagedWinapi.Windows;
 using QAliber.Engine.Patterns;
 using System.IO;
@@ -65,35 +64,6 @@ namespace QAliber.Engine.Controls.UIA
 		public AutomationElement UIAutomationElement
 		{
 			get { return automationElement; }
-		}
-
-		/// <summary>
-		/// The MSAA API for the control
-		/// </summary>
-		[Editor(typeof(UITypeEditor.MSAAUITypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
-		[Category("Accessibility")]
-		public SystemAccessibleObject MSAA
-		{
-			get
-			{
-				if (sao == null)
-				{
-					try
-					{
-						if (automationElement != null && Handle != 0)
-						{
-							SystemWindow win = new SystemWindow(
-								new IntPtr(Handle));
-							sao = SystemAccessibleObject.FromWindow(win, AccessibleObjectID.OBJID_WINDOW);
-						}
-					}
-					catch (System.Runtime.InteropServices.COMException)
-					{
-						sao = null;
-					}
-				}
-				return sao;
-			}
 		}
 
 		public override List<UIControlBase> Children
@@ -337,7 +307,6 @@ namespace QAliber.Engine.Controls.UIA
 		public override void Refresh()
 		{
 			base.Refresh();
-			sao = null;
 			idIndex = -1;
 		}
 
@@ -530,8 +499,6 @@ namespace QAliber.Engine.Controls.UIA
 		[NonSerialized]
 		protected AutomationElement automationElement;
 		protected int idIndex = -1;
-		[NonSerialized]
-		protected SystemAccessibleObject sao = null;
 
 		protected static TreeWalker walker = TreeWalker.ControlViewWalker;
 		#endregion
