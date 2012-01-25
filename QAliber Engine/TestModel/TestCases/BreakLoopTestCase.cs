@@ -30,6 +30,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control")]
+	[XmlType("BreakLoop", Namespace=Util.XmlNamespace)]
 	public class BreakLoopTestCase : TestCase
 	{
 		public BreakLoopTestCase() : base( "Cut Branches" )

@@ -24,12 +24,14 @@ using QAliber.Logger;
 using System.Drawing;
 using QAliber.ImageHandling;
 using QAliber.Engine;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
+	[XmlType("OperateOnImage", Namespace=Util.XmlNamespace)]
 	public abstract class OperateOnImage : TestCase
 	{
 		protected OperateOnImage( string name ) : base( name )

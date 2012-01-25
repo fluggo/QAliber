@@ -21,6 +21,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
 using QAliber.Logger;
+using System.Xml.Serialization;
 
 
 
@@ -37,6 +38,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
+	[XmlType(TypeName="FileCompare", Namespace=Util.XmlNamespace)]
 	public class FileCompare : global::QAliber.TestModel.TestCase
 	{
 		public FileCompare() : base( "Compare Files" )

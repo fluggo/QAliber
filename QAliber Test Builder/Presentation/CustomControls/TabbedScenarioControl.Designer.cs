@@ -225,14 +225,14 @@ namespace QAliber.Builder.Presentation
 			// openFileDialog
 			// 
 			this.openFileDialog.DefaultExt = "sce";
-			this.openFileDialog.Filter = "Test Scenario File|*.scn|Log Files|*.qlog|All Files|*.*";
+			this.openFileDialog.Filter = "Test Scenario File|*.scnx|Log Files|*.qlog|All Files|*.*";
 			this.openFileDialog.Multiselect = true;
 			this.openFileDialog.Title = "Load Test Scenario";
 			// 
 			// saveFileDialog
 			// 
-			this.saveFileDialog.DefaultExt = "sce";
-			this.saveFileDialog.Filter = "Test Scenario File|*.scn|All Files|*.*";
+			this.saveFileDialog.DefaultExt = "scnx";
+			this.saveFileDialog.Filter = "Test Scenario File|*.scnx";
 			this.saveFileDialog.Title = "Save Test Scenario";
 			// 
 			// tabbedDocumentControl

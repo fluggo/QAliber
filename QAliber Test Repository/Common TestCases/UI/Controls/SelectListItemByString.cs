@@ -27,12 +27,14 @@ using QAliber.Engine.Controls.UIA;
 using QAliber.Engine.Controls.Web;
 using QAliber.Engine.Patterns;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
+	[XmlType("SelectListItemByString", Namespace=Util.XmlNamespace)]
 	public class SelectListItemByString : TestCase
 	{
 		public SelectListItemByString() : base( "Select List Item by String" )

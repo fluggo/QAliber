@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using QAliber.TestModel.Attributes;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace QAliber.TestModel.TestCases
 {
 	[Serializable]
 	[VisualPath(@"Hidden")]
+	[XmlType("LoadError", Namespace=Util.XmlNamespace)]
 	public class LoadErrorTestCase : TestCase, ISerializable
 	{
 		public LoadErrorTestCase() : base( "Error Loading Type" )

@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -30,6 +31,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
+	[XmlType("MoveWindow", Namespace=Util.XmlNamespace)]
 	public class MoveWindow : TestCase
 	{
 		public MoveWindow() : base( "Move Window" )

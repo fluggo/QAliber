@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 
 
@@ -33,6 +34,7 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Resources Monitoring")]
+	[XmlType("StartPerfmon", Namespace=Util.XmlNamespace)]
 	public class StartPerfmon : global::QAliber.TestModel.TestCase
 	{
 		public StartPerfmon() : base( "Start Performance Monitor" ) {

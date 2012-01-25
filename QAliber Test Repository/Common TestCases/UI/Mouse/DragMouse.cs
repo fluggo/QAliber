@@ -22,12 +22,14 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
+	[XmlType("DragMouse", Namespace=Util.XmlNamespace)]
 	public class DragMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
 		public DragMouse() : base( "Drag Mouse" )

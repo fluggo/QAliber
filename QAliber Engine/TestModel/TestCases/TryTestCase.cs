@@ -27,6 +27,7 @@ namespace QAliber.TestModel
 {
 	[Serializable]
 	[VisualPath(@"Flow Control\Recovery")]
+	[XmlType("Try", Namespace=Util.XmlNamespace)]
 	public class TryTestCase : FolderTestCase
 	{
 		public TryTestCase() : base( "Try" )

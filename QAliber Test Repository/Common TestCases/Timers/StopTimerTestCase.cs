@@ -27,6 +27,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 
 	[Serializable]
 	[VisualPath(@"System\Timings")]
+	[XmlType("StopTimer", Namespace=Util.XmlNamespace)]
 	public class StopTimerTestCase : QAliber.TestModel.TestCase
 	{
 		/// <summary>

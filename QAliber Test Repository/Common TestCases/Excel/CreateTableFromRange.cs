@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Data.OleDb;
 using System.Data;
+using System.Xml.Serialization;
 
 
 
@@ -36,6 +37,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Excel")]
+	[XmlType(TypeName="CreateTableFromRange", Namespace=Util.XmlNamespace)]
 	public class CreateTableFromRange : global::QAliber.TestModel.TestCase
 	{
 		public CreateTableFromRange() : base( "Create Table from Range" )

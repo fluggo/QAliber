@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 
 
@@ -33,6 +34,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Processes")]
+	[XmlType(TypeName="LogResources", Namespace=Util.XmlNamespace)]
 	public class LogResources : global::QAliber.TestModel.TestCase
 	{
 		public LogResources() : base( "Log Process Resources" )

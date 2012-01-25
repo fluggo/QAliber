@@ -25,12 +25,14 @@ using System.Drawing;
 using QAliber.RemotingModel;
 using QAliber.ImageHandling;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
+	[XmlType("WaitForImages", Namespace=Util.XmlNamespace)]
 	public class WaitForImages : TestCase
 	{
 		public WaitForImages() : base( "Wait for Image" )

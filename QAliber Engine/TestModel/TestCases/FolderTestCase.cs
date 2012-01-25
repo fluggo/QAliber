@@ -30,6 +30,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control")]
+	[XmlType("Folder", Namespace=Util.XmlNamespace)]
 	public class FolderTestCase : TestCase
 	{
 		public FolderTestCase() : this( "Folder" ) {

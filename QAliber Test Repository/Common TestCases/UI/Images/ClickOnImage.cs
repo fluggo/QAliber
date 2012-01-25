@@ -23,12 +23,14 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.ImageHandling;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
+	[XmlType("ClickOnImage", Namespace=Util.XmlNamespace)]
 	public class ClickOnImage : OperateOnImage
 	{
 		public ClickOnImage() : this( "Click on Image" ) {

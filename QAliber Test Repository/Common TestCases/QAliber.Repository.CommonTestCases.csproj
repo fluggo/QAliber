@@ -158,6 +158,7 @@
     <Compile Include="UI\Controls\WaitForControl.cs" />
     <Compile Include="UI\Windows\ResizeWindow.cs" />
     <Compile Include="UI\Windows\MoveWindow.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -23,12 +23,14 @@ using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
+	[XmlType("WaitForControl", Namespace=Util.XmlNamespace)]
 	public class WaitForControl : TestCase
 	{
 		public WaitForControl() : base( "Wait for Control" )

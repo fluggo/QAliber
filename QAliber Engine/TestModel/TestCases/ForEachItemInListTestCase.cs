@@ -32,6 +32,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Loops")]
+	[XmlType("ForEach", Namespace=Util.XmlNamespace)]
 	public class ForEachTestCase : FolderTestCase
 	{
 		public ForEachTestCase() : base( "For Each Item In List" )

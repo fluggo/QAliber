@@ -22,12 +22,14 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
+	[XmlType("LogImageOfControl", Namespace=Util.XmlNamespace)]
 	public class LogImageOfControl : TestCase
 	{
 		public LogImageOfControl() : base( "Log Image of Control" )

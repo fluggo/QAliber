@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 
 
@@ -33,6 +34,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Processes")]
+	[XmlType(TypeName="KillProcess", Namespace=Util.XmlNamespace)]
 	public class KillProcess : global::QAliber.TestModel.TestCase
 	{
 		public KillProcess() : base( "Kill Process" )

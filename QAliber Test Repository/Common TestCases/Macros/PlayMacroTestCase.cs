@@ -31,6 +31,7 @@ namespace QAliber.Repository.CommonTestCases.Macros
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Macros")]
+	[XmlType(TypeName="PlayMacro", Namespace=Util.XmlNamespace)]
 	public class PlayMacroTestCase : TestCase
 	{
 		public PlayMacroTestCase() : base( "Play Macro" )

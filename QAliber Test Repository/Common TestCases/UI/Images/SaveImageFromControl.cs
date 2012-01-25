@@ -21,12 +21,14 @@ using System.Windows.Forms;
 using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
+	[XmlType("SaveImageFromControl", Namespace=Util.XmlNamespace)]
 	public class SaveImageFromControl : TestCase
 	{
 		public SaveImageFromControl() : base( "Save Image from Control" )

@@ -23,12 +23,14 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.RemotingModel;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Images")]
+	[XmlType("CompareImages", Namespace=Util.XmlNamespace)]
 	public class CompareImages : TestCase
 	{
 		public CompareImages() : base( "Compare Images" )

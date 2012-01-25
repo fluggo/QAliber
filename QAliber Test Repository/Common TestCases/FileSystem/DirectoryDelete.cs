@@ -20,6 +20,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 
 
@@ -30,6 +31,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
+	[XmlType(TypeName="DirectoryCreate", Namespace=Util.XmlNamespace)]
 	public class DirectoryCreate : global::QAliber.TestModel.TestCase
 	{
 		public DirectoryCreate() : base( "Create Directory" )

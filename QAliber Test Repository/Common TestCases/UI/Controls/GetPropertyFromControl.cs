@@ -22,12 +22,14 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.TestModel.TypeEditors;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
+	[XmlType("GetPropertyFromControl", Namespace=Util.XmlNamespace)]
 	public class GetPropertyFromControl : TestCase
 	{
 		public GetPropertyFromControl() : base( "Get Property from Control" )

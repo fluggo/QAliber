@@ -18,9 +18,10 @@ using System.Collections.Generic;
 using System.Text;
 using QAliber.TestModel;
 using System.Windows.Forms;
-using System.Windows;
 using System.ComponentModel;
+using System.Drawing;
 using QAliber.Logger;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -29,6 +30,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
+	[XmlType("ResizeWindow", Namespace=Util.XmlNamespace)]
 	public class ResizeWindow : TestCase
 	{
 		public ResizeWindow() : base( "Resize Window" )

@@ -62,6 +62,7 @@ namespace QAliber.TestModel.Variables
 
 		[DisplayName("Defined By")]
 		[ReadOnly(true)]
+		[XmlIgnore]
 		public TestCase TestStep {
 			get { return _testStep; }
 		}

@@ -24,12 +24,14 @@ using QAliber.Logger;
 using QAliber.TestModel.TypeEditors;
 using QAliber.Engine.Controls;
 using QAliber.ImageHandling;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Controls")]
+	[XmlType("ReadTextFromControl", Namespace=Util.XmlNamespace)]
 	public class ReadTextFromControl : TestCase
 	{
 		public ReadTextFromControl() : base( "Read Text from Control" )

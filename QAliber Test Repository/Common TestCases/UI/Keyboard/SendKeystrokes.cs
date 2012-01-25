@@ -22,6 +22,7 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 {
@@ -37,6 +38,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Keyboard")]
+	[XmlType("SendKeystrokes", Namespace=Util.XmlNamespace)]
 	public class SendKeystrokes : TestCase
 	{
 		public SendKeystrokes() : base( "Send Keystrokes" )

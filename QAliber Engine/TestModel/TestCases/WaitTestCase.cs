@@ -30,6 +30,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"System\Timings")]
+	[XmlType("Wait", Namespace=Util.XmlNamespace)]
 	public class WaitTestCase : TestCase
 	{
 		public WaitTestCase() : base( "Wait" )

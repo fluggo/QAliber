@@ -22,11 +22,13 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Net;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.Networking.Http
 {
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Networking\Http")]
+	[XmlType(TypeName="SendPostWebRequest", Namespace=Util.XmlNamespace)]
 	public class SendPostWebRequest : global::QAliber.TestModel.TestCase
 	{
 		public SendPostWebRequest() : base( "Send Post Web Request" )

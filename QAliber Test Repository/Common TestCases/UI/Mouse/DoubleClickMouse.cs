@@ -22,12 +22,14 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
+	[XmlType("DoubleClickMouse", Namespace=Util.XmlNamespace)]
 	public class DoubleClickMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
 	{
 		public DoubleClickMouse() : base( "Double-Click Mouse" )

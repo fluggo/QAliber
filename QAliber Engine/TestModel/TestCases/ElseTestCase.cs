@@ -31,6 +31,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Conditions")]
+	[XmlType("Else", Namespace=Util.XmlNamespace)]
 	public class ElseTestCase : FolderTestCase
 	{
 		public ElseTestCase() : base( "Else" )

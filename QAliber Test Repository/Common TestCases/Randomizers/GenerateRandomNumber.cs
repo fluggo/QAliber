@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 
 
@@ -33,6 +34,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Variables\Randomizers")]
+	[XmlType("GenerateRandomNumber", Namespace=Util.XmlNamespace)]
 	public class GenerateRandomNumberTestCase : global::QAliber.TestModel.TestCase
 	{
 		public GenerateRandomNumberTestCase() : base( "Generate Random Number" )

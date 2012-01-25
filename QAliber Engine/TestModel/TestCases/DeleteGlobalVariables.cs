@@ -24,6 +24,7 @@ using System.Data.OleDb;
 using System.Data;
 using QAliber.TestModel.Attributes;
 using QAliber.TestModel.Variables;
+using System.Xml.Serialization;
 
 
 
@@ -38,6 +39,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Variables")]
+	[XmlType("DeleteVariable", Namespace=Util.XmlNamespace)]
 	public class DeleteGlobalVariables : TestCase
 	{
 		public DeleteGlobalVariables() : base( "Delete Variable" ) {

@@ -21,12 +21,14 @@ using System.Windows.Forms;
 using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
+using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
    
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Windows")]
+	[XmlType("ChangeWindowState", Namespace=Util.XmlNamespace)]
 	public class ChangeWindowState : TestCase
 	{
 		/// <summary>

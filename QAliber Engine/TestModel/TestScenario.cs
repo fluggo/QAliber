@@ -21,16 +21,20 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.Serialization.Formatters.Binary;
 using QAliber.TestModel.Variables;
 using System.Collections;
 using System.Data;
 using System.Runtime.Serialization;
+using System.Xml;
+using System.Reflection;
+using System.Globalization;
+using System.Linq;
 
 namespace QAliber.TestModel
 {
 	[Serializable]
+	[XmlType("Scenario", Namespace=Util.XmlNamespace)]
 	public class TestScenario
 	{
 		public TestScenario()
@@ -78,6 +82,7 @@ namespace QAliber.TestModel
 		private bool hasChanged;
 
 		[Browsable(false)]
+		[XmlIgnore]
 		public bool HasChanged
 		{
 			get { return hasChanged; }
@@ -135,50 +140,109 @@ namespace QAliber.TestModel
 			ReloadUserVariables();
 		}
 
-		public void Save()
-		{
-			BinaryFormatter binFormatter = new BinaryFormatter();
-			using (StreamWriter writer = new StreamWriter(filename))
-			{
-				binFormatter.Serialize(writer.BaseStream, this);
+		static XmlSerializer CreateXmlSerializer() {
+			// Pull in all the additional types we need
+			List<Type> extraTypes = new List<Type>();
+			extraTypes.AddRange( TestController.Default.SupportedTypes );
+			extraTypes.Add( typeof(DataTable) );
+
+			// Assign System.Windows.Size a different namespace
+			XmlAttributeOverrides attributeOverrides = new XmlAttributeOverrides();
+
+			attributeOverrides.Add( typeof(System.Windows.Size), new XmlAttributes() {
+				XmlType = new XmlTypeAttribute() { TypeName = "Size", Namespace = "assembly:WindowsBase" }
+			} );
+
+			attributeOverrides.Add( typeof(ScenarioVariable<string>), new XmlAttributes() {
+				XmlType = new XmlTypeAttribute() { TypeName = "StringVariable", Namespace = Util.XmlNamespace }
+			} );
+
+			attributeOverrides.Add( typeof(ScenarioVariable<string[]>), new XmlAttributes() {
+				XmlType = new XmlTypeAttribute() { TypeName = "ListVariable", Namespace = Util.XmlNamespace }
+			} );
+
+			attributeOverrides.Add( typeof(ScenarioVariable<DataTable>), new XmlAttributes() {
+				XmlType = new XmlTypeAttribute() { TypeName = "TableVariable", Namespace = Util.XmlNamespace }
+			} );
+
+			return new XmlSerializer( typeof(TestScenario), attributeOverrides,
+				extraTypes.ToArray(), new XmlRootAttribute() { Namespace=Util.XmlNamespace }, Util.XmlNamespace );
+		}
+
+		public void Save() {
+			XmlSerializer serializer = CreateXmlSerializer();
+			XmlWriterSettings settings = new XmlWriterSettings() {
+				Indent = true,
+				CloseOutput = true,
+				Encoding = Encoding.UTF8
+			};
+
+			// Scan the assemblies for PreferredXmlPrefix attributes
+			List<XmlQualifiedName> namespaceList = new List<XmlQualifiedName>();
+			namespaceList.Add( new XmlQualifiedName( "xsi", "http://www.w3.org/2001/XMLSchema-instance" ) );
+
+			var attrs = TestController.Default.SupportedTypes
+				.Select( type => type.Assembly )
+				.Distinct()
+				.SelectMany( assem =>
+					assem.GetCustomAttributes( typeof(PreferredXmlPrefixAttribute), false )
+						.Cast<PreferredXmlPrefixAttribute>() )
+				.OrderBy( attr => attr.Namespace );
+
+			// Now select some prefixes for them; we prefer to give them the one they asked for,
+			// but we can substitute a numbered suffix if some collide
+			HashSet<string> prefixesInUse = new HashSet<string>( new string[] { "xsi" } );
+
+			foreach( PreferredXmlPrefixAttribute attr in attrs ) {
+				if( namespaceList.Any( name => name.Namespace == attr.Namespace ) )
+					break;
+
+				string prefix = attr.Prefix;
+				int suffix = 1;
+
+				while( prefixesInUse.Contains( prefix ) )
+					prefix = attr.Prefix + (suffix++).ToString();
+
+				namespaceList.Add( new XmlQualifiedName( prefix, attr.Namespace ) );
+				prefixesInUse.Add( prefix );
+			}
+
+			XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces( namespaceList.ToArray() );
+			XmlWriter writer = XmlWriter.Create( Filename, settings );
+
+			try {
+				serializer.Serialize( writer, this, namespaces );
+			}
+			finally {
+				writer.Close();
 			}
 		}
 
-		public void SaveAs(string newFilename)
-		{
-			BinaryFormatter binFormatter = new BinaryFormatter();
-			
-			using (StreamWriter writer = new StreamWriter(newFilename))
-			{
-				binFormatter.Serialize(writer.BaseStream, this);
-			}
-		}
+		public static TestScenario Load( string filename ) {
+			XmlSerializer serializer = CreateXmlSerializer();
+			XmlReader reader = XmlReader.Create( filename );
+			TestScenario result;
 
-		public static TestScenario Load(string filename)
-		{
-			TestScenario testScenario = null;
-			BinaryFormatter binFormatter = new BinaryFormatter();
-			binFormatter.Binder = new DeserializationBinder();
-			DeserializationBinder.errorTypes.Clear();
-			DeserializationBinder.errorIndex = 0;
-			using (StreamReader reader = new StreamReader(filename))
-			{
-				
-				testScenario = binFormatter.Deserialize(reader.BaseStream) as TestScenario;
+			try {
+				result = (TestScenario) serializer.Deserialize( reader );
 			}
-			if (testScenario != null)
-			{
-				testScenario.Filename = filename;
-				testScenario.RootTestCase.Parent = null;
-				testScenario.RootTestCase.Scenario = testScenario;
-				testScenario.SetDependantsRecursively(testScenario.RootTestCase);
+			finally {
+				reader.Close();
 			}
-			return testScenario;
+
+			if( result != null ) {
+				result.Filename = filename;
+				result.RootTestCase.Parent = null;
+				result.RootTestCase.Scenario = result;
+				result.SetDependantsRecursively( result.RootTestCase );
+			}
+
+			return result;
 		}
 
 		private void SetDependantsRecursively(TestCase testcase)
 		{
-			TestCase.maxID = TestCase.maxID > testcase.ID ? TestCase.maxID : testcase.ID;
+			testcase.ID = TestCase.maxID++;
 			FolderTestCase folder = testcase as FolderTestCase;
 			if (folder != null && folder.Children != null)
 			{

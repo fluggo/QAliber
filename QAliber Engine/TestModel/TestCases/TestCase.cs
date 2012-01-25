@@ -37,6 +37,7 @@ namespace QAliber.TestModel
 	/// The base class for all test cases implementations
 	/// </summary>
 	[Serializable]
+	[XmlType("TestStep", Namespace=Util.XmlNamespace)]
 	public abstract class TestCase : ICloneable
 	{
 		private string _defaultName;
@@ -216,6 +217,7 @@ namespace QAliber.TestModel
 		/// </summary>
 		[Browsable(false)]
 		[DefaultValue(true)]
+		[XmlAttribute]
 		public bool MarkedForExecution
 		{
 			get { return markedForExecution; }
@@ -230,6 +232,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Stop Parent on Fail")]
 		[Description("Should the current tree branch terminate if the current test case fails ?")]
+		[XmlAttribute]
 		public bool ExitBranchOnError
 		{
 			get { return exitBranchOnError; }
@@ -280,6 +283,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Always Run")]
 		[Description("Run this step even if the folder has already failed.")]
+		[XmlAttribute]
 		public bool AlwaysRun {
 			get { return alwaysRun; }
 			set { alwaysRun = value; }
@@ -318,6 +322,7 @@ namespace QAliber.TestModel
 		[DisplayName("Number of Retries")]
 		[Description("How many times to retry in case of failure")]
 		[DefaultValue(0)]
+		[XmlAttribute]
 		public int NumOfRetries
 		{
 			get { return numOfRetries; }
@@ -333,6 +338,7 @@ namespace QAliber.TestModel
 		[DisplayName("Take Screenshot?")]
 		[Description("When to take a screenshot during the execution of the test case")]
 		[DefaultValue(TakeScreenshotOption.No)]
+		[XmlAttribute]
 		public TakeScreenshotOption ScreenshotOption
 		{
 			get { return screenshotOption; }
@@ -445,6 +451,7 @@ namespace QAliber.TestModel
 		[Description("The origin of the test case")]
 		[DisplayName("Repository Location")]
 		[ReadOnly(true)]
+		[XmlIgnore]
 		public virtual string RepositoryLocation
 		{
 			get { return originalPath; }
@@ -476,6 +483,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Results")]
 		[DisplayName("Actual Result")]
 		[Description("The actual result this test case returned")]
+		[XmlIgnore]
 		public TestCaseResult ActualResult
 		{
 			get { return actualResult; }
@@ -512,6 +520,7 @@ namespace QAliber.TestModel
 		/// A unique identifier of the test case, when in a scenario
 		/// </summary>
 		[Browsable(false)]
+		[XmlIgnore]
 		public int ID
 		{
 			get 

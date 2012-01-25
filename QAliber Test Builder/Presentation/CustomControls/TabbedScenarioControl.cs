@@ -49,7 +49,7 @@ namespace QAliber.Builder.Presentation
 		{
 			try
 			{
-				if (System.IO.Path.GetExtension(filename).ToLower() == ".scn")
+				if (System.IO.Path.GetExtension(filename).ToLower() == ".scnx")
 				{
 					ScenarioControl newScenarioControl = new ScenarioControl();
 					TestScenario loadedScenario = TestScenario.Load(filename);
@@ -91,7 +91,7 @@ namespace QAliber.Builder.Presentation
 				{
 					try
 					{
-						if (System.IO.Path.GetExtension(filename).ToLower() == ".scn")
+						if (System.IO.Path.GetExtension(filename).ToLower() == ".scnx")
 						{
 							ScenarioControl newScenarioControl = new ScenarioControl();
 							TestScenario loadedScenario = TestScenario.Load(filename);

@@ -30,6 +30,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Variables")]
+	[XmlType("SetVariable", Namespace=Util.XmlNamespace)]
 	public class SetVariableTestCase : TestCase
 	{
 		public SetVariableTestCase() : base( "Set Variable" )

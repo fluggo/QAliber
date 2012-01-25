@@ -27,6 +27,7 @@ namespace QAliber.TestModel
 {
 	[Serializable]
 	[VisualPath(@"Flow Control\Recovery")]
+	[XmlType("Recover", Namespace=Util.XmlNamespace)]
 	public class RecoverTestCase : FolderTestCase
 	{
 		/// <summary>

@@ -29,6 +29,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"System\Timings")]
+	[XmlType("StartTimer", Namespace=Util.XmlNamespace)]
 	public class StartTimerTestCase : QAliber.TestModel.TestCase
 	{
 		public StartTimerTestCase() : base( "Start Timer" )

@@ -30,6 +30,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Loops")]
+	[XmlType("Loop", Namespace=Util.XmlNamespace)]
 	public class LoopTestCase : FolderTestCase
 	{
 		public LoopTestCase() : base( "Loop" )

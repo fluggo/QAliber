@@ -28,6 +28,7 @@ namespace QAliber.Repository.CommonTestCases.Macros
 {
 	[Serializable]
 	[VisualPath(@"Flow Control")]
+	[XmlType(TypeName="CallScenario", Namespace=Util.XmlNamespace)]
 	public class CallScenarioTestCase : TestCase
 	{
 		public CallScenarioTestCase() : base( "Run Another Scenario" ) {

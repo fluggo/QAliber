@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 
 
@@ -38,6 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Registry")]
+	[XmlType("DeleteRegistryKey", Namespace=Util.XmlNamespace)]
 	public class DeleteRegistryKey : global::QAliber.TestModel.TestCase
 	{
 		public DeleteRegistryKey() : base( "Delete Registry Key" )

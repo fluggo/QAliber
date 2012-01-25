@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 
 
@@ -37,6 +38,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\File System")]
+	[XmlType(TypeName="FileSearch", Namespace=Util.XmlNamespace)]
 	public class FileSearch : global::QAliber.TestModel.TestCase
 	{
 		public FileSearch() : base( "Search File" )

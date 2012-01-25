@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Data.OleDb;
 using System.Data;
+using System.Xml.Serialization;
 
 
 
@@ -32,6 +33,7 @@ namespace QAliber.Repository.CommonTestCases.DB
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Database")]
+	[XmlType(TypeName="QueryDatabase", Namespace=Util.XmlNamespace)]
 	public class QueryDatabase : global::QAliber.TestModel.TestCase
 	{
 		public QueryDatabase() : base( "Query Database" )

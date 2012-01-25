@@ -29,6 +29,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Loops")]
+	[XmlType("While", Namespace=Util.XmlNamespace)]
 	public class WhileTestCase : FolderTestCase
 	{
 		public WhileTestCase() : base( "While" )

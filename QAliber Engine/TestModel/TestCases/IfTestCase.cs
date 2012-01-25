@@ -29,6 +29,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Conditions")]
+	[XmlType("If", Namespace=Util.XmlNamespace)]
 	public class IfTestCase : FolderTestCase
 	{
 		public IfTestCase() : base( "If" )

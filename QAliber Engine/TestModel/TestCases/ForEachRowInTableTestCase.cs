@@ -34,6 +34,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[VisualPath(@"Flow Control\Loops")]
+	[XmlType("ForEachRowInTable", Namespace=Util.XmlNamespace)]
 	public class ForEachRowInTableTestCase : FolderTestCase
 	{
 		public ForEachRowInTableTestCase() : base( "For Each Row In Table" )

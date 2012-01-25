@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 
 
@@ -33,6 +34,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"System\Registry")]
+	[XmlType("AddRegistryValue", Namespace=Util.XmlNamespace)]
 	public class AddRegistryValue : global::QAliber.TestModel.TestCase
 	{
 		public AddRegistryValue() : base( "Add Registry Value" )

@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.Collections;
 using QAliber.TestModel.Variables;
 using QAliber.TestModel;
+using System.Xml.Serialization;
 
 
 
@@ -36,6 +37,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 	/// </summary>
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"Variables\Randomizers")]
+	[XmlType("GetRandomItemInList", Namespace=Util.XmlNamespace)]
 	public class GetRandomItemInListTestCase : global::QAliber.TestModel.TestCase
 	{
 		public GetRandomItemInListTestCase() : base( "Get Random Item in List" )
