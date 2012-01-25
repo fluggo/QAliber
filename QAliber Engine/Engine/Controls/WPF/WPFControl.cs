@@ -115,17 +115,49 @@ namespace QAliber.Engine.Controls.WPF
 			get { return runtimeID; }
 			set { runtimeID = value; }
 		}
-	
+
+		bool _visible;
+
+		public override bool Visible {
+			get {
+				return _visible;
+			}
+		}
+
+		bool _enabled;
+
+		public override bool Enabled {
+			get {
+				return _enabled;
+			}
+		}
+
+		string _name;
+
+		public override string Name {
+			get {
+				return _name;
+			}
+		}
+
+		Rect _layout = Rect.Empty;
+
+		public override Rect Layout {
+			get {
+				return _layout;
+			}
+		}
+
 		private void BuildFromVisual(FrameworkElement wpfElement, UpdateMethod updateMethod)
 		{
-			name = wpfElement.Name;
+			_name = wpfElement.Name;
 			className = wpfElement.GetType().Name;
 			id = wpfElement.Uid;
-			visible = wpfElement.IsVisible;
-			enabled = wpfElement.IsEnabled;
+			_visible = wpfElement.IsVisible;
+			_enabled = wpfElement.IsEnabled;
 			runtimeID = wpfElement.GetHashCode();
-			
-			layout = new Rect(wpfElement.PointToScreen(new Point(0, 0)), wpfElement.RenderSize);
+
+			_layout = new Rect(wpfElement.PointToScreen(new Point(0, 0)), wpfElement.RenderSize);
 
 			switch (updateMethod)
 			{

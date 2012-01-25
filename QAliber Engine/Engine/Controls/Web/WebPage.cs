@@ -561,17 +561,19 @@ namespace QAliber.Engine.Controls.Web
 			}
 		}
 
+		Rect _layout = Rect.Empty;
+
 		public override Rect Layout
 		{
 			get
 			{
-				if (layout == Rect.Empty)
+				if (_layout == Rect.Empty)
 				{
 					InitUIAWorker();
 					if (uiaElement != null)
-						layout = uiaElement.Current.BoundingRectangle;
+						_layout = uiaElement.Current.BoundingRectangle;
 				}
-				return layout;
+				return _layout;
 			}
 		}
 

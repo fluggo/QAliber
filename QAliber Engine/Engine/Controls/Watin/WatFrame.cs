@@ -42,7 +42,7 @@ namespace QAliber.Engine.Controls.Watin
 			{
 				docElement = element;
 			   // docElement
-				index = idx;
+				_index = idx;
 			}
 		}
 	   
@@ -54,13 +54,15 @@ namespace QAliber.Engine.Controls.Watin
 		public override void Refresh()
 		{
 			base.Refresh();
-			index = 0;
+			_index = 0;
 		}
 
 		#endregion
 
 
 		#region Properties
+		int _index;
+
 		/// <summary>
 		/// Get the index of the control in the watingBaseControl category (Divs,Butoons etc')
 		/// The index is given by the BaseControl on this Ctor
@@ -69,11 +71,7 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				return index;
-			}
-			set
-			{
-				index = value;
+				return _index;
 			}
 		}
 
@@ -164,7 +162,7 @@ namespace QAliber.Engine.Controls.Watin
 				else if (!string.IsNullOrEmpty(InnerText) && InnerText.Length < 32)
 					return InnerText;
 				else
-					return "Frame[" + index + "]";
+					return "Frame[" + _index + "]";
 			}
 		}
 

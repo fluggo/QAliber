@@ -37,6 +37,9 @@ namespace QAliber.Engine.Controls.Watin
 				return browser.Url;
 			}
 		}
+
+		Rect _layout = Rect.Empty;
+
 		/// <summary>
 		/// The layout of the page is actually the body of the document (all html controls are relatieve to it)
 		/// </summary>
@@ -44,16 +47,16 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				if (layout == Rect.Empty)
+				if (_layout == Rect.Empty)
 				{
 					//Thread initDocThread = new Thread(new ThreadStart(InitUIAWorker));
 					//initDocThread.Start();
 					//initDocThread.Join();
 					pageWinElement = RetrievePageByHandle(browser.hWnd);
 					if (pageWinElement != null)
-						layout = pageWinElement.Current.BoundingRectangle;
+						_layout = pageWinElement.Current.BoundingRectangle;
 				}
-				return layout;
+				return _layout;
 			}
 		}
 		

@@ -56,11 +56,13 @@ namespace QAliber.Engine.Controls.Web
 		public override void Refresh()
 		{
 			base.Refresh();
-			index = 0;
+			_index = 0;
 		}
 
 		#endregion
 		#region Properties
+		int _index;
+
 		/// <summary>
 		/// Retrieve the Wec control Index.
 		/// </summary>
@@ -75,9 +77,9 @@ namespace QAliber.Engine.Controls.Web
 		{
 			get
 			{
-				if (index == 0)
+				if (_index == 0)
 				{
-					index = 1;
+					_index = 1;
 					IHTMLElementCollection elements = (IHTMLElementCollection)this.htmlElement.parentElement.children;
 					int idxCounter = 0;
 					foreach (IHTMLElement element in elements)
@@ -87,13 +89,13 @@ namespace QAliber.Engine.Controls.Web
 							idxCounter++;
 							if (this.AbsoluteIndex == element.sourceIndex)
 							{
-								index = idxCounter;
+								_index = idxCounter;
 								break;
 							}
 						}
 					}
 				}
-				return index;
+				return _index;
 			}
 		}
 

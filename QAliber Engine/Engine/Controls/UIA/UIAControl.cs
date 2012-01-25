@@ -79,13 +79,25 @@ namespace QAliber.Engine.Controls.UIA
 						UIAControl control = UIAControl.GetControlByType(element);
 						if (control != null)
 						{
-							control.Index = children.Count;
+							control.SetIndex( children.Count );
 							children.Add(control);
 							control.parent = this;
 						}
 					}
 				}
 				return children;
+			}
+		}
+
+		int _index;
+
+		private void SetIndex( int index ) {
+			_index = index;
+		}
+
+		public override int Index {
+			get {
+				return _index;
 			}
 		}
 

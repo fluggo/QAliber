@@ -29,15 +29,15 @@ namespace QAliber.Engine.Controls.WPF
 
 		}
 
+		private int _handle;
+
 		public new int Handle
 		{
-			get
-			{
-				return handle;
+			get {
+				return _handle;
 			}
-			set
-			{
-				handle = value;
+			set {
+				_handle = value;
 			}
 		}
 

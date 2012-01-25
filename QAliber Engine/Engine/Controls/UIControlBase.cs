@@ -83,7 +83,7 @@ namespace QAliber.Engine.Controls
 		[Category("Common")]
 		public virtual bool Visible
 		{
-			get { return visible; }    
+			get { return false; }
 		}
 
 		/// <summary>
@@ -102,7 +102,7 @@ namespace QAliber.Engine.Controls
 		[Category("Common")]
 		public virtual bool Enabled
 		{
-			get { return enabled; }
+			get { return false; }
 		}
 
 		/// <summary>
@@ -111,7 +111,7 @@ namespace QAliber.Engine.Controls
 		[Category("Common")]
 		public virtual int Handle
 		{
-			get { return handle; }
+			get { return 0; }
 		}
 
 
@@ -143,9 +143,8 @@ namespace QAliber.Engine.Controls
 		{
 			get
 			{
-				return index;
+				return 0;
 			}
-			set { index = value; }
 		}
 
 		/// <summary>
@@ -182,7 +181,7 @@ namespace QAliber.Engine.Controls
 		[Description("The layout of the control in absolute desktop coordinates")]
 		public virtual Rect Layout
 		{
-			get { return layout; }
+			get { return Rect.Empty; }
 		}
 
 		/// <summary>
@@ -235,7 +234,7 @@ namespace QAliber.Engine.Controls
 		[Category("Identifiers")]
 		public virtual string Name
 		{
-			get { return name; }
+			get { return string.Empty; }
 		}
 
 		/// <summary>
@@ -1214,15 +1213,9 @@ namespace QAliber.Engine.Controls
 
 		protected string codePath = String.Empty;
 		protected string id = String.Empty;
-		protected int index;
-		protected int handle;
 		protected UIControlBase parent = null;
 		protected List<UIControlBase> children = null;
 		protected Dictionary<string, object> extendedProperties = new Dictionary<string,object>();
-		protected bool visible;
-		protected bool enabled;
-		protected string name;
-		protected Rect layout = Rect.Empty;
 
 		internal static readonly string tmpFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\qaliberTmpObj.bin";
 		#endregion
