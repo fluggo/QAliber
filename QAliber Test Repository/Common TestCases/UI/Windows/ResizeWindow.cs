@@ -22,6 +22,8 @@ using System.ComponentModel;
 using System.Drawing;
 using QAliber.Logger;
 using System.Xml.Serialization;
+using QAliber.Engine.Controls;
+using QAliber.Engine.Controls.UIA;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -69,11 +71,22 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			string code = "UIAWindow w = " + control + " as UIAWindow;\n";
-			code += "w.Resize(" + size.Width + ", " + size.Height + ");\n";
-			code += "return null;\n";
-			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
 
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( !c.Exists ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException("Control not found");
+			}
+
+			UIAWindow window = c as UIAWindow;
+
+			if( window == null ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException( "Control doesn't appear to be a window" );
+			}
+
+			window.Resize( size.Width, size.Height );
 		}
 
 		public override string Description

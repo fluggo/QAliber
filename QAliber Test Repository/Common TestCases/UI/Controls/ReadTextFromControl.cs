@@ -66,10 +66,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			text = string.Empty;
-			StringBuilder code = new StringBuilder();
-			code.Append("UIControlBase c = " + control + ";\n");
-			code.Append("return c;\n");
-			UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code.ToString());
+
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
 			if (!c.Exists)
 				throw new ArgumentException("Couldn't retrieve control " + control);
 

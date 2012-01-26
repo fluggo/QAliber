@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Drawing;
 using System.Xml.Serialization;
+using QAliber.Engine.Controls;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
@@ -64,9 +65,15 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			string code = "UIControlBase c = " + control + ";\n";
-			code += "return c.GetImage();\n";
-			Bitmap image = (Bitmap)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( !c.Exists ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException("Control not found");
+			}
+
+			Bitmap image = c.GetImage();
 			Logger.Log.Default.Image(image, logDescription);
 
 		}

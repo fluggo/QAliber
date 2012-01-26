@@ -509,6 +509,29 @@ namespace QAliber.Engine.Controls
 		}
 		#endregion
 
+		public static UIControlBase FindControlByPath( string path ) {
+			// This is an attempt to standardize how control paths work. Currently,
+			// control paths are all C# expressions; in the future we may want to
+			// change them to something that could be evaluated a little more smartly.
+			// Anyhow, the first thing we do is standardize how we retry a path search:
+
+			string code = @"
+UIControlBase c = new UINullControl();
+
+for( int i = 0; i < 3; i++ ) {
+	c = " + path + @";
+
+	if( c.Exists )
+		return c;
+
+	System.Threading.Thread.Sleep( 0 );
+}
+
+return c;";
+
+			return (UIControlBase) CodeEvaluator.Evaluate(code);
+		}
+
 		#region Methods
 		/// <summary>
 		/// Waits for a specific child by name

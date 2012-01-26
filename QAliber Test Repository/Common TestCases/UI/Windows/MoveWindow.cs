@@ -18,10 +18,12 @@ using System.Collections.Generic;
 using System.Text;
 using QAliber.TestModel;
 using System.Windows.Forms;
-using System.Windows;
+using System.Drawing;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Xml.Serialization;
+using QAliber.Engine.Controls;
+using QAliber.Engine.Controls.UIA;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -69,11 +71,22 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			string code = "UIAWindow w = " + control + " as UIAWindow;\n";
-			code += "w.Move(" + point.X + ", " + point.Y + ");\n";
-			code += "return null;\n";
-			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
 
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( !c.Exists ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException("Control not found");
+			}
+
+			UIAWindow window = c as UIAWindow;
+
+			if( window == null ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException( "Control doesn't appear to be a window" );
+			}
+
+			window.Move( point.X, point.Y );
 		}
 
 		public override string Description

@@ -78,6 +78,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeEvaluator.cs" />
     <Compile Include="Controls\UINullControl.cs" />
     <Compile Include="Controls\Desktop.cs" />
     <Compile Include="Controls\IControlLocator.cs" />

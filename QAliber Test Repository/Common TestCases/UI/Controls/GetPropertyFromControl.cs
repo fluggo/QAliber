@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.TestModel.TypeEditors;
 using System.Xml.Serialization;
+using QAliber.Engine.Controls;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -38,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			list = new MultipleSelectionList();
 			list.Items.AddRange(
 				new string[] { "Layout.X", "Layout.Y", "Layout.Width", "Layout.Height",
-				"Name", "HelpText",
+				"Name",
 				"ClassName", "ID",
 				"Enabled", "Visible"});
 		}
@@ -83,17 +84,61 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			string code = "UIControlBase c = " + control + ";\n";
-			vals = "";
-			foreach (string item in list.SelectedItems)
-			{
-				string execCode = code + "return c." + item + ".ToString();";
-				string res = (string)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(execCode);
-				Log.Default.Info("Property '" + item + "' = '" + res + "'");
-				vals += res + ",";
+
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( !c.Exists ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException("Control not found");
 			}
-			vals = vals.Trim(',');
-			
+
+			List<string> values = new List<string>();
+
+			foreach( string item in list.SelectedItems ) {
+				switch( item ) {
+					case "Layout.X":
+						values.Add( c.Layout.X.ToString() );
+						break;
+
+					case "Layout.Y":
+						values.Add( c.Layout.Y.ToString() );
+						break;
+
+					case "Layout.Width":
+						values.Add( c.Layout.Width.ToString() );
+						break;
+
+					case "Layout.Height":
+						values.Add( c.Layout.Height.ToString() );
+						break;
+
+					case "Name":
+						values.Add( c.Name );
+						break;
+
+					case "ClassName":
+						values.Add( c.ClassName );
+						break;
+
+					case "ID":
+						values.Add( c.ID );
+						break;
+
+					case "Enabled":
+						values.Add( c.Enabled.ToString() );
+						break;
+
+					case "Visible":
+						values.Add( c.Visible.ToString() );
+						break;
+
+					default:
+						values.Add( "(unknown property)" );
+						break;
+				}
+			}
+
+			vals = string.Join( ",", values );
 		}
 
 		public override string Description

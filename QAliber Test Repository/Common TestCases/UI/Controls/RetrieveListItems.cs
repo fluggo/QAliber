@@ -69,14 +69,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		public override void Body()
 		{
-			string code;
-		 
-			code = "UIControlBase c = " + control + ";return c;\n";
-
-		 
 			try
 			{
-				UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
+				UIControlBase c = UIControlBase.FindControlByPath( control );
 
 				if (!c.Exists)
 				{

@@ -85,13 +85,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 
 			try
 			{
-				string code = "UIControlBase c = " + control + ";\nreturn c;\n";
-				UIControlBase c = (UIControlBase)QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
-				if (!c.Exists)
-				{
+				UIControlBase c = UIControlBase.FindControlByPath( control );
+
+				if( !c.Exists ) {
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					return;
+					throw new InvalidOperationException("Control not found");
 				}
+
 				c.Write(keystrokes);
 			}
 			catch (System.Reflection.TargetInvocationException)

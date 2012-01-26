@@ -22,6 +22,7 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Xml.Serialization;
+using QAliber.Engine.Controls;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
@@ -64,11 +65,15 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		public override void Body()
 		{
 			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			string code = "UIControlBase c = " + control + ";\n";
-			code += "c.GetImage().Save(@\"" + file + "\");\n";
-			code += "return null;\n";
-			QAliber.Repository.CommonTestCases.Eval.CodeEvaluator.Evaluate(code);
 
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( !c.Exists ) {
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw new InvalidOperationException("Control not found");
+			}
+
+			c.GetImage().Save( file );
 		}
 
 		public override string Description
