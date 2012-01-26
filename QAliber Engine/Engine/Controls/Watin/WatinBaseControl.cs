@@ -139,7 +139,6 @@ namespace QAliber.Engine.Controls.Watin
 		public override void Refresh()
 		{
 			base.Refresh();
-			id = string.Empty;
 			children = null;
 		}
 

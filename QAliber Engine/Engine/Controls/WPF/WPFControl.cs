@@ -63,12 +63,14 @@ namespace QAliber.Engine.Controls.WPF
 			}
 		}
 
+		string _id;
+
 		public override string ID
 		{
 			get
 			{
-				if (!string.IsNullOrEmpty(id))
-					return id;
+				if (!string.IsNullOrEmpty(_id))
+					return _id;
 				return className;
 			}
 		}
@@ -107,7 +109,7 @@ namespace QAliber.Engine.Controls.WPF
 		{
 			base.Refresh();
 			_codePath = null;
-			id = string.Empty;
+			_id = null;
 			children = null;
 		}
 
@@ -155,7 +157,7 @@ namespace QAliber.Engine.Controls.WPF
 		{
 			_name = wpfElement.Name;
 			className = wpfElement.GetType().Name;
-			id = wpfElement.Uid;
+			_id = wpfElement.Uid;
 			_visible = wpfElement.IsVisible;
 			_enabled = wpfElement.IsEnabled;
 			runtimeID = wpfElement.GetHashCode();

@@ -127,7 +127,7 @@ namespace QAliber.Engine.Controls
 		{
 			get 
 			{
-				return id; 
+				return string.Empty;
 			}
 		}
 
@@ -1116,7 +1116,6 @@ return c;";
 		public virtual void Refresh()
 		{
 			parent = null;
-			id = string.Empty;
 			children = null;
 		}
 
@@ -1233,7 +1232,6 @@ return c;";
 
 		#region Private Fields
 
-		protected string id = String.Empty;
 		protected UIControlBase parent = null;
 		protected List<UIControlBase> children = null;
 		protected Dictionary<string, object> extendedProperties = new Dictionary<string,object>();

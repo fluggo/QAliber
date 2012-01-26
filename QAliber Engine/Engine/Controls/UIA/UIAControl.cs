@@ -125,22 +125,24 @@ namespace QAliber.Engine.Controls.UIA
 			get { return automationElement.Current.HelpText; }
 		}
 
+		string _id;
+
 		public override string ID
 		{
 			get 
 			{
-				if (id == string.Empty)
+				if (_id == null)
 				{
 					if (automationElement.Current.AutomationId == "" ||
 						IsIdHandle(automationElement.Current.AutomationId))
 					{
-						id = UIType;
+						_id = UIType;
 					}
 					else
-						id = automationElement.Current.AutomationId;
+						_id = automationElement.Current.AutomationId;
 
 				}
-				return id; 
+				return _id;
 			}
 		}
 
@@ -323,6 +325,7 @@ namespace QAliber.Engine.Controls.UIA
 			base.Refresh();
 			idIndex = -1;
 			_codePath = null;
+			_id = null;
 		}
 
 		/// <summary>
