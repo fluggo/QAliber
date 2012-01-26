@@ -144,11 +144,13 @@ namespace QAliber.Engine.Controls.UIA
 			}
 		}
 
+		string _codePath;
+
 		public override string CodePath
 		{
 			get
 			{
-				if (codePath == string.Empty)
+				if (_codePath == null)
 				{
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
@@ -159,11 +161,11 @@ namespace QAliber.Engine.Controls.UIA
 					string tmpName = Name;
 					string tmpID = ID;
 					if (tmpName == "" && tmpID.StartsWith("UI"))
-						codePath = prefix + "[@\"" + tmpID + "\", " + IDIndex + "]";
+						_codePath = prefix + "[@\"" + tmpID + "\", " + IDIndex + "]";
 					else
-						codePath = prefix + "[@\"" + tmpName + "\", @\"" + ClassName + "\", @\"" + tmpID + "\"]";
+						_codePath = prefix + "[@\"" + tmpName + "\", @\"" + ClassName + "\", @\"" + tmpID + "\"]";
 				}
-				return codePath;
+				return _codePath;
 			}
 		}
 
@@ -320,6 +322,7 @@ namespace QAliber.Engine.Controls.UIA
 		{
 			base.Refresh();
 			idIndex = -1;
+			_codePath = null;
 		}
 
 		/// <summary>

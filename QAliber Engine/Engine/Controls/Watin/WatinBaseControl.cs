@@ -138,7 +138,7 @@ namespace QAliber.Engine.Controls.Watin
 
 		public override void Refresh()
 		{
-			codePath = string.Empty;
+			base.Refresh();
 			id = string.Empty;
 			children = null;
 		}

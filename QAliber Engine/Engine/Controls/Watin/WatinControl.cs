@@ -66,6 +66,7 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			base.Refresh();
 			_index = 0;
+			_codePath = null;
 		}
 
 		#endregion
@@ -85,31 +86,33 @@ namespace QAliber.Engine.Controls.Watin
 			}
 		}
 
+		string _codePath;
+
 		public override string CodePath
 		{
 			get
 			{
-				if (codePath == string.Empty)
+				if (_codePath == null)
 				{
 					string prefix = String.Empty;
 
 					if (this.ID != null)
 					{
 						prefix = parent.Parent.CodePath + "." + UIType + "(Find.ById(\"" + ID + "\"))";
-						codePath = prefix;
+						_codePath = prefix;
 					}
 					else if (this.Name != null)
 					{
 						prefix = parent.Parent.CodePath + "." + UIType +"(Find.ByName(\"" + Name + "\"))";
-						codePath = prefix;
+						_codePath = prefix;
 					}
 					else
 					{
 						prefix = parent.CodePath + "[" +Index + "]";
-						codePath = prefix;
+						_codePath = prefix;
 					}
 				}
-				return codePath;
+				return _codePath;
 			}
 		}
 		/// <summary>

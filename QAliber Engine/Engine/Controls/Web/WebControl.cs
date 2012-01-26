@@ -57,6 +57,7 @@ namespace QAliber.Engine.Controls.Web
 		{
 			base.Refresh();
 			_index = 0;
+			_codePath = null;
 		}
 
 		#endregion
@@ -99,38 +100,40 @@ namespace QAliber.Engine.Controls.Web
 			}
 		}
 
+		string _codePath = null;
+
 		public override string CodePath
 		{
 			get
 			{
-				if (codePath == string.Empty)
+				if (_codePath == null)
 				{
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
 					if (parent == null)
-						codePath = "Desktop.Web";
+						_codePath = "Desktop.Web";
 					else if (this.ID != null)
 					{
 						prefix = "Desktop.Web.CurrentPage.FindByID(\"" + TagName + "\", \"" + ID + "\")";
-						codePath = prefix;
+						_codePath = prefix;
 					}
 					else if (this.Name != "")
 					{
 						prefix = "Desktop.Web.CurrentPage.FindByName(\"" + TagName + "\", \"" + Name + "\")";
-						codePath = prefix;
+						_codePath = prefix;
 					}
 					else if (useAbsIdx)
 					{
 						prefix = "Desktop.Web.CurrentPage.FindByAbsIndex(\"" + Name + "\", " + AbsoluteIndex + ")";
-						codePath = prefix;
+						_codePath = prefix;
 					}
 					else
 					{
 						prefix = Parent.CodePath;
-						codePath = prefix + "[\"" + TagName + "\", " + Index + "]";
+						_codePath = prefix + "[\"" + TagName + "\", " + Index + "]";
 					}
 				}
-				return codePath;
+				return _codePath;
 			}
 		}
 		/// <summary>

@@ -43,11 +43,13 @@ namespace QAliber.Engine.Controls.WPF
 		//		  base.SetFocus();
 		//}
 
+		string _codePath;
+
 		public override string CodePath
 		{
 			get
 			{
-				if (codePath == string.Empty)
+				if (_codePath == string.Empty)
 				{
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
@@ -55,9 +57,9 @@ namespace QAliber.Engine.Controls.WPF
 						prefix = "Desktop.WPF";
 					else
 						prefix = parent.CodePath;
-					codePath = prefix + "[@\"" + Name + "\", @\"" + ClassName + "\", @\"" + ID + "\"]";
+					_codePath = prefix + "[@\"" + Name + "\", @\"" + ClassName + "\", @\"" + ID + "\"]";
 				}
-				return codePath;
+				return _codePath;
 			}
 		}
 
@@ -103,7 +105,8 @@ namespace QAliber.Engine.Controls.WPF
 
 		public override void Refresh()
 		{
-			codePath = string.Empty;
+			base.Refresh();
+			_codePath = null;
 			id = string.Empty;
 			children = null;
 		}

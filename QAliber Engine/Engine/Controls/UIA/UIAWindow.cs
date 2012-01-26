@@ -237,7 +237,7 @@ namespace QAliber.Engine.Controls.UIA
 			if (trans.Current.CanResize)
 				trans.Resize(width, height);
 			else
-				QAliber.Logger.Log.Default.Error("Window can not be resized '" + Name + "'", codePath, QAliber.Logger.EntryVerbosity.Internal);
+				QAliber.Logger.Log.Default.Error("Window can not be resized '" + Name + "'", CodePath, QAliber.Logger.EntryVerbosity.Internal);
 		}
 		/// <summary>
 		/// Move the window to new location by x,y pixles.
@@ -274,7 +274,7 @@ namespace QAliber.Engine.Controls.UIA
 			if (trans.Current.CanMove)
 				trans.Move(x, y);
 			else
-				QAliber.Logger.Log.Default.Error("Window can not be moved '" + Name + "'", codePath, QAliber.Logger.EntryVerbosity.Internal);
+				QAliber.Logger.Log.Default.Error("Window can not be moved '" + Name + "'", CodePath, QAliber.Logger.EntryVerbosity.Internal);
 		}
 		/// <summary>
 		/// Close the window
