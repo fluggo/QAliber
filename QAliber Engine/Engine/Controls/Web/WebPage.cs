@@ -583,10 +583,6 @@ namespace QAliber.Engine.Controls.Web
 			{
 				return Desktop.Web;
 			}
-			set
-			{
-				base.Parent = value;
-			}
 		}
 
 		#endregion

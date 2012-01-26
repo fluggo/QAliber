@@ -109,9 +109,9 @@ namespace QAliber.Engine.Controls
 		/// The native win32 handle of the control
 		/// </summary>
 		[Category("Common")]
-		public virtual int Handle
+		public virtual IntPtr Handle
 		{
-			get { return 0; }
+			get { return IntPtr.Zero; }
 		}
 
 
@@ -275,7 +275,6 @@ namespace QAliber.Engine.Controls
 		public virtual UIControlBase Parent
 		{
 			get { return parent; }
-			set { parent = value; }
 		}
 
 		/// <summary>

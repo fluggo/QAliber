@@ -169,10 +169,6 @@ namespace QAliber.Engine.Controls.Watin
 			{
 				return Desktop.Watin;
 			}
-			set
-			{
-				base.Parent = value;
-			}
 		}
 		/// <summary>
 		/// Get the page AutomationElement control, set the type (FireFox or IE)

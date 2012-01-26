@@ -319,7 +319,6 @@ namespace QAliber.Engine.Controls.Web
 				}
 				return parent;
 			}
-			set { parent = value;}
 		}
 		/// <summary>
 		/// Retrieve the style of the web control.

@@ -132,7 +132,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 					Debug.WriteLine( "Sending MOUSEMOVE" );
 					System.Windows.Point clientPoint = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
 
-					SendMessage( new HandleRef( this, (IntPtr) control.Handle ), 0x0200, (IntPtr) 0, (IntPtr) (((int) clientPoint.Y << 16) | (int) clientPoint.X) );
+					SendMessage( new HandleRef( this, control.Handle ), 0x0200, (IntPtr) 0, (IntPtr) (((int) clientPoint.Y << 16) | (int) clientPoint.X) );
 				}
 
 				Debug.WriteLine( "Repainting highlight after MOUSEMOVE" );

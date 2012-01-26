@@ -65,11 +65,11 @@ namespace QAliber.Engine.Controls.WPF
 										m.ModuleName.Contains("PresentationFramework.ni.dll"))
 									{
 										WPFWindow c = (WPFWindow)WPFAUTHelpers.TalkToAUT(p.MainWindowHandle, "QueryWPF", p.MainWindowTitle);
-										c.Handle = p.MainWindowHandle.ToInt32();
 										if (c != null)
 										{
 											children.Add(c);
-											c.Parent = this;
+											c.SetHandle( p.MainWindowHandle );
+											c.SetParent( this );
 										}
 									}
 								}

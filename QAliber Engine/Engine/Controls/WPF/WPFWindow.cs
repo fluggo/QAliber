@@ -29,16 +29,28 @@ namespace QAliber.Engine.Controls.WPF
 
 		}
 
-		private int _handle;
+		private IntPtr _handle;
 
-		public new int Handle
-		{
+		public override IntPtr Handle {
 			get {
 				return _handle;
 			}
-			set {
-				_handle = value;
+		}
+
+		internal void SetHandle( IntPtr handle ) {
+			_handle = handle;
+		}
+
+		private UIControlBase _parent;
+
+		public override UIControlBase Parent {
+			get {
+				return _parent;
 			}
+		}
+
+		internal void SetParent( UIControlBase parent ) {
+			_parent = parent;
 		}
 
 	}

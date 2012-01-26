@@ -115,19 +115,6 @@ namespace QAliber.Engine.Controls.Watin
 			}
 		}
 
-		public override UIControlBase Parent
-		{
-			get
-			{
-				return base.Parent;
-			}
-			set
-			{
-				base.Parent = value;
-			}
-		}
-
-
 		public override string UIType
 		{
 			get

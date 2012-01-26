@@ -211,11 +211,11 @@ namespace QAliber.Engine.Controls.UIA
 			get { return automationElement.Current.ClassName; }
 		}
 
-		public override int Handle
+		public override IntPtr Handle
 		{
 			get
 			{
-				return automationElement.Current.NativeWindowHandle;
+				return new IntPtr( automationElement.Current.NativeWindowHandle );
 			}
 		}
 

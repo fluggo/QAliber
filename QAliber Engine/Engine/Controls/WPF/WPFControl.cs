@@ -99,10 +99,6 @@ namespace QAliber.Engine.Controls.WPF
 				//	  parent = (WPFControl)WPFAUTHelpers.TalkToAUT(GetWindowHandle(), "QueryWPFParent", runtimeID.ToString());
 				return parent;
 			}
-			set
-			{
-				parent = value;
-			}
 		}
 
 		public override void Refresh()
@@ -233,7 +229,7 @@ namespace QAliber.Engine.Controls.WPF
 			while (control != null)
 			{
 				if (control is WPFWindow)
-					return new IntPtr(((WPFWindow)control).Handle);
+					return ((WPFWindow)control).Handle;
 				control = control.Parent;
 			}
 			return IntPtr.Zero;
