@@ -258,14 +258,11 @@ namespace QAliber.Engine.Controls
 		/// <summary>
 		/// The class name of the control
 		/// </summary>
-
-		protected string className;
-
 		[Category("Identifiers")]
 		[DisplayName("Class Name")]
 		public virtual string ClassName
 		{
-			get { return className; }
+			get { return null; }
 		}
 
 		/// <summary>

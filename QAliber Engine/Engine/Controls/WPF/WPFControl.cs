@@ -63,6 +63,7 @@ namespace QAliber.Engine.Controls.WPF
 			}
 		}
 
+		string _className;
 		string _id;
 
 		public override string ID
@@ -71,7 +72,7 @@ namespace QAliber.Engine.Controls.WPF
 			{
 				if (!string.IsNullOrEmpty(_id))
 					return _id;
-				return className;
+				return _className;
 			}
 		}
 
@@ -154,7 +155,7 @@ namespace QAliber.Engine.Controls.WPF
 		private void BuildFromVisual(FrameworkElement wpfElement, UpdateMethod updateMethod)
 		{
 			_name = wpfElement.Name;
-			className = wpfElement.GetType().Name;
+			_className = wpfElement.GetType().Name;
 			_id = wpfElement.Uid;
 			_visible = wpfElement.IsVisible;
 			_enabled = wpfElement.IsEnabled;
