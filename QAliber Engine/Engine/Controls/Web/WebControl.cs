@@ -58,6 +58,7 @@ namespace QAliber.Engine.Controls.Web
 			base.Refresh();
 			_index = 0;
 			_codePath = null;
+			_parent = null;
 		}
 
 		#endregion
@@ -293,7 +294,9 @@ namespace QAliber.Engine.Controls.Web
 				return ((IHTMLElement2)htmlElement).tabIndex;
 			}
 		}
-		
+
+		UIControlBase _parent;
+
 		/// <summary>
 		/// Retrieve the parent control for this HTML control.
 		/// </summary>
@@ -312,12 +315,12 @@ namespace QAliber.Engine.Controls.Web
 		{
 			get
 			{
-				if (parent == null)
+				if (_parent == null)
 				{
 					if (htmlElement.parentElement != null)
-						parent = WebControl.GetControlByType(this.htmlElement.parentElement);
+						_parent = WebControl.GetControlByType(this.htmlElement.parentElement);
 				}
-				return parent;
+				return _parent;
 			}
 		}
 		/// <summary>
@@ -433,7 +436,7 @@ namespace QAliber.Engine.Controls.Web
 						if (child != null)
 						{
 							children.Add(child);
-							child.parent = this;
+							child._parent = this;
 						}
 					}
 				}

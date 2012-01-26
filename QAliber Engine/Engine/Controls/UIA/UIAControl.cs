@@ -81,7 +81,7 @@ namespace QAliber.Engine.Controls.UIA
 						{
 							control.SetIndex( children.Count );
 							children.Add(control);
-							control.parent = this;
+							control._parent = this;
 						}
 					}
 				}
@@ -219,19 +219,21 @@ namespace QAliber.Engine.Controls.UIA
 			}
 		}
 
+		UIAControl _parent;
+
 		public override UIControlBase Parent
 		{
 			get
 			{
-				if (parent == null)
+				if (_parent == null)
 				{
 					AutomationElement element = walker.GetParent(automationElement);
 					if (element != null)
 					{
-						parent = UIAControl.GetControlByType(element);
+						_parent = UIAControl.GetControlByType(element);
 					}
 				}
-				return parent;
+				return _parent;
 			}
 		}
 
@@ -326,6 +328,7 @@ namespace QAliber.Engine.Controls.UIA
 			idIndex = -1;
 			_codePath = null;
 			_id = null;
+			_parent = null;
 		}
 
 		/// <summary>

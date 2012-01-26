@@ -274,7 +274,7 @@ namespace QAliber.Engine.Controls
 		[Browsable(false)]
 		public virtual UIControlBase Parent
 		{
-			get { return parent; }
+			get { return null; }
 		}
 
 		/// <summary>
@@ -1114,7 +1114,6 @@ return c;";
 		/// </remarks>
 		public virtual void Refresh()
 		{
-			parent = null;
 			children = null;
 		}
 
@@ -1231,7 +1230,6 @@ return c;";
 
 		#region Private Fields
 
-		protected UIControlBase parent = null;
 		protected List<UIControlBase> children = null;
 		protected Dictionary<string, object> extendedProperties = new Dictionary<string,object>();
 

@@ -36,7 +36,7 @@ namespace QAliber.Engine.Controls.Watin
 		#region Constructors
 		public WatinControl(WatinBaseControl parent, WatiN.Core.Element element,int idx)
 		{
-			this.parent = parent;
+			_parent = parent;
 			if (element != null)
 			{
 				htmlElement = element;
@@ -54,8 +54,8 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			try
 			{
-			  parent.SetFocus();
-			  htmlElement.NativeElement.SetFocus();
+				Parent.SetFocus();
+				htmlElement.NativeElement.SetFocus();
 			}
 			catch
 			{
@@ -98,17 +98,17 @@ namespace QAliber.Engine.Controls.Watin
 
 					if (this.ID != null)
 					{
-						prefix = parent.Parent.CodePath + "." + UIType + "(Find.ById(\"" + ID + "\"))";
+						prefix = Parent.Parent.CodePath + "." + UIType + "(Find.ById(\"" + ID + "\"))";
 						_codePath = prefix;
 					}
 					else if (this.Name != null)
 					{
-						prefix = parent.Parent.CodePath + "." + UIType +"(Find.ByName(\"" + Name + "\"))";
+						prefix = Parent.Parent.CodePath + "." + UIType +"(Find.ByName(\"" + Name + "\"))";
 						_codePath = prefix;
 					}
 					else
 					{
-						prefix = parent.CodePath + "[" +Index + "]";
+						prefix = Parent.CodePath + "[" +Index + "]";
 						_codePath = prefix;
 					}
 				}
@@ -234,7 +234,7 @@ namespace QAliber.Engine.Controls.Watin
 					rect.Right - rect.Left, 
 					rect.Bottom - rect.Top);
 
-				UIControlBase ances = parent.Parent;
+				UIControlBase ances = Parent.Parent;
 
 				res.Offset(ances.Layout.Left, ances.Layout.Top);
 				return res;
@@ -246,7 +246,7 @@ namespace QAliber.Engine.Controls.Watin
 		/// <param name="times">number of flashes</param>
 		public void Flash(int times)
 		{
-			parent.SetFocus();
+			Parent.SetFocus();
 			htmlElement.Focus();
 			htmlElement.Flash(times);
 		}
@@ -260,7 +260,9 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get { return htmlElement.Text; }
 		}
-		
+
+		UIControlBase _parent;
+
 		/// <summary>
 		/// Retrieve the parent WatinBaseControl 
 		/// </summary>
@@ -269,7 +271,7 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				return parent;
+				return _parent;
 			}
 		}
 

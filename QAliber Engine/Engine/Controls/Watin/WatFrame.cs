@@ -37,7 +37,7 @@ namespace QAliber.Engine.Controls.Watin
 		#region Constructors
 		public WatFrame(WatinBaseControl parent, WatiN.Core.Frame element, int idx)
 		{
-			this.parent = parent;
+			_parent = parent;
 			if (element != null)
 			{
 				docElement = element;
@@ -89,18 +89,18 @@ namespace QAliber.Engine.Controls.Watin
 
 					if (this.ID != null)
 					{
-						prefix = parent.Parent.CodePath + "." + UIType + "(Find.ById(\"" + ID + "\"))";
+						prefix = Parent.Parent.CodePath + "." + UIType + "(Find.ById(\"" + ID + "\"))";
 						_codePath = prefix;
 					}
 					else if (this.Name != null)
 					{
-						prefix = parent.Parent.CodePath + "." + UIType + "(Find.ByName(\"" + Name + "\"))";
+						prefix = Parent.Parent.CodePath + "." + UIType + "(Find.ByName(\"" + Name + "\"))";
 						_codePath = prefix;
 					}
 
 					else
 					{
-						prefix = parent.CodePath + "[" + Index + "]";
+						prefix = Parent.CodePath + "[" + Index + "]";
 						_codePath = prefix;
 					}
 				}
@@ -201,14 +201,14 @@ namespace QAliber.Engine.Controls.Watin
 					rect.Right - rect.Left,
 					rect.Bottom - rect.Top);
 
-				res.Offset(parent.Parent.Layout.Left, parent.Parent.Layout.Top);
+				res.Offset(Parent.Parent.Layout.Left, Parent.Parent.Layout.Top);
 				return res;
 			}
 		}
 
 		public override void SetFocus()
 		{
-			parent.SetFocus();
+			Parent.SetFocus();
 		}
 	   
 
@@ -223,6 +223,8 @@ namespace QAliber.Engine.Controls.Watin
 		}
 
 
+		UIControlBase _parent;
+
 		/// <summary>
 		/// Retrieve the parent WatinBaseControl 
 		/// </summary>
@@ -231,11 +233,9 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				return parent;
+				return _parent;
 			}
 		}
-
-
 
 		public override List<UIControlBase> Children
 		{

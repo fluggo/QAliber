@@ -91,13 +91,15 @@ namespace QAliber.Engine.Controls.WPF
 			}
 		}
 
+		UIControlBase _parent;
+
 		public override UIControlBase Parent
 		{
 			get
 			{
 				//if (parent == null)
 				//	  parent = (WPFControl)WPFAUTHelpers.TalkToAUT(GetWindowHandle(), "QueryWPFParent", runtimeID.ToString());
-				return parent;
+				return _parent;
 			}
 		}
 
@@ -187,7 +189,7 @@ namespace QAliber.Engine.Controls.WPF
 				{
 					WPFControl wpfChild = new WPFControl(child, updateMethod);
 					children.Add(wpfChild);
-					wpfChild.parent = this;
+					wpfChild._parent = this;
 				}
 			}
 		}

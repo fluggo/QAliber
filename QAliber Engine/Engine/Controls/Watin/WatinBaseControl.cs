@@ -38,22 +38,24 @@ namespace QAliber.Engine.Controls.Watin
 	/// </summary>
 	public class WatinBaseControl : UIControlBase
 	{
+		UIControlBase _parent;
+
 		#region Constructors
 		public WatinBaseControl(WatBrowser browser, WatinBaseTypes type)
 		{
-			parent = browser;
+			_parent = browser;
 			this.type = type;
 		}
 
 		public WatinBaseControl(WatinControl elementWithChilds, WatinBaseTypes type)
 		{
-			parent = elementWithChilds;
+			_parent = elementWithChilds;
 			this.type = type;
 		}
 
 		public WatinBaseControl(WatFrame frameWithChilds, WatinBaseTypes type)
 		{
-			parent = frameWithChilds;
+			_parent = frameWithChilds;
 			this.type = type;
 		}
 		
@@ -63,7 +65,7 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				return parent.CodePath + "." + type;
+				return Parent.CodePath + "." + type;
 			}
 		}
 		/// <summary>
@@ -81,7 +83,7 @@ namespace QAliber.Engine.Controls.Watin
 		/// </summary>
 		public override void SetFocus()
 		{
-			parent.SetFocus();
+			Parent.SetFocus();
 		}
 		
 		public override List<UIControlBase> Children
@@ -136,7 +138,7 @@ namespace QAliber.Engine.Controls.Watin
 					switch (type)
 					{
 						case WatinBaseTypes.Areas:
-							foreach (Area element in ((WatBrowser) parent).BrowserPage.Areas)
+							foreach (Area element in ((WatBrowser) Parent).BrowserPage.Areas)
 							{
 							   
 								children.Add(new WatinControl(this,element,idx));
@@ -145,119 +147,119 @@ namespace QAliber.Engine.Controls.Watin
 							return children;
 
 						case WatinBaseTypes.Buttons:
-							foreach (WatiN.Core.Button element in ((WatBrowser)parent).BrowserPage.Buttons)
+							foreach (WatiN.Core.Button element in ((WatBrowser)Parent).BrowserPage.Buttons)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children; ;
 						case WatinBaseTypes.CheckBoxes:
-							foreach (WatiN.Core.CheckBox element in ((WatBrowser)parent).BrowserPage.CheckBoxes)
+							foreach (WatiN.Core.CheckBox element in ((WatBrowser)Parent).BrowserPage.CheckBoxes)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Divs:
-							foreach (WatiN.Core.Div element in ((WatBrowser)parent).BrowserPage.Divs)
+							foreach (WatiN.Core.Div element in ((WatBrowser)Parent).BrowserPage.Divs)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Forms:
-							foreach (WatiN.Core.Form element in ((WatBrowser)parent).BrowserPage.Forms)
+							foreach (WatiN.Core.Form element in ((WatBrowser)Parent).BrowserPage.Forms)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Frames:
-							foreach (WatiN.Core.Frame element in ((WatBrowser)parent).BrowserPage.Frames)
+							foreach (WatiN.Core.Frame element in ((WatBrowser)Parent).BrowserPage.Frames)
 							{
 								children.Add(new WatFrame(this, element, idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Images:
-							foreach (WatiN.Core.Image element in ((WatBrowser)parent).BrowserPage.Images)
+							foreach (WatiN.Core.Image element in ((WatBrowser)Parent).BrowserPage.Images)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Labels:
-							foreach (WatiN.Core.Label element in ((WatBrowser)parent).BrowserPage.Labels)
+							foreach (WatiN.Core.Label element in ((WatBrowser)Parent).BrowserPage.Labels)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Links:
-							foreach (WatiN.Core.Link element in ((WatBrowser)parent).BrowserPage.Links)
+							foreach (WatiN.Core.Link element in ((WatBrowser)Parent).BrowserPage.Links)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Paras:
-							foreach (WatiN.Core.Para element in ((WatBrowser)parent).BrowserPage.Paras)
+							foreach (WatiN.Core.Para element in ((WatBrowser)Parent).BrowserPage.Paras)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.RadioButtons:
-							foreach (WatiN.Core.RadioButton element in ((WatBrowser)parent).BrowserPage.RadioButtons)
+							foreach (WatiN.Core.RadioButton element in ((WatBrowser)Parent).BrowserPage.RadioButtons)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.SelectLists:
-							foreach (WatiN.Core.SelectList element in ((WatBrowser)parent).BrowserPage.SelectLists)
+							foreach (WatiN.Core.SelectList element in ((WatBrowser)Parent).BrowserPage.SelectLists)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Spans:
-							foreach (WatiN.Core.Span element in ((WatBrowser)parent).BrowserPage.Spans)
+							foreach (WatiN.Core.Span element in ((WatBrowser)Parent).BrowserPage.Spans)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.TableBodies:
-							foreach (WatiN.Core.TableBody element in ((WatBrowser)parent).BrowserPage.TableBodies)
+							foreach (WatiN.Core.TableBody element in ((WatBrowser)Parent).BrowserPage.TableBodies)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.TableCells:
-							foreach (WatiN.Core.TableCell element in ((WatBrowser)parent).BrowserPage.TableCells)
+							foreach (WatiN.Core.TableCell element in ((WatBrowser)Parent).BrowserPage.TableCells)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.TableRows:
-							foreach (WatiN.Core.TableRow element in ((WatBrowser)parent).BrowserPage.TableRows)
+							foreach (WatiN.Core.TableRow element in ((WatBrowser)Parent).BrowserPage.TableRows)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.Tables:
-							foreach (WatiN.Core.Table element in ((WatBrowser)parent).BrowserPage.Tables)
+							foreach (WatiN.Core.Table element in ((WatBrowser)Parent).BrowserPage.Tables)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
 							}
 							return children;
 						case WatinBaseTypes.TextFields:
-							foreach (WatiN.Core.TextField element in ((WatBrowser)parent).BrowserPage.TextFields)
+							foreach (WatiN.Core.TextField element in ((WatBrowser)Parent).BrowserPage.TextFields)
 							{
 								children.Add(new WatinControl(this,element,idx));
 								idx++;
@@ -275,7 +277,7 @@ namespace QAliber.Engine.Controls.Watin
 			switch (type)
 			{
 				case WatinBaseTypes.Areas:
-					foreach (Area element in ((WatinControl)parent).WatinElement.DomContainer.Areas)
+					foreach (Area element in ((WatinControl)Parent).WatinElement.DomContainer.Areas)
 					{
 
 						children.Add(new WatinControl(this, element, idx));
@@ -284,28 +286,28 @@ namespace QAliber.Engine.Controls.Watin
 					return children;
 
 				case WatinBaseTypes.Buttons:
-					foreach (WatiN.Core.Button element in ((WatinControl)parent).WatinElement.DomContainer.Buttons)
+					foreach (WatiN.Core.Button element in ((WatinControl)Parent).WatinElement.DomContainer.Buttons)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children; ;
 				case WatinBaseTypes.CheckBoxes:
-					foreach (WatiN.Core.CheckBox element in ((WatinControl)parent).WatinElement.DomContainer.CheckBoxes)
+					foreach (WatiN.Core.CheckBox element in ((WatinControl)Parent).WatinElement.DomContainer.CheckBoxes)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Divs:
-					foreach (WatiN.Core.Div element in ((WatinControl)parent).WatinElement.DomContainer.Divs)
+					foreach (WatiN.Core.Div element in ((WatinControl)Parent).WatinElement.DomContainer.Divs)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Forms:
-					foreach (WatiN.Core.Form element in ((WatinControl)parent).WatinElement.DomContainer.Forms)
+					foreach (WatiN.Core.Form element in ((WatinControl)Parent).WatinElement.DomContainer.Forms)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
@@ -313,84 +315,84 @@ namespace QAliber.Engine.Controls.Watin
 					return children;
 
 				case WatinBaseTypes.Images:
-					foreach (WatiN.Core.Image element in ((WatinControl)parent).WatinElement.DomContainer.Images)
+					foreach (WatiN.Core.Image element in ((WatinControl)Parent).WatinElement.DomContainer.Images)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Labels:
-					foreach (WatiN.Core.Label element in ((WatinControl)parent).WatinElement.DomContainer.Labels)
+					foreach (WatiN.Core.Label element in ((WatinControl)Parent).WatinElement.DomContainer.Labels)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Links:
-					foreach (WatiN.Core.Link element in ((WatinControl)parent).WatinElement.DomContainer.Links)
+					foreach (WatiN.Core.Link element in ((WatinControl)Parent).WatinElement.DomContainer.Links)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Paras:
-					foreach (WatiN.Core.Para element in ((WatinControl)parent).WatinElement.DomContainer.Paras)
+					foreach (WatiN.Core.Para element in ((WatinControl)Parent).WatinElement.DomContainer.Paras)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.RadioButtons:
-					foreach (WatiN.Core.RadioButton element in ((WatinControl)parent).WatinElement.DomContainer.RadioButtons)
+					foreach (WatiN.Core.RadioButton element in ((WatinControl)Parent).WatinElement.DomContainer.RadioButtons)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.SelectLists:
-					foreach (WatiN.Core.SelectList element in ((WatinControl)parent).WatinElement.DomContainer.SelectLists)
+					foreach (WatiN.Core.SelectList element in ((WatinControl)Parent).WatinElement.DomContainer.SelectLists)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Spans:
-					foreach (WatiN.Core.Span element in ((WatinControl)parent).WatinElement.DomContainer.Spans)
+					foreach (WatiN.Core.Span element in ((WatinControl)Parent).WatinElement.DomContainer.Spans)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TableBodies:
-					foreach (WatiN.Core.TableBody element in ((Table)((WatinControl)parent).WatinElement).TableBodies)
+					foreach (WatiN.Core.TableBody element in ((Table)((WatinControl)Parent).WatinElement).TableBodies)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TableCells:
-					foreach (WatiN.Core.TableCell element in ((TableRow)((WatinControl)parent).WatinElement).TableCells)
+					foreach (WatiN.Core.TableCell element in ((TableRow)((WatinControl)Parent).WatinElement).TableCells)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TableRows:
-					foreach (WatiN.Core.TableRow element in ((Table)((WatinControl)parent).WatinElement).TableRows)
+					foreach (WatiN.Core.TableRow element in ((Table)((WatinControl)Parent).WatinElement).TableRows)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Tables:
-					foreach (WatiN.Core.Table element in ((Table)((WatinControl)parent).WatinElement).Tables)
+					foreach (WatiN.Core.Table element in ((Table)((WatinControl)Parent).WatinElement).Tables)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TextFields:
-					foreach (WatiN.Core.TextField element in ((WatinControl)parent).WatinElement.DomContainer.TextFields)
+					foreach (WatiN.Core.TextField element in ((WatinControl)Parent).WatinElement.DomContainer.TextFields)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
@@ -408,7 +410,7 @@ namespace QAliber.Engine.Controls.Watin
 			switch (type)
 			{
 				case WatinBaseTypes.Areas:
-					foreach (Area element in ((WatFrame)parent).DocElement.Areas)
+					foreach (Area element in ((WatFrame)Parent).DocElement.Areas)
 					{
 
 						children.Add(new WatinControl(this, element, idx));
@@ -417,119 +419,119 @@ namespace QAliber.Engine.Controls.Watin
 					return children;
 
 				case WatinBaseTypes.Buttons:
-					foreach (WatiN.Core.Button element in ((WatFrame)parent).DocElement.Buttons)
+					foreach (WatiN.Core.Button element in ((WatFrame)Parent).DocElement.Buttons)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children; ;
 				case WatinBaseTypes.CheckBoxes:
-					foreach (WatiN.Core.CheckBox element in ((WatFrame)parent).DocElement.CheckBoxes)
+					foreach (WatiN.Core.CheckBox element in ((WatFrame)Parent).DocElement.CheckBoxes)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Divs:
-					foreach (WatiN.Core.Div element in ((WatFrame)parent).DocElement.Divs)
+					foreach (WatiN.Core.Div element in ((WatFrame)Parent).DocElement.Divs)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Forms:
-					foreach (WatiN.Core.Form element in ((WatFrame)parent).DocElement.Forms)
+					foreach (WatiN.Core.Form element in ((WatFrame)Parent).DocElement.Forms)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Frames:
-					foreach (WatiN.Core.Frame element in ((WatFrame)parent).DocElement.Frames)
+					foreach (WatiN.Core.Frame element in ((WatFrame)Parent).DocElement.Frames)
 					{
 						children.Add(new WatFrame(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Images:
-					foreach (WatiN.Core.Image element in ((WatFrame)parent).DocElement.Images)
+					foreach (WatiN.Core.Image element in ((WatFrame)Parent).DocElement.Images)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Labels:
-					foreach (WatiN.Core.Label element in ((WatFrame)parent).DocElement.Labels)
+					foreach (WatiN.Core.Label element in ((WatFrame)Parent).DocElement.Labels)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Links:
-					foreach (WatiN.Core.Link element in ((WatFrame)parent).DocElement.Links)
+					foreach (WatiN.Core.Link element in ((WatFrame)Parent).DocElement.Links)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Paras:
-					foreach (WatiN.Core.Para element in ((WatFrame)parent).DocElement.Paras)
+					foreach (WatiN.Core.Para element in ((WatFrame)Parent).DocElement.Paras)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.RadioButtons:
-					foreach (WatiN.Core.RadioButton element in ((WatFrame)parent).DocElement.RadioButtons)
+					foreach (WatiN.Core.RadioButton element in ((WatFrame)Parent).DocElement.RadioButtons)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.SelectLists:
-					foreach (WatiN.Core.SelectList element in ((WatFrame)parent).DocElement.SelectLists)
+					foreach (WatiN.Core.SelectList element in ((WatFrame)Parent).DocElement.SelectLists)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Spans:
-					foreach (WatiN.Core.Span element in ((WatFrame)parent).DocElement.Spans)
+					foreach (WatiN.Core.Span element in ((WatFrame)Parent).DocElement.Spans)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TableBodies:
-					foreach (WatiN.Core.TableBody element in ((WatFrame)parent).DocElement.TableBodies)
+					foreach (WatiN.Core.TableBody element in ((WatFrame)Parent).DocElement.TableBodies)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TableCells:
-					foreach (WatiN.Core.TableCell element in ((WatFrame)parent).DocElement.TableCells)
+					foreach (WatiN.Core.TableCell element in ((WatFrame)Parent).DocElement.TableCells)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TableRows:
-					foreach (WatiN.Core.TableRow element in ((WatFrame)parent).DocElement.TableRows)
+					foreach (WatiN.Core.TableRow element in ((WatFrame)Parent).DocElement.TableRows)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.Tables:
-					foreach (WatiN.Core.Table element in ((WatFrame)parent).DocElement.Tables)
+					foreach (WatiN.Core.Table element in ((WatFrame)Parent).DocElement.Tables)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
 					}
 					return children;
 				case WatinBaseTypes.TextFields:
-					foreach (WatiN.Core.TextField element in ((WatFrame)parent).DocElement.TextFields)
+					foreach (WatiN.Core.TextField element in ((WatFrame)Parent).DocElement.TextFields)
 					{
 						children.Add(new WatinControl(this, element, idx));
 						idx++;
