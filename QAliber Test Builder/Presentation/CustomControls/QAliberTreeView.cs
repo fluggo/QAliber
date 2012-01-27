@@ -59,12 +59,6 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		public bool EnableComplexCheck
-		{
-			get { return enableComplexCheck; }
-			set { enableComplexCheck = value; }
-		}
-
 
 		#region Overrides
 		protected override void OnBeforeSelect(TreeViewCancelEventArgs e)
@@ -115,47 +109,6 @@ namespace QAliber.Builder.Presentation
 			}
 			startNode = e.Node;
 			base.OnAfterSelect(e);
-		}
-
-		protected override void OnAfterCheck(TreeViewEventArgs e)
-		{
-			if (enableComplexCheck)
-			{
-				if (e.Node.Checked == false)
-				{
-					if (enableDescendantsChecking)
-					{
-						enableComplexCheck = false;
-						SetCheckForDescendants(e.Node, false);
-						enableComplexCheck = true;
-					}
-					if (AreAllSiblingsChecked(e.Node, false))
-					{
-						if (e.Node.Parent != null)
-						{
-							enableDescendantsChecking = false;
-							e.Node.Parent.Checked = false;
-							enableDescendantsChecking = true;
-						}
-					}
-				}
-				else
-				{
-					if (enableDescendantsChecking)
-					{
-						enableComplexCheck = false;
-						SetCheckForDescendants(e.Node, true);
-						enableComplexCheck = true;
-					}
-					if (e.Node.Parent != null)
-					{
-						enableDescendantsChecking = false;
-						e.Node.Parent.Checked = true;
-						enableDescendantsChecking = true;
-					}
-				}
-			}
-			base.OnAfterCheck(e);
 		}
 
 		protected override void OnItemDrag(ItemDragEventArgs e)
@@ -361,8 +314,6 @@ namespace QAliber.Builder.Presentation
 		#endregion
 
 		internal bool cancelMultiSelection = false;
-		private bool enableDescendantsChecking = true;
-		private bool enableComplexCheck;
 		private TreeNode lastOverNode;
 		private QAliberTreeNode nodeToBeDragged;
 		private TreeNode startNode;

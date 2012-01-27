@@ -338,7 +338,6 @@ namespace QAliber.Builder.Presentation
 			this.scenarioTreeView.AllowDrop = true;
 			this.scenarioTreeView.CheckBoxes = true;
 			this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.scenarioTreeView.EnableComplexCheck = true;
 			this.scenarioTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.scenarioTreeView.HideSelection = false;
 			this.scenarioTreeView.ImageIndex = 0;

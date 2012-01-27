@@ -61,13 +61,11 @@ namespace QAliber.Builder.Presentation
 
 		public void FillTree(TestScenario scenario)
 		{
-			scenarioTreeView.EnableComplexCheck = false;
 			QAliberTreeNode node = new QAliberTreeNode(scenario.RootTestCase);
 			SetIconToNode(node, TestCaseResult.None);
 			node.ContextMenuStrip = testCasesMenu;
 			scenarioTreeView.Nodes.Add(node);
 			FillTreeRecursively(node);
-			scenarioTreeView.EnableComplexCheck = true;
 			testScenario = scenario;
 			node.Expand();
 		}
