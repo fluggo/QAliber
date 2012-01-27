@@ -920,7 +920,6 @@ return c;";
 			OnBeforeAnyAction(ControlActionType.Click);
 			if (CheckExistence())
 			{
-				SetFocus();
 				Point p = new Point(Layout.Left + rel.X, Layout.Top + rel.Y);
 				Logger.Log.Default.Info("Clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.Click(button, p);
@@ -961,7 +960,6 @@ return c;";
 			OnBeforeAnyAction(ControlActionType.DoubleClick);
 			if (CheckExistence())
 			{
-				SetFocus();
 				Point p = new Point(Layout.Left + rel.X, Layout.Top + rel.Y);
 				Logger.Log.Default.Info("Double clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.DoubleClick(button, p);
@@ -1016,7 +1014,6 @@ return c;";
 			OnBeforeAnyAction(ControlActionType.Drag);
 			if (CheckExistence())
 			{
-				SetFocus();
 				Point p1 = new Point(Layout.Left + rel1.X, Layout.Top + rel1.Y);
 				Point p2 = new Point(Layout.Left + rel2.X, Layout.Top + rel2.Y);
 				Logger.Log.Default.Info("Dragging mouse on control " + CodePath, "Button : " + button + " , From : " + rel1 + " To : " + rel2, QAliber.Logger.EntryVerbosity.Internal);
@@ -1038,7 +1035,6 @@ return c;";
 			OnBeforeAnyAction(ControlActionType.MoveMouse);
 			if (CheckExistence())
 			{
-				SetFocus();
 				Point p = new Point(Layout.Left + to.X, Layout.Top + to.Y);
 				Win32.LowLevelInput.MoveMouse(p);
 			}
@@ -1148,7 +1144,6 @@ return c;";
 		/// <returns>The bitmap of the control</returns>
 		public System.Drawing.Bitmap GetImage()
 		{
-			SetFocus();
 			System.Threading.Thread.Sleep(1000);
 			return Win32.GDI32.GetImage(Layout);
 		}
