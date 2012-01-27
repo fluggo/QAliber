@@ -121,7 +121,7 @@ namespace QAliber.Engine.Controls.Watin
 		{
 			get
 			{
-				return "Desktop.Watin";
+				return "code:Desktop.Watin";
 			}
 		}
 

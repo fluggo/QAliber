@@ -157,7 +157,7 @@ namespace QAliber.Engine.Controls.UIA
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
 					if (parent == null || (parent is UIAControl) && ((UIAControl)parent).UIAutomationElement.Equals(AutomationElement.RootElement))
-						prefix = "Desktop.UIA";
+						prefix = "code:Desktop.UIA";
 					else
 						prefix = parent.CodePath;
 					string tmpName = Name;

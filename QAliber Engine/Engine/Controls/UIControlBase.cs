@@ -511,11 +511,12 @@ namespace QAliber.Engine.Controls
 			// change them to something that could be evaluated a little more smartly.
 			// Anyhow, the first thing we do is standardize how we retry a path search:
 
-			string code = @"
+			if( path.StartsWith( "code:" ) ) {
+				string code = @"
 UIControlBase c = new UINullControl();
 
 for( int i = 0; i < 3; i++ ) {
-	c = " + path + @";
+	c = " + path.Substring( 5 ) + @";
 
 	if( c.Exists )
 		return c;
@@ -525,7 +526,10 @@ for( int i = 0; i < 3; i++ ) {
 
 return c;";
 
-			return (UIControlBase) CodeEvaluator.Evaluate(code);
+				return (UIControlBase) CodeEvaluator.Evaluate( code );
+			}
+
+			throw new ArgumentException( "Could not recognize control path scheme." );
 		}
 
 		#region Methods

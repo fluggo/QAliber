@@ -112,20 +112,20 @@ namespace QAliber.Engine.Controls.Web
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
 					if (parent == null)
-						_codePath = "Desktop.Web";
+						_codePath = "code:Desktop.Web";
 					else if (this.ID != null)
 					{
-						prefix = "Desktop.Web.CurrentPage.FindByID(\"" + TagName + "\", \"" + ID + "\")";
+						prefix = "code:Desktop.Web.CurrentPage.FindByID(\"" + TagName + "\", \"" + ID + "\")";
 						_codePath = prefix;
 					}
 					else if (this.Name != "")
 					{
-						prefix = "Desktop.Web.CurrentPage.FindByName(\"" + TagName + "\", \"" + Name + "\")";
+						prefix = "code:Desktop.Web.CurrentPage.FindByName(\"" + TagName + "\", \"" + Name + "\")";
 						_codePath = prefix;
 					}
 					else if (useAbsIdx)
 					{
-						prefix = "Desktop.Web.CurrentPage.FindByAbsIndex(\"" + Name + "\", " + AbsoluteIndex + ")";
+						prefix = "code:Desktop.Web.CurrentPage.FindByAbsIndex(\"" + Name + "\", " + AbsoluteIndex + ")";
 						_codePath = prefix;
 					}
 					else

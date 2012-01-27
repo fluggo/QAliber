@@ -41,7 +41,7 @@ namespace QAliber.Engine.Controls.WPF
 		{
 			get
 			{
-				return "Desktop.WPF";
+				return "code:Desktop.WPF";
 			}
 		}
 

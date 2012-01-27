@@ -104,11 +104,11 @@ namespace QAliber.Engine.Controls.Watin
 				switch (browserType)
 				{
 					case browserType.IE:
-						return "Desktop.Watin.IE(\"" + browser.Url + "\")";
+						return "code:Desktop.Watin.IE(\"" + browser.Url + "\")";
 					case browserType.FireFox:
-						return "Desktop.Watin.FF(\"" + browser.Url + "\")";
+						return "code:Desktop.Watin.FF(\"" + browser.Url + "\")";
 					default:
-						return "Desktop.Watin.Chrome(\"" + browser.Url + "\")";
+						return "code:Desktop.Watin.Chrome(\"" + browser.Url + "\")";
 				}
 			}
 		}

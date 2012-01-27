@@ -557,7 +557,7 @@ namespace QAliber.Engine.Controls.Web
 		{
 			get
 			{
-				return "Desktop.Web.CurrentPage";
+				return "code:Desktop.Web.CurrentPage";
 			}
 		}
 

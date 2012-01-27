@@ -54,7 +54,7 @@ namespace QAliber.Engine.Controls.WPF
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
 					if (parent == null || parent is WPFRoot)
-						prefix = "Desktop.WPF";
+						prefix = "code:Desktop.WPF";
 					else
 						prefix = parent.CodePath;
 					_codePath = prefix + "[@\"" + Name + "\", @\"" + ClassName + "\", @\"" + ID + "\"]";

@@ -57,7 +57,7 @@ namespace QAliber.Engine.Controls.Web
 		{
 			get
 			{
-				return "Desktop.Web";
+				return "code:Desktop.Web";
 			}
 		}
 

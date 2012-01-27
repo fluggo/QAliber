@@ -37,7 +37,7 @@ namespace QAliber.Engine.Controls.UIA
 		{
 			get
 			{
-				return "Desktop.UIA";
+				return "code:Desktop.UIA";
 			}
 		}
 
