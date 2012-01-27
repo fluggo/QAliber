@@ -429,16 +429,19 @@ namespace QAliber.TestModel
 
 		private void TestExecutionWorker(object testcase)
 		{
+			bool oldEnabled = ((TestCase) testcase).MarkedForExecution;
+
 			try
 			{
-			   
 				Log.Default.Filename = CreateLogDirectory() + @"\Testcase.qlog";
 				TestCase.ExitTotally = false;
 				TestCase.BranchesToBreak = 0;
+				((TestCase) testcase).MarkedForExecution = true;
 				((TestCase)testcase).Run();
 			}
 			finally
 			{
+				((TestCase) testcase).MarkedForExecution = oldEnabled;
 				Log.Default.Dispose();
 				RaiseExecutionStateChanged(ExecutionState.Executed);
 				RaiseLogResultArrived(Log.Default.Filename);
