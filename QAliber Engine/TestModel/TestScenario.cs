@@ -153,6 +153,10 @@ namespace QAliber.TestModel
 				XmlType = new XmlTypeAttribute() { TypeName = "Size", Namespace = "assembly:WindowsBase" }
 			} );
 
+			attributeOverrides.Add( typeof(System.Windows.Point), new XmlAttributes() {
+				XmlType = new XmlTypeAttribute() { TypeName = "Point", Namespace = "assembly:WindowsBase" }
+			} );
+
 			attributeOverrides.Add( typeof(ScenarioVariable<string>), new XmlAttributes() {
 				XmlType = new XmlTypeAttribute() { TypeName = "StringVariable", Namespace = Util.XmlNamespace }
 			} );
