@@ -57,6 +57,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.radioButtonWeb = new System.Windows.Forms.RadioButton();
 			this._timer = new System.Windows.Forms.Timer(this.components);
 			this._cancelButton = new System.Windows.Forms.Button();
+			this.label1 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// btnCursor
@@ -80,39 +81,38 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			// labelHelp
 			// 
 			this.labelHelp.AutoSize = true;
-			this.labelHelp.Location = new System.Drawing.Point(91, 26);
+			this.labelHelp.Location = new System.Drawing.Point(91, 9);
 			this.labelHelp.Name = "labelHelp";
-			this.labelHelp.Size = new System.Drawing.Size(388, 13);
+			this.labelHelp.Size = new System.Drawing.Size(249, 13);
 			this.labelHelp.TabIndex = 2;
-			this.labelHelp.Text = "Drag the crosshair icon to select the control you want to perform the operation o" +
-	"n";
+			this.labelHelp.Text = "Drag the crosshair to the control you want to target.";
 			// 
 			// labelPath
 			// 
 			this.labelPath.AutoSize = true;
 			this.labelPath.Location = new System.Drawing.Point(12, 51);
 			this.labelPath.Name = "labelPath";
-			this.labelPath.Size = new System.Drawing.Size(65, 13);
+			this.labelPath.Size = new System.Drawing.Size(67, 13);
 			this.labelPath.TabIndex = 3;
-			this.labelPath.Text = "Control Path";
+			this.labelPath.Text = "&Control path:";
 			// 
 			// labelCoord
 			// 
 			this.labelCoord.AutoSize = true;
 			this.labelCoord.Location = new System.Drawing.Point(12, 84);
 			this.labelCoord.Name = "labelCoord";
-			this.labelCoord.Size = new System.Drawing.Size(73, 13);
+			this.labelCoord.Size = new System.Drawing.Size(75, 13);
 			this.labelCoord.TabIndex = 4;
-			this.labelCoord.Text = "Relative Point";
+			this.labelCoord.Text = "&Relative point:";
 			// 
 			// labelType
 			// 
 			this.labelType.AutoSize = true;
 			this.labelType.Location = new System.Drawing.Point(12, 116);
 			this.labelType.Name = "labelType";
-			this.labelType.Size = new System.Drawing.Size(67, 13);
+			this.labelType.Size = new System.Drawing.Size(66, 13);
 			this.labelType.TabIndex = 6;
-			this.labelType.Text = "Control Type";
+			this.labelType.Text = "Control type:";
 			// 
 			// labelTypeDyn
 			// 
@@ -139,7 +139,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.textBoxXY.ReadOnly = true;
 			this.textBoxXY.Size = new System.Drawing.Size(100, 20);
 			this.textBoxXY.TabIndex = 9;
-			this.textBoxXY.Text = "(X,Y)";
+			this.textBoxXY.Text = "X,Y";
 			// 
 			// radioButtonUIA
 			// 
@@ -150,7 +150,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.radioButtonUIA.Size = new System.Drawing.Size(89, 17);
 			this.radioButtonUIA.TabIndex = 10;
 			this.radioButtonUIA.TabStop = true;
-			this.radioButtonUIA.Text = "UIAutomation";
+			this.radioButtonUIA.Text = "&UIAutomation";
 			this.radioButtonUIA.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonWeb
@@ -160,7 +160,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.radioButtonWeb.Name = "radioButtonWeb";
 			this.radioButtonWeb.Size = new System.Drawing.Size(102, 17);
 			this.radioButtonWeb.TabIndex = 11;
-			this.radioButtonWeb.Text = "Internet Explorer";
+			this.radioButtonWeb.Text = "&Internet Explorer";
 			this.radioButtonWeb.UseVisualStyleBackColor = true;
 			// 
 			// _timer
@@ -178,6 +178,15 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this._cancelButton.Text = "Cancel";
 			this._cancelButton.UseVisualStyleBackColor = true;
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(91, 27);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(340, 13);
+			this.label1.TabIndex = 13;
+			this.label1.Text = "You can also press Scroll Lock to capture the control under the cursor.";
+			// 
 			// UIControlLocatorForm
 			// 
 			this.AcceptButton = this.btnOk;
@@ -185,6 +194,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this._cancelButton;
 			this.ClientSize = new System.Drawing.Size(538, 150);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this._cancelButton);
 			this.Controls.Add(this.radioButtonWeb);
 			this.Controls.Add(this.radioButtonUIA);
@@ -197,8 +207,11 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.Controls.Add(this.labelHelp);
 			this.Controls.Add(this.textBox);
 			this.Controls.Add(this.btnCursor);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "UIControlLocatorForm";
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Control Locator";
 			this.ResumeLayout(false);
@@ -221,5 +234,6 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private System.Windows.Forms.RadioButton radioButtonWeb;
 		private System.Windows.Forms.Timer _timer;
 		private System.Windows.Forms.Button _cancelButton;
+		private System.Windows.Forms.Label label1;
 	}
 }

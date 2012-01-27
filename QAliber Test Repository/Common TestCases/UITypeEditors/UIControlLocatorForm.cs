@@ -82,27 +82,12 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 						Cursor = Cursors.Default;
 						btnCursor.BackgroundImage = Properties.Resources.Crosshair;
 						capturing = false;
-						UIControlBase control = null;
-						if (radioButtonWeb.Checked)
-						{
-							control = Desktop.Web.GetControlFromCursor();
-						}
-						else
-						{
-							control = UIAControl.GetControlByType(capturedElement);
-						}
-						if (control != null)
-						{
-							textBox.Text = control.CodePath;
-							labelTypeDyn.Text = control.UIType;
-							coordinate = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
-							textBoxXY.Text = coordinate.ToString();
-						}
+						ShowCapturedElement();
 						break;
 					}
 					case 0x0200: { //MouseMove
 						System.Windows.Point point = new System.Windows.Point( Cursor.Position.X, Cursor.Position.Y );
-						RecaptureElement( point );
+						RecaptureElement( point, true );
 					}
 
 						break;
@@ -144,10 +129,10 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				GDI32.HighlightWindow(capturedElement);
 			}
 
-			RecaptureElement( point );
+			RecaptureElement( point, true );
 		}
 
-		private void RecaptureElement( System.Windows.Point point ) {
+		private void RecaptureElement( System.Windows.Point point, bool highlight ) {
 			AutomationElement element = null;
 
 			try {
@@ -157,17 +142,40 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			catch {
 			}
 
-			if (element != null && !element.Equals(capturedElement))
+			if ( highlight && element != null && !element.Equals(capturedElement))
 			{
 				Debug.WriteLine( "Changing highlighted element" );
 
 				GDI32.RedrawWindow(capturedElement);
 				GDI32.HighlightWindow(element);
-				capturedElement = element;
 
 				// Restart the timer to give a second's delay before delivering the mouse move
 				_timer.Stop();
 				_timer.Start();
+			}
+
+			capturedElement = element;
+		}
+
+		private void ShowCapturedElement() {
+			if( capturedElement == null )
+				return;
+
+			UIControlBase control = null;
+			if (radioButtonWeb.Checked)
+			{
+				control = Desktop.Web.GetControlFromCursor();
+			}
+			else
+			{
+				control = UIAControl.GetControlByType(capturedElement);
+			}
+			if (control != null)
+			{
+				textBox.Text = control.CodePath;
+				labelTypeDyn.Text = control.UIType;
+				coordinate = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
+				textBoxXY.Text = coordinate.ToString();
 			}
 		}
 
@@ -190,7 +198,24 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private void btnOk_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
-			Close();
+		}
+
+		protected override void OnLoad( EventArgs e ) {
+			base.OnLoad(e);
+
+			_captureHotkey = new ManagedWinapi.Hotkey() { KeyCode = Keys.Scroll };
+
+			_captureHotkey.HotkeyPressed += delegate( object sender, EventArgs ev ) {
+				System.Windows.Point point = new System.Windows.Point( Cursor.Position.X, Cursor.Position.Y );
+				RecaptureElement( point, false );
+				ShowCapturedElement();
+			};
+
+			_captureHotkey.Enabled = true;
+		}
+
+		protected override void OnClosed(EventArgs e) {
+			_captureHotkey.Dispose();
 		}
 
 		private Form form;
@@ -198,6 +223,6 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private AutomationElement capturedElement;
 		private System.Windows.Point coordinate;
 
-		
+		ManagedWinapi.Hotkey _captureHotkey;
 	}
 }
