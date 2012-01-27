@@ -1209,8 +1209,7 @@ return c;";
 	   
 		protected bool CheckExistence()
 		{
-			if (Layout == Rect.Empty || Layout.X < -Layout.Width || Layout.Y < -Layout.Height)
-			{
+			if( !Visible ) {
 				QAliber.Logger.Log.Default.Error("Control '" + Name + "' was not found on screen", CodePath, QAliber.Logger.EntryVerbosity.Internal);
 				return false;
 			}
