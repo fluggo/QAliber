@@ -56,6 +56,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.radioButtonUIA = new System.Windows.Forms.RadioButton();
 			this.radioButtonWeb = new System.Windows.Forms.RadioButton();
 			this._timer = new System.Windows.Forms.Timer(this.components);
+			this._cancelButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btnCursor
@@ -123,11 +124,11 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			// 
 			// btnOk
 			// 
-			this.btnOk.Location = new System.Drawing.Point(452, 111);
+			this.btnOk.Location = new System.Drawing.Point(370, 115);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(75, 23);
 			this.btnOk.TabIndex = 8;
-			this.btnOk.Text = "Ok";
+			this.btnOk.Text = "OK";
 			this.btnOk.UseVisualStyleBackColor = true;
 			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
@@ -167,11 +168,24 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this._timer.Interval = 1000;
 			this._timer.Tick += new System.EventHandler(this.HandleTimerTick);
 			// 
+			// _cancelButton
+			// 
+			this._cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this._cancelButton.Location = new System.Drawing.Point(451, 115);
+			this._cancelButton.Name = "_cancelButton";
+			this._cancelButton.Size = new System.Drawing.Size(75, 23);
+			this._cancelButton.TabIndex = 12;
+			this._cancelButton.Text = "Cancel";
+			this._cancelButton.UseVisualStyleBackColor = true;
+			// 
 			// UIControlLocatorForm
 			// 
+			this.AcceptButton = this.btnOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this._cancelButton;
 			this.ClientSize = new System.Drawing.Size(538, 150);
+			this.Controls.Add(this._cancelButton);
 			this.Controls.Add(this.radioButtonWeb);
 			this.Controls.Add(this.radioButtonUIA);
 			this.Controls.Add(this.textBoxXY);
@@ -206,5 +220,6 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		private System.Windows.Forms.RadioButton radioButtonUIA;
 		private System.Windows.Forms.RadioButton radioButtonWeb;
 		private System.Windows.Forms.Timer _timer;
+		private System.Windows.Forms.Button _cancelButton;
 	}
 }

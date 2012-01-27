@@ -36,16 +36,22 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		{
 			if (value is string)
 			{
-				
+				ICoordinate coordable = context.Instance as ICoordinate;
+
 				UIControlLocatorForm dialog = new UIControlLocatorForm();
-				if (dialog.ShowDialog() == DialogResult.OK)
-				{
-					if (context.Instance is ICoordinate)
-					{
-						((ICoordinate)context.Instance).Coordinate = dialog.Coordinate;
-					}
+				dialog.ControlPath = (string) value;
+
+				if( coordable != null )
+					dialog.Coordinate = coordable.Coordinate;
+
+				if( dialog.ShowDialog() == DialogResult.OK ) {
+					if( coordable != null )
+						coordable.Coordinate = dialog.Coordinate;
+
 					return dialog.ControlPath;
 				}
+
+				return value;
 			}
 			return base.EditValue(context, provider, value);
 		}

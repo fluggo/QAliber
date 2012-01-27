@@ -49,17 +49,22 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 
 		public string ControlPath
 		{
-			get
-			{
+			get {
 				return textBox.Text;
+			}
+			set {
+				textBox.Text = value;
 			}
 		}
 
 		public System.Windows.Point Coordinate
 		{
-			get
-			{
+			get {
 				return coordinate;
+			}
+			set {
+				coordinate = value;
+				textBoxXY.Text = coordinate.ToString();
 			}
 		}
 
