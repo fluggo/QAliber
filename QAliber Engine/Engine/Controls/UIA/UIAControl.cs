@@ -40,6 +40,20 @@ namespace QAliber.Engine.Controls.UIA
 	public abstract class UIAControl : UIControlBase
 	{
 		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
+		static CacheRequest __searchCache;
+
+		static UIAControl() {
+			// Caches those properties we expect in the UIAControl
+			__searchCache = new CacheRequest();
+			__searchCache.AutomationElementMode = AutomationElementMode.Full;
+			__searchCache.TreeScope = TreeScope.Element;
+			__searchCache.Add( AutomationElement.AutomationIdProperty );
+			__searchCache.Add( AutomationElement.NameProperty );
+			__searchCache.Add( AutomationElement.ClassNameProperty );
+			__searchCache.Add( AutomationElement.ControlTypeProperty );
+			__searchCache.Add( AutomationElement.NativeWindowHandleProperty );
+			__searchCache.Add( AutomationElement.ProcessIdProperty );
+		}
 
 		#region Constructores
 		/// <summary>
@@ -72,10 +86,16 @@ namespace QAliber.Engine.Controls.UIA
 		{
 			get
 			{
-				if (children == null)
-				{
+				if( children == null ) {
 					children = new List<UIControlBase>();
-					AutomationElementCollection elements = automationElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.IsControlElementProperty, true));
+
+					AutomationElementCollection elements;
+
+					using( __searchCache.Activate() ) {
+						elements = automationElement.FindAll(
+							TreeScope.Children, new PropertyCondition( AutomationElement.IsControlElementProperty, true ) );
+					}
+
 					foreach (AutomationElement element in elements)
 					{
 						UIAControl control = UIAControl.GetControlByType(element);
@@ -135,13 +155,13 @@ namespace QAliber.Engine.Controls.UIA
 			{
 				if (_id == null)
 				{
-					if (automationElement.Current.AutomationId == "" ||
-						IsIdHandle(automationElement.Current.AutomationId))
+					if (automationElement.Cached.AutomationId == "" ||
+						IsIdHandle(automationElement.Cached.AutomationId))
 					{
 						_id = UIType;
 					}
 					else
-						_id = automationElement.Current.AutomationId;
+						_id = automationElement.Cached.AutomationId;
 
 				}
 				return _id;
@@ -178,46 +198,22 @@ namespace QAliber.Engine.Controls.UIA
 			get { return automationElement.Current.BoundingRectangle; }
 		}
 
-		/// <summary>
-		/// The type of the control as it exposed by the UI Automation framework.
-		/// <example>
-		/// <code>
-		///  UIAButton button1 = null;
-		///    UIAPane win = Desktop.UIA[@"", @"Shell_TrayWnd", @"UIAPane"] as UIAPane;
-		///    foreach (UIControl control in win.Children)
-		///    {
-		///		   if (control.Type == System.Windows.Automation.ControlType.Button)
-		///		   {
-		///			   button1 = control as UIAButton;
-		///			   break;
-		///		   }
-		///    }
-		///    button1.Click();
-		/// </code>
-		/// </example>
-		/// </summary>
-		[Browsable(false)]
-		public virtual ControlType UIAControlType
-		{
-			get { return automationElement.Current.ControlType; }
-		}
-
 		public override string Name
 		{
-			get { return automationElement.Current.Name; }
+			get { return automationElement.Cached.Name; }
 		}
 
 		
 		public override string ClassName
 		{
-			get { return automationElement.Current.ClassName; }
+			get { return automationElement.Cached.ClassName; }
 		}
 
 		public override IntPtr Handle
 		{
 			get
 			{
-				return new IntPtr( automationElement.Current.NativeWindowHandle );
+				return new IntPtr( automationElement.Cached.NativeWindowHandle );
 			}
 		}
 
@@ -241,7 +237,7 @@ namespace QAliber.Engine.Controls.UIA
 
 		public override Process Process
 		{
-			get { return System.Diagnostics.Process.GetProcessById(automationElement.Current.ProcessId); }
+			get { return System.Diagnostics.Process.GetProcessById(automationElement.Cached.ProcessId); }
 		}
 
 		/// <summary>
@@ -341,10 +337,10 @@ namespace QAliber.Engine.Controls.UIA
 			if (IsWinForms)
 			{
 				File.Delete(UIControlBase.tmpFile);
-				Injector.Launch(new IntPtr(UIAutomationElement.Current.NativeWindowHandle),
+				Injector.Launch(new IntPtr(UIAutomationElement.Cached.NativeWindowHandle),
 							this.GetType().Assembly.Location, 
 							typeof(UIAControl).FullName, "QueryWinForms",
-							UIAutomationElement.Current.NativeWindowHandle.ToString());
+							UIAutomationElement.Cached.NativeWindowHandle.ToString());
 				int i = 0;
 				while (!File.Exists(UIControlBase.tmpFile))
 				{
@@ -385,83 +381,85 @@ namespace QAliber.Engine.Controls.UIA
 		/// <returns></returns>
 		public static UIAControl GetControlByType(AutomationElement element)
 		{
-			if (element.Current.ControlType.Id == ControlType.Button.Id)
+			int typeId = element.Cached.ControlType.Id;
+
+			if (typeId == ControlType.Button.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.Calendar.Id)
+			else if (typeId == ControlType.Calendar.Id)
 				return new UIATable(element);
-			else if (element.Current.ControlType.Id == ControlType.CheckBox.Id)
+			else if (typeId == ControlType.CheckBox.Id)
 				return new UIACheckBox(element);
-			else if (element.Current.ControlType.Id == ControlType.ComboBox.Id)
+			else if (typeId == ControlType.ComboBox.Id)
 				return new UIAComboBox(element);
-			else if (element.Current.ControlType.Id == ControlType.Custom.Id)
+			else if (typeId == ControlType.Custom.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.DataItem.Id)
+			else if (typeId == ControlType.DataItem.Id)
 				return new UIAListItem(element);
-			else if (element.Current.ControlType.Id == ControlType.DataGrid.Id)
+			else if (typeId == ControlType.DataGrid.Id)
 				return new UIATable(element);
-			else if (element.Current.ControlType.Id == ControlType.Document.Id)
+			else if (typeId == ControlType.Document.Id)
 				return new UIADocument(element);
-			else if (element.Current.ControlType.Id == ControlType.Edit.Id)
+			else if (typeId == ControlType.Edit.Id)
 				return new UIAEditBox(element);
-			else if (element.Current.ControlType.Id == ControlType.Group.Id)
+			else if (typeId == ControlType.Group.Id)
 				return new UIAGroup(element);
-			else if (element.Current.ControlType.Id == ControlType.Header.Id)
+			else if (typeId == ControlType.Header.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.HeaderItem.Id)
+			else if (typeId == ControlType.HeaderItem.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.Hyperlink.Id)
+			else if (typeId == ControlType.Hyperlink.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.Image.Id)
+			else if (typeId == ControlType.Image.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.List.Id)
+			else if (typeId == ControlType.List.Id)
 				return new UIAListBox(element);
-			else if (element.Current.ControlType.Id == ControlType.ListItem.Id)
+			else if (typeId == ControlType.ListItem.Id)
 				return new UIAListItem(element);
-			else if (element.Current.ControlType.Id == ControlType.Menu.Id)
+			else if (typeId == ControlType.Menu.Id)
 				return new UIAMenu(element);
-			else if (element.Current.ControlType.Id == ControlType.MenuBar.Id)
+			else if (typeId == ControlType.MenuBar.Id)
 				return new UIAMenu(element);
-			else if (element.Current.ControlType.Id == ControlType.MenuItem.Id)
+			else if (typeId == ControlType.MenuItem.Id)
 				return new UIAMenuItem(element);
-			else if (element.Current.ControlType.Id == ControlType.Pane.Id)
+			else if (typeId == ControlType.Pane.Id)
 				return new UIAPane(element);
-			else if (element.Current.ControlType.Id == ControlType.ProgressBar.Id)
+			else if (typeId == ControlType.ProgressBar.Id)
 				return new UIARange(element);
-			else if (element.Current.ControlType.Id == ControlType.RadioButton.Id)
+			else if (typeId == ControlType.RadioButton.Id)
 				return new UIARadioButton(element);
-			else if (element.Current.ControlType.Id == ControlType.Separator.Id)
+			else if (typeId == ControlType.Separator.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.ScrollBar.Id)
+			else if (typeId == ControlType.ScrollBar.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.Slider.Id)
+			else if (typeId == ControlType.Slider.Id)
 				return new UIARange(element);
-			else if (element.Current.ControlType.Id == ControlType.Spinner.Id)
+			else if (typeId == ControlType.Spinner.Id)
 				return new UIARange(element);
-			else if (element.Current.ControlType.Id == ControlType.SplitButton.Id)
+			else if (typeId == ControlType.SplitButton.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.StatusBar.Id)
+			else if (typeId == ControlType.StatusBar.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.Tab.Id)
+			else if (typeId == ControlType.Tab.Id)
 				return new UIATab(element);
-			else if (element.Current.ControlType.Id == ControlType.TabItem.Id)
+			else if (typeId == ControlType.TabItem.Id)
 				return new UIATabItem(element);
-			else if (element.Current.ControlType.Id == ControlType.Table.Id)
+			else if (typeId == ControlType.Table.Id)
 				return new UIATable(element);
-			else if (element.Current.ControlType.Id == ControlType.Text.Id)
+			else if (typeId == ControlType.Text.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.Thumb.Id)
+			else if (typeId == ControlType.Thumb.Id)
 				return new UIALabel(element);
-			else if (element.Current.ControlType.Id == ControlType.TitleBar.Id)
+			else if (typeId == ControlType.TitleBar.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.ToolBar.Id)
+			else if (typeId == ControlType.ToolBar.Id)
 				return new UIAToolbar(element);
-			else if (element.Current.ControlType.Id == ControlType.ToolTip.Id)
+			else if (typeId == ControlType.ToolTip.Id)
 				return new UIAButton(element);
-			else if (element.Current.ControlType.Id == ControlType.Tree.Id)
+			else if (typeId == ControlType.Tree.Id)
 				return new UIATree(element);
-			else if (element.Current.ControlType.Id == ControlType.TreeItem.Id)
+			else if (typeId == ControlType.TreeItem.Id)
 				return new UIATreeItem(element);
-			else if (element.Current.ControlType.Id == ControlType.Window.Id)
+			else if (typeId == ControlType.Window.Id)
 				return new UIAWindow(element);
 			else
 				return null;
