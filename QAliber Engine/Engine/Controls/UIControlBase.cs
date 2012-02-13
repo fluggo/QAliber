@@ -15,6 +15,7 @@
  
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows;
@@ -1226,7 +1227,6 @@ return c;";
 		#region Private Fields
 
 		protected List<UIControlBase> children = null;
-		protected Dictionary<string, object> extendedProperties = new Dictionary<string,object>();
 
 		internal static readonly string tmpFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\qaliberTmpObj.bin";
 		#endregion
@@ -1261,74 +1261,59 @@ return c;";
 
 		#region ICustomTypeDescriptor Members
 
-		public AttributeCollection GetAttributes()
-		{
+		AttributeCollection ICustomTypeDescriptor.GetAttributes() {
 			return TypeDescriptor.GetAttributes(this, true);
 		}
 
-		public string GetClassName()
-		{
+		string ICustomTypeDescriptor.GetClassName() {
 			return TypeDescriptor.GetClassName(this, true);
 		}
 
-		public string GetComponentName()
-		{
+		string ICustomTypeDescriptor.GetComponentName() {
 			return TypeDescriptor.GetComponentName(this, true);
 		}
 
-		public TypeConverter GetConverter()
-		{
+		TypeConverter ICustomTypeDescriptor.GetConverter() {
 			return TypeDescriptor.GetConverter(this, true);
 		}
 
-		public EventDescriptor GetDefaultEvent()
-		{
+		EventDescriptor ICustomTypeDescriptor.GetDefaultEvent() {
 			return TypeDescriptor.GetDefaultEvent(this, true);
 		}
 
-		public PropertyDescriptor GetDefaultProperty()
-		{
+		PropertyDescriptor ICustomTypeDescriptor.GetDefaultProperty() {
 			return TypeDescriptor.GetDefaultProperty(this, true);
 		}
 
-		public object GetEditor(Type editorBaseType)
-		{
+		object ICustomTypeDescriptor.GetEditor(Type editorBaseType) {
 			return TypeDescriptor.GetEditor(this, editorBaseType, true);
 		}
 
-		public EventDescriptorCollection GetEvents(Attribute[] attributes)
-		{
+		EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[] attributes) {
 			return TypeDescriptor.GetEvents(this, attributes, true);
 		}
 
-		public EventDescriptorCollection GetEvents()
-		{
+		EventDescriptorCollection ICustomTypeDescriptor.GetEvents() {
 			return TypeDescriptor.GetEvents(this, true);
 		}
 
-		public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
-		{
-			PropertyDescriptorCollection props = new PropertyDescriptorCollection(null);
-			foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(this, attributes, true))
-			{
-				props.Add(prop);
-			}
-			Attribute[] attrs = new Attribute[] { new CategoryAttribute("Additional Properites") };
-			Dictionary<string, object>.Enumerator i = extendedProperties.GetEnumerator();
-			while (i.MoveNext())
-			{
-				props.Add(new ExtendedPropertyDescriptor(i.Current.Key, i.Current.Value, attrs));
-			}
+		/// <summary>
+		/// Gets a collection of properties defined on this object.
+		/// </summary>
+		/// <param name="attributes">Optional array of attributes to use as a filter.</param>
+		/// <returns>A <see cref="PropertyDescriptorCollection"/> with all properties listed on the object.</returns>
+		public virtual PropertyDescriptorCollection GetProperties( Attribute[] attributes ) {
+			PropertyDescriptorCollection props = new PropertyDescriptorCollection(
+				TypeDescriptor.GetProperties( this, attributes, true ).Cast<PropertyDescriptor>().ToArray() );
+
 			return props;
 		}
 
-		public PropertyDescriptorCollection GetProperties()
-		{
-			return TypeDescriptor.GetProperties(this, true);
+		public PropertyDescriptorCollection GetProperties() {
+			return this.GetProperties( null );
 		}
 
-		public object GetPropertyOwner(PropertyDescriptor pd)
-		{
+		object ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor pd) {
 			return this;
 		}
 

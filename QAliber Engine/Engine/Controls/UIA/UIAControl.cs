@@ -39,6 +39,8 @@ namespace QAliber.Engine.Controls.UIA
 	[Serializable]
 	public abstract class UIAControl : UIControlBase
 	{
+		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
+
 		#region Constructores
 		/// <summary>
 		/// Abstract class Ctor, used to initiate the base UI control with the UI Automation element.
@@ -355,10 +357,25 @@ namespace QAliber.Engine.Controls.UIA
 				{
 					BinaryFormatter bf = new BinaryFormatter();
 					bf.Binder = new WPF.AllowAllAssemblyVersionsDeserializationBinder();
-					extendedProperties = bf.Deserialize(fs) as Dictionary<string, object>;
+					_extendedProperties = bf.Deserialize(fs) as Dictionary<string, object>;
 
 				}
 			}
+		}
+
+		public override PropertyDescriptorCollection GetProperties( Attribute[] attributes ) {
+			// BJC: Adds in the properties that would have been grabbed from the WinForms spy DLL.
+			// I prefer not to do things that way, so I'm planning to add in all the UI Automation properties
+			// I can find.
+			PropertyDescriptorCollection props = base.GetProperties( attributes );
+
+			Attribute[] attrs = new Attribute[] { new CategoryAttribute( "Additional Properties" ) };
+
+			foreach( var kv in _extendedProperties ) {
+				props.Add( new ExtendedPropertyDescriptor( kv.Key, kv.Value, attrs ) );
+			}
+
+			return props;
 		}
 
 		/// <summary>

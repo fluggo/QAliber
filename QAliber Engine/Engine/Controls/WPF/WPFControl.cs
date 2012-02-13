@@ -31,6 +31,8 @@ namespace QAliber.Engine.Controls.WPF
 	[Serializable]
 	public class WPFControl : UIControlBase
 	{
+		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
+
 		public WPFControl(FrameworkElement wpfElement, UpdateMethod updateMethod)
 		{
 			children = new List<UIControlBase>();
@@ -215,7 +217,7 @@ namespace QAliber.Engine.Controls.WPF
 								BinaryFormatter bf = new BinaryFormatter();
 								bf.Serialize(ms, obj);
 							}
-							extendedProperties.Add(prop.Name, obj);
+							_extendedProperties.Add(prop.Name, obj);
 						}
 						catch (System.Runtime.Serialization.SerializationException)
 						{
@@ -224,6 +226,18 @@ namespace QAliber.Engine.Controls.WPF
 				   
 				}
 			}
+		}
+
+		public override PropertyDescriptorCollection GetProperties( Attribute[] attributes ) {
+			PropertyDescriptorCollection props = base.GetProperties( attributes );
+
+			Attribute[] attrs = new Attribute[] { new CategoryAttribute( "Additional Properties" ) };
+
+			foreach( var kv in _extendedProperties ) {
+				props.Add( new ExtendedPropertyDescriptor( kv.Key, kv.Value, attrs ) );
+			}
+
+			return props;
 		}
 
 		private IntPtr GetWindowHandle()
