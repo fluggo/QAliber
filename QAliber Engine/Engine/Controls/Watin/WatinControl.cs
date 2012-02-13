@@ -275,25 +275,16 @@ namespace QAliber.Engine.Controls.Watin
 			}
 		}
 
+		public override UIControlBase[] GetChildren() {
+			WatinBaseControl parent = ((WatinBaseControl )Parent);
 
-		public override List<UIControlBase> Children
-		{
-			get
-			{
-				if (children == null && ((WatinBaseControl )Parent).BaseType == WatinBaseTypes.Tables)
-				{
-					children = new List<UIControlBase>();
-					children.Add(new WatinBaseControl(this, WatinBaseTypes.TableRows));
-				}
+			if( parent.BaseType == WatinBaseTypes.Tables )
+				return new UIControlBase[] { new WatinBaseControl( this, WatinBaseTypes.Tables ) };
 
-				if (children == null && ((WatinBaseControl)Parent).BaseType == WatinBaseTypes.TableRows)
-				{
-					children = new List<UIControlBase>();
-					children.Add(new WatinBaseControl(this, WatinBaseTypes.TableCells));
-				}
+			if( parent.BaseType == WatinBaseTypes.TableRows )
+				return new UIControlBase[] { new WatinBaseControl( this, WatinBaseTypes.TableCells ) };
 
-				return children;
-			}
+			return base.GetChildren();
 		}
 
 		/// <summary>

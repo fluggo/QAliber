@@ -37,20 +37,11 @@ namespace QAliber.Engine.Controls.Web
 		public event EventHandler<NavigationEventArgs> AfterNavigationInAnyPage;
 
 
-		public override List<UIControlBase> Children
-		{
-			get
-			{
-				
-				if (children == null)
-				{
-					children = new List<UIControlBase>();
-					if (CurrentPage != null)
-						children.Add(CurrentPage);
-				}
-				return children;
-				
-			}
+		public override UIControlBase[] GetChildren() {
+			if( CurrentPage != null )
+				return new UIControlBase[] { CurrentPage };
+
+			return new UIControlBase[0];
 		}
 
 		public override string CodePath

@@ -32,10 +32,11 @@ namespace QAliber.Engine.Controls.WPF
 	public class WPFControl : UIControlBase
 	{
 		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
+		List<UIControlBase> _children;
 
 		public WPFControl(FrameworkElement wpfElement, UpdateMethod updateMethod)
 		{
-			children = new List<UIControlBase>();
+			_children = new List<UIControlBase>();
 			BuildFromVisual(wpfElement, updateMethod);
 		}
 
@@ -78,20 +79,8 @@ namespace QAliber.Engine.Controls.WPF
 			}
 		}
 
-		public override List<UIControlBase> Children
-		{
-			get
-			{
-				//if (children == null)
-				//{
-				//	  WPFControl control = (WPFControl)WPFAUTHelpers.TalkToAUT(GetWindowHandle(), "QueryWPFChildren", runtimeID.ToString());
-				//	  if (control != null)
-				//	  {
-				//		  children = control.Children;
-				//	  }
-				//}
-				return children;
-			}
+		public override UIControlBase[] GetChildren() {
+			return _children.ToArray();
 		}
 
 		UIControlBase _parent;
@@ -111,7 +100,6 @@ namespace QAliber.Engine.Controls.WPF
 			base.Refresh();
 			_codePath = null;
 			_id = null;
-			children = null;
 		}
 
 		private int runtimeID;
@@ -191,7 +179,7 @@ namespace QAliber.Engine.Controls.WPF
 				if (child != null)
 				{
 					WPFControl wpfChild = new WPFControl(child, updateMethod);
-					children.Add(wpfChild);
+					_children.Add(wpfChild);
 					wpfChild._parent = this;
 				}
 			}

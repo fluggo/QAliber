@@ -38,7 +38,7 @@ namespace QAliber.Engine.Controls.Web
 			get
 			{
 				List<HTMLLi> items = new List<HTMLLi>();
-				foreach (UIControlBase item in this.Children)
+				foreach (UIControlBase item in this.GetChildren())
 				{
 					if (((WebControl)item).TagName.ToLower() == "li")
 						items.Add((HTMLLi)item);

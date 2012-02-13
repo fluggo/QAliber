@@ -113,54 +113,29 @@ namespace QAliber.Engine.Controls.Watin
 			}
 		}
 
-		public override List<UIControlBase> Children
-		{
-			get
-			{
-					if (children == null)
-					{
-						children = new List<UIControlBase>();
+		public override UIControlBase[] GetChildren() {
+			List<UIControlBase> children = new List<UIControlBase>();
 
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Areas));
-						
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Buttons));
-						
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.CheckBoxes));
-					   
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Divs));
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Areas ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Buttons ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.CheckBoxes ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Divs ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Forms ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Frames ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Images ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Labels ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Links ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Paras ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.RadioButtons ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.SelectLists ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Spans ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.TableBodies ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.TableCells ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.TableRows ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.Tables ) );
+			children.Add( new WatinBaseControl( this, WatinBaseTypes.TextFields ) );
 
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Forms));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Frames));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Images));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Labels));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Links));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Paras));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.RadioButtons));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.SelectLists));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Spans));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.TableBodies));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.TableCells));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.TableRows));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.Tables));
-
-						children.Add(new WatinBaseControl(this, WatinBaseTypes.TextFields));
-
-						
-					}
-					return children;
-			}
+			return children.ToArray();
 		}
 
 		public override UIControlBase Parent

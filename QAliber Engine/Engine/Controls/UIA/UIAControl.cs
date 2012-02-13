@@ -82,33 +82,28 @@ namespace QAliber.Engine.Controls.UIA
 			get { return automationElement; }
 		}
 
-		public override List<UIControlBase> Children
-		{
-			get
-			{
-				if( children == null ) {
-					children = new List<UIControlBase>();
+		public override UIControlBase[] GetChildren() {
+			List<UIControlBase> children = new List<UIControlBase>();
 
-					AutomationElementCollection elements;
+			AutomationElementCollection elements;
 
-					using( __searchCache.Activate() ) {
-						elements = automationElement.FindAll(
-							TreeScope.Children, new PropertyCondition( AutomationElement.IsControlElementProperty, true ) );
-					}
-
-					foreach (AutomationElement element in elements)
-					{
-						UIAControl control = UIAControl.GetControlByType(element);
-						if (control != null)
-						{
-							control.SetIndex( children.Count );
-							children.Add(control);
-							control._parent = this;
-						}
-					}
-				}
-				return children;
+			using( __searchCache.Activate() ) {
+				elements = automationElement.FindAll(
+					TreeScope.Children, new PropertyCondition( AutomationElement.IsControlElementProperty, true ) );
 			}
+
+			foreach (AutomationElement element in elements)
+			{
+				UIAControl control = UIAControl.GetControlByType(element);
+				if (control != null)
+				{
+					control.SetIndex( children.Count );
+					children.Add(control);
+					control._parent = this;
+				}
+			}
+
+			return children.ToArray();
 		}
 
 		int _index;
@@ -264,7 +259,7 @@ namespace QAliber.Engine.Controls.UIA
 					if (p != null)
 					{
 						List<UIControlBase> siblings = new List<UIControlBase>();
-						siblings.AddRange(p.Children);
+						siblings.AddRange(p.GetChildren());
 						if (siblings.Count > 0)
 						{
 							siblings.Sort(new IDControlSorter());

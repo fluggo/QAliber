@@ -406,8 +406,6 @@ namespace QAliber.Engine.Controls.Web
 			get { return htmlElement.title; }
 		}
 
-		
-		
 		/// <summary>
 		/// Retrieve all children of this control
 		/// </summary>
@@ -421,27 +419,20 @@ namespace QAliber.Engine.Controls.Web
 		/// </code>
 		/// </example>
 		/// <returns>UIControl[] if has children or empty array if have none </returns>
-		[Browsable(false)]
-		public override List<UIControlBase> Children
-		{
-			get
+		public override UIControlBase[] GetChildren() {
+			List<UIControlBase> children = new List<UIControlBase>();
+			IHTMLElementCollection elements = (IHTMLElementCollection)htmlElement.children;
+			foreach (IHTMLElement element in elements)
 			{
-				if (children == null)
+				WebControl child = WebControl.GetControlByType(element);
+				if (child != null)
 				{
-					children = new List<UIControlBase>();
-					IHTMLElementCollection elements = (IHTMLElementCollection)htmlElement.children;
-					foreach (IHTMLElement element in elements)
-					{
-						WebControl child = WebControl.GetControlByType(element);
-						if (child != null)
-						{
-							children.Add(child);
-							child._parent = this;
-						}
-					}
+					children.Add(child);
+					child._parent = this;
 				}
-				return children;
 			}
+
+			return children.ToArray();
 		}
 
 		public override Process Process

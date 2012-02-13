@@ -46,7 +46,7 @@ namespace QAliber.Engine.Controls.Watin
 		/// <returns></returns>
 		public FireFox FF(string url)
 		{
-			foreach ( UIControlBase b in Children)
+			foreach ( UIControlBase b in GetChildren())
 			{
 				if (((WatBrowser)b).BrowserType == browserType.FireFox && ((WatBrowser)b).Name == url)
 					return (FireFox) ((WatBrowser)b).BrowserPage;
@@ -62,7 +62,7 @@ namespace QAliber.Engine.Controls.Watin
 		/// <returns></returns>
 		public IE IE(string url)
 		{
-			foreach (UIControlBase b in Children)
+			foreach (UIControlBase b in GetChildren())
 			{
 				if (((WatBrowser)b).BrowserType == browserType.IE && ((WatBrowser)b).Name == url)
 					return (IE)((WatBrowser)b).BrowserPage;
@@ -81,7 +81,7 @@ namespace QAliber.Engine.Controls.Watin
 		public IE IE(string url,bool useRegex)
 		{
 			Regex regex = new Regex(url.ToLower());
-			foreach (UIControlBase b in Children)
+			foreach (UIControlBase b in GetChildren())
 			{
 				if (((WatBrowser)b).BrowserType == browserType.IE && regex.IsMatch(((WatBrowser)b).Name.ToLower()))
 					return (IE)((WatBrowser)b).BrowserPage;
@@ -101,7 +101,9 @@ namespace QAliber.Engine.Controls.Watin
 			int ieIdx = 0;
 			int generalIdx = 0;
 
-			while (ieIdx < children.Count && generalIdx < children.Count)
+			UIControlBase[] children = GetChildren();
+
+			while (ieIdx < children.Length && generalIdx < children.Length)
 			{
 				if (((WatBrowser)children[ieIdx]).BrowserType == browserType.IE)
 				{
@@ -125,44 +127,26 @@ namespace QAliber.Engine.Controls.Watin
 			}
 		}
 
-		public override List<UIControlBase> Children
-		{
-			get
+		public override UIControlBase[] GetChildren() {
+			List<UIControlBase> children = new List<UIControlBase>();
+
+			foreach (IE browser in WatiN.Core.IE.InternetExplorers())
 			{
-				if (children == null)
+				if (browser.NativeDocument != null)
 				{
-					children = new List<UIControlBase>();
-				   
-					foreach (IE browser in WatiN.Core.IE.InternetExplorers())
-					{
-						if (browser.NativeDocument != null)
-						{
-							children.Add(new WatBrowser(browser));
-						}
-					}
-					FireFox ffBrowser = null;
-					try
-					{
-						 ffBrowser = FireFox.AttachTo<FireFox>(WatiN.Core.Constraints.AnyConstraint.Instance, 2);
-					}
-					catch { }
-					if (ffBrowser != null)
-						children.Add(new WatBrowser(ffBrowser));
-				  
-					
-					
-					return children;
+					children.Add(new WatBrowser(browser));
 				}
-
-				return children;
 			}
-		}
+			FireFox ffBrowser = null;
+			try
+			{
+				ffBrowser = FireFox.AttachTo<FireFox>(WatiN.Core.Constraints.AnyConstraint.Instance, 2);
+			}
+			catch { }
+			if (ffBrowser != null)
+				children.Add(new WatBrowser(ffBrowser));
 
-		public override void Refresh()
-		{
-			base.Refresh();
-			if (children != null)
-				children = null;
+			return children.ToArray();
 		}
 
 
@@ -180,7 +164,7 @@ namespace QAliber.Engine.Controls.Watin
 			
 			
 				//watin handles return active browser with index = 0
-				WatBrowser focusedBrowser = (WatBrowser)Children[0];
+				WatBrowser focusedBrowser = (WatBrowser) GetChildren()[0];
 				//get the abs bounds relative to the page top left
 
 				WatinControl element = focusedBrowser.GetElementFromPoint((int)pt.X - (int)focusedBrowser.Layout.Left, (int)pt.Y - (int)focusedBrowser.Layout.Top);
@@ -199,8 +183,6 @@ namespace QAliber.Engine.Controls.Watin
 
 		
 		#endregion
-
-		new List<UIControlBase> children;
 	}
 
 	public delegate UIControlBase LocatorDelegate(Point pt);

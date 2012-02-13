@@ -36,19 +36,14 @@ namespace QAliber.Engine.Controls
 	[Serializable]
 	public abstract class UIControlBase : ICustomTypeDescriptor
 	{
-		#region Properties
 		/// <summary>
 		/// The children of the control (as seen in the UI control browser)
 		/// </summary>
-		[Browsable(false)]
-		public virtual List<UIControlBase> Children
-		{
-			get
-			{
-				return children;
-			}
+		public virtual UIControlBase[] GetChildren() {
+			return new UIControlBase[0];
 		}
 
+		#region Properties
 		/// <summary>
 		/// Is the control exists ?
 		/// </summary>
@@ -337,8 +332,7 @@ namespace QAliber.Engine.Controls
 					watch.Start();
 					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 					{
-						children = null;
-						foreach (UIControlBase child in Children)
+						foreach (UIControlBase child in GetChildren())
 						{
 							if (useRegex && Regex.Match(child.Name, name).Success)
 								return child;
@@ -409,8 +403,7 @@ namespace QAliber.Engine.Controls
 					watch.Start();
 					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 					{
-						children = null;
-						foreach (UIControlBase child in Children)
+						foreach (UIControlBase child in GetChildren())
 						{
 							if (useRegex && Regex.Match(child.Name, name).Success &&
 								Regex.Match(child.ID, id).Success)
@@ -455,9 +448,7 @@ namespace QAliber.Engine.Controls
 					watch.Start();
 					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 					{
-						children = null;
-						foreach (UIControlBase child in Children)
-						{
+						foreach (UIControlBase child in GetChildren()) {
 							// BJC: For reasons I can't discern, the automation API returns names for
 							// controls that don't have any. For that reason, if name is an empty string,
 							// I'll skip searching on name
@@ -488,9 +479,7 @@ namespace QAliber.Engine.Controls
 						watch.Start();
 						while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 						{
-							children = null;
-							foreach (QAliber.Engine.Controls.UIA.UIAControl child in Children)
-							{
+							foreach (QAliber.Engine.Controls.UIA.UIAControl child in GetChildren()) {
 								if (child.ID == id && child.IDIndex == idIndex)
 									return child;
 							}
@@ -704,7 +693,7 @@ return c;";
 					findList = GetAnscestors();
 					break;
 				case TreeScope.Children:
-					findList = Children;
+					findList = GetChildren().ToList();
 					break;
 				case TreeScope.Subtree:
 				case TreeScope.Descendants:
@@ -824,7 +813,7 @@ return c;";
 					findList = GetAnscestors();
 					break;
 				case TreeScope.Children:
-					findList = Children;
+					findList = GetChildren().ToList();
 					break;
 				case TreeScope.Subtree:
 				case TreeScope.Descendants:
@@ -863,7 +852,7 @@ return c;";
 		public AmbiguityResult TestAmbiguity(string name, string classname, string id)
 		{
 			int matchCount = 0;
-			foreach (UIControlBase child in Children)
+			foreach (UIControlBase child in GetChildren())
 			{
 				if (child.Name == name && child.ClassName == classname && child.ID == id)
 					matchCount++;
@@ -1110,9 +1099,7 @@ return c;";
 		/// <remarks>
 		/// If the control is changed during automation it is recommended to refresh the control (or its parent), before using it
 		/// </remarks>
-		public virtual void Refresh()
-		{
-			children = null;
+		public virtual void Refresh() {
 		}
 
 		/// <summary>
@@ -1190,7 +1177,7 @@ return c;";
 		{
 			if (depth <= 0)
 				return list;
-			foreach (UIControlBase child in control.Children)
+			foreach (UIControlBase child in control.GetChildren())
 			{
 				list.Add(child);
 				list = GetDescendantsRecursively(child, depth - 1, list);
@@ -1225,8 +1212,6 @@ return c;";
 		#endregion
 
 		#region Private Fields
-
-		protected List<UIControlBase> children = null;
 
 		internal static readonly string tmpFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\qaliberTmpObj.bin";
 		#endregion

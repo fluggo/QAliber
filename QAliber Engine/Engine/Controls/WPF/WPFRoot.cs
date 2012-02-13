@@ -45,46 +45,39 @@ namespace QAliber.Engine.Controls.WPF
 			}
 		}
 
-		public override List<UIControlBase> Children
-		{
-			get
+		public override UIControlBase[] GetChildren() {
+			List<UIControlBase> children = new List<UIControlBase>();
+			foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
 			{
-
-				if (children == null)
+				if (p.ProcessName != "System" && !p.ProcessName.Contains("devenv") && !p.ProcessName.Contains("vshost"))
 				{
-					children = new List<UIControlBase>();
-					foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
+					try
 					{
-						if (p.ProcessName != "System" && !p.ProcessName.Contains("devenv") && !p.ProcessName.Contains("vshost"))
+						foreach (System.Diagnostics.ProcessModule m in p.Modules)
 						{
-							try
+							if (m.ModuleName.Contains("PresentationFramework.dll") ||
+								m.ModuleName.Contains("PresentationFramework.ni.dll"))
 							{
-								foreach (System.Diagnostics.ProcessModule m in p.Modules)
+								WPFWindow c = (WPFWindow)WPFAUTHelpers.TalkToAUT(p.MainWindowHandle, "QueryWPF", p.MainWindowTitle);
+								if (c != null)
 								{
-									if (m.ModuleName.Contains("PresentationFramework.dll") ||
-										m.ModuleName.Contains("PresentationFramework.ni.dll"))
-									{
-										WPFWindow c = (WPFWindow)WPFAUTHelpers.TalkToAUT(p.MainWindowHandle, "QueryWPF", p.MainWindowTitle);
-										if (c != null)
-										{
-											children.Add(c);
-											c.SetHandle( p.MainWindowHandle );
-											c.SetParent( this );
-										}
-									}
+									children.Add(c);
+									c.SetHandle( p.MainWindowHandle );
+									c.SetParent( this );
 								}
-							}
-							catch (Win32Exception)
-							{
 							}
 						}
 					}
-					GetLayouts();
-					
+					catch (Win32Exception)
+					{
+					}
 				}
-				return children;
-
 			}
+
+			if( layouts == null )
+				GetLayouts();
+
+			return children.ToArray();
 		}
 
 		#region IControlLocator Members
@@ -123,7 +116,8 @@ namespace QAliber.Engine.Controls.WPF
 
 		private void GetLayoutsRec(UIControlBase parent)
 		{
-			foreach (UIControlBase c in parent.Children)
+			// BJC: Before you ask, no, I don't like what I did here
+			foreach (UIControlBase c in parent.GetChildren())
 			{
 				layouts.Add(c);
 				GetLayoutsRec(c);
