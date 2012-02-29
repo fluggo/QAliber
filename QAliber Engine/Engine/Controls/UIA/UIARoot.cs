@@ -28,9 +28,7 @@ namespace QAliber.Engine.Controls.UIA
 	/// </summary>
 	public class UIARoot : UIAControl, IControlLocator
 	{
-		internal UIARoot() : base(AutomationElement.RootElement)
-		{
-			
+		internal UIARoot() : base( AutomationElement.RootElement.GetUpdatedCache( UIAControl.SearchCache ) ) {
 		}
 
 		public override string CodePath

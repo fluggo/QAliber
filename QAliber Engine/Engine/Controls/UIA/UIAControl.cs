@@ -40,19 +40,19 @@ namespace QAliber.Engine.Controls.UIA
 	public abstract class UIAControl : UIControlBase
 	{
 		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
-		static CacheRequest __searchCache;
+		internal static readonly CacheRequest SearchCache;
 
 		static UIAControl() {
 			// Caches those properties we expect in the UIAControl
-			__searchCache = new CacheRequest();
-			__searchCache.AutomationElementMode = AutomationElementMode.Full;
-			__searchCache.TreeScope = TreeScope.Element;
-			__searchCache.Add( AutomationElement.AutomationIdProperty );
-			__searchCache.Add( AutomationElement.NameProperty );
-			__searchCache.Add( AutomationElement.ClassNameProperty );
-			__searchCache.Add( AutomationElement.ControlTypeProperty );
-			__searchCache.Add( AutomationElement.NativeWindowHandleProperty );
-			__searchCache.Add( AutomationElement.ProcessIdProperty );
+			SearchCache = new CacheRequest();
+			SearchCache.AutomationElementMode = AutomationElementMode.Full;
+			SearchCache.TreeScope = TreeScope.Element;
+			SearchCache.Add( AutomationElement.AutomationIdProperty );
+			SearchCache.Add( AutomationElement.NameProperty );
+			SearchCache.Add( AutomationElement.ClassNameProperty );
+			SearchCache.Add( AutomationElement.ControlTypeProperty );
+			SearchCache.Add( AutomationElement.NativeWindowHandleProperty );
+			SearchCache.Add( AutomationElement.ProcessIdProperty );
 		}
 
 		#region Constructores
@@ -87,7 +87,7 @@ namespace QAliber.Engine.Controls.UIA
 
 			AutomationElementCollection elements;
 
-			using( __searchCache.Activate() ) {
+			using( SearchCache.Activate() ) {
 				elements = automationElement.FindAll(
 					TreeScope.Children, new PropertyCondition( AutomationElement.IsControlElementProperty, true ) );
 			}
