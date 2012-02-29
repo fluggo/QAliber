@@ -76,7 +76,7 @@ namespace QAliber.TestModel
 			{
 				Log.Default.Error(e.GetType().Name + " Caught", e.Message, EntryVerbosity.Internal);
 			}
-			Log.Default.Info("Stack Trace", e.StackTrace, EntryVerbosity.Debug);
+			Log.Default.Info("Exception Details", e.ToString(), EntryVerbosity.Debug);
 			actualResult = TestCaseResult.Failed;
 		}
 		
