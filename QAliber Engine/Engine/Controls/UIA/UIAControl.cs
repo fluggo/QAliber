@@ -29,6 +29,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using ManagedInjector;
 using System.Threading;
+using System.Linq;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls.UIA
 {
@@ -37,7 +39,7 @@ namespace QAliber.Engine.Controls.UIA
 	/// All UIA Desktop elements derive from this class.
 	/// </summary>
 	[Serializable]
-	public abstract class UIAControl : UIControlBase
+	public class UIAControl : UIControlBase
 	{
 		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
 		internal static readonly CacheRequest SearchCache;
@@ -53,6 +55,29 @@ namespace QAliber.Engine.Controls.UIA
 			SearchCache.Add( AutomationElement.ControlTypeProperty );
 			SearchCache.Add( AutomationElement.NativeWindowHandleProperty );
 			SearchCache.Add( AutomationElement.ProcessIdProperty );
+
+			// Look for the pattern-available properties, too
+			SearchCache.Add( AutomationElement.IsDockPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsExpandCollapsePatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsGridItemPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsGridPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsInvokePatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsItemContainerPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsMultipleViewPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsRangeValuePatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsScrollItemPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsScrollPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsSelectionItemPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsSelectionPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsSynchronizedInputPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsTableItemPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsTablePatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsTextPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsTogglePatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsTransformPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsValuePatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsVirtualizedItemPatternAvailableProperty );
+			SearchCache.Add( AutomationElement.IsWindowPatternAvailableProperty );
 		}
 
 		#region Constructores
@@ -160,6 +185,97 @@ namespace QAliber.Engine.Controls.UIA
 
 				}
 				return _id;
+			}
+		}
+
+		public override string UIType {
+			get {
+				// Supports the old style of finding elements by their class type;
+				// this is a map from control types to the old class names
+				ControlType type = automationElement.Cached.ControlType;
+
+				if( type == ControlType.Button ||
+						type == ControlType.Image ||
+						type == ControlType.Separator ||
+						type == ControlType.ScrollBar ||
+						type == ControlType.SplitButton ||
+						type == ControlType.TitleBar ||
+						type == ControlType.ToolTip )
+					return "UIAButton";
+
+				if( type == ControlType.Calendar ||
+						type == ControlType.DataGrid ||
+						type == ControlType.Table )
+					return "UIATable";
+
+				if( type == ControlType.CheckBox )
+					return "UIACheckBox";
+
+				if( type == ControlType.ComboBox )
+					return "UIAComboBox";
+
+				if( type == ControlType.Custom ||
+						type == ControlType.Header ||
+						type == ControlType.HeaderItem ||
+						type == ControlType.Hyperlink ||
+						type == ControlType.StatusBar ||
+						type == ControlType.Text ||
+						type == ControlType.Thumb )
+					return "UIALabel";
+
+				if( type == ControlType.DataItem ||
+						type == ControlType.ListItem )
+					return "UIAListItem";
+
+				if( type == ControlType.Document )
+					return "UIADocument";
+
+				if( type == ControlType.Edit )
+					return "UIAEditBox";
+
+				if( type == ControlType.Group )
+					return "UIAGroup";
+
+				if( type == ControlType.List )
+					return "UIAListBox";
+
+				if( type == ControlType.Menu ||
+						type == ControlType.MenuBar )
+					return "UIAMenu";
+
+				if( type == ControlType.MenuItem )
+					return "UIAMenuItem";
+
+				if( type == ControlType.Pane )
+					return "UIAPane";
+
+				if( type == ControlType.ProgressBar ||
+						type == ControlType.Slider ||
+						type == ControlType.Spinner )
+					return "UIARange";
+
+				if( type == ControlType.RadioButton )
+					return "UIARadioButton";
+
+				if( type == ControlType.Tab )
+					return "UIATab";
+
+				if( type == ControlType.TabItem )
+					return "UIATabItem";
+
+				if( type == ControlType.ToolBar )
+					return "UIAToolbar";
+
+				if( type == ControlType.Tree )
+					return "UIATree";
+
+				if( type == ControlType.TreeItem )
+					return "UIATreeItem";
+
+				if( type == ControlType.Window )
+					return "UIAWindow";
+
+				return string.Empty;
 			}
 		}
 
@@ -396,88 +512,262 @@ namespace QAliber.Engine.Controls.UIA
 		/// <returns></returns>
 		public static UIAControl GetControlByType(AutomationElement element)
 		{
-			int typeId = element.Cached.ControlType.Id;
+			return new UIAControl( element );
+		}
 
-			if (typeId == ControlType.Button.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.Calendar.Id)
-				return new UIATable(element);
-			else if (typeId == ControlType.CheckBox.Id)
-				return new UIACheckBox(element);
-			else if (typeId == ControlType.ComboBox.Id)
-				return new UIAComboBox(element);
-			else if (typeId == ControlType.Custom.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.DataItem.Id)
-				return new UIAListItem(element);
-			else if (typeId == ControlType.DataGrid.Id)
-				return new UIATable(element);
-			else if (typeId == ControlType.Document.Id)
-				return new UIADocument(element);
-			else if (typeId == ControlType.Edit.Id)
-				return new UIAEditBox(element);
-			else if (typeId == ControlType.Group.Id)
-				return new UIAGroup(element);
-			else if (typeId == ControlType.Header.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.HeaderItem.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.Hyperlink.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.Image.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.List.Id)
-				return new UIAListBox(element);
-			else if (typeId == ControlType.ListItem.Id)
-				return new UIAListItem(element);
-			else if (typeId == ControlType.Menu.Id)
-				return new UIAMenu(element);
-			else if (typeId == ControlType.MenuBar.Id)
-				return new UIAMenu(element);
-			else if (typeId == ControlType.MenuItem.Id)
-				return new UIAMenuItem(element);
-			else if (typeId == ControlType.Pane.Id)
-				return new UIAPane(element);
-			else if (typeId == ControlType.ProgressBar.Id)
-				return new UIARange(element);
-			else if (typeId == ControlType.RadioButton.Id)
-				return new UIARadioButton(element);
-			else if (typeId == ControlType.Separator.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.ScrollBar.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.Slider.Id)
-				return new UIARange(element);
-			else if (typeId == ControlType.Spinner.Id)
-				return new UIARange(element);
-			else if (typeId == ControlType.SplitButton.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.StatusBar.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.Tab.Id)
-				return new UIATab(element);
-			else if (typeId == ControlType.TabItem.Id)
-				return new UIATabItem(element);
-			else if (typeId == ControlType.Table.Id)
-				return new UIATable(element);
-			else if (typeId == ControlType.Text.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.Thumb.Id)
-				return new UIALabel(element);
-			else if (typeId == ControlType.TitleBar.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.ToolBar.Id)
-				return new UIAToolbar(element);
-			else if (typeId == ControlType.ToolTip.Id)
-				return new UIAButton(element);
-			else if (typeId == ControlType.Tree.Id)
-				return new UIATree(element);
-			else if (typeId == ControlType.TreeItem.Id)
-				return new UIATreeItem(element);
-			else if (typeId == ControlType.Window.Id)
-				return new UIAWindow(element);
-			else
-				return null;
+		public override T GetControlInterface<T>() {
+			T result = GetControlInterface( typeof(T) ) as T;
+			return result ?? base.GetControlInterface<T>();
+		}
+
+		private object GetControlInterface( Type type ) {
+			if( type == typeof(IText) ) {
+				// Qaliber's IText covers both automations Text and Value patterns
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsTextPatternAvailableProperty )) &&
+					!((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsValuePatternAvailableProperty )) )
+					return null;
+
+				ValuePattern valuePattern = (ValuePattern) automationElement.GetCurrentPattern( ValuePattern.Pattern );
+				TextPattern textPattern = (TextPattern) automationElement.GetCurrentPattern( TextPattern.Pattern );
+
+				return new TextPatternImpl( textPattern, valuePattern );
+			}
+
+			if( type == typeof(ISelector) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsScrollPatternAvailableProperty )) &&
+						automationElement.Cached.ControlType != ControlType.ComboBox &&
+						automationElement.Cached.ControlType != ControlType.Menu &&
+						automationElement.Cached.ControlType != ControlType.MenuBar &&
+						automationElement.Cached.ControlType != ControlType.MenuItem &&
+						automationElement.Cached.ControlType != ControlType.List &&
+						automationElement.Cached.ControlType != ControlType.Tree &&
+						automationElement.Cached.ControlType != ControlType.Tab )
+					return null;
+
+				SelectionPattern selectionPattern = (SelectionPattern) automationElement.GetCurrentPattern( SelectionPattern.Pattern );
+
+				return new SelectorPatternImpl( automationElement, selectionPattern );
+			}
+
+			if( type == typeof(IWindowPattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsWindowPatternAvailableProperty )) )
+					return null;
+
+				WindowPattern windowPattern = (WindowPattern) automationElement.GetCurrentPattern( WindowPattern.Pattern );
+				return new WindowPatternImpl( windowPattern );
+			}
+
+			if( type == typeof(ITransformPattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsTransformPatternAvailableProperty )) )
+					return null;
+
+				TransformPattern transformPattern = (TransformPattern) automationElement.GetCurrentPattern( TransformPattern.Pattern );
+				return new TransformPatternImpl( transformPattern );
+			}
+
+			return null;
+		}
+
+		class TextPatternImpl : IText {
+			TextPattern _textPattern;
+			ValuePattern _valuePattern;
+
+			public TextPatternImpl( TextPattern textPattern, ValuePattern valuePattern ) {
+				_textPattern = textPattern;
+				_valuePattern = valuePattern;
+			}
+
+			public string Text {
+				get {
+					if( _textPattern != null )
+						return _textPattern.DocumentRange.GetText( -1 );
+
+					return _valuePattern.Current.Value;
+				}
+			}
+		}
+
+		private static OrCondition __itemPropertyCondition = new OrCondition(
+			new PropertyCondition( AutomationElement.ControlTypeProperty, ControlType.ListItem ),
+			new PropertyCondition( AutomationElement.ControlTypeProperty, ControlType.MenuItem ),
+			new PropertyCondition( AutomationElement.ControlTypeProperty, ControlType.DataItem ),
+			new PropertyCondition( AutomationElement.ControlTypeProperty, ControlType.TabItem ),
+			new PropertyCondition( AutomationElement.ControlTypeProperty, ControlType.TreeItem ) );
+
+		class SelectorPatternImpl : ISelector {
+			// BJC: Not at all a fan of this interface. Not one bit.
+			AutomationElement _element;
+			SelectionPattern _pattern;
+
+			public SelectorPatternImpl( AutomationElement element, SelectionPattern pattern ) {
+				_element = element;
+				_pattern = pattern;
+			}
+
+			public void Select( string name ) {
+				// The PatternsExecutor goes through the children and tries
+				// to find one with the right name
+				CacheRequest cache = new CacheRequest();
+				cache.AutomationElementMode = AutomationElementMode.Full;
+				cache.TreeScope = TreeScope.Element;
+				cache.Add( AutomationElement.NameProperty );
+				cache.Add( AutomationElement.IsSelectionItemPatternAvailableProperty );
+
+				AutomationElementCollection children;
+
+				using( cache.Activate() ) {
+					children = _element.FindAll( TreeScope.Descendants, __itemPropertyCondition );
+				}
+
+				AutomationElement target = children.Cast<AutomationElement>()
+					.FirstOrDefault( child => StringComparer.InvariantCultureIgnoreCase.Equals( child.Cached.Name, name ) );
+
+				if( target == null ) {
+					Log.Default.Error( "Could not find name " + name + " in '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal );
+					return;
+				}
+
+				if( ((bool) target.GetCachedPropertyValue( AutomationElement.IsSelectionItemPatternAvailableProperty )) ) {
+					var pattern = (SelectionItemPattern) target.GetCurrentPattern( SelectionItemPattern.Pattern );
+					pattern.Select();
+				}
+				else {
+					// Try to click it
+					QAliber.Logger.Log.Default.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
+					GetControlByType( target ).Click();
+				}
+			}
+
+			public void Select( int index ) {
+				CacheRequest cache = new CacheRequest();
+				cache.AutomationElementMode = AutomationElementMode.Full;
+				cache.TreeScope = TreeScope.Element;
+				cache.Add( AutomationElement.IsSelectionItemPatternAvailableProperty );
+
+				AutomationElementCollection children;
+
+				using( cache.Activate() ) {
+					children = _element.FindAll( TreeScope.Children, __itemPropertyCondition );
+				}
+
+				AutomationElement target = children.Cast<AutomationElement>().ElementAtOrDefault( index );
+
+				if( target == null ) {
+					Log.Default.Error( "Could not find index " + index + " in '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal );
+					return;
+				}
+
+				if( ((bool) target.GetCachedPropertyValue( AutomationElement.IsSelectionItemPatternAvailableProperty )) ) {
+					var pattern = (SelectionItemPattern) target.GetCurrentPattern( SelectionItemPattern.Pattern );
+					pattern.Select();
+				}
+				else {
+					// Try to click it
+					QAliber.Logger.Log.Default.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
+					GetControlByType( target ).Click();
+				}
+			}
+
+			public UIAControl[] SelectedItems {
+				get {
+					if( _pattern == null ) {
+						Log.Default.Error( "Could not get selection for " + _element.Cached.ControlType.ProgrammaticName +
+							" '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal);
+
+						return new UIAControl[0];
+					}
+
+					using( SearchCache.Activate() ) {
+						return _pattern.Current.GetSelection().Select( e => GetControlByType( e ) ).ToArray();
+					}
+				}
+			}
+
+			public string[] Items {
+				get {
+					CacheRequest cache = new CacheRequest();
+					cache.Add( AutomationElement.NameProperty );
+
+					using( cache.Activate() ) {
+						return _element.FindAll( TreeScope.Descendants, __itemPropertyCondition )
+							.Cast<AutomationElement>()
+							.Select( e => e.Cached.Name )
+							.ToArray();
+					}
+				}
+			}
+
+			public bool CanSelectMultiple {
+				get {
+					if( _pattern == null ) {
+						Log.Default.Error( "Selection pattern not supported on " + _element.Cached.ControlType.ProgrammaticName +
+							" '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal);
+
+						return false;
+					}
+
+					return _pattern.Current.CanSelectMultiple;
+				}
+			}
+		}
+
+		class WindowPatternImpl : IWindowPattern {
+			WindowPattern _pattern;
+
+			public WindowPatternImpl( WindowPattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public bool CanMinimize {
+				get { return _pattern.Current.CanMinimize; }
+			}
+
+			public bool CanMaximize {
+				get { return _pattern.Current.CanMaximize; }
+			}
+
+			public void Close() {
+				_pattern.Close();
+			}
+
+			public QAliber.Engine.Patterns.WindowVisualState State
+				{ get { return (QAliber.Engine.Patterns.WindowVisualState)(int) _pattern.Current.WindowVisualState; } }
+
+			public void SetState( QAliber.Engine.Patterns.WindowVisualState state ) {
+				_pattern.SetWindowVisualState( (System.Windows.Automation.WindowVisualState)(int) state );
+			}
+		}
+
+		class TransformPatternImpl : ITransformPattern {
+			TransformPattern _pattern;
+
+			public TransformPatternImpl( TransformPattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public bool CanMove {
+				get { return _pattern.Current.CanMove; }
+			}
+
+			public bool CanResize {
+				get { return _pattern.Current.CanResize; }
+			}
+
+			public bool CanRotate {
+				get { return _pattern.Current.CanRotate; }
+			}
+
+			public void Move( double x, double y ) {
+				_pattern.Move( x, y );
+			}
+
+			public void Resize( double width, double height ) {
+				_pattern.Resize( width, height );
+			}
+
+			public void Rotate( double degrees ) {
+				_pattern.Rotate( degrees );
+			}
 		}
 
 		/// <summary>

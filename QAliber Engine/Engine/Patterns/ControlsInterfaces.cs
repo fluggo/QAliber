@@ -27,23 +27,6 @@ namespace QAliber.Engine.Patterns
 		string Text { get; }
 	}
 
-	public interface IToggle
-	{
-		void Check();
-		void UnCheck();
-		void Toggle();
-
-		ToggleState CheckState { get; }
-	}
-
-	public interface ISelectable
-	{
-		void Select();
-		void AddToSelection();
-		void RemoveFromSelection();
-		bool IsSelected { get; }
-	}
-
 	public interface ISelector
 	{
 		void Select(string name);
@@ -54,52 +37,29 @@ namespace QAliber.Engine.Patterns
 		bool CanSelectMultiple { get; }
 	}
 
-	public interface ITable
-	{
-		int Columns { get; }
-		int Rows { get; }
-		UIAControl GetCell(int row, int column);
+	public interface IWindowPattern {
+		bool CanMinimize { get; }
+		bool CanMaximize { get; }
+
+		void Close();
+
+		WindowVisualState State { get; }
+		void SetState( WindowVisualState state );
 	}
 
-	public interface IExpandable
-	{
-		void Expand();
-		void Collapse();
-		ExpandCollapseState ExpandCollapseState { get; }
+	public enum WindowVisualState {
+		Normal = System.Windows.Automation.WindowVisualState.Normal,
+		Maximized = System.Windows.Automation.WindowVisualState.Maximized,
+		Minimized = System.Windows.Automation.WindowVisualState.Minimized,
 	}
 
-	public interface IScrollable
-	{
-		void Scroll(double horPercents, double verPercents);
-
-		bool CanScrollHorizontal { get; }
-		bool CanScrollVertical { get; }
-		double HorizontalPercents { get; }
-		double VericalPercents { get; }
-	}
-
-	public interface IInvokable
-	{
-		void Invoke();
-	}
-
-	public interface ITransform
-	{
-		void Move(double x, double y);
-		void Resize(double width, double height);
-		void Rotate(double degrees);
-
+	public interface ITransformPattern {
 		bool CanMove { get; }
 		bool CanResize { get; }
 		bool CanRotate { get; }
+
+		void Move( double x, double y );
+		void Resize( double width, double height );
+		void Rotate( double degrees );
 	}
-
-	public interface IRangeValue
-	{
-		double Value { get; }
-		double MaximumValue { get; }
-		double MinimumValue { get; }
-	}
-
-
 }

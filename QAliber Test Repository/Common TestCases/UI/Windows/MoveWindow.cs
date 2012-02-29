@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Xml.Serialization;
 using QAliber.Engine.Controls;
 using QAliber.Engine.Controls.UIA;
+using QAliber.Engine.Patterns;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -79,14 +80,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				throw new InvalidOperationException("Control not found");
 			}
 
-			UIAWindow window = c as UIAWindow;
+			ITransformPattern transform = c.GetControlInterface<ITransformPattern>();
 
-			if( window == null ) {
+			if( transform == null ) {
 				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				throw new InvalidOperationException( "Control doesn't appear to be a window" );
 			}
 
-			window.Move( point.X, point.Y );
+			transform.Move( point.X, point.Y );
 		}
 
 		public override string Description

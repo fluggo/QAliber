@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Xml.Serialization;
 using QAliber.Engine.Controls;
 using QAliber.Engine.Controls.UIA;
+using QAliber.Engine.Patterns;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -79,7 +80,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				throw new InvalidOperationException("Control not found");
 			}
 
-			UIAWindow window = c as UIAWindow;
+			IWindowPattern window = c.GetControlInterface<IWindowPattern>();
 
 			if( window == null ) {
 				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
@@ -92,19 +93,30 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 					break;
 
 				case WindowOperationType.Maximize:
-					window.Maximize();
+					if( !window.CanMaximize ) {
+						Log.Default.Error( "Window does not support maximizing.", string.Empty, EntryVerbosity.Internal );
+						return;
+					}
+
+					window.SetState( WindowVisualState.Maximized );
 					break;
 
 				case WindowOperationType.Minimize:
-					window.Minimize();
+					if( !window.CanMinimize ) {
+						Log.Default.Error( "Window does not support maximizing.", string.Empty, EntryVerbosity.Internal );
+						return;
+					}
+
+					window.SetState( WindowVisualState.Minimized );
 					break;
 
 				case WindowOperationType.Restore:
-					window.Restore();
+					window.SetState( WindowVisualState.Normal );
 					break;
 
 				case WindowOperationType.SetFocus:
-					window.SetFocus();
+					window.SetState( WindowVisualState.Normal );
+					c.SetFocus();
 					break;
 			}
 		}

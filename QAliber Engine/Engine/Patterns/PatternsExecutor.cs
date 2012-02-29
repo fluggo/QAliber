@@ -276,7 +276,7 @@ namespace QAliber.Engine.Patterns
 						{
 							//Could not select through the selection pattern, trying to click it
 							QAliber.Logger.Log.Default.Warning("Could not find the item selectable, trying to click it", "", QAliber.Logger.EntryVerbosity.Internal);
-							new UIAListItem(child).Click();
+							new UIAControl(child).Click();
 							return;
 						}
 					}
