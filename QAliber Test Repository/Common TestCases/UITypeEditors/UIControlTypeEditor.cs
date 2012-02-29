@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing.Design;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace QAliber.Repository.CommonTestCases.UITypeEditors
 {
@@ -36,6 +37,11 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		{
 			if (value is string)
 			{
+				IWindowsFormsEditorService editor = (IWindowsFormsEditorService) provider.GetService( typeof(IWindowsFormsEditorService) );
+
+				if( editor == null )
+					return null;
+
 				ICoordinate coordable = context.Instance as ICoordinate;
 
 				UIControlLocatorForm dialog = new UIControlLocatorForm();
@@ -44,7 +50,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				if( coordable != null )
 					dialog.Coordinate = coordable.Coordinate;
 
-				if( dialog.ShowDialog() == DialogResult.OK ) {
+				if( editor.ShowDialog( dialog ) == DialogResult.OK ) {
 					if( coordable != null )
 						coordable.Coordinate = dialog.Coordinate;
 
