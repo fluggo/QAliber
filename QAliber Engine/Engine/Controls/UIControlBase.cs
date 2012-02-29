@@ -992,6 +992,10 @@ return c;";
 			return list;
 		}
 
+		public virtual T GetControlInterface<T>() where T : class {
+			return this as T;
+		}
+
 		#endregion
 
 		#region Private/Protected Methods

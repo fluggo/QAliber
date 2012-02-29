@@ -25,6 +25,7 @@ using QAliber.TestModel.TypeEditors;
 using QAliber.Engine.Controls;
 using QAliber.ImageHandling;
 using System.Xml.Serialization;
+using QAliber.Engine.Patterns;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -72,19 +73,21 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			if (!c.Exists)
 				throw new ArgumentException("Couldn't retrieve control " + control);
 
-			if (c is QAliber.Engine.Patterns.IText)
-			{
-			   
-				text = ((QAliber.Engine.Patterns.IText)c).Text;
+			IText textPattern = c.GetControlInterface<IText>();
+
+			if( textPattern != null ) {
+				text = textPattern.Text;
 				Logger.Log.Default.Info("Found text property", text);
 				return;
 			}
+
 			if (c is QAliber.Engine.Controls.Web.WebControl)
 			{
 				text = ((QAliber.Engine.Controls.Web.WebControl)c).InnerText;
 				Logger.Log.Default.Info("Found inner text property of web control", text);
 				return;
 			}
+
 			Logger.Log.Default.Info("Couldn't find a text property, trying to do optical character recognition");
 			OCRItem ocrItem = new OCRItem(c.GetImage());
 			text = ocrItem.ProcessImage();

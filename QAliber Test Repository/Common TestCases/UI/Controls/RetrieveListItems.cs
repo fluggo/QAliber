@@ -78,12 +78,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
-				if (c is UIAComboBox || c is UIAListBox)
-				{
-					listItems = ((Engine.Patterns.ISelector)c).Items;
+
+				ISelector selectorPattern = c.GetControlInterface<ISelector>();
+
+				if( selectorPattern != null ) {
+					listItems = selectorPattern.Items;
 					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 				}
-
 				else if (c is HTMLSelect)
 				{
 					HTMLOption[] ops = ((HTMLSelect)c).Options;
@@ -95,7 +96,6 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 				}
-
 				else
 				{
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;

@@ -80,38 +80,39 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
-			   if (c is UIAComboBox || c is UIAListBox)
-			   {
-				   ((Engine.Patterns.ISelector)c).Select(item);
-				   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			   }
 
-			   else if (c is HTMLSelect)
-			   {
-				   HTMLOption selectedOp = ((HTMLSelect)c).SelectItem(item);
-				   if (selectedOp != null)
-					   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ISelector selectorPattern = c.GetControlInterface<ISelector>();
 
-				   else
-				   {
-					   actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					   Logger.Log.Default.Error("Item was not selected");
-				   }
+				if( selectorPattern != null ) {
+					selectorPattern.Select( item );
+					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				}
+				else if (c is HTMLSelect)
+				{
+					HTMLOption selectedOp = ((HTMLSelect)c).SelectItem(item);
+					if (selectedOp != null)
+						actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
-			   }
+					else
+					{
+						actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+						Logger.Log.Default.Error("Item was not selected");
+					}
 
-			   else
-			   {
-				   actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				   throw new InvalidOperationException("Control is not a list type");
-			   }
+				}
 
-			}
-				catch (Exception ex)
+				else
 				{
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw ex;
+					throw new InvalidOperationException("Control is not a list type");
 				}
+
+			}
+			catch (Exception ex)
+			{
+				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				throw ex;
+			}
 		}
 
 		public override string Description

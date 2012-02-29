@@ -80,23 +80,23 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
-			   if (c is UIAComboBox || c is UIAListBox)
-			   {
-				   ((Engine.Patterns.ISelector)c).Select(index);
-				   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			   }
 
-			   else if (c is HTMLSelect)
-			   {
-				   ((HTMLSelect)c).SelectItem(index);
-				   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			   }
+				ISelector selectorPattern = c.GetControlInterface<ISelector>();
 
-			   else
-			   {
-				   actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				   throw new InvalidOperationException("Control is not list type control");
-			   }
+				if( selectorPattern != null ) {
+					selectorPattern.Select( index );
+					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				}
+				else if (c is HTMLSelect)
+				{
+					((HTMLSelect)c).SelectItem(index);
+					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				}
+				else
+				{
+					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					throw new InvalidOperationException("Control is not list type control");
+				}
 
 			}
 			catch (Exception ex)
