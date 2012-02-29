@@ -315,6 +315,26 @@ namespace QAliber.Engine.Controls.UIA
 			}
 		}
 
+		public UIAControl FindFirstChildByIdIndex( string id, int idIndex ) {
+			if (Exists)
+			{
+				Stopwatch watch = new Stopwatch();
+				watch.Start();
+				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+				{
+					foreach (QAliber.Engine.Controls.UIA.UIAControl child in GetChildren()) {
+						if (child.ID == id && child.IDIndex == idIndex)
+							return child;
+					}
+					System.Threading.Thread.Sleep(50);
+				}
+				QAliber.Logger.Log.Default.Warning(
+					string.Format("Cannot find control [{0}, {1}] for control {2}",
+									id, idIndex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
+			}
+			return new UIANullControl();
+		}
+
 		public override void Refresh()
 		{
 			base.Refresh();

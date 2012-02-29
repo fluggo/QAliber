@@ -281,6 +281,38 @@ namespace QAliber.Engine.Controls
 		#endregion
 
 		#region Indexers
+		[Obsolete("Use FindFirstChildByName instead.")]
+		public UIControlBase this[string name]
+			{ get { return FindFirstChildByName( name, false ); } }
+
+		[Obsolete("Use FindFirstChildByName instead.")]
+		public UIControlBase this[string name, bool useRegex]
+			{ get { return FindFirstChildByName( name, useRegex ); } }
+
+		[Obsolete("Use FindFirstChildByNameId instead.")]
+		public UIControlBase this[string name, string id]
+			{ get { return FindFirstChildByNameId( name, id, false ); } }
+
+		[Obsolete("Use FindFirstChildByNameId instead.")]
+		public UIControlBase this[string name, string id, bool useRegex]
+			{ get { return FindFirstChildByNameId( name, id, useRegex ); } }
+
+		[Obsolete("Use FindFirstChildByNameClassId instead.")]
+		public UIControlBase this[string name, string className, string id]
+			{ get { return FindFirstChildByNameClassId( name, className, id ); } }
+
+		[Obsolete("Use UIAControl.FindFirstChildByIdIndex instead.")]
+		public QAliber.Engine.Controls.UIA.UIAControl this[string id, int idIndex] {
+			get {
+				var control = this as QAliber.Engine.Controls.UIA.UIAControl;
+
+				if( control == null )
+					return new UIANullControl();
+
+				return control.FindFirstChildByIdIndex( id, idIndex );
+			}
+		}
+
 		/// <summary>
 		/// Gets the first child with the given name.
 		/// </summary>
@@ -288,67 +320,39 @@ namespace QAliber.Engine.Controls
 		/// <code>
 		///    UIAButton button1 = null;
 		///    UIAPane win = Desktop.UIA[@"", @"Shell_TrayWnd", @"UIAPane"] as UIAPane;
-		///    button1 = win["Start"] as UIAButton;
+		///    button1 = win.FindFirstChildByName( "Start", false ) as UIAButton;
 		///    button1.Click();
 		/// </code>
 		/// </example>
 		/// <param name="name">The name of the child control</param>
-		/// <returns>If the name was found, the first control found with that name is returned, otherwise null</returns>
-		public virtual UIControlBase this[string name]
-		{
-			get
-			{
-				return this[name, false];
+		/// <param name="useRegex">If set to true, the 'name' parameter will be treated as regular expression.
+		/// </param>
+		/// <returns>If the name was found, the control with that name is returned, otherwise a <see cref="UINullControl"/>.</returns>
+		public UIControlBase FindFirstChildByName( string name, bool useRegex ) {
+			if( !Exists )
+				return new UINullControl();
+
+			Stopwatch watch = new Stopwatch();
+			watch.Start();
+
+			while( watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl ) {
+				foreach( UIControlBase child in GetChildren() ) {
+					if( useRegex && Regex.Match( child.Name, name, RegexOptions.CultureInvariant ).Success )
+						return child;
+
+					if( !useRegex && StringComparer.InvariantCultureIgnoreCase.Equals( name, child.Name ) )
+						return child;
+				}
+				System.Threading.Thread.Sleep(50);
 			}
+
+			QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
+																name, useRegex, CodePath), "",
+												QAliber.Logger.EntryVerbosity.Internal);
+
+			return new UINullControl();
 		}
 
-		/// <summary>
-		/// Gets the first child with a name that matches the regular expression given by the 'name' parameter
-		/// </summary>
-		/// <example>
-		/// <code>
-		///    UIAListItem myFolder = null;
-		///    UIAListBox desktopWindowShortcuts = Desktop.UIA[@"Program Manager", @"Progman", @"UIAPane"][@"Desktop", @"SysListView32", @"1"] as UIAListBox;
-		///    myFolder = desktopWindowShortcuts["My*", true] as UIAListItem;
-		///    myFolder.DoubleClick();
-		/// </code>
-		/// </example>
-		/// <param name="name">The pattern to match the children's names against</param>
-		/// <param name="useRegex">If set to true, the 'name' parameter will be treated as regular expression.
-		/// If set to false, it is identical to calling UIControl[name]
-		/// </param>
-		/// <returns>If the name was found, the control with that name is returned, otherwise null</returns>
-		/// <seealso href="http://msdn.microsoft.com/en-us/library/2k3te2cs(VS.80).aspx">
-		/// MSDN Regular Expression
-		/// </seealso>
-		/// 
-		public virtual UIControlBase this[string name, bool useRegex]
-		{
-			get
-			{
-				if (Exists)
-				{
-					Stopwatch watch = new Stopwatch();
-					watch.Start();
-					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
-					{
-						foreach (UIControlBase child in GetChildren())
-						{
-							if (useRegex && Regex.Match(child.Name, name).Success)
-								return child;
-							if (!useRegex && name.ToLower() == child.Name.ToLower())
-								return child;
-						}
-						System.Threading.Thread.Sleep(50);
-					}
-					QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
-																	 name, useRegex, CodePath), "",
-													   QAliber.Logger.EntryVerbosity.Internal);
-				}
-				return new UINullControl();
-			}
-		}
-		
 		/// <summary>
 		/// Gets the first child with the given name and id
 		/// </summary>
@@ -356,71 +360,40 @@ namespace QAliber.Engine.Controls
 		/// <code>
 		///    UIAButton startButton = null;
 		///    UIAPane win = Desktop.UIA[@"", @"Shell_TrayWnd", @"UIAPane"] as UIAPane;
-		///    startButton = win["Start","304"] as UIAButton;
+		///    startButton = win.FindFirstChildByNameId( "Start", "304", false ) as UIAButton;
 		///    startButton.DoubleClick();
 		/// </code>
 		/// </example>
 		/// <param name="name">The name of the child control</param>
 		/// <param name="id">The id of the child control</param>
+		/// <param name="useRegex">If set to true, the <paramref name="name"/> parameter will be treated as regular expression.
+		/// </param>
 		/// <returns>If name and id were found, the control is returned, otherwise null</returns>
 		/// <remarks>The id is constant and does not change from run to run.</remarks>
-		public UIControlBase this[string name, string id]
-		{
-			get
+		public UIControlBase FindFirstChildByNameId( string name, string id, bool useRegex ) {
+			if (Exists)
 			{
-				return this[name, id, false];
-
-			}
-		}
-
-		/// <summary>
-		/// Gets the first child with a name and id that matches the regular expression given by the parameters
-		/// </summary>
-		/// <example>
-		/// <code>
-		///    UIAListItem myFolder = null;
-		///    UIAListBox desktopWindowShortcuts = Desktop.UIA[@"Program Manager", @"Progman", @"UIAPane"][@"Desktop", @"SysListView32", @"1"] as UIAListBox;
-		///    myFolder = desktopWindowShortcuts["My*","*", true] as UIAListItem;
-		///    myFolder.DoubleClick();
-		/// </code>
-		/// </example>
-		/// <param name="name">The pattern to match the children's names against</param>
-		/// <param name="id">The pattern to match the children's ids against</param>
-		/// <param name="useRegex">If set to true, the 'name' and 'id' parameters will be treated as regular expression.
-		/// If set to false, it is identical to calling UIControl[name, id]
-		/// </param>
-		/// <returns>If the name and id were found, the control with that name is returned, otherwise null</returns>
-		/// <see href="http://msdn.microsoft.com/en-us/library/2k3te2cs(VS.80).aspx">
-		/// MSDN Regular Expression
-		/// </see>
-		public UIControlBase this[string name, string id, bool useRegex]
-		{
-			get
-			{
-				if (Exists)
+				Stopwatch watch = new Stopwatch();
+				watch.Start();
+				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 				{
-					Stopwatch watch = new Stopwatch();
-					watch.Start();
-					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
+					foreach (UIControlBase child in GetChildren())
 					{
-						foreach (UIControlBase child in GetChildren())
-						{
-							if (useRegex && Regex.Match(child.Name, name).Success &&
-								Regex.Match(child.ID, id).Success)
-								return child;
-							if (!useRegex &&
-								name.ToLower() == child.Name.ToLower() &&
-								id.ToLower() == child.ID.ToLower())
-								return child;
-						}
-						System.Threading.Thread.Sleep(50);
+						if (useRegex && Regex.Match(child.Name, name, RegexOptions.CultureInvariant).Success &&
+							Regex.Match(child.ID, id, RegexOptions.CultureInvariant).Success)
+							return child;
+						if (!useRegex &&
+							StringComparer.InvariantCultureIgnoreCase.Equals( name, child.Name ) &&
+							StringComparer.InvariantCultureIgnoreCase.Equals( id, child.ID ))
+							return child;
 					}
-					QAliber.Logger.Log.Default.Warning(
-						string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
-									  name, id, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
+					System.Threading.Thread.Sleep(50);
 				}
-				return new UINullControl();
+				QAliber.Logger.Log.Default.Warning(
+					string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
+									name, id, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 			}
+			return new UINullControl();
 		}
 
 		/// <summary>
@@ -430,7 +403,7 @@ namespace QAliber.Engine.Controls
 		/// <code>
 		///    UIAButton startButton = null;
 		///    UIAPane win = Desktop.UIA[@"", @"Shell_TrayWnd", @"UIAPane"] as UIAPane;
-		///    startButton = win["Start","Button","304"] as UIAButton;
+		///    startButton = win.FindFirstChildByNameClassId( "Start","Button","304" ) as UIAButton;
 		///    startButton.Click();
 		/// </code>
 		/// </example>
@@ -438,60 +411,29 @@ namespace QAliber.Engine.Controls
 		/// <param name="className">The class name of the child control</param>
 		/// <param name="id">The id of the child control, if you want to look only for name and classname you can pass null</param>
 		/// <returns>If name, classname and id were found, the control is returned, otherwise null</returns>
-		public UIControlBase this[string name, string className, string id]
-		{
-			get
+		public UIControlBase FindFirstChildByNameClassId( string name, string className, string id ) {
+			if (Exists)
 			{
-				if (Exists)
+				Stopwatch watch = new Stopwatch();
+				watch.Start();
+				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 				{
-					Stopwatch watch = new Stopwatch();
-					watch.Start();
-					while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
-					{
-						foreach (UIControlBase child in GetChildren()) {
-							// BJC: For reasons I can't discern, the automation API returns names for
-							// controls that don't have any. For that reason, if name is an empty string,
-							// I'll skip searching on name
-							if ( (string.IsNullOrEmpty( name ) || child.Name.ToLowerInvariant() == name.ToLowerInvariant()) &&
-								(id == null || child.ID.ToLowerInvariant() == id.ToLowerInvariant()) &&
-								child.ClassName.ToLowerInvariant() == className.ToLowerInvariant())
-								return child;
-						}
-						System.Threading.Thread.Sleep(50);
+					foreach (UIControlBase child in GetChildren()) {
+						// BJC: For reasons I can't discern, the automation API returns names for
+						// controls that don't have any. For that reason, if name is an empty string,
+						// I'll skip searching on name
+						if ( (string.IsNullOrEmpty( name ) || child.Name.ToLowerInvariant() == name.ToLowerInvariant()) &&
+							(id == null || child.ID.ToLowerInvariant() == id.ToLowerInvariant()) &&
+							child.ClassName.ToLowerInvariant() == className.ToLowerInvariant())
+							return child;
 					}
-					QAliber.Logger.Log.Default.Warning(
-						string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
-									  name, className, id, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
+					System.Threading.Thread.Sleep(50);
 				}
-				return new UINullControl();
+				QAliber.Logger.Log.Default.Warning(
+					string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
+									name, className, id, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 			}
-		}
-
-		public virtual QAliber.Engine.Controls.UIA.UIAControl this[string id, int idIndex]
-		{
-			get
-			{
-				if (Exists)
-				{
-					if (this is QAliber.Engine.Controls.UIA.UIAControl)
-					{
-						Stopwatch watch = new Stopwatch();
-						watch.Start();
-						while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
-						{
-							foreach (QAliber.Engine.Controls.UIA.UIAControl child in GetChildren()) {
-								if (child.ID == id && child.IDIndex == idIndex)
-									return child;
-							}
-							System.Threading.Thread.Sleep(50);
-						}
-						QAliber.Logger.Log.Default.Warning(
-							string.Format("Cannot find control [{0}, {1}] for control {2}",
-										  id, idIndex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
-					}
-				}
-				return new UIANullControl();
-			}
+			return new UINullControl();
 		}
 		#endregion
 
