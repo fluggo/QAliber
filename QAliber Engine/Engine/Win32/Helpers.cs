@@ -34,22 +34,22 @@ namespace QAliber.Engine.Win32
 	public class GDI32
 	{
 		[DllImport("GDI32.dll")]
-		public static extern bool BitBlt(int hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, int hdcSrc, int nXSrc, int nYSrc, int dwRop);
+		public static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
 		[DllImport("GDI32.dll")]
-		public static extern int CreateCompatibleBitmap(int hdc, int nWidth, int nHeight);
+		public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
 		[DllImport("GDI32.dll")]
-		public static extern int CreateCompatibleDC(int hdc);
+		public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 		[DllImport("gdi32.dll")]
 		public static extern IntPtr CreateDC(string lpszDriver, string lpszDevice,
 		   string lpszOutput, IntPtr lpInitData);
 		[DllImport("GDI32.dll")]
-		public static extern bool DeleteDC(int hdc);
+		public static extern bool DeleteDC(IntPtr hdc);
 		[DllImport("GDI32.dll")]
-		public static extern bool DeleteObject(int hObject);
+		public static extern bool DeleteObject(IntPtr hObject);
 		[DllImport("GDI32.dll")]
-		public static extern int GetDeviceCaps(int hdc, int nIndex);
+		public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 		[DllImport("GDI32.dll")]
-		public static extern int SelectObject(int hdc, int hgdiobj);
+		public static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
 
 		/// <summary>
 		/// Captures a rectangle over the desktop
@@ -60,22 +60,23 @@ namespace QAliber.Engine.Win32
 		{
 			// Retrieve the handle to a display device context for the client 
 			// area of the window. 
-			IntPtr hDC = new IntPtr(User32.GetWindowDC(User32.GetDesktopWindow()));
+			IntPtr window = User32.GetDesktopWindow();
+			IntPtr hDC = User32.GetWindowDC(window);
 			// Create a memory device context compatible with the device. 
-			int hDCMem = GDI32.CreateCompatibleDC(hDC.ToInt32());
+			IntPtr hDCMem = GDI32.CreateCompatibleDC(hDC);
 			// Retrieve the width and height of window display elements.
 			// Create a bitmap compatible with the device associated with the 
 			// device context.
-			int hBitmap = GDI32.CreateCompatibleBitmap(hDC.ToInt32(), (int)r.Width, (int)r.Height);
-			int hOld = GDI32.SelectObject(hDCMem, hBitmap);
+			IntPtr hBitmap = GDI32.CreateCompatibleBitmap(hDC, (int)r.Width, (int)r.Height);
+			IntPtr hOld = GDI32.SelectObject(hDCMem, hBitmap);
 			// bitblt over
-			GDI32.BitBlt(hDCMem, 0, 0, (int)r.Width, (int)r.Height, hDC.ToInt32(), (int)r.Left, (int)r.Top, 0x00CC0020);
+			GDI32.BitBlt(hDCMem, 0, 0, (int)r.Width, (int)r.Height, hDC, (int)r.Left, (int)r.Top, 0x00CC0020);
 			// restore selection
 			GDI32.SelectObject(hDCMem, hOld);
 			// clean up 
 			GDI32.DeleteDC(hDCMem);
-			User32.ReleaseDC(hDC);
-			Bitmap img = Bitmap.FromHbitmap(new IntPtr(hBitmap));
+			User32.ReleaseDC(window, hDC);
+			Bitmap img = Bitmap.FromHbitmap(hBitmap);
 
 			// Delete the bitmap object and free all resources associated with it. 
 			GDI32.DeleteObject(hBitmap);
@@ -123,7 +124,7 @@ namespace QAliber.Engine.Win32
 
 				User32.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
 				User32.UpdateWindow(IntPtr.Zero);
-				User32.ReleaseDC(dc);
+				GDI32.DeleteDC( dc );
 			}
 			catch (OverflowException)
 			{
@@ -148,7 +149,7 @@ namespace QAliber.Engine.Win32
 				int startY = 2;
 				IntPtr dc = IntPtr.Zero;
 				if (element.Current.NativeWindowHandle != 0)
-					dc = new IntPtr(User32.GetWindowDC(element.Current.NativeWindowHandle));
+					dc = User32.GetWindowDC(new IntPtr(element.Current.NativeWindowHandle));
 				else
 				{
 					dc = GDI32.CreateDC("DISPLAY", null, null, IntPtr.Zero);
@@ -223,7 +224,7 @@ namespace QAliber.Engine.Win32
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetForegroundWindow();
 		[DllImport("User32.dll")]
-		public static extern int GetDesktopWindow();
+		public static extern IntPtr GetDesktopWindow();
 		[DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
 		public static extern short GetKeyState(int keyCode);
 		[DllImport("user32.dll", ExactSpelling = true)]
@@ -231,7 +232,7 @@ namespace QAliber.Engine.Win32
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetMessageExtraInfo();
 		[DllImport("User32.dll")]
-		public static extern int GetWindowDC(int hWnd);
+		public static extern IntPtr GetWindowDC(IntPtr hWnd);
 		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 		[DllImport("user32.dll")]
@@ -245,9 +246,7 @@ namespace QAliber.Engine.Win32
 		[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
 		public static extern IntPtr LoadCursorFromFile(string path);
 		[DllImport("User32.dll")]
-		public static extern int ReleaseDC(int hWnd, int hDC);
-		[DllImport("User32.dll")]
-		public static extern void ReleaseDC(IntPtr dc);
+		public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 		[DllImport("user32.dll")]
 		public static extern int ReleaseCapture();
 		[DllImport("user32.dll")]
