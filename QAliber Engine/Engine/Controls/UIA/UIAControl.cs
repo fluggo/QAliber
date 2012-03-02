@@ -31,6 +31,7 @@ using ManagedInjector;
 using System.Threading;
 using System.Linq;
 using QAliber.Logger;
+using System.Globalization;
 
 namespace QAliber.Engine.Controls.UIA
 {
@@ -43,6 +44,20 @@ namespace QAliber.Engine.Controls.UIA
 	{
 		Dictionary<string, object> _extendedProperties = new Dictionary<string,object>();
 		internal static readonly CacheRequest SearchCache;
+		static TypeMapEntry[] __idToElementName;
+		string _xpathElementName;
+
+		class TypeMapEntry {
+			public TypeMapEntry( ControlType type, string elementName, string uiTypeName ) {
+				ControlType = type;
+				ElementName = elementName;
+				UITypeName = uiTypeName;
+			}
+
+			public ControlType ControlType { get; set; }
+			public string ElementName { get; set; }
+			public string UITypeName { get; set; }
+		}
 
 		static UIAControl() {
 			// Caches those properties we expect in the UIAControl
@@ -78,6 +93,49 @@ namespace QAliber.Engine.Controls.UIA
 			SearchCache.Add( AutomationElement.IsValuePatternAvailableProperty );
 			SearchCache.Add( AutomationElement.IsVirtualizedItemPatternAvailableProperty );
 			SearchCache.Add( AutomationElement.IsWindowPatternAvailableProperty );
+
+			// Build a table of XPath element names to UI automation IDs
+			__idToElementName = new TypeMapEntry[] {
+				new TypeMapEntry( ControlType.Button, "button", "UIAButton" ),
+				new TypeMapEntry( ControlType.Calendar, "calendar", "UIATable" ),
+				new TypeMapEntry( ControlType.CheckBox, "checkbox", "UIACheckBox" ),
+				new TypeMapEntry( ControlType.ComboBox, "combobox", "UIAComboBox" ),
+				new TypeMapEntry( ControlType.Custom, "custom", "UIALabel" ),
+				new TypeMapEntry( ControlType.DataGrid, "datagrid", "UIATable" ),
+				new TypeMapEntry( ControlType.DataItem, "dataitem", "UIAListItem" ),
+				new TypeMapEntry( ControlType.Document, "document", "UIADocument" ),
+				new TypeMapEntry( ControlType.Edit, "edit", "UIAEditBox" ),
+				new TypeMapEntry( ControlType.Group, "group", "UIAGroup" ),
+				new TypeMapEntry( ControlType.Header, "header", "UIALabel" ),
+				new TypeMapEntry( ControlType.HeaderItem, "headeritem", "UIALabel" ),
+				new TypeMapEntry( ControlType.Hyperlink, "hyperlink", "UIALabel" ),
+				new TypeMapEntry( ControlType.Image, "image", "UIAButton" ),
+				new TypeMapEntry( ControlType.List, "list", "UIAListBox" ),
+				new TypeMapEntry( ControlType.ListItem, "listitem", "UIAListItem" ),
+				new TypeMapEntry( ControlType.Menu, "menu", "UIAMenu" ),
+				new TypeMapEntry( ControlType.MenuBar, "menubar", "UIAMenu" ),
+				new TypeMapEntry( ControlType.MenuItem, "menuitem", "UIAMenuItem" ),
+				new TypeMapEntry( ControlType.Pane, "pane", "UIAPane" ),
+				new TypeMapEntry( ControlType.ProgressBar, "progressbar", "UIARange" ),
+				new TypeMapEntry( ControlType.RadioButton, "radiobutton", "UIARadioButton" ),
+				new TypeMapEntry( ControlType.ScrollBar, "scrollbar", "UIAButton" ),
+				new TypeMapEntry( ControlType.Separator, "separator", "UIAButton" ),
+				new TypeMapEntry( ControlType.Slider, "slider", "UIARange" ),
+				new TypeMapEntry( ControlType.Spinner, "spinner", "UIARange" ),
+				new TypeMapEntry( ControlType.SplitButton, "splitbutton", "UIAButton" ),
+				new TypeMapEntry( ControlType.StatusBar, "statusbar", "UIALabel" ),
+				new TypeMapEntry( ControlType.Tab, "tab", "UIATab" ),
+				new TypeMapEntry( ControlType.TabItem, "tabitem", "UIATabItem" ),
+				new TypeMapEntry( ControlType.Table, "table", "UIATable" ),
+				new TypeMapEntry( ControlType.Text, "text", "UIALabel" ),
+				new TypeMapEntry( ControlType.Thumb, "thumb", "UIALabel" ),
+				new TypeMapEntry( ControlType.TitleBar, "titlebar", "UIAButton" ),
+				new TypeMapEntry( ControlType.ToolBar, "toolbar", "UIAToolbar" ),
+				new TypeMapEntry( ControlType.ToolTip, "tooltip", "UIAButton" ),
+				new TypeMapEntry( ControlType.Tree, "tree", "UIATree" ),
+				new TypeMapEntry( ControlType.TreeItem, "treeitem", "UIATreeItem" ),
+				new TypeMapEntry( ControlType.Window, "window", "UIAWindow" ),
+			};
 		}
 
 		#region Constructores
@@ -91,6 +149,18 @@ namespace QAliber.Engine.Controls.UIA
 		protected UIAControl(AutomationElement element)
 		{
 			automationElement = element;
+
+			if( automationElement == null ) {
+				_xpathElementName = "null";
+			}
+			else {
+				foreach( var map in __idToElementName ) {
+					if( map.ControlType == automationElement.Cached.ControlType ) {
+						_xpathElementName = map.ElementName;
+						break;
+					}
+				}
+			}
 		}
 		#endregion
 
@@ -131,6 +201,12 @@ namespace QAliber.Engine.Controls.UIA
 			return children.ToArray();
 		}
 
+		public string XPathElementName {
+			get {
+				return _xpathElementName;
+			}
+		}
+
 		int _index;
 
 		private void SetIndex( int index ) {
@@ -167,24 +243,14 @@ namespace QAliber.Engine.Controls.UIA
 			get { return automationElement.Current.HelpText; }
 		}
 
-		string _id;
+		public override string ID {
+			get {
+				object value = automationElement.GetCachedPropertyValue( AutomationElement.AutomationIdProperty, true );
 
-		public override string ID
-		{
-			get 
-			{
-				if (_id == null)
-				{
-					if (automationElement.Cached.AutomationId == "" ||
-						IsIdHandle(automationElement.Cached.AutomationId))
-					{
-						_id = UIType;
-					}
-					else
-						_id = automationElement.Cached.AutomationId;
+				if( value == AutomationElement.NotSupported )
+					return null;
 
-				}
-				return _id;
+				return (string) value;
 			}
 		}
 
@@ -193,87 +259,10 @@ namespace QAliber.Engine.Controls.UIA
 				// Supports the old style of finding elements by their class type;
 				// this is a map from control types to the old class names
 				ControlType type = automationElement.Cached.ControlType;
+				TypeMapEntry entry = __idToElementName.FirstOrDefault( m => m.ControlType == type );
 
-				if( type == ControlType.Button ||
-						type == ControlType.Image ||
-						type == ControlType.Separator ||
-						type == ControlType.ScrollBar ||
-						type == ControlType.SplitButton ||
-						type == ControlType.TitleBar ||
-						type == ControlType.ToolTip )
-					return "UIAButton";
-
-				if( type == ControlType.Calendar ||
-						type == ControlType.DataGrid ||
-						type == ControlType.Table )
-					return "UIATable";
-
-				if( type == ControlType.CheckBox )
-					return "UIACheckBox";
-
-				if( type == ControlType.ComboBox )
-					return "UIAComboBox";
-
-				if( type == ControlType.Custom ||
-						type == ControlType.Header ||
-						type == ControlType.HeaderItem ||
-						type == ControlType.Hyperlink ||
-						type == ControlType.StatusBar ||
-						type == ControlType.Text ||
-						type == ControlType.Thumb )
-					return "UIALabel";
-
-				if( type == ControlType.DataItem ||
-						type == ControlType.ListItem )
-					return "UIAListItem";
-
-				if( type == ControlType.Document )
-					return "UIADocument";
-
-				if( type == ControlType.Edit )
-					return "UIAEditBox";
-
-				if( type == ControlType.Group )
-					return "UIAGroup";
-
-				if( type == ControlType.List )
-					return "UIAListBox";
-
-				if( type == ControlType.Menu ||
-						type == ControlType.MenuBar )
-					return "UIAMenu";
-
-				if( type == ControlType.MenuItem )
-					return "UIAMenuItem";
-
-				if( type == ControlType.Pane )
-					return "UIAPane";
-
-				if( type == ControlType.ProgressBar ||
-						type == ControlType.Slider ||
-						type == ControlType.Spinner )
-					return "UIARange";
-
-				if( type == ControlType.RadioButton )
-					return "UIARadioButton";
-
-				if( type == ControlType.Tab )
-					return "UIATab";
-
-				if( type == ControlType.TabItem )
-					return "UIATabItem";
-
-				if( type == ControlType.ToolBar )
-					return "UIAToolbar";
-
-				if( type == ControlType.Tree )
-					return "UIATree";
-
-				if( type == ControlType.TreeItem )
-					return "UIATreeItem";
-
-				if( type == ControlType.Window )
-					return "UIAWindow";
+				if( entry != null )
+					return entry.UITypeName;
 
 				return string.Empty;
 			}
@@ -290,18 +279,74 @@ namespace QAliber.Engine.Controls.UIA
 					string prefix = String.Empty;
 					UIControlBase parent = Parent;
 					if (parent == null || (parent is UIAControl) && ((UIAControl)parent).UIAutomationElement.Equals(AutomationElement.RootElement))
-						prefix = "code:Desktop.UIA";
+						prefix = "uia:";
 					else
 						prefix = parent.CodePath;
-					string tmpName = Name;
-					string tmpID = ID;
-					if (tmpName == "" && tmpID.StartsWith("UI"))
-						_codePath = prefix + "[@\"" + tmpID + "\", " + IDIndex + "]";
-					else
-						_codePath = prefix + "[@\"" + tmpName + "\", @\"" + ClassName + "\", @\"" + tmpID + "\"]";
+
+					prefix += "/" + XPathElementName;
+
+					if( Name == null && ID == null ) {
+						_codePath = prefix + "[" + Index.ToString( CultureInfo.InvariantCulture ) + "]";
+					}
+					else {
+						List<string> conditions = new List<string>();
+
+						// The name, which we leave out for title bars because it's redundant
+						if( Name != null && automationElement.Cached.ControlType != ControlType.TitleBar ) {
+							if( Name.Contains( '\'' ) )
+								conditions.Add( "@Name=\"" + Name + "\"" );
+							else
+								conditions.Add( "@Name=\'" + Name + "\'" );
+						}
+
+						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null ) {
+							if( ClassName.Contains( '\'' ) )
+								conditions.Add( "@ClassName=\"" + ClassName + "\"" );
+							else
+								conditions.Add( "@ClassName=\'" + ClassName + "\'" );
+						}
+
+						if( ID != null ) {
+							if( ID.Contains( '\'' ) )
+								conditions.Add( "@ID=\"" + ID + "\"" );
+							else
+								conditions.Add( "@ID=\'" + ID + "\'" );
+						}
+
+						if( conditions.Count != 0 )
+							_codePath = prefix + "[" + string.Join( " and ", conditions ) + "]";
+						else
+							_codePath = prefix;
+					}
 				}
 				return _codePath;
 			}
+		}
+
+		/// <summary>
+		/// Returns the first control identified by the given XPath expression.
+		/// </summary>
+		/// <param name="xpath">XPath expression to evaluate.</param>
+		/// <returns>A <see cref="UIAControl"/> if the expression evaluates to one,
+		///   or a <see cref="UIANullControl"/> if the result returns empty.</returns>
+		public static UIAControl FindControlByXPath( string xpath ) {
+			XPathExpression exp = XPath.Parse( xpath );
+			UIAXPathEvaluator evaluator = new UIAXPathEvaluator();
+
+			IXPathNode[] expResult = evaluator.Evaluate( exp ) as IXPathNode[];
+
+			if( expResult == null )
+				throw new ArgumentException( "XPath did not evaluate to a control." );
+
+			if( expResult.Length == 0 )
+				return new UIANullControl();
+
+			XPathAdapter adapter = expResult[0] as XPathAdapter;
+
+			if( adapter == null )
+				throw new ArgumentException( "XPath evaluated to a non-control node." );
+
+			return adapter.Owner;
 		}
 
 		public override Rect Layout
@@ -309,9 +354,15 @@ namespace QAliber.Engine.Controls.UIA
 			get { return automationElement.Current.BoundingRectangle; }
 		}
 
-		public override string Name
-		{
-			get { return automationElement.Cached.Name; }
+		public override string Name {
+			get {
+				object value = automationElement.GetCachedPropertyValue( AutomationElement.NameProperty, true );
+
+				if( value == AutomationElement.NotSupported )
+					return null;
+
+				return (string) value;
+			}
 		}
 
 		
@@ -442,7 +493,6 @@ namespace QAliber.Engine.Controls.UIA
 			base.Refresh();
 			idIndex = -1;
 			_codePath = null;
-			_id = null;
 			_parent = null;
 		}
 

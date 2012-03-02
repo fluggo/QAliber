@@ -461,6 +461,10 @@ return c;";
 				return (UIControlBase) CodeEvaluator.Evaluate( code );
 			}
 
+			if( path.StartsWith( "uia:" ) ) {
+				return QAliber.Engine.Controls.UIA.UIAControl.FindControlByXPath( path.Substring( 4 ) );
+			}
+
 			throw new ArgumentException( "Could not recognize control path scheme." );
 		}
 

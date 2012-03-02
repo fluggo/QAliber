@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeEvaluator.cs" />
+    <Compile Include="Controls\UIA\XPathSupport.cs" />
     <Compile Include="Controls\UINullControl.cs" />
     <Compile Include="Controls\Desktop.cs" />
     <Compile Include="Controls\IControlLocator.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Win32\Helpers.cs" />
     <Compile Include="Win32\SendInput.cs" />
     <Compile Include="Controls\WPF\WPFControl.cs" />
+    <Compile Include="XPath.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EngineOptionsPane.resx">
