@@ -462,7 +462,19 @@ return c;";
 			}
 
 			if( path.StartsWith( "uia:" ) ) {
-				return QAliber.Engine.Controls.UIA.UIAControl.FindControlByXPath( path.Substring( 4 ) );
+				Stopwatch watch = new Stopwatch();
+				watch.Start();
+
+				while ( watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl ) {
+					UIControlBase control = QAliber.Engine.Controls.UIA.UIAControl.FindControlByXPath( path.Substring( 4 ) );
+
+					if( control.Exists )
+						return control;
+
+					System.Threading.Thread.Sleep( 0 );
+				}
+
+				return new UIANullControl();
 			}
 
 			throw new ArgumentException( "Could not recognize control path scheme." );
