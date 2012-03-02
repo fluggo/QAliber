@@ -88,7 +88,7 @@ namespace QAliber.Engine.Controls.UIA
 		/// Reperesents UI Automation element in the UI Automation tree,and contains
 		/// values used as identifiers by UI Automation client applications.
 		///</param>
-		public UIAControl(AutomationElement element)
+		protected UIAControl(AutomationElement element)
 		{
 			automationElement = element;
 		}
@@ -119,7 +119,7 @@ namespace QAliber.Engine.Controls.UIA
 
 			foreach (AutomationElement element in elements)
 			{
-				UIAControl control = UIAControl.GetControlByType(element);
+				UIAControl control = new UIAControl( element );
 				if (control != null)
 				{
 					control.SetIndex( children.Count );
@@ -512,7 +512,7 @@ namespace QAliber.Engine.Controls.UIA
 		/// <returns></returns>
 		public static UIAControl GetControlByType(AutomationElement element)
 		{
-			return new UIAControl( element );
+			return new UIAControl( element.GetUpdatedCache( SearchCache ) );
 		}
 
 		public override T GetControlInterface<T>() {
@@ -634,7 +634,7 @@ namespace QAliber.Engine.Controls.UIA
 				else {
 					// Try to click it
 					QAliber.Logger.Log.Default.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
-					GetControlByType( target ).Click();
+					new UIAControl( target ).Click();
 				}
 			}
 
@@ -664,7 +664,7 @@ namespace QAliber.Engine.Controls.UIA
 				else {
 					// Try to click it
 					QAliber.Logger.Log.Default.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
-					GetControlByType( target ).Click();
+					new UIAControl( target ).Click();
 				}
 			}
 
@@ -678,7 +678,7 @@ namespace QAliber.Engine.Controls.UIA
 					}
 
 					using( SearchCache.Activate() ) {
-						return _pattern.Current.GetSelection().Select( e => GetControlByType( e ) ).ToArray();
+						return _pattern.Current.GetSelection().Select( e => new UIAControl( e ) ).ToArray();
 					}
 				}
 			}
