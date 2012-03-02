@@ -413,22 +413,8 @@ namespace QAliber.Engine.Controls.UIA
 		#endregion
 
 		#region Methods
-		public override void SetFocus()
-		{
-			try
-			{
-				if (!this.UIType.EndsWith("Item"))
-					automationElement.SetFocus();
-			}
-			catch (InvalidOperationException)
-			{
-			}
-			finally
-			{
-				UIControlBase prnt = Parent;
-				if (prnt != null)
-					prnt.SetFocus();
-			}
+		public override void SetFocus() {
+			automationElement.SetFocus();
 		}
 
 		public UIAControl FindFirstChildByIdIndex( string id, int idIndex ) {
