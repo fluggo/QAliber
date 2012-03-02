@@ -272,22 +272,7 @@ namespace QAliber.Engine.Win32
 		}
 
 
-	}
 
-	/// <summary>
-	/// Useful extension methods
-	/// </summary>
-	public static class Extensions
-	{
-		/// <summary>
-		/// Returns the x,y of the middle of the rectangle
-		/// </summary>
-		/// <param name="r"></param>
-		/// <returns></returns>
-		public static Point Middle(this Rect r)
-		{
-			return new Point(r.X + r.Width / 2, r.Y + r.Height / 2);	
-		}
 	}
 }
 
