@@ -105,7 +105,6 @@
     </Compile>
     <Compile Include="Enumerators.cs" />
     <Compile Include="Patterns\ControlsInterfaces.cs" />
-    <Compile Include="Patterns\PatternsExecutor.cs" />
     <Compile Include="PlayerConfig.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
