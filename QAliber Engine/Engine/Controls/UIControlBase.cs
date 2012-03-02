@@ -722,6 +722,10 @@ return c;";
 			if (CheckExistence())
 			{
 				Point p = new Point(Layout.Left + rel.X, Layout.Top + rel.Y);
+
+				if( p.X > 10000.0 || p.Y > 10000.0 || p.X < -10000.0 || p.Y < -10000.0 )
+					throw new Exception( string.Format( "Couldn't find point to click ({0}, {1}).", p.X, p.Y ) );
+
 				Logger.Log.Default.Info("Clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.Click(button, p);
 			}
