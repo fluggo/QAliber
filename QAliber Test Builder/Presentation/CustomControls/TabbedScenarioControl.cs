@@ -306,6 +306,27 @@ namespace QAliber.Builder.Presentation
 
 		}
 
+		internal void CloseItem(object sender, EventArgs e)
+		{
+			try
+			{
+				ScenarioControl currentScenarioControl = tabbedDocumentControl.SelectedControl as ScenarioControl;
+				if (currentScenarioControl != null)
+				{
+					tabbedDocumentControl.Items.Remove(currentScenarioControl);
+				}
+				else
+				{
+					LogViewerControl currentLogViewControl = tabbedDocumentControl.SelectedControl as LogViewerControl;
+					if (currentLogViewControl != null)
+						tabbedDocumentControl.Items.Remove(currentLogViewControl);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Could not close!\n" + ex.Message, "Error While Closing");
+			}
+		}
 		
 
 		

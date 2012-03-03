@@ -278,6 +278,12 @@ namespace QAliber.Builder.Presentation
 			
 		}
 
+		// Not really a tool strip item, but...
+		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			executionContainer.dockManager.tabbedScenarioControl.CloseItem(sender, e);
+		}
+
 
 	}
 }

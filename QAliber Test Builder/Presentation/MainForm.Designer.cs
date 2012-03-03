@@ -48,6 +48,7 @@ namespace QAliber.Builder.Presentation
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,6 +117,7 @@ namespace QAliber.Builder.Presentation
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.newToolStripMenuItem,
 			this.loadToolStripMenuItem,
+			this.closeToolStripMenuItem,
 			this.toolStripSeparator1,
 			this.saveToolStripMenuItem,
 			this.saveAsToolStripMenuItem,
@@ -143,6 +145,13 @@ namespace QAliber.Builder.Presentation
 			this.loadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
 			this.loadToolStripMenuItem.Text = "&Open";
 			this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+			// 
+			// closeToolStripMenuItem
+			// 
+			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.closeToolStripMenuItem.Text = "&Close";
+			this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -325,7 +334,7 @@ namespace QAliber.Builder.Presentation
 			this.selectBlueToolStripMenuItem.CheckOnClick = true;
 			this.selectBlueToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
 			this.selectBlueToolStripMenuItem.Name = "selectBlueToolStripMenuItem";
-			this.selectBlueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectBlueToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.selectBlueToolStripMenuItem.Text = "Select Blue";
 			this.selectBlueToolStripMenuItem.Click += new System.EventHandler(this.selectBlueToolStripMenuItem_Click);
 			// 
@@ -334,7 +343,7 @@ namespace QAliber.Builder.Presentation
 			this.selectGreenToolStripMenuItem.CheckOnClick = true;
 			this.selectGreenToolStripMenuItem.ForeColor = System.Drawing.Color.Green;
 			this.selectGreenToolStripMenuItem.Name = "selectGreenToolStripMenuItem";
-			this.selectGreenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectGreenToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.selectGreenToolStripMenuItem.Text = "Select Green";
 			this.selectGreenToolStripMenuItem.Click += new System.EventHandler(this.selectGreenToolStripMenuItem_Click);
 			// 
@@ -343,7 +352,7 @@ namespace QAliber.Builder.Presentation
 			this.selectRedToolStripMenuItem.CheckOnClick = true;
 			this.selectRedToolStripMenuItem.ForeColor = System.Drawing.Color.Red;
 			this.selectRedToolStripMenuItem.Name = "selectRedToolStripMenuItem";
-			this.selectRedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectRedToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.selectRedToolStripMenuItem.Text = "Select Red";
 			this.selectRedToolStripMenuItem.Click += new System.EventHandler(this.selectRedToolStripMenuItem_Click);
 			// 
@@ -352,7 +361,7 @@ namespace QAliber.Builder.Presentation
 			this.selectOrangeToolStripMenuItem.CheckOnClick = true;
 			this.selectOrangeToolStripMenuItem.ForeColor = System.Drawing.Color.Orange;
 			this.selectOrangeToolStripMenuItem.Name = "selectOrangeToolStripMenuItem";
-			this.selectOrangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectOrangeToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.selectOrangeToolStripMenuItem.Text = "Select Orange";
 			this.selectOrangeToolStripMenuItem.Click += new System.EventHandler(this.selectOrangeToolStripMenuItem_Click);
 			// 
@@ -361,7 +370,7 @@ namespace QAliber.Builder.Presentation
 			this.selectPurpleToolStripMenuItem.CheckOnClick = true;
 			this.selectPurpleToolStripMenuItem.ForeColor = System.Drawing.Color.Purple;
 			this.selectPurpleToolStripMenuItem.Name = "selectPurpleToolStripMenuItem";
-			this.selectPurpleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectPurpleToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.selectPurpleToolStripMenuItem.Text = "Select Purple";
 			this.selectPurpleToolStripMenuItem.Click += new System.EventHandler(this.selectPurpleToolStripMenuItem_Click);
 			// 
@@ -595,6 +604,7 @@ namespace QAliber.Builder.Presentation
 		internal ExecutionContainer executionContainer;
 		private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
 
 	}
 }
