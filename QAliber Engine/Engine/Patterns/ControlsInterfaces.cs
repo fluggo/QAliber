@@ -62,4 +62,27 @@ namespace QAliber.Engine.Patterns
 		void Resize( double width, double height );
 		void Rotate( double degrees );
 	}
+
+	public interface ISelectionItemPattern {
+		bool IsSelected { get; }
+
+		void AddToSelection();
+		void RemoveFromSelection();
+		void Select();
+	}
+
+	public enum ToggleState {
+		Off = System.Windows.Automation.ToggleState.Off,
+		On = System.Windows.Automation.ToggleState.On,
+		Indeterminate = System.Windows.Automation.ToggleState.Indeterminate,
+	}
+
+	public interface ITogglePattern {
+		ToggleState ToggleState { get; }
+		void Toggle();
+	}
+
+	public interface IInvokePattern {
+		void Invoke();
+	}
 }

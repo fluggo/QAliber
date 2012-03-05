@@ -555,6 +555,22 @@ namespace QAliber.Engine.Controls.UIA
 				props.Add( new ExtendedPropertyDescriptor( kv.Key, kv.Value, attrs ) );
 			}
 
+			{
+				ISelectionItemPattern pattern = GetControlInterface<ISelectionItemPattern>();
+
+				if( pattern != null ) {
+					props.Add( MakePropertyDescriptor( "IsSelected", () => pattern.IsSelected ) );
+				}
+			}
+
+			{
+				ITogglePattern pattern = GetControlInterface<ITogglePattern>();
+
+				if( pattern != null ) {
+					props.Add( MakePropertyDescriptor( "ToggleState", () => pattern.ToggleState ) );
+				}
+			}
+
 			return props;
 		}
 
@@ -616,6 +632,30 @@ namespace QAliber.Engine.Controls.UIA
 
 				TransformPattern transformPattern = (TransformPattern) automationElement.GetCurrentPattern( TransformPattern.Pattern );
 				return new TransformPatternImpl( transformPattern );
+			}
+
+			if( type == typeof(ISelectionItemPattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsSelectionItemPatternAvailableProperty )) )
+					return null;
+
+				SelectionItemPattern pattern = (SelectionItemPattern) automationElement.GetCurrentPattern( SelectionItemPattern.Pattern );
+				return new SelectionItemPatternImpl( pattern );
+			}
+
+			if( type == typeof(ITogglePattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsTogglePatternAvailableProperty )) )
+					return null;
+
+				TogglePattern pattern = (TogglePattern) automationElement.GetCurrentPattern( TogglePattern.Pattern );
+				return new TogglePatternImpl( pattern );
+			}
+
+			if( type == typeof(IInvokePattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsInvokePatternAvailableProperty )) )
+					return null;
+
+				InvokePattern pattern = (InvokePattern) automationElement.GetCurrentPattern( InvokePattern.Pattern );
+				return new InvokePatternImpl( pattern );
 			}
 
 			return null;
@@ -820,6 +860,57 @@ namespace QAliber.Engine.Controls.UIA
 
 			public void Rotate( double degrees ) {
 				_pattern.Rotate( degrees );
+			}
+		}
+
+		class SelectionItemPatternImpl : ISelectionItemPattern {
+			SelectionItemPattern _pattern;
+
+			public SelectionItemPatternImpl( SelectionItemPattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public bool IsSelected {
+				get { return _pattern.Current.IsSelected; }
+			}
+
+			public void AddToSelection() {
+				_pattern.AddToSelection();
+			}
+
+			public void RemoveFromSelection() {
+				_pattern.RemoveFromSelection();
+			}
+
+			public void Select() {
+				_pattern.Select();
+			}
+		}
+
+		class TogglePatternImpl : ITogglePattern {
+			TogglePattern _pattern;
+
+			public TogglePatternImpl( TogglePattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public QAliber.Engine.Patterns.ToggleState ToggleState
+				{ get { return (QAliber.Engine.Patterns.ToggleState)(int) _pattern.Current.ToggleState; } }
+
+			public void Toggle() {
+				_pattern.Toggle();
+			}
+		}
+
+		class InvokePatternImpl : IInvokePattern {
+			InvokePattern _pattern;
+
+			public InvokePatternImpl( InvokePattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public void Invoke() {
+				_pattern.Invoke();
 			}
 		}
 
