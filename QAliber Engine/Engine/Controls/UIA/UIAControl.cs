@@ -368,7 +368,14 @@ namespace QAliber.Engine.Controls.UIA
 		
 		public override string ClassName
 		{
-			get { return automationElement.Cached.ClassName; }
+			get {
+				object value = automationElement.GetCachedPropertyValue( AutomationElement.ClassNameProperty, true );
+
+				if( value == AutomationElement.NotSupported )
+					return null;
+
+				return (string) value;
+			}
 		}
 
 		public override IntPtr Handle
