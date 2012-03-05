@@ -26,6 +26,7 @@ using QAliber.RemotingModel;
 using QAliber.ImageHandling;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
 {
@@ -76,6 +77,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 
 		public override void Body()
 		{
+			// Fix up a relative path
+			string path = Path.Combine( Path.GetDirectoryName( Scenario.Filename ), file );
+
+			if( !System.IO.File.Exists( path ) ) {
+				Log.Default.Error( "Could not find image file",
+					"Could not find image file at " + path, EntryVerbosity.Normal );
+				ActualResult = TestCaseResult.Failed;
+				return;
+			}
+
 			Bitmap mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
 			Bitmap subImage = new Bitmap( Image.FromFile( path ) );
 			ImageFinder imageFinder = new ImageFinder(mainImage, subImage);
