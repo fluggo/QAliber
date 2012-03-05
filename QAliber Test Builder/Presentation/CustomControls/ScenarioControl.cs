@@ -389,6 +389,8 @@ namespace QAliber.Builder.Presentation
 
 		private void AfterValueChanged(object s, PropertyValueChangedEventArgs e)
 		{
+			// BJC: This block of code intends to make the value change undoable;
+			// I don't know why it's commented out
 			//if (e.OldValue != null)
 			//{
 			//	  ICommand command = new PropertyChangedCommand(scenarioTreeView.SelectedNode,
@@ -399,16 +401,15 @@ namespace QAliber.Builder.Presentation
 			//	  CommandsCollection.Default.AddNewCommand(command);
 
 			//}
-			if (e.ChangedItem.PropertyDescriptor.Name == "Name")
-			{
-				foreach (TreeNode node in scenarioTreeView.SelectedNodes)
-				{
-					node.Text = e.ChangedItem.Value.ToString();
-				}
 
-			}
-						
 			OnScenarioChanged();
+		}
+
+		private void HandleAfterLabelChanged( object sender, NodeLabelEditEventArgs e ) {
+			if( e.Label != null ) {
+				testCasesPG.SelectedObjects = testCasesPG.SelectedObjects;
+				OnScenarioChanged();
+			}
 		}
 
 		internal void MenuCutClicked(object sender, EventArgs e)

@@ -222,6 +222,23 @@ namespace QAliber.Builder.Presentation
 				TestCaseDragged(this, new NodeDraggedEventArgs(typeNode, targetNode));
 		}
 
+		protected override void OnAfterLabelEdit( NodeLabelEditEventArgs e ) {
+			if( e.Label != null ) {
+				((QAliberTreeNode) e.Node).Testcase.Name = e.Label;
+			}
+
+			base.OnAfterLabelEdit( e );
+		}
+
+		protected override void OnKeyDown( KeyEventArgs e ) {
+			// Allow editing node names with F2
+			if( e.KeyCode == Keys.F2 && e.Modifiers == Keys.None && SelectedNode != null ) {
+				SelectedNode.BeginEdit();
+			}
+
+			base.OnKeyDown( e );
+		}
+
 		#endregion
 
 		#region Private Methods
@@ -342,7 +359,15 @@ namespace QAliber.Builder.Presentation
 		public TestCase Testcase
 		{
 			get { return testcase; }
-			set { testcase = value; }
+			set {
+				if( testcase != null )
+					testcase.PropertyChanged -= HandlePropertyChanged;
+
+				testcase = value;
+
+				if( testcase != null )
+					testcase.PropertyChanged += HandlePropertyChanged;
+			}
 		}
 
 		private Color nonHighlightForeColor;
@@ -359,6 +384,11 @@ namespace QAliber.Builder.Presentation
 		{
 			get { return nonHighlightBackColor; }
 			set { nonHighlightBackColor = value; }
+		}
+
+		private void HandlePropertyChanged( object sender, PropertyChangedEventArgs e ) {
+			if( e.PropertyName == "Name" )
+				Text = Name = testcase.Name;
 		}
 
 		public void AddChild(TestCase testCase)

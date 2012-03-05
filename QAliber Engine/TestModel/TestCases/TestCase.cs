@@ -38,8 +38,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[Serializable]
 	[XmlType("TestStep", Namespace=Util.XmlNamespace)]
-	public abstract class TestCase : ICloneable
-	{
+	public abstract class TestCase : ICloneable, INotifyPropertyChanged {
 		private string _defaultName;
 
 		protected TestCase( string name ) {
@@ -179,6 +178,19 @@ namespace QAliber.TestModel
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Raised when a property changes.
+		/// </summary>
+		[field: NonSerialized]
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void OnPropertyChanged( string propertyName ) {
+			PropertyChangedEventHandler handler = PropertyChanged;
+
+			if( handler != null )
+				handler( this, new PropertyChangedEventArgs( propertyName ) );
+		}
 
 		#region Data Structure
 		
@@ -409,7 +421,7 @@ namespace QAliber.TestModel
 		public string Name
 		{
 			get { return name; }
-			set { name = value; }
+			set { name = value; OnPropertyChanged( "Name" ); }
 		}
 
 		/// <summary>
