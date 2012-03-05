@@ -44,7 +44,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		private int timeout = 10000;
 
 		[Category("Image")]
-		[Description("The timeout in miliseconds, to wait for the specified image")]
+		[Description("The timeout in miliseconds, to wait for the specified image.")]
 		public int Timeout 
 		{
 			get { return timeout; }
@@ -68,7 +68,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 
 		[Category("Image")]
 		[DisplayName("Rectangle Found")]
-		[Description("The region where the image was found in the desktop")]
+		[Description("The region where the image was found in the desktop.")]
 		public Rect RectFound
 		{
 			get { return rect; }
@@ -98,7 +98,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 				if (rect.X >= 0)
 				{
 					LogPassedByExpectedResult("Image was found at " + rect, "");
-					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = TestCaseResult.Passed;
 					return;
 				}
 				mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
@@ -106,7 +106,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			}
 
 			LogFailedByExpectedResult("Couldn't find the image within the desktop in the timeout given", "");
-			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 
 		}
 
