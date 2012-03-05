@@ -55,7 +55,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		[Category("Image")]
 		[Editor(typeof(QAliber.Repository.CommonTestCases.UITypeEditors.DesktopGrabberTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[DisplayName("Image File")]
-		[Description("The image to look for in the desktop (the image format must be bmp)")]
+		[Description("The image to look for in the desktop. The image can be BMP, GIF, JPEG, PNG, or TIFF.")]
 		public string File
 		{
 			get { return file; }
@@ -77,7 +77,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		public override void Body()
 		{
 			Bitmap mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
-			Bitmap subImage = Bitmap.FromFile(file) as Bitmap;
+			Bitmap subImage = new Bitmap( Image.FromFile( path ) );
 			ImageFinder imageFinder = new ImageFinder(mainImage, subImage);
 			Stopwatch watch = new Stopwatch();
 			watch.Start();
