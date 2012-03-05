@@ -1133,6 +1133,12 @@ return c;";
 			return this;
 		}
 
+		public static PropertyDescriptor MakePropertyDescriptor<TProperty>( string propertyName, Func<TProperty> getter ) {
+			Attribute[] attrs = new Attribute[] { new CategoryAttribute( "Additional Properties" ) };
+
+			return new DynamicPropertyDescriptor<object, TProperty>( propertyName, obj => getter(), attrs );
+		}
+
 		#endregion
 	}
 
@@ -1203,6 +1209,57 @@ return c;";
 
 		private object val;
 
+	}
+
+	/// <summary>
+	/// Describes a dynamic property.
+	/// </summary>
+	/// <typeparam name="TTarget">Type that this property applies to.</typeparam>
+	/// <typeparam name="TProperty">Type of the property.</typeparam>
+	class DynamicPropertyDescriptor<TTarget, TProperty> : PropertyDescriptor {
+		Func<TTarget, TProperty> _getter;
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="DynamicPropertyDescriptor{TTarget,TProperty}"/> class.
+		/// </summary>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="getter">Function that returns the value of the property.</param>
+		/// <param name="attrs">Additional attributes to use for the property.</param>
+		public DynamicPropertyDescriptor( string propertyName, Func<TTarget, TProperty> getter, Attribute[] attrs ) : base( propertyName, attrs ) {
+			_getter = getter;
+		}
+
+		public override bool CanResetValue( object component ) {
+			return false;
+		}
+
+		public override Type ComponentType {
+			get { return typeof(TTarget); }
+		}
+
+		public override object GetValue( object component ) {
+			return _getter( (TTarget) component );
+		}
+
+		public override bool IsReadOnly {
+			get { return true; }
+		}
+
+		public override Type PropertyType {
+			get { return typeof(TProperty); }
+		}
+
+		public override void ResetValue(object component) {
+			throw new NotSupportedException();
+		}
+
+		public override void SetValue(object component, object value) {
+			throw new NotSupportedException();
+		}
+
+		public override bool ShouldSerializeValue(object component) {
+			return false;
+		}
 	}
 
 	class IDControlSorter : IComparer<UIControlBase>
