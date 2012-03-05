@@ -439,8 +439,6 @@ namespace QAliber.TestModel
 			Name = _defaultName;
 		}
 
-		protected string description;
-
 		/// <summary>
 		/// The description of the test csae, the description will be logged as a remark by the QAliber runner.
 		/// A good practice is to set it according to the parameters the user chosen for the test case
@@ -450,7 +448,7 @@ namespace QAliber.TestModel
 		[XmlIgnore, ReadOnly(true)]
 		public virtual string Description
 		{
-			get { return description; }
+			get { return string.Empty; }
 		}
 
 		protected string originalPath;
