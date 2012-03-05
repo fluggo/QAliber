@@ -259,6 +259,8 @@ namespace QAliber.Engine.Win32
 		public static extern bool UpdateWindow(IntPtr hwnd);
 		[DllImport("user32.dll")]
 		public static extern IntPtr WindowFromPoint(System.Drawing.Point pt);
+		[DllImport("user32.dll", SetLastError=true)]
+		static extern int GetWindowLong( IntPtr hWnd, int nIndex );
 
 		/// <summary>
 		/// Gets the state of the caps lock key
@@ -271,8 +273,17 @@ namespace QAliber.Engine.Win32
 			}
 		}
 
+		const int WS_EX_TOPMOST = 0x8;
+		const int GWL_EXSTYLE = -20;
 
+		public static bool GetAlwaysOnTop( IntPtr windowHandle ) {
+			int style = GetWindowLong( windowHandle, GWL_EXSTYLE );
 
+			if( style == 0 )
+				Marshal.ThrowExceptionForHR( Marshal.GetHRForLastWin32Error() );
+
+			return (style & WS_EX_TOPMOST) == WS_EX_TOPMOST;
+		}
 	}
 }
 

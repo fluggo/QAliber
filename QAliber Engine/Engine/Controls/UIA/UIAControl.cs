@@ -32,6 +32,7 @@ using System.Threading;
 using System.Linq;
 using QAliber.Logger;
 using System.Globalization;
+using QAliber.Engine.Win32;
 
 namespace QAliber.Engine.Controls.UIA
 {
@@ -365,7 +366,16 @@ namespace QAliber.Engine.Controls.UIA
 			}
 		}
 
-		
+		/// <summary>
+		/// Determines whether the window is marked topmost (always-on-top).
+		/// </summary>
+		/// <value>True if the window is topmost, false otherwise.</value>
+		public bool AlwaysOnTop {
+			get {
+				return User32.GetAlwaysOnTop( (IntPtr) automationElement.Cached.NativeWindowHandle );
+			}
+		}
+
 		public override string ClassName
 		{
 			get {
