@@ -48,7 +48,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			// 
 			// saveFileDialog
 			// 
-			this.saveFileDialog.Filter = "Bitmap Files|*.bmp";
+			this.saveFileDialog.Filter = "PNG files|*.png|Bitmap files|*.bmp|JPEG files|*.jpeg";
 			// 
 			// DesktopMaskForm
 			// 
@@ -61,7 +61,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
 			this.Name = "DesktopMaskForm";
-			this.Opacity = 0.5;
+			this.Opacity = 0.5D;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "DesktopMaskForm";
 			this.ResumeLayout(false);
