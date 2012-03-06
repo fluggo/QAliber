@@ -67,6 +67,7 @@ namespace QAliber.Engine.Controls.UIA
 			SearchCache.TreeScope = TreeScope.Element;
 			SearchCache.Add( AutomationElement.AutomationIdProperty );
 			SearchCache.Add( AutomationElement.NameProperty );
+			SearchCache.Add( AutomationElement.BoundingRectangleProperty );
 			SearchCache.Add( AutomationElement.ClassNameProperty );
 			SearchCache.Add( AutomationElement.ControlTypeProperty );
 			SearchCache.Add( AutomationElement.NativeWindowHandleProperty );
@@ -352,7 +353,7 @@ namespace QAliber.Engine.Controls.UIA
 
 		public override Rect Layout
 		{
-			get { return automationElement.Current.BoundingRectangle; }
+			get { return automationElement.Cached.BoundingRectangle; }
 		}
 
 		public override string Name {
