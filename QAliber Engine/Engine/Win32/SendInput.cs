@@ -167,16 +167,6 @@ namespace QAliber.Engine.Win32
 			Click(button, point, true);
 		}
 
-		public static void Click(MouseButtons button)
-		{
-			Click(button, new Point(0, 0));
-		}
-
-		public static void Click()
-		{
-			Click(MouseButtons.Left, new Point(0, 0));
-		}
-
 		/// <summary>
 		/// Double clicks the mouse
 		/// </summary>
@@ -187,22 +177,6 @@ namespace QAliber.Engine.Win32
 			Click(button, point, false);
 			System.Threading.Thread.Sleep(200);
 			Click(button, point, false);
-			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
-		}
-
-		public static void DoubleClick(MouseButtons button)
-		{
-			Click(button, new Point(0, 0), false);
-			System.Threading.Thread.Sleep(200);
-			Click(button, new Point(0, 0), false);
-			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
-		}
-
-		public static void DoubleClick()
-		{
-			Click(MouseButtons.Left, new Point(0, 0), false);
-			System.Threading.Thread.Sleep(200);
-			Click(MouseButtons.Left, new Point(0, 0), false);
 			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 		}
 
@@ -244,11 +218,6 @@ namespace QAliber.Engine.Win32
 			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 
 			
-		}
-
-		public static void DragMouse(Point from, Point to)
-		{
-			DragMouse(MouseButtons.Left, from, to);
 		}
 
 		/// <summary>
@@ -323,7 +292,7 @@ namespace QAliber.Engine.Win32
 
 		}
 
-		internal static void InjectLowMouseInput(MouseEvents evt, Point p)
+		private static void InjectLowMouseInput(MouseEvents evt, Point p)
 		{
 			Win32Input input = new Win32Input();
 			input.type = 0;
@@ -333,10 +302,8 @@ namespace QAliber.Engine.Win32
 			input.mi.time = 0;
 			input.mi.dx = (int)(p.X * (65535f / Screen.PrimaryScreen.Bounds.Width));
 			input.mi.dy = (int)(p.Y * (65535f / Screen.PrimaryScreen.Bounds.Height));
-			input.mi.dwFlags = (uint)(evt | MouseEvents.ABSOLUTE);
+			input.mi.dwFlags = (uint)(evt | MouseEvents.MOVE | MouseEvents.ABSOLUTE);
 			SendInput(1, ref input, Marshal.SizeOf(input));
-			System.Windows.Forms.Application.DoEvents();
-			
 		}
 
 		private static void PressKey(char unicodeChar)
