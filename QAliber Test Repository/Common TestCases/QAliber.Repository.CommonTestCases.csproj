@@ -78,6 +78,7 @@
     <Compile Include="FileSystem\FileCopy.cs" />
     <Compile Include="Macros\CallScenarioTestCase.cs" />
     <Compile Include="Macros\PlayMacroTestCase.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Networking\Http\SendWebRequest.cs" />
     <Compile Include="Networking\Http\SendPostWebRequest.cs" />
     <Compile Include="Processes\WaitProcess.cs" />

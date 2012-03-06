@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing.Design;
 using System.Windows.Forms;
+using QAliber.TestModel;
 
 namespace QAliber.Repository.CommonTestCases.UITypeEditors
 {
@@ -34,6 +35,8 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 
 		public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
 		{
+			TestCase testCase = context.Instance as TestCase;
+
 			if (value is string)
 			{
 				IntPtr mainHandle = UIControlLocatorForm.FindWindowByCaption(IntPtr.Zero, "QAliber Test Builder");
@@ -42,7 +45,18 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				DesktopMaskForm dialog = new DesktopMaskForm();
 				dialog.ShowDialog();
 				form.Visible = true;
-				return dialog.ImageFile;
+
+				string path = dialog.ImageFile;
+
+				if( testCase != null && testCase.Scenario.Filename != null ) {
+					// Make a relative path if we can
+					path = NativeMethods.MakeRelativePath( testCase.Scenario.Filename, false, path, false ) ?? path;
+
+					if( path.StartsWith( ".\\" ) )
+						path = path.Substring( 2 );
+				}
+
+				return path;
 			}
 			return base.EditValue(context, provider, value);
 		}
