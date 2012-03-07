@@ -233,30 +233,37 @@
     <ProjectReference Include="..\..\QAliber Engine\Engine\ManagedWinAPI\ManagedWinapi.csproj">
       <Project>{FBD3EC1E-47E2-4D2D-81C9-D6506125A09A}</Project>
       <Name>ManagedWinapi</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\Engine\QAliber.Engine.csproj">
       <Project>{27B3A35B-FB9E-4319-A7DF-F55B1FE65FD6}</Project>
       <Name>QAliber.Engine</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\Logger\QAliber.Logger.csproj">
       <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
       <Name>QAliber.Logger</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\OCR\QAliber.ImageHandling.csproj">
       <Project>{357618F5-959D-4DAB-BCB6-63E1CEB556E6}</Project>
       <Name>QAliber.ImageHandling</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\RemotingModel\QAliber.RemotingModel.csproj">
       <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
       <Name>QAliber.RemotingModel</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\TestModel\QAliber.TestModel.csproj">
       <Project>{21076058-52DA-46EC-ABE6-5E389CBED60C}</Project>
       <Name>QAliber.TestModel</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Test Developer\Recorder\QAliber.Recorder.csproj">
       <Project>{3EC9A569-9AC3-408F-A081-47F21FEA3771}</Project>
       <Name>QAliber.Recorder</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
