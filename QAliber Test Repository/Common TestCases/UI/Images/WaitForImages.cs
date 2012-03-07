@@ -41,35 +41,56 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			Icon = Properties.Resources.Bitmap;
 		}
 
-		private int timeout = 10000;
-
-		[Category("Image")]
-		[Description("The timeout in miliseconds, to wait for the specified image.")]
-		public int Timeout 
-		{
-			get { return timeout; }
-			set { timeout = value; }
-		}
-
 		private string file = "";
 
-		[Category("Image")]
+		[Category("Behavior")]
 		[Editor(typeof(QAliber.Repository.CommonTestCases.UITypeEditors.DesktopGrabberTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[DisplayName("Image File")]
 		[Description("The image to look for in the desktop. The image can be BMP, GIF, JPEG, PNG, or TIFF.")]
+		[DefaultValue("")]
 		public string File
 		{
 			get { return file; }
 			set { file = value; }
 		}
 
+		private int timeout = 10000;
 
-		private Rect rect = new Rect();
+		[Category("Behavior")]
+		[Description("The timeout in milliseconds, to wait for the specified image.")]
+		[DefaultValue(10000)]
+		public int Timeout
+		{
+			get { return timeout; }
+			set { timeout = value; }
+		}
 
-		[Category("Image")]
+		private int _correlationPercent = 85;
+
+		[Category("Behavior")]
+		[DisplayName("Match Percent")]
+		[Description("How closely the image should match, in percentage.")]
+		[DefaultValue(85)]
+		[TypeConverter(typeof(PercentageInt32Converter))]
+		public int CorrelationPercent
+		{
+			get { return _correlationPercent; }
+			set {
+				if( value < 0 || value > 100 )
+					throw new ArgumentOutOfRangeException( "value", "Percentage must be between 0 and 100." );
+
+				_correlationPercent = value;
+			}
+		}
+
+
+		private Rectangle rect = new Rectangle();
+
+		[Category("Results")]
 		[DisplayName("Rectangle Found")]
 		[Description("The region where the image was found in the desktop.")]
-		public Rect RectFound
+		[XmlIgnore]
+		public Rectangle RectFound
 		{
 			get { return rect; }
 		}
@@ -90,22 +111,28 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			Bitmap mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
 			Bitmap subImage = new Bitmap( Image.FromFile( path ) );
 			ImageFinder imageFinder = new ImageFinder(mainImage, subImage);
+
+			double correlation;
+
 			Stopwatch watch = new Stopwatch();
 			watch.Start();
-			while (watch.ElapsedMilliseconds < timeout + 3000)
-			{
-				rect = imageFinder.Find();
-				if (rect.X >= 0)
-				{
-					LogPassedByExpectedResult("Image was found at " + rect, "");
+
+			do {
+				correlation = imageFinder.Find( out rect );
+
+				if( Math.Round( correlation, 4 ) + 0.00005 >= (_correlationPercent / 100.0) ) {
+					LogPassedByExpectedResult( "Image was found at " + rect, string.Format( "Match percentage: {0:p}", correlation ) );
 					ActualResult = TestCaseResult.Passed;
 					return;
 				}
+
 				mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
 				imageFinder = new ImageFinder(mainImage, subImage);
-			}
+			} while( watch.ElapsedMilliseconds < timeout + 3000 );
 
 			LogFailedByExpectedResult("Couldn't find the image within the desktop in the timeout given", "");
+			Log.Default.Info( "Best match", string.Format(
+				"Best match was at {0}, but only matched {1:p} (expected {2})", rect, correlation, _correlationPercent ) );
 			ActualResult = TestCaseResult.Failed;
 
 		}

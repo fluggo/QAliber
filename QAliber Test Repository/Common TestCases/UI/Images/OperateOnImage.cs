@@ -57,16 +57,18 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			Bitmap mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
 			Bitmap subImage = Bitmap.FromFile(file) as Bitmap;
 			ImageFinder imageFinder = new ImageFinder(mainImage, subImage);
-			System.Windows.Rect r = imageFinder.Find();
-			if (r.X < 0)
-			{
+
+			Rectangle r;
+			double correlation = imageFinder.Find( out r );
+
+			if( correlation < 0.85 ) {
 				LogFailedByExpectedResult("Couldn't find the image within the desktop", "");
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 			else
 			{
-				int x = (int)(r.X + r.Width / 2);
-				int y = (int)(r.Y + r.Height / 2);
+				int x = r.X + r.Width / 2;
+				int y = r.Y + r.Height / 2;
 				switch (actionType)
 				{
 					case ControlActionType.MoveMouse:

@@ -35,28 +35,21 @@ namespace QAliber.ImageHandling
 		/// </summary>
 		/// <param name="main">The image to search</param>
 		/// <param name="sub">The partial image to look for in the 'main' image</param>
-		/// <param name="tolerance">The tolerance in percents that find will work above it</param>
-		public ImageFinder(Bitmap main, Bitmap sub, int tolerance)
+		public ImageFinder(Bitmap main, Bitmap sub)
 		{
 			this.main = main;
 			this.sub = sub;
-			maxTolerance = (double)tolerance / 100.0;
-		}
-
-		public ImageFinder(Bitmap main, Bitmap sub) : this(main, sub, 85)
-		{
-			
 		}
 
 		/// <summary>
 		/// Finds an image within an image
-		/// <remarks>
-		/// An exact match is found.
-		/// Image formats should be 24bpp
-		/// </remarks>
 		/// </summary>
-		/// <returns>(-1, -1, 0, 0) if no match was found, otherwise the rectangle of the sub image within the main image</returns>
-		public System.Windows.Rect Find()
+		/// <param name="area">On return, the region that best matched the image.</param>
+		/// <remarks>
+		/// Image formats should be 24bpp.
+		/// </remarks>
+		/// <returns>A number between -1.0 and 1.0, where 1.0 is an exact match.</returns>
+		public double Find( out Rectangle area )
 		{
 			using (var m = new Image<Emgu.CV.Structure.Bgr, Byte>(main))
 			{
@@ -68,11 +61,9 @@ namespace QAliber.ImageHandling
 						int width = s.Width, height = s.Height;
 						Point[] minLoc, maxLoc;
 						r.MinMax(out min, out max, out minLoc, out maxLoc);
-						if (max[0] < maxTolerance)
-							return new System.Windows.Rect(-1, -1, 0, 0);
-						else
-							return new System.Windows.Rect(maxLoc[0].X, maxLoc[0].Y, width, height);
 
+						area = new Rectangle( maxLoc[0].X, maxLoc[0].Y, width, height );
+						return max[0];
 					}
 				}
 			}
@@ -82,7 +73,6 @@ namespace QAliber.ImageHandling
 		}
 
 
-		double maxTolerance;
 		Bitmap main, sub;
 	}
 }
