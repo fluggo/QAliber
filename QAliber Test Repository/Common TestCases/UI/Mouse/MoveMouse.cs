@@ -39,8 +39,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private string control = "";
 
-		
-		[Category("Mouse")]
+		[Category("Behavior")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -50,9 +49,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private Point point;
 
-		[Category("Mouse")]
-		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected")]
-		[TypeConverter(typeof(ExpandableObjectConverter))]
+		[Category("Behavior")]
+		[DisplayName("Point")]
+		[Description("The coordinate in pixels, relative to the upper-left corner of the control you selected.")]
 		public Point Coordinate
 		{
 			get { return point; }

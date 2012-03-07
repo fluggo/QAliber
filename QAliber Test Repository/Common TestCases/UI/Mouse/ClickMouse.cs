@@ -39,9 +39,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		private string control = "";
 
-		
-		[Category("Mouse")]
-		[DisplayName("1) Control")]
+		[Category("Behavior")]
+		[DisplayName("Control")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -49,30 +48,29 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { control = value; }
 		}
 
+		private MouseButtons button = MouseButtons.Left;
+
+		[Category("Behavior")]
+		[DisplayName("Mouse Button")]
+		[Description("The mouse button to click.")]
+		[DefaultValue(MouseButtons.Left)]
+		public MouseButtons Button
+		{
+			get { return button; }
+			set { button = value; }
+		}
+
 		private Point point;
 
-		[Category("Mouse")]
-		[DisplayName("3) Coordinate")]
-	//	  [TypeConverter(typeof(ExpandableObjectConverter))]
-		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected")]
+		[Category("Behavior")]
+		[DisplayName("Point")]
+		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected.")]
 		public Point Coordinate
 		{
 			get { return point; }
 			set { point = value; }
 		}
 
-		private MouseButtons button = MouseButtons.Left;
-
-		[Category("Mouse")]
-		[DisplayName("2) Button")]
-		[Description("The mouse button to click")]
-		public MouseButtons Button
-		{
-			get { return button; }
-			set { button = value; }
-		}
-	
-	
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
