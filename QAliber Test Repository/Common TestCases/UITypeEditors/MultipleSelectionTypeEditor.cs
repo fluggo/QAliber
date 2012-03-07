@@ -17,10 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing.Design;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using QAliber.TestModel;
 using QAliber.TestModel.Variables;
+using System.Reflection;
 
 namespace QAliber.TestModel.TypeEditors
 {
@@ -37,69 +39,33 @@ namespace QAliber.TestModel.TypeEditors
 
 		public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
 		{
-			list = value as MultipleSelectionList;
+			string[] list = value as string[];
 			if (provider != null && list != null)
 			{
-				service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+				IWindowsFormsEditorService service = (IWindowsFormsEditorService) provider.GetService( typeof(IWindowsFormsEditorService) );
+
 				ListBox listBox = new ListBox();
 				listBox.SelectionMode = SelectionMode.MultiSimple;
-				foreach (string item in list.SelectedItems)
+				listBox.Dock = DockStyle.Fill;
+
+				MethodInfo optionsMethod = context.Instance.GetType().GetMethod( "Get" + context.PropertyDescriptor.Name + "Options" );
+				string[] options = (string[]) optionsMethod.Invoke( context.Instance, new object[0] );
+				listBox.Items.AddRange( options );
+
+				foreach (string item in list)
 				{
 					listBox.SelectedItems.Add(item);
 				}
-				listBox.Leave += new EventHandler(ListBoxLeave);
-				listBox.Items.AddRange(list.Items.ToArray());
-				listBox.Dock = DockStyle.Fill;
+
 
 				service.DropDownControl(listBox);
-				return value;
+
+				return listBox.SelectedItems.Cast<string>().ToArray();
 			}
+
 			return base.EditValue(context, provider, value);
 		}
 
-		private void ListBoxLeave(object sender, EventArgs e)
-		{
-			list.SelectedItems.Clear();
-			foreach (string item in ((ListBox)sender).SelectedItems)
-			{
-				list.SelectedItems.Add(item);
-			}
-		}
-
-		
-
-		private MultipleSelectionList list;
-		private IWindowsFormsEditorService service;
-
 	}
 
-	[Serializable]
-	public class MultipleSelectionList
-	{
-		private List<string> items = new List<string>();
-
-		public List<string> Items 
-		{
-			get { return items; }
-			set { items = value; }
-		}
-
-		private List<string> selectedItems = new List<string>();
-
-		public List<string> SelectedItems
-		{
-			get { return selectedItems; }
-			set { selectedItems = value; }
-		}
-
-		public override string ToString()
-		{
-			return string.Join(",", selectedItems.ToArray());
-		}
-
-		
-	}
-
-
-	
 }

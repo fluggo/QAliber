@@ -36,17 +36,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public GetPropertyFromControl() : base( "Get Property from Control" )
 		{
 			Icon = Properties.Resources.Window;
-			list = new MultipleSelectionList();
-			list.Items.AddRange(
-				new string[] { "Layout.X", "Layout.Y", "Layout.Width", "Layout.Height",
-				"Name",
-				"ClassName", "ID",
-				"Enabled", "Visible"});
+			_list = new string[0];
 		}
 
 		private string control = "";
 
-		
 		[Category("Control")]
 		[DisplayName("1) Control")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -56,18 +50,24 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			set { control = value; }
 		}
 
-		private MultipleSelectionList list;
+		private string[] _list;
 
 		[Category("Control")]
 		[DisplayName("2) Properties")]
 		[Description("The properties to retrieve")]
 		[Editor(typeof(MultipleSelectionTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
-		public MultipleSelectionList List
+		public string[] List
 		{
-			get { return list; }
-			set { list = value; }
+			get { return _list; }
+			set { _list = value; }
 		}
 
+		public string[] GetListOptions() {
+			return new string[] { "Layout.X", "Layout.Y", "Layout.Width", "Layout.Height",
+				"Name",
+				"ClassName", "ID",
+				"Enabled", "Visible"};
+		}
 
 		private string vals;
 
@@ -94,7 +94,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 			List<string> values = new List<string>();
 
-			foreach( string item in list.SelectedItems ) {
+			foreach( string item in _list ) {
 				switch( item ) {
 					case "Layout.X":
 						values.Add( c.Layout.X.ToString() );
