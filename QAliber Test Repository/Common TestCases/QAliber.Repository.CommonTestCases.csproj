@@ -37,11 +37,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\</OutputPath>
+    <OutputPath>..\..\Binaries\User Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Binaries\Help\QAliber.Repository.CommonTestCases.XML</DocumentationFile>
+    <DocumentationFile>..\..\Binaries\User Assemblies\QAliber.Repository.CommonTestCases.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
