@@ -42,8 +42,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private string control = "";
 
-		[Category("Control")]
-		[DisplayName("1) Control")]
+		[Category("Behavior")]
+		[DisplayName("Control")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -53,9 +53,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private string[] _list;
 
-		[Category("Control")]
-		[DisplayName("2) Properties")]
-		[Description("The properties to retrieve")]
+		[Category("Behavior")]
+		[DisplayName("Properties")]
+		[Description("The properties to retrieve.")]
 		[Editor(typeof(MultipleSelectionTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string[] List
 		{
@@ -72,17 +72,15 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private string vals;
 
-		[Category("Control")]
-		[DisplayName("3) Values")]
-		[Description("The values to retrieve")]
+		[Category("Results")]
+		[DisplayName("Values")]
+		[Description("The values retrieved.")]
 		[XmlIgnore]
 		public string Values
 		{
 			get { return vals; }
 		}
-		
-	
-	
+
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;

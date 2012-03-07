@@ -47,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// <summary>
 		/// The window to change, make sure the 'UIType' in the locator dialog is 'UIAWindow'
 		/// </summary>
-		[Category(" Window")]
+		[Category("Behavior")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -55,13 +55,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { control = value; }
 		}
 
-		private WindowOperationType opType;
+		private WindowOperationType opType = WindowOperationType.SetFocus;
 
 		/// <summary>
 		/// The operation you want to perform on the window
 		/// </summary>
-		[Category(" Window")]
-		[Description("Select the operation you want to perform on the window")]
+		[Category("Behavior")]
+		[Description("The operation you want to perform on the window.")]
+		[DefaultValue(WindowOperationType.SetFocus)]
 		public WindowOperationType Operation
 		{
 			get { return opType; }

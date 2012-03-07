@@ -46,9 +46,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// <summary>
 		/// The window to resize, make sure the 'UIType' in the locator dialog is 'UIAWindow'
 		/// </summary>
-		[Category(" Window")]
+		[Category("Behavior")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
-		[Description("The window to resize, make sure the 'UIType' is 'UIAWindow'")] 
+		[Description("The window to resize.")]
 		public string Control
 		{
 			get { return control; }
@@ -60,8 +60,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// <summary>
 		/// The size in pixels to set the window"
 		/// </summary>
-		[Category(" Window")]
-		[Description("The size in pixels to set the window")]
+		[Category("Behavior")]
+		[Description("Target size of the window, in pixels.")]
 		public Size Size
 		{
 			get { return size; }

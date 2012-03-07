@@ -47,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// <summary>
 		/// The window to move, make sure the 'UIType' in the locator dialog is 'UIAWindow'
 		/// </summary>
-		[Category(" Window")]
+		[Category("Behavior")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -60,8 +60,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// <summary>
 		/// The coordinate in pixels, relative to the upper left corner of the desktop to move the window to
 		/// </summary>
-		[Category(" Window")]
-		[Description("The coordinate in pixels, relative to the upper left corner of the desktop to move the window to")]
+		[Category("Behavior")]
+		[DisplayName("Point")]
+		[Description("Point where the upper-left corner of the window should be.")]
 		public Point Coordinate
 		{
 			get { return point; }

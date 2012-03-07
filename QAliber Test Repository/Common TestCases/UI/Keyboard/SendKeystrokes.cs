@@ -52,9 +52,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 		/// <summary>
 		/// The control to send the keys to
 		/// </summary>
-		[Category("Keyboard")]
-		[DisplayName("1) Control")]
-		[Description("The control to send the keystrokes too")]
+		[Category("Behavior")]
+		[Description("The control to receive the keystrokes.")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -70,9 +69,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 		/// </remarks>
 		/// <example>To send Alt+f and then s use '({LeftAlt}f)s'</example>
 		/// </summary>
-		[Category("Keyboard")]
-		[DisplayName("2) Keystrokes")]
-		[Description("The keys to send, special keys - e.g Enter, Tab - should be wrapped with {}\nsimulataneous click should be wrapped with ()\nFor example pressing ctrl+s ({LeftCtrl}s)")]
+		[Category("Behavior")]
+		[DisplayName("Keystrokes")]
+		[Description("The keys to send. Special keys, such as Enter or Tab, should be wrapped with {}. To press more than one key at a time, use (). For example, pressing Ctrl+s is ({LeftCtrl}s).")]
 		public string Keystrokes
 		{
 			get { return keystrokes; }

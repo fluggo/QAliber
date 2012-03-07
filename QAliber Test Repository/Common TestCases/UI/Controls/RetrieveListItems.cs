@@ -44,8 +44,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		private string control = "";
 
 
-		[Category("Control")]
-		[DisplayName("1) Control")]
+		[Category("Behavior")]
+		[DisplayName("Control")]
 		[Description("The control must be of type UIACombobox, UIAListBox or HTMLSelect")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
@@ -56,9 +56,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private string[] listItems;
 
-		[Category("Control")]
-		[DisplayName("2) Retrieved Items")]
-		[Description("String of all items in the list")]
+		[Category("Results")]
+		[DisplayName("Retrieved Items")]
+		[Description("String of all items in the list.")]
 		[XmlIgnore]
 		public string[] ListItems
 		{

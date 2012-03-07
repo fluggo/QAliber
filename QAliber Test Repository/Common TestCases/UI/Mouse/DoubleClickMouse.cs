@@ -53,7 +53,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		private MouseButtons button = MouseButtons.Left;
 
 		[Category("Behavior")]
-		[DisplayName("Button")]
+		[DisplayName("Mouse Button")]
 		[Description("The mouse button to double click.")]
 		[DefaultValue(MouseButtons.Left)]
 		public MouseButtons Button

@@ -40,10 +40,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private string control = "";
 
-		
-		[Category("Control")]
-		[DisplayName("1) Control")]
+		[Category("Behavior")]
+		[DisplayName("Control")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[DefaultValue("")]
 		public string Control
 		{
 			get { return control; }
@@ -52,18 +52,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private int timeout = 1000;
 
-		[Category("Control")]
-		[DisplayName("2) Timeout")]
-		[Description("The timeout in miliseconds to wait for the control")]
+		[Category("Behavior")]
+		[DisplayName("Timeout")]
+		[Description("The timeout in milliseconds to wait for the control.")]
+		[DefaultValue(1000)]
 		public int Timeout
 		{
 			get { return timeout; }
 			set { timeout = value; }
 		}
 
-		
-	
-	
 		public override void Body()
 		{
 			string code;

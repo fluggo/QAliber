@@ -43,8 +43,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		private string control = "";
 
 		
-		[Category("Control")]
-		[DisplayName("1) Control")]
+		[Category("Behavior")]
+		[DisplayName("Control")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -54,9 +54,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		private string text;
 
-		[Category("Control")]
-		[DisplayName("2) Text Read")]
-		[Description("The text read from the control")]
+		[Category("Results")]
+		[DisplayName("Text Read")]
+		[Description("The text read from the control.")]
 		[XmlIgnore]
 		public string TextRead
 		{
