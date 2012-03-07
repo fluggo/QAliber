@@ -68,15 +68,15 @@ namespace QAliber.TestModel
 			set { retType = value; }
 		}
 
-		private VariableDropDownList varName = new VariableDropDownList();
+		private string varName = string.Empty;
 
 		/// <summary>
 		/// The variable name
 		/// </summary>
-		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[Category(" Variables")]
 		[DisplayName("Variable Name")]
-		public VariableDropDownList VariableName
+		[TypeConverter(typeof(StringVariableNameTypeConverter))]
+		public string VariableName
 		{
 			get { return varName; }
 			set { varName = value; }
@@ -88,7 +88,7 @@ namespace QAliber.TestModel
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, retType, out retVal);
 			Scenario.Variables.AddOrReplaceByName(new QAliber.TestModel.Variables.ScenarioVariable<string>(
-				varName.Selected, retVal.ToString(), this));
+				varName, retVal.ToString(), this));
 
 		}
 

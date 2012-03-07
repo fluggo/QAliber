@@ -43,35 +43,26 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 		public GetRandomItemInListTestCase() : base( "Get Random Item in List" )
 		{
 			Icon = null;
-			listName = new ListVariableDropDownList();
 		}
 
 		public override void Body()
 		{
-			ICollection collection = Scenario.Lists[listName.Selected].Value as ICollection;
-			int curIndex = 0;
-			int index = new Random().Next(collection.Count);
-			IEnumerator i = collection.GetEnumerator();
-
-			while (curIndex <= index)
-			{
-				i.MoveNext();
-				curIndex++;
-			}
-			generatedItem = i.Current.ToString();
+			string[] collection = Scenario.Lists[listName].Value;
+			int index = new Random().Next(collection.Length);
+			generatedItem = collection[index];
 			Log.Default.Info("Item picked = '" + generatedItem + "'");
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
-		private ListVariableDropDownList listName;
+		private string listName = string.Empty;
 
 		/// <summary>
 		/// The list name (without $)
 		/// </summary>
 		[Category(" Random Generator")]
-		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[DisplayName("List Name")]
-		public ListVariableDropDownList ListName
+		[TypeConverter(typeof(ListVariableNameTypeConverter))]
+		public string ListName
 		{
 			get { return listName; }
 			set { listName = value; }

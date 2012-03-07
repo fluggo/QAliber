@@ -40,33 +40,30 @@ namespace QAliber.TestModel
 			Icon = Properties.Resources.Loop;
 		}
 
-		private ListVariableDropDownList listName = new ListVariableDropDownList();
+		private string listName = string.Empty;
 
 
 		/// <summary>
 		/// The list to iterate on (excluding $)
 		/// </summary>
-		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[Category("List")]
 		[DisplayName("List Name")]
 		[Description("The list to iterate on (excluding $)")]
-		public ListVariableDropDownList ListName
+		[TypeConverter(typeof(ListVariableNameTypeConverter))]
+		public string ListName
 		{
 			get { return listName; }
 			set { listName = value; }
 		}
 
-		public override void Setup()
-		{
-			base.Setup();
-			list = Scenario.Lists[listName.Selected];
-			if (list == null)
-				throw new ArgumentException("List '" + listName + "' is not recognized");
-		}
-
 		public override void Body()
 		{
-			string[] vals = list.Value as string[];
+			ScenarioVariable<string[]> list = Scenario.Lists[listName];
+
+			if (list == null)
+				throw new ArgumentException("List '" + listName + "' is not recognized");
+
+			string[] vals = list.Value;
 			foreach (string obj in vals)
 			{
 				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
@@ -90,9 +87,6 @@ namespace QAliber.TestModel
 				return "For Each Item In '" + listName + "'";
 			}
 		}
-
-		protected ScenarioVariable<string[]> list;
-	
 	}
 	
 }

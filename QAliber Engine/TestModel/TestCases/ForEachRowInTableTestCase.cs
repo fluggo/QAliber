@@ -42,31 +42,28 @@ namespace QAliber.TestModel
 			Icon = Properties.Resources.Loop;
 		}
 
-		private TableVariableDropDownList tableName = new TableVariableDropDownList();
+		private string tableName = string.Empty;
 
 		/// <summary>
 		/// The table to iterate on (excluding $)
 		/// </summary>
-		[Editor(typeof(QAliber.TestModel.TypeEditors.ComboDropDownTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[Category(" Table")]
 		[DisplayName("Table Name")]
 		[Description("The table to iterate on (excluding $)")]
-		public TableVariableDropDownList TableName
+		[TypeConverter(typeof(TableVariableNameTypeConverter))]
+		public string TableName
 		{
 			get { return tableName; }
 			set { tableName = value; }
 		}
 
-		public override void Setup()
-		{
-			base.Setup();
-			table = Scenario.Tables[tableName.Selected];
-			if (table == null)
-				throw new ArgumentException("Table '" + tableName + "' is not recognized");
-		}
-
 		public override void Body()
 		{
+			ScenarioVariable<DataTable> table = Scenario.Tables[tableName];
+
+			if (table == null)
+				throw new ArgumentException("Table '" + tableName + "' is not recognized");
+
 			DataTable dataTable = table.Value as DataTable;
 			int j = 0;
 			foreach (DataRow row in dataTable.Rows)
@@ -96,9 +93,5 @@ namespace QAliber.TestModel
 				return "For Each Item In '" + tableName + "'";
 			}
 		}
-
-		protected ScenarioVariable<DataTable> table;
-	
 	}
-	
 }
