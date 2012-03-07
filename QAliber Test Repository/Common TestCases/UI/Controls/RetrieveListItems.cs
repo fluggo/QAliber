@@ -59,6 +59,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		[Category("Control")]
 		[DisplayName("2) Retrieved Items")]
 		[Description("String of all items in the list")]
+		[XmlIgnore]
 		public string[] ListItems
 		{
 			get { return listItems; }
@@ -118,6 +119,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			}
 		}
 
+		public override object Clone() {
+			RetrieveListItems result = (RetrieveListItems) base.Clone();
+
+			result.listItems = null;
+
+			return result;
+		}
 	}
 
 

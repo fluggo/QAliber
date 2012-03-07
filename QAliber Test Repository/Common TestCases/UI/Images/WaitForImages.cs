@@ -145,6 +145,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			}
 		}
 
+		public override object Clone() {
+			WaitForImages result = (WaitForImages) base.Clone();
+
+			result.rect = new Rectangle();
+
+			return result;
+		}
 	}
 
 

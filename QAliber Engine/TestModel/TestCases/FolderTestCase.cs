@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Linq;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
@@ -40,7 +41,7 @@ namespace QAliber.TestModel
 			Icon = Properties.Resources.Folder;
 		}
 
-		protected List<TestCase> children = new List<TestCase>();
+		private List<TestCase> _children = new List<TestCase>();
 
 		/// <summary>
 		/// The children of this test case
@@ -48,8 +49,8 @@ namespace QAliber.TestModel
 		[Browsable(false)]
 		public List<TestCase> Children
 		{
-			get { return children; }
-			set { children = value; }
+			get { return _children; }
+			set { _children = value; }
 		}
 		
 		public override void Body()
@@ -57,7 +58,7 @@ namespace QAliber.TestModel
 			ActualResult = TestCaseResult.Passed;
 			bool stopRunning = false;
 
-			foreach (TestCase child in children)
+			foreach (TestCase child in _children)
 			{
 				if( child.MarkedForExecution && (!stopRunning || child.AlwaysRun) )
 				{
@@ -93,6 +94,19 @@ namespace QAliber.TestModel
 				
 				
 			}
+		}
+
+		public override object Clone() {
+			FolderTestCase result = (FolderTestCase) base.Clone();
+
+			result._children = result._children.Select( child => {
+				TestCase newChild = (TestCase) child.Clone();
+				newChild.Parent = result;
+
+				return newChild;
+			} ).ToList();
+
+			return result;
 		}
 	}
 	

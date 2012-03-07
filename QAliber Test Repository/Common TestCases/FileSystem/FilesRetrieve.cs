@@ -87,6 +87,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		/// </summary>
 		[DisplayName("Retrieved Files")]
 		[Category("Files")]
+		[XmlIgnore]
 		public string[] RetrievedFiles
 		{
 			get { return retrievedFiles; }
@@ -99,8 +100,14 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 				return "Retrieving files '" + pattern + "' from " + sourceDir;
 			}
 		}
-	
-	
-	
+
+		public override object Clone() {
+			FilesRetrieve result = (FilesRetrieve) base.Clone();
+
+			result.retrievedFiles = new string[0];
+
+			return result;
+		}
+
 	}
 }

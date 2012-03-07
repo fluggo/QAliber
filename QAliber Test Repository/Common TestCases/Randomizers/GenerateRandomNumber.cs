@@ -100,6 +100,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 		/// </summary>
 		[Category(" Random Generator")]
 		[DisplayName("Generated Number")]
+		[XmlIgnore]
 		public double GeneratedNumber
 		{
 			get { return generatedNum; }
@@ -114,8 +115,13 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 				return string.Format("Generating number between {0} to {1} in {2} step", minVal, maxVal, step);
 			}
 		}
-	
-	
-	
+
+		public override object Clone() {
+			GenerateRandomNumberTestCase result = (GenerateRandomNumberTestCase) base.Clone();
+
+			result.generatedNum = 0.0;
+
+			return result;
+		}
 	}
 }

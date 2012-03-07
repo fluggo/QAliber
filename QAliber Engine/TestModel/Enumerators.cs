@@ -52,7 +52,7 @@ namespace QAliber.TestModel
 	/// </summary>
 	[TypeConverter(typeof(ExpandableObjectConverter))]
 	[Serializable]
-	public class VideoOptions
+	public class VideoOptions : ICloneable
 	{
 		private bool captureVideo;
 
@@ -111,6 +111,10 @@ namespace QAliber.TestModel
 
 		public override int GetHashCode() {
 			return unchecked(Interval.GetHashCode() * CaptureVideo.GetHashCode());
+		}
+
+		public object Clone() {
+			return MemberwiseClone();
 		}
 	}
 }

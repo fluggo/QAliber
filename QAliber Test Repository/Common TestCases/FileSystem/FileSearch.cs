@@ -132,6 +132,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 		/// </summary>
 		[DisplayName("Get line of found text")]
 		[Category("Files")]
+		[XmlIgnore]
 		public string TextOutput
 		{
 			get { return textOutput; }
@@ -146,8 +147,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 				return "Looking in file '" + sourceFile + "' for the pattern '" + pattern + "'";
 			}
 		}
-	
-	
-	
+
+		public override object Clone() {
+			FileSearch result = (FileSearch) base.Clone();
+
+			result.textOutput = null;
+
+			return result;
+		}
 	}
 }

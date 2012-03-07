@@ -75,6 +75,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 		/// </summary>
 		[Category(" Random Generator")]
 		[DisplayName("Chosen Item")]
+		[XmlIgnore]
 		public string GeneratedItem
 		{
 			get { return generatedItem; }
@@ -89,9 +90,13 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 				return string.Format("Picking item from '{0}'", listName);
 			}
 		}
+
+		public override object Clone() {
+			GetRandomItemInListTestCase result = (GetRandomItemInListTestCase) base.Clone();
+
+			result.generatedItem = null;
+
+			return result;
+		}
 	}
-
-	
-
-	
 }

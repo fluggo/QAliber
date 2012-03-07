@@ -36,7 +36,6 @@ namespace QAliber.TestModel
 	/// <summary>
 	/// The base class for all test cases implementations
 	/// </summary>
-	[Serializable]
 	[XmlType("TestStep", Namespace=Util.XmlNamespace)]
 	public abstract class TestCase : ICloneable, INotifyPropertyChanged {
 		private string _defaultName;
@@ -573,22 +572,22 @@ namespace QAliber.TestModel
 		#region ICloneable Members
 
 		/// <summary>
-		/// Clones the test case using serialization
+		/// Clones the test case.
 		/// </summary>
-		/// <remarks>All test csaes classes must be Serializable</remarks>
-		/// <returns>A deep copy of the test case</returns>
-		public object Clone()
-		{
-			TestCase result = null;
-			using (MemoryStream memStream = new MemoryStream())
-			{
-				BinaryFormatter binFormatter = new BinaryFormatter();
-				binFormatter.Serialize(memStream, this);
-				memStream.Seek(0, SeekOrigin.Begin);
-				result = binFormatter.Deserialize(memStream) as TestCase;
-				result.UpdateIDs();
-				memStream.Close();
-			}
+		/// <returns>A clone of the test case.</returns>
+		/// <remarks>This method performs a memberwise clone. In your subclass,
+		///   be sure to clone any subtests you have, and clone any other important
+		///   object references.</remarks>
+		public virtual object Clone() {
+			TestCase result = (TestCase) MemberwiseClone();
+
+			result._actualResult = TestCaseResult.None;
+			result._hasBreakPoint = false;
+			result._outputProperties = null;
+			result._changedProperties = new Dictionary<string,string>();
+			result._videoOptions = (VideoOptions) _videoOptions.Clone();
+			result.UpdateIDs();
+
 			return result;
 		}
 

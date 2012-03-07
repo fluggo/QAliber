@@ -57,6 +57,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		[Category("Control")]
 		[DisplayName("2) Text Read")]
 		[Description("The text read from the control")]
+		[XmlIgnore]
 		public string TextRead
 		{
 			get { return text; }
@@ -103,6 +104,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			}
 		}
 
+		public override object Clone() {
+			ReadTextFromControl result = (ReadTextFromControl) base.Clone();
+
+			result.text = null;
+
+			return result;
+		}
 	}
 
 

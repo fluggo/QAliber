@@ -48,16 +48,19 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			if (processes.Length > 0)
 			{
 				Process process = processes[0];
-				cpuCounter = new PerformanceCounter("Process", "% Processor Time", process.ProcessName);
-				cpu = cpuCounter.NextValue();
-				System.Threading.Thread.Sleep(100);
-				cpu = cpuCounter.NextValue();
-				System.Threading.Thread.Sleep(100);
-				cpu = cpuCounter.NextValue();
-				
-				virtualMemory = process.PagedMemorySize64 / 1024f;
-				memory = process.WorkingSet64 / 1024f;
-				cpu = cpuCounter.NextValue();
+
+				using( PerformanceCounter cpuCounter = new PerformanceCounter( "Process", "% Processor Time", process.ProcessName ) ) {
+					cpu = cpuCounter.NextValue();
+					System.Threading.Thread.Sleep(100);
+					cpu = cpuCounter.NextValue();
+					System.Threading.Thread.Sleep(100);
+					cpu = cpuCounter.NextValue();
+
+					virtualMemory = process.PagedMemorySize64 / 1024f;
+					memory = process.WorkingSet64 / 1024f;
+					cpu = cpuCounter.NextValue();
+				}
+
 				Log.Default.Info(string.Format("CPU = {0:0.00}%", cpu));
 				Log.Default.Info(string.Format("Physical Memory = {0} KB", (int)memory));
 				Log.Default.Info(string.Format("Virtual Memory = {0} KB", (int)virtualMemory));
@@ -120,9 +123,6 @@ namespace QAliber.Repository.CommonTestCases.Processes
 		{
 			get { return virtualMemory; }
 		}
-
-		[NonSerialized]
-		private PerformanceCounter cpuCounter;
 
 		public override string Description
 		{

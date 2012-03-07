@@ -24,6 +24,7 @@ using QAliber.Logger;
 using QAliber.TestModel.TypeEditors;
 using System.Xml.Serialization;
 using QAliber.Engine.Controls;
+using System.Linq;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -74,6 +75,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		[Category("Control")]
 		[DisplayName("3) Values")]
 		[Description("The values to retrieve")]
+		[XmlIgnore]
 		public string Values
 		{
 			get { return vals; }
@@ -149,6 +151,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			}
 		}
 
+		public override object Clone() {
+			GetPropertyFromControl result = (GetPropertyFromControl) base.Clone();
+
+			result._list = result._list.ToArray();
+			result.vals = null;
+
+			return result;
+		}
 	}
 
 
