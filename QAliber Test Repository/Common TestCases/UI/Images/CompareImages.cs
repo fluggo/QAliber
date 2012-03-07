@@ -35,7 +35,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	{
 		public CompareImages() : base( "Compare Images" )
 		{
-			icon = Properties.Resources.Bitmap;
+			Icon = Properties.Resources.Bitmap;
 		}
 
 		private string file1 = "";
@@ -92,7 +92,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 		public override void Body()
 		{
-			actualResult = TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			Bitmap image1 = Bitmap.FromFile(file1) as Bitmap;
 			Bitmap image2 = Bitmap.FromFile(file2) as Bitmap;
 			if (postDifference)
@@ -103,7 +103,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			if (image1.Width != image2.Width || image1.Height != image2.Height)
 			{
 				Log.Default.Error("Sizes are different", image1.Size + "\n" + image2.Size);
-				actualResult = TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 			}
 			else
 			{
@@ -126,7 +126,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 				{
 					Log.Default.Error("Images are not equal!");
 					Log.Default.Image(diffImage, "Difference Image");
-					actualResult = TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 				}
 			}
 		}

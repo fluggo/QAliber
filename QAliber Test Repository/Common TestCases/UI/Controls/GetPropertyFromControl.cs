@@ -35,7 +35,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	{
 		public GetPropertyFromControl() : base( "Get Property from Control" )
 		{
-			icon = Properties.Resources.Window;
+			Icon = Properties.Resources.Window;
 			list = new MultipleSelectionList();
 			list.Items.AddRange(
 				new string[] { "Layout.X", "Layout.Y", "Layout.Width", "Layout.Height",
@@ -83,12 +83,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				throw new InvalidOperationException("Control not found");
 			}
 

@@ -44,13 +44,13 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	{
 		public VerifyRegistryKey() : base( "Verify Registry Key" )
 		{
-			icon = Properties.Resources.Registry;
+			Icon = Properties.Resources.Registry;
 		}
 
 		public override void Setup()
 		{
 			base.Setup();
-			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 		}
 
 		public override void Body()
@@ -84,12 +84,12 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			}
 			if (key != null)
 			{
-				actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 				LogPassedByExpectedResult("Key found in registry", "");
 			}
 			else
 			{
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				LogFailedByExpectedResult("Key was not found in registry", "");
 			}
 

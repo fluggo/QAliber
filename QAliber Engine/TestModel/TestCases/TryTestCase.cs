@@ -32,7 +32,7 @@ namespace QAliber.TestModel
 	{
 		public TryTestCase() : base( "Try" )
 		{
-			icon = Properties.Resources.Try;
+			Icon = Properties.Resources.Try;
 		}
 
 		private void SetExitOnErrorRec(FolderTestCase testcase)
@@ -52,7 +52,7 @@ namespace QAliber.TestModel
 			Log.Default.BeforeErrorIsPosted += new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
 			base.Body();
 			exitTotally = false;
-			if (actualResult == TestCaseResult.Failed)
+			if (ActualResult == TestCaseResult.Failed)
 				lastError = errListener;
 			Log.Default.BeforeErrorIsPosted -= new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
 		}

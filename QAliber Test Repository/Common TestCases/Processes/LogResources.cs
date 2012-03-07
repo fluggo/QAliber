@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	{
 		public LogResources() : base( "Log Process Resources" )
 		{
-			icon = Properties.Resources.StartProcess;
+			Icon = Properties.Resources.StartProcess;
 		}
 
 		public override void Body()
@@ -65,7 +65,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			}
 			else
 				Log.Default.Warning("Process is not available");
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string filename = "";

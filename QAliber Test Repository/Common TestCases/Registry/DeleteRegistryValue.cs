@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	{
 		public DeleteRegistryValue() : base( "Delete Registry Value" )
 		{
-			icon = Properties.Resources.Registry;
+			Icon = Properties.Resources.Registry;
 		}
 
 		public override void Body()
@@ -51,8 +51,8 @@ namespace QAliber.Repository.CommonTestCases.Registry
 				else
 					key.DeleteValue(regVal);
 			}
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			
+
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string regkey = "";

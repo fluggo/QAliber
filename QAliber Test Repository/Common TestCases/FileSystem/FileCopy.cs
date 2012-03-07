@@ -36,13 +36,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public FileCopy() : base( "Copy File" )
 		{
-			icon = Properties.Resources.FileCopy;
+			Icon = Properties.Resources.FileCopy;
 		}
 
 		public override void Body()
 		{
 			File.Copy(sourceFile, destFile, overwrite);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string sourceFile = "";

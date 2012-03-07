@@ -20,7 +20,7 @@ namespace QAliber.TestModel
 	{
 		public CaseTestCase() : base( "Case" )
 		{
-			icon = Properties.Resources.Case;
+			Icon = Properties.Resources.Case;
 		}
 
 		public override void Body()
@@ -30,8 +30,8 @@ namespace QAliber.TestModel
 				throw new InvalidOperationException("Parent must be switch");
 			}
 
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-		   
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+
 			if (expectedCase == SwitchTestCase.switchConditionValue)
 			{
 				Log.Default.Info("Last switch = " + SwitchTestCase.switchConditionValue);

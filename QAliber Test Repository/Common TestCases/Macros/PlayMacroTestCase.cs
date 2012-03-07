@@ -36,7 +36,7 @@ namespace QAliber.Repository.CommonTestCases.Macros
 	{
 		public PlayMacroTestCase() : base( "Play Macro" )
 		{
-			icon = Properties.Resources.Macro;
+			Icon = Properties.Resources.Macro;
 		}
 
 		private string filename = string.Empty;
@@ -59,7 +59,7 @@ namespace QAliber.Repository.CommonTestCases.Macros
 			MacroRecorder recorder = new MacroRecorder();
 			recorder.Load(filename);
 			recorder.Play();
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		public override string Description

@@ -36,13 +36,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public DirectoryCreate() : base( "Create Directory" )
 		{
-			icon = Properties.Resources.FileCopy;
+			Icon = Properties.Resources.FileCopy;
 		}
 
 		public override void Body()
 		{
 			Directory.CreateDirectory(dirName);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string dirName = "";

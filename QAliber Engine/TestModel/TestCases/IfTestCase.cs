@@ -34,7 +34,7 @@ namespace QAliber.TestModel
 	{
 		public IfTestCase() : base( "If" )
 		{
-			icon = Properties.Resources.If;
+			Icon = Properties.Resources.If;
 		}
 
 		private string cSharpExpression;
@@ -59,7 +59,7 @@ namespace QAliber.TestModel
 			ifConditionValue = false;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Boolean, out conditionResult);
 			ifConditionValue = (bool)conditionResult;
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			if ((bool)conditionResult)
 			{
 				Log.Default.Info(cSharpExpression + " = true");

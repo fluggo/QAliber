@@ -42,7 +42,7 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			ProcessStartInfo psi = new ProcessStartInfo("logman",
 				string.Format("stop {0}", perfname));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;

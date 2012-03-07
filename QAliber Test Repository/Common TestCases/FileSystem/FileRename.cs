@@ -36,13 +36,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public FileRename() : base( "Rename File" )
 		{
-			icon = Properties.Resources.File;
+			Icon = Properties.Resources.File;
 		}
 
 		public override void Body()
 		{
 			File.Move(sourceFile, destFile);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string sourceFile = "";

@@ -43,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 	{
 		public SendKeystrokes() : base( "Send Keystrokes" )
 		{
-			icon = Properties.Resources.Keyboard;
+			Icon = Properties.Resources.Keyboard;
 		}
 
 		private string control = "";
@@ -81,14 +81,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 			try
 			{
 				UIControlBase c = UIControlBase.FindControlByPath( control );
 
 				if( !c.Exists ) {
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
 
@@ -96,7 +96,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			}
 			catch (System.Reflection.TargetInvocationException)
 			{
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 
 		}

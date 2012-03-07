@@ -36,13 +36,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public FileDelete() : base( "Delete File" )
 		{
-			icon = Properties.Resources.FileDelete;
+			Icon = Properties.Resources.FileDelete;
 		}
 
 		public override void Body()
 		{
 			File.Delete(sourceFile);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string sourceFile = "";

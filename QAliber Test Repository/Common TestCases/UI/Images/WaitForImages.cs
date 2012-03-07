@@ -38,7 +38,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	{
 		public WaitForImages() : base( "Wait for Image" )
 		{
-			icon = Properties.Resources.Bitmap;
+			Icon = Properties.Resources.Bitmap;
 		}
 
 		private int timeout = 10000;

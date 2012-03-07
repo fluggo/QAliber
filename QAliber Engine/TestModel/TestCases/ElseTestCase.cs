@@ -36,12 +36,12 @@ namespace QAliber.TestModel
 	{
 		public ElseTestCase() : base( "Else" )
 		{
-			icon = Properties.Resources.If;
+			Icon = Properties.Resources.If;
 		}
 
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			Log.Default.Info("Last If result = " + IfTestCase.ifConditionValue);
 			if (!IfTestCase.ifConditionValue)
 			{

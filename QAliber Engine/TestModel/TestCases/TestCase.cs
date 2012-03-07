@@ -76,7 +76,7 @@ namespace QAliber.TestModel
 				Log.Default.Error(e.GetType().Name + " Caught", e.Message, EntryVerbosity.Internal);
 			}
 			Log.Default.Info("Exception Details", e.ToString(), EntryVerbosity.Debug);
-			actualResult = TestCaseResult.Failed;
+			_actualResult = TestCaseResult.Failed;
 		}
 		
 		/// <summary>
@@ -86,17 +86,17 @@ namespace QAliber.TestModel
 
 		protected virtual void SetVariables()
 		{
-			if (scenario != null)
+			if (_scenario != null)
 			{
 				PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
-				if (outputProperties != null)
+				if (_outputProperties != null)
 				{
 					PropertyDescriptor foundProp = null;
-					foreach (string name in outputProperties.Keys)
+					foreach (string name in _outputProperties.Keys)
 					{
 						foreach (PropertyDescriptor prop in props)
 						{
-							if (prop.DisplayName == outputProperties[name])
+							if (prop.DisplayName == _outputProperties[name])
 							{
 								foundProp = prop;
 								break;
@@ -112,20 +112,20 @@ namespace QAliber.TestModel
 								string[] stringList = list.Cast<object>().Select(
 									obj => (obj == null) ? "(null)" : obj.ToString() ).ToArray();
 
-								ScenarioVariable<string[]> l = scenario.Lists[name];
+								ScenarioVariable<string[]> l = _scenario.Lists[name];
 								if (l != null)
 									l.Value = stringList;
 								else
-									scenario.Lists.AddOrReplaceByName(new ScenarioVariable<string[]>(name, stringList, this));
+									_scenario.Lists.AddOrReplaceByName(new ScenarioVariable<string[]>(name, stringList, this));
 
 							}
 							else if (val != null)
 							{
-								ScenarioVariable<string> v = scenario.Variables[name];
+								ScenarioVariable<string> v = _scenario.Variables[name];
 								if (v != null)
 									v.Value = val.ToString();
 								else
-									scenario.Variables.AddOrReplaceByName(new ScenarioVariable<string>(name, val.ToString(), this));
+									_scenario.Variables.AddOrReplaceByName(new ScenarioVariable<string>(name, val.ToString(), this));
 							}
 
 						}
@@ -136,23 +136,23 @@ namespace QAliber.TestModel
 
 		protected virtual void GetVariables()
 		{
-			if (scenario != null)
+			if (_scenario != null)
 			{
-				if (changedProperties == null)
-					changedProperties = new Dictionary<string, string>();
-				changedProperties.Clear();
+				if (_changedProperties == null)
+					_changedProperties = new Dictionary<string, string>();
+				_changedProperties.Clear();
 				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(this))
 				{
 					object val = prop.GetValue(this);
 					if (val != null)
 					{
 						string strVal = val.ToString();
-						string replacementVal = scenario.ReplaceAllVars(strVal);
+						string replacementVal = _scenario.ReplaceAllVars(strVal);
 						if (string.Compare(replacementVal, strVal) != 0)
 						{
 							if (prop.PropertyType.Equals(typeof(string)))
 							{
-								changedProperties.Add(prop.Name, strVal);
+								_changedProperties.Add(prop.Name, strVal);
 								prop.SetValue(this, replacementVal);
 							}
 						}
@@ -163,9 +163,9 @@ namespace QAliber.TestModel
 
 		protected virtual void RestoreVariables()
 		{
-			if (scenario != null)
+			if (_scenario != null)
 			{
-				Dictionary<string, string>.Enumerator i = changedProperties.GetEnumerator();
+				Dictionary<string, string>.Enumerator i = _changedProperties.GetEnumerator();
 				while (i.MoveNext())
 				{
 					PropertyDescriptor prop = TypeDescriptor.GetProperties(this).Find(i.Current.Key, true);
@@ -193,8 +193,8 @@ namespace QAliber.TestModel
 		}
 
 		#region Data Structure
-		
-		protected TestCase parent;
+
+		private TestCase _parent;
 
 		/// <summary>
 		/// The parent of the test case
@@ -203,11 +203,11 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public TestCase Parent
 		{
-			get { return parent; }
-			set { parent = value; }
+			get { return _parent; }
+			set { _parent = value; }
 		}
 
-		protected TestScenario scenario;
+		private TestScenario _scenario;
 
 		/// <summary>
 		/// The test scenario that this test case belongs to
@@ -216,13 +216,13 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public TestScenario Scenario
 		{
-			get { return scenario; }
-			set { scenario = value; }
+			get { return _scenario; }
+			set { _scenario = value; }
 		}
 		#endregion
 
 		#region Flow Control
-		protected bool markedForExecution = true;
+		private bool _markedForExecution = true;
 
 		/// <summary>
 		/// Tells the QAliber Runner whether to run this tes case
@@ -232,11 +232,11 @@ namespace QAliber.TestModel
 		[XmlAttribute]
 		public bool MarkedForExecution
 		{
-			get { return markedForExecution; }
-			set { markedForExecution = value; }
+			get { return _markedForExecution; }
+			set { _markedForExecution = value; }
 		}
 
-		protected bool exitBranchOnError = true;
+		private bool _exitBranchOnError = true;
 
 		/// <summary>
 		/// Tells the QAliber Runner whether to continue the scenario on the next branch, if this test case fails
@@ -247,8 +247,8 @@ namespace QAliber.TestModel
 		[XmlAttribute]
 		public bool ExitBranchOnError
 		{
-			get { return exitBranchOnError; }
-			set { exitBranchOnError = value; }
+			get { return _exitBranchOnError; }
+			set { _exitBranchOnError = value; }
 		}
 
 		/// <summary>
@@ -275,7 +275,7 @@ namespace QAliber.TestModel
 			ExitBranchOnError = ExitBranchOnErrorDefaultValue;
 		}
 
-		protected bool exitOnError;
+		private bool _exitOnError;
 
 		/// <summary>
 		/// Tells the QAliber Runner whether to quit the scenario, if this test case fails
@@ -286,19 +286,19 @@ namespace QAliber.TestModel
 		[DefaultValue(false)]
 		public bool ExitOnError
 		{
-			get { return exitOnError; }
-			set { exitOnError = value; }
+			get { return _exitOnError; }
+			set { _exitOnError = value; }
 		}
 
-		private bool alwaysRun;
+		private bool _alwaysRun;
 
 		[Category("Test Case Flow Control")]
 		[DisplayName("Always Run")]
 		[Description("Run this step even if the folder has already failed.")]
 		[XmlAttribute]
 		public bool AlwaysRun {
-			get { return alwaysRun; }
-			set { alwaysRun = value; }
+			get { return _alwaysRun; }
+			set { _alwaysRun = value; }
 		}
 
 		/// <summary>
@@ -325,7 +325,7 @@ namespace QAliber.TestModel
 			AlwaysRun = AlwaysRunDefaultValue;
 		}
 
-		protected int numOfRetries;
+		private int _numOfRetries;
 
 		/// <summary>
 		/// Tells the QAliber Runner how many times to retry this test case, if this test case fails
@@ -337,11 +337,11 @@ namespace QAliber.TestModel
 		[XmlAttribute]
 		public int NumOfRetries
 		{
-			get { return numOfRetries; }
-			set { numOfRetries = value; }
+			get { return _numOfRetries; }
+			set { _numOfRetries = value; }
 		}
 
-		protected TakeScreenshotOption screenshotOption;
+		private TakeScreenshotOption _screenshotOption;
 
 		/// <summary>
 		/// Tells the QAliber runner when to take screenshots in the test case life cycle
@@ -353,19 +353,19 @@ namespace QAliber.TestModel
 		[XmlAttribute]
 		public TakeScreenshotOption ScreenshotOption
 		{
-			get { return screenshotOption; }
-			set { screenshotOption = value; }
+			get { return _screenshotOption; }
+			set { _screenshotOption = value; }
 		}
 
-		protected VideoOptions videoOptions = new VideoOptions();
+		private VideoOptions _videoOptions = new VideoOptions();
 
 		[Category("Test Case Results")]
 		[DisplayName("Video Settings")]
 		[TypeConverter(typeof(ExpandableObjectConverter))]
 		public VideoOptions VideoOptions
 		{
-			get { return videoOptions; }
-			set { videoOptions = value; }
+			get { return _videoOptions; }
+			set { _videoOptions = value; }
 		}
 
 		/// <summary>
@@ -383,15 +383,14 @@ namespace QAliber.TestModel
 			VideoOptions = new VideoOptions();
 		}
 
-		[NonSerialized]
-		private bool hasBreakPoint;
+		private bool _hasBreakPoint;
 
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool HasBreakPoint
 		{
-			get { return hasBreakPoint; }
-			set { hasBreakPoint = value; }
+			get { return _hasBreakPoint; }
+			set { _hasBreakPoint = value; }
 		}
 	
 		/// <summary>
@@ -411,7 +410,7 @@ namespace QAliber.TestModel
 		#endregion
 
 		#region Test Case Descriptors
-		private string name;
+		private string _name;
 
 		/// <summary>
 		/// The logical name of the test case
@@ -420,8 +419,8 @@ namespace QAliber.TestModel
 		[Description("The name of the test case")]
 		public string Name
 		{
-			get { return name; }
-			set { name = value; OnPropertyChanged( "Name" ); }
+			get { return _name; }
+			set { _name = value; OnPropertyChanged( "Name" ); }
 		}
 
 		/// <summary>
@@ -451,7 +450,7 @@ namespace QAliber.TestModel
 			get { return string.Empty; }
 		}
 
-		protected string originalPath;
+		private string _originalPath;
 
 		/// <summary>
 		/// The description of the test csae, the description will be logged as a remark by the QAliber runner.
@@ -464,11 +463,11 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public virtual string RepositoryLocation
 		{
-			get { return originalPath; }
-			set { originalPath = value; }
+			get { return _originalPath; }
+			set { _originalPath = value; }
 		}
 
-		protected TestCaseResult expectedResult = TestCaseResult.Passed;
+		private TestCaseResult _expectedResult = TestCaseResult.Passed;
 
 		/// <summary>
 		/// The expected result for this test case, for support of both positive and negative tests in the same test case
@@ -479,11 +478,11 @@ namespace QAliber.TestModel
 		[DefaultValue(TestCaseResult.Passed)]
 		public TestCaseResult ExpectedResult
 		{
-			get { return expectedResult; }
-			set { expectedResult = value; }
+			get { return _expectedResult; }
+			set { _expectedResult = value; }
 		}
 
-		protected TestCaseResult actualResult;
+		private TestCaseResult _actualResult;
 
 		/// <summary>
 		/// The actual result of the test case.
@@ -496,17 +495,17 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public TestCaseResult ActualResult
 		{
-			get { return actualResult; }
-			set { actualResult = value; }
+			get { return _actualResult; }
+			set { _actualResult = value; }
 		}
 
 		private TestCaseResult expectedVsActual
 		{
 			get
 			{
-				if (expectedResult == TestCaseResult.None)
+				if (_expectedResult == TestCaseResult.None)
 					return TestCaseResult.Passed;
-				else if (expectedResult != actualResult)
+				else if (_expectedResult != _actualResult)
 					return TestCaseResult.Failed;
 				else
 					return TestCaseResult.Passed;
@@ -520,11 +519,11 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public Dictionary<string, string> OutputProperties
 		{
-			get { return outputProperties; }
-			set { outputProperties = value; }
+			get { return _outputProperties; }
+			set { _outputProperties = value; }
 		}
 
-		protected int id;
+		private int _id;
 
 		/// <summary>
 		/// A unique identifier of the test case, when in a scenario
@@ -535,15 +534,15 @@ namespace QAliber.TestModel
 		{
 			get 
 			{
-				return id; 
+				return _id;
 			}
 			set 
 			{ 
-				id = value; 
+				_id = value;
 			}
 		}
 
-		protected Bitmap icon;
+		private Bitmap _icon;
 
 		/// <summary>
 		/// A bitmap by the size of 16x16 to be shown next to the test case in the QAliber Test Builder, this should be set in the constructor of your test case
@@ -552,11 +551,11 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public Bitmap Icon
 		{
-			get { return icon; }
-			set { icon = value; }
+			get { return _icon; }
+			set { _icon = value; }
 		}
 
-		protected Color color = Color.Black;
+		private Color _color = Color.Black;
 
 		/// <summary>
 		/// The color the test case in the QAliber Test Builder, for better visualization
@@ -565,8 +564,8 @@ namespace QAliber.TestModel
 		[XmlIgnore]
 		public Color Color
 		{
-			get { return color; }
-			set { color = value; }
+			get { return _color; }
+			set { _color = value; }
 		}
 	
 		#endregion
@@ -609,11 +608,11 @@ namespace QAliber.TestModel
 		/// </summary>
 		public void Run()
 		{
-			if (!markedForExecution || exitTotally)
+			if (!_markedForExecution || exitTotally)
 				return;
 			currenTestCase = this;
-			TestController.Default.RaiseStepStarted(id);
-			if (hasBreakPoint)
+			TestController.Default.RaiseStepStarted(_id);
+			if (_hasBreakPoint)
 			{
 				try
 				{
@@ -643,19 +642,19 @@ namespace QAliber.TestModel
 
 		protected void HandleResult()
 		{
-			if (expectedResult != TestCaseResult.None && actualResult != expectedResult)
+			if (_expectedResult != TestCaseResult.None && _actualResult != _expectedResult)
 			{
 				Log.Default.Result(TestCaseResult.Failed);
-				if (screenshotOption == TakeScreenshotOption.OnError)
+				if (_screenshotOption == TakeScreenshotOption.OnError)
 				{
-					Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + name);
+					Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + _name);
 				}
 				
-				if (currentRetryNumber < numOfRetries)
+				if (_currentRetryNumber < _numOfRetries)
 				{
-					currentRetryNumber++;
+					_currentRetryNumber++;
 					Log.Default.IndentOut();
-					Log.Default.Warning(name + " - Retry #" + currentRetryNumber);
+					Log.Default.Warning(_name + " - Retry #" + _currentRetryNumber);
 					Run();
 				}
 				
@@ -674,7 +673,7 @@ namespace QAliber.TestModel
 		/// <param name="extra">And additional info to log</param>
 		protected void LogFailedByExpectedResult(string message, string extra)
 		{
-			if (expectedResult == TestCaseResult.Failed)
+			if (_expectedResult == TestCaseResult.Failed)
 				Log.Default.Info(message, extra);
 			else
 				Log.Default.Error(message, extra);
@@ -689,7 +688,7 @@ namespace QAliber.TestModel
 		/// <param name="extra">And additional info to log</param>
 		protected void LogPassedByExpectedResult(string message, string extra)
 		{
-			if (expectedResult != TestCaseResult.Failed)
+			if (_expectedResult != TestCaseResult.Failed)
 				Log.Default.Info(message, extra);
 			else
 				Log.Default.Error(message, extra);
@@ -698,19 +697,19 @@ namespace QAliber.TestModel
 
 		private void InitRun()
 		{
-			actualResult = TestCaseResult.None;
+			_actualResult = TestCaseResult.None;
 			GetVariables();
-			Log.Default.IndentIn(name, Description, true);
-			if (videoOptions != null && videoOptions.CaptureVideo
+			Log.Default.IndentIn(_name, Description, true);
+			if (_videoOptions != null && _videoOptions.CaptureVideo
 				&& !Logger.Slideshow.SlideshowRecorder.Default.IsCapturing)
 			{
-				capturing = true;
-				Logger.Slideshow.SlideshowRecorder.Default.Interval = videoOptions.Interval;
-				Logger.Slideshow.SlideshowRecorder.Default.Start(name);
+				_capturing = true;
+				Logger.Slideshow.SlideshowRecorder.Default.Interval = _videoOptions.Interval;
+				Logger.Slideshow.SlideshowRecorder.Default.Start(_name);
 			}
-			if (screenshotOption == TakeScreenshotOption.BeforeTestCase || screenshotOption == TakeScreenshotOption.Both)
+			if (_screenshotOption == TakeScreenshotOption.BeforeTestCase || _screenshotOption == TakeScreenshotOption.Both)
 			{
-				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "Begin - " + name);
+				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "Begin - " + _name);
 			}
 		}
 
@@ -720,14 +719,14 @@ namespace QAliber.TestModel
 			SetVariables();
 			RestoreVariables();
 			TestController.Default.RaiseStepResultArrived(expectedVsActual);
-			if (capturing)
+			if (_capturing)
 			{
-				capturing = false;
+				_capturing = false;
 				Logger.Slideshow.SlideshowRecorder.Default.Stop();
 			}
-			if (screenshotOption == TakeScreenshotOption.AfterTestCase || screenshotOption == TakeScreenshotOption.Both)
+			if (_screenshotOption == TakeScreenshotOption.AfterTestCase || _screenshotOption == TakeScreenshotOption.Both)
 			{
-				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "End - " + name);
+				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "End - " + _name);
 			}
 			Log.Default.IndentOut();
 			System.Windows.Forms.Application.DoEvents();
@@ -735,7 +734,7 @@ namespace QAliber.TestModel
 
 		private void UpdateIDs()
 		{
-			id = maxID;
+			_id = maxID;
 			maxID++;
 			if (this is FolderTestCase)
 			{
@@ -751,11 +750,10 @@ namespace QAliber.TestModel
 		private static TestCase currenTestCase;
 		internal static int maxID = 1;
 
-		protected Dictionary<string, string> outputProperties;
-		protected Dictionary<string, string> changedProperties = new Dictionary<string,string>();
-		private bool capturing;
-		private int currentRetryNumber = 0;
+		private Dictionary<string, string> _outputProperties;
+		private Dictionary<string, string> _changedProperties = new Dictionary<string,string>();
+		private bool _capturing;
+		private int _currentRetryNumber = 0;
 
-		
 	}
 }

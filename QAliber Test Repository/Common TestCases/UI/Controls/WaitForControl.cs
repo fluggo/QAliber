@@ -35,7 +35,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	{
 		public WaitForControl() : base( "Wait for Control" )
 		{
-			icon = Properties.Resources.Window;
+			Icon = Properties.Resources.Window;
 		}
 
 		private string control = "";
@@ -91,7 +91,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 				}
 			}
 			if (res)
-				actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			else
 			{
 				LogFailedByExpectedResult("Control not found after " + timeout + " miliseconds",control);
@@ -99,7 +99,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 				{
 					Log.Default.Warning("Exception caught", lastException, EntryVerbosity.Debug);
 				}
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 
 		}

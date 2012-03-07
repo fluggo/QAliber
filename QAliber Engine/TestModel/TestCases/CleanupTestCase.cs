@@ -35,8 +35,7 @@ namespace QAliber.TestModel
 	{
 		public CleanupTestCase() : base( "Cleanup" )
 		{
-			expectedResult = TestCaseResult.Passed;
-			icon = Properties.Resources.Edit_UndoHS;
+			Icon = Properties.Resources.Edit_UndoHS;
 		}
 
 		protected override bool AlwaysRunDefaultValue {

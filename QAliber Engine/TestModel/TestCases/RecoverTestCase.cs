@@ -36,7 +36,7 @@ namespace QAliber.TestModel
 		/// </summary>
 		public RecoverTestCase() : base( "Recover" )
 		{
-			icon = Properties.Resources.Recover;
+			Icon = Properties.Resources.Recover;
 		}
 
 		private string errorToCatch = string.Empty;
@@ -55,7 +55,7 @@ namespace QAliber.TestModel
 
 		public override void Body()
 		{
-			actualResult = TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			if (!string.IsNullOrEmpty(TryTestCase.lastError) && TryTestCase.lastError.Contains(errorToCatch))
 				base.Body();
 			else

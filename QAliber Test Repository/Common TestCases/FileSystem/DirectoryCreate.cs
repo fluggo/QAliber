@@ -36,13 +36,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public DirectoryDelete() : base( "Delete Directory" )
 		{
-			icon = Properties.Resources.FileDelete;
+			Icon = Properties.Resources.FileDelete;
 		}
 
 		public override void Body()
 		{
 			Directory.Delete(dirName);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string dirName = "";

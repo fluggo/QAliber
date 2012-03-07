@@ -61,7 +61,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			if (r.X < 0)
 			{
 				LogFailedByExpectedResult("Couldn't find the image within the desktop", "");
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 			else
 			{
@@ -88,8 +88,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 					default:
 						throw new ArgumentException("Can't understand action " + actionType);
 				}
-				
-				actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			}
 		}
 

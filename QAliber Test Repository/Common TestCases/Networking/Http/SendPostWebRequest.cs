@@ -33,7 +33,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 	{
 		public SendPostWebRequest() : base( "Send Post Web Request" )
 		{
-			icon = Properties.Resources.Http;
+			Icon = Properties.Resources.Http;
 		}
 
 		public override void Body()
@@ -64,7 +64,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 			if (response.StatusCode != expectedCode)
 			{
 				Log.Default.Error("Http status code was different than expected", "Actual : " + response.StatusCode + "\nExpected : " + expectedCode);
-				actualResult = global::QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = global::QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 			// we will read data via the response stream
 			Stream resStream = response.GetResponseStream();
@@ -89,7 +89,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 				}
 				while (count > 0); // any more data to read?
 			}
-			actualResult = global::QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = global::QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string url;

@@ -42,7 +42,7 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			ProcessStartInfo psi = new ProcessStartInfo("logman",
 				string.Format("update {0} -f csv -o \"{1}\\perflog.csv\"", perfname, Log.Default.Path));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;

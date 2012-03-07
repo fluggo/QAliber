@@ -41,7 +41,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	{
 		public DisplayMessageBox() : base( "Display Message Box" )
 		{
-			icon = Properties.Resources.Dialog;
+			Icon = Properties.Resources.Dialog;
 		}
 
 		private string title = "";
@@ -94,7 +94,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			dialogResult = MessageBox.Show(text, title, buttons);
 			Log.Default.Info("The user pressed '" + dialogResult + "'");
 		}

@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	{
 		public SelectListItemByString() : base( "Select List Item by String" )
 		{
-			icon = Properties.Resources.Combobox;
+			Icon = Properties.Resources.Combobox;
 		}
 
 		private string control = "";
@@ -77,7 +77,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 			   if (!c.Exists)
 				{
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
 
@@ -85,17 +85,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 				if( selectorPattern != null ) {
 					selectorPattern.Select( item );
-					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 				}
 				else if (c is HTMLSelect)
 				{
 					HTMLOption selectedOp = ((HTMLSelect)c).SelectItem(item);
 					if (selectedOp != null)
-						actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+						ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 					else
 					{
-						actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+						ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 						Logger.Log.Default.Error("Item was not selected");
 					}
 
@@ -103,14 +103,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 				else
 				{
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 					throw new InvalidOperationException("Control is not a list type");
 				}
 
 			}
 			catch (Exception ex)
 			{
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				throw ex;
 			}
 		}

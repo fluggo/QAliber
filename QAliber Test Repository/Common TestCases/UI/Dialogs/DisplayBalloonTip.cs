@@ -41,7 +41,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	{
 		public DisplayBalloonTip() : base( "Display Balloon Tip" )
 		{
-			icon = Properties.Resources.Dialog;
+			Icon = Properties.Resources.Dialog;
 		}
 
 		private string title = "";
@@ -105,7 +105,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			Notifier.Instance.notifyIcon.ShowBalloonTip(timeout, title, text, messageIcon);
 		}
 

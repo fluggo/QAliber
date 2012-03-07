@@ -37,7 +37,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		}
 
 		protected ClickOnImage( string name ) : base( name ) {
-			icon = Properties.Resources.Mouse;
+			Icon = Properties.Resources.Mouse;
 			actionType = QAliber.Engine.ControlActionType.Click;
 			button = MouseButtons.Left;
 		}

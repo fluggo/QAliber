@@ -42,7 +42,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public CreateTableFromRange() : base( "Create Table from Range" )
 		{
-			icon = Properties.Resources.Excel;
+			Icon = Properties.Resources.Excel;
 		}
 
 		public override void Body()
@@ -64,8 +64,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			Scenario.Tables.Add(table);
 			conn.Close();
 
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 		}
 

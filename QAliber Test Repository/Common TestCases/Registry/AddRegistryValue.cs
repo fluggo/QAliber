@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	{
 		public AddRegistryValue() : base( "Add Registry Value" )
 		{
-			icon = Properties.Resources.Registry;
+			Icon = Properties.Resources.Registry;
 		}
 
 		public override void Body()
@@ -50,7 +50,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 
 			Microsoft.Win32.Registry.SetValue(key, val, regVal);
 
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string regkey = "";

@@ -37,7 +37,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	{
 		public ReadTextFromControl() : base( "Read Text from Control" )
 		{
-			icon = Properties.Resources.Window;
+			Icon = Properties.Resources.Window;
 		}
 
 		private string control = "";
@@ -65,7 +65,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			text = string.Empty;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );

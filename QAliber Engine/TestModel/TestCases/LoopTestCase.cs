@@ -35,7 +35,7 @@ namespace QAliber.TestModel
 	{
 		public LoopTestCase() : base( "Loop" )
 		{
-			icon = Properties.Resources.Loop;
+			Icon = Properties.Resources.Loop;
 		}
 
 		protected int numOfLoops = 1;
@@ -56,7 +56,7 @@ namespace QAliber.TestModel
 		{
 			for (int i = 0; i < numOfLoops; i++)
 			{
-				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
+				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
 				Log.Default.IndentIn(Name + " - Loop #" + (int)(i + 1));
 				base.Body();
 				Log.Default.IndentOut();

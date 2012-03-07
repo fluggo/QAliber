@@ -44,13 +44,13 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	{
 		public VerifyRegistryValue() : base( "Verify Registry Value" )
 		{
-			icon = Properties.Resources.Registry;
+			Icon = Properties.Resources.Registry;
 		}
 
 		public override void Setup()
 		{
 			base.Setup();
-			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 		}
 
 		public override void Body()
@@ -61,7 +61,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			string realVal = Microsoft.Win32.Registry.GetValue(key, val, "").ToString();
 			if (string.Compare(realVal, regVal, true) == 0)
 			{
-			   actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			   LogPassedByExpectedResult("Registry value is as expected", "");
 			}
 			else

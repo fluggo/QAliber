@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	{
 		public WaitProcess() : base( "Wait for Process" )
 		{
-			icon = Properties.Resources.StartProcess;
+			Icon = Properties.Resources.StartProcess;
 		}
 
 		public override void Body()
@@ -52,14 +52,14 @@ namespace QAliber.Repository.CommonTestCases.Processes
 				if (processes.Length > 0)
 				{
 					Log.Default.Info("Process arrived");
-					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 					break;
 				}
 				System.Threading.Thread.Sleep(50);
 			}
-			if (actualResult != QAliber.RemotingModel.TestCaseResult.Passed)
+			if (ActualResult != QAliber.RemotingModel.TestCaseResult.Passed)
 			{
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				Log.Default.Error("Process did not load after " + timeout);
 			}
 		}

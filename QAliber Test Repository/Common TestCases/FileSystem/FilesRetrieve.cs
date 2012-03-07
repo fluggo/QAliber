@@ -36,13 +36,13 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public FilesRetrieve() : base( "Retrieve Files" )
 		{
-			icon = Properties.Resources.FileRetrieve;
+			Icon = Properties.Resources.FileRetrieve;
 		}
 
 		public override void Body()
 		{
 			retrievedFiles = Directory.GetFiles(sourceDir, pattern, searchOption);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string sourceDir = "";

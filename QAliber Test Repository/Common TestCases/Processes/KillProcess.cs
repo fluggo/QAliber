@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	{
 		public KillProcess() : base( "Kill Process" )
 		{
-			icon = Properties.Resources.ProcessRemove;
+			Icon = Properties.Resources.ProcessRemove;
 		}
 
 		public override void Body()
@@ -58,7 +58,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 					processes[0].Kill();
 				
 			}
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string filename = "";

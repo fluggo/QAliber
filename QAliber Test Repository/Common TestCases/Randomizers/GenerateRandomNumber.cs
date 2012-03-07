@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 	{
 		public GenerateRandomNumberTestCase() : base( "Generate Random Number" )
 		{
-			icon = null;
+			Icon = null;
 		}
 
 		public override void Body()
@@ -48,7 +48,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			int rndVal = new Random().Next(0, range);
 			generatedNum = minVal + rndVal * step;
 			Log.Default.Info("The generated number is " + generatedNum);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private double minVal = 0;

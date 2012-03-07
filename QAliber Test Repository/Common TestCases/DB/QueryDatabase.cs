@@ -38,7 +38,7 @@ namespace QAliber.Repository.CommonTestCases.DB
 	{
 		public QueryDatabase() : base( "Query Database" )
 		{
-			icon = Properties.Resources.DatabaseQuery;
+			Icon = Properties.Resources.DatabaseQuery;
 		}
 
 		public override void Body()
@@ -54,7 +54,7 @@ namespace QAliber.Repository.CommonTestCases.DB
 			dataSet.WriteXml(outFile, XmlWriteMode.IgnoreSchema);
 
 			conn.Close();
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 
 		}

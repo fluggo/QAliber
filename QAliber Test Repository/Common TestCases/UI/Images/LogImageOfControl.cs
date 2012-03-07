@@ -35,7 +35,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	{
 		public LogImageOfControl() : base( "Log Image of Control" )
 		{
-			icon = Properties.Resources.Bitmap;
+			Icon = Properties.Resources.Bitmap;
 		}
 
 		private string control = "";
@@ -64,12 +64,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				throw new InvalidOperationException("Control not found");
 			}
 

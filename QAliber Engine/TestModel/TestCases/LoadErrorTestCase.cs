@@ -14,7 +14,7 @@ namespace QAliber.TestModel.TestCases
 	{
 		public LoadErrorTestCase() : base( "Error Loading Type" )
 		{
-			icon = Properties.Resources.LoadError;
+			Icon = Properties.Resources.LoadError;
 			if (DeserializationBinder.errorIndex < DeserializationBinder.errorTypes.Count)
 			{
 				Name += " " + DeserializationBinder.errorTypes[DeserializationBinder.errorIndex];

@@ -34,7 +34,7 @@ namespace QAliber.TestModel
 	{
 		public WhileTestCase() : base( "While" )
 		{
-			icon = Properties.Resources.Loop;
+			Icon = Properties.Resources.Loop;
 		}
 
 		private string cSharpExpression;

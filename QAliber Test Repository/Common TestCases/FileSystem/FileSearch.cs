@@ -43,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 	{
 		public FileSearch() : base( "Search File" )
 		{
-			icon = Properties.Resources.FileSearch;
+			Icon = Properties.Resources.FileSearch;
 		}
 
 		public override void Body()
@@ -60,7 +60,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						{
 							textOutput = line;
 							Log.Default.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
-							actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+							ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 							break;
 						}
 					}
@@ -70,17 +70,17 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						{
 							textOutput = line;
 							Log.Default.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
-							actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+							ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 							break;
 						}
 					}
 					line = reader.ReadLine();
 					lineNumber++;
 				}
-				if (actualResult != QAliber.RemotingModel.TestCaseResult.Passed)
+				if (ActualResult != QAliber.RemotingModel.TestCaseResult.Passed)
 				{
 					Log.Default.Error("Pattern '" + pattern + "' was not found");
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				}
 			}
 		}

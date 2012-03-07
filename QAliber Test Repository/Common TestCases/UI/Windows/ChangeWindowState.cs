@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		/// </summary>
 		public ChangeWindowState() : base( "Change Window State" )
 		{
-			icon = QAliber.Repository.CommonTestCases.Properties.Resources.Window;
+			Icon = QAliber.Repository.CommonTestCases.Properties.Resources.Window;
 		}
 
 		private string control = "";
@@ -71,19 +71,19 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				throw new InvalidOperationException("Control not found");
 			}
 
 			IWindowPattern window = c.GetControlInterface<IWindowPattern>();
 
 			if( window == null ) {
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				throw new InvalidOperationException( "Control doesn't appear to be a window" );
 			}
 

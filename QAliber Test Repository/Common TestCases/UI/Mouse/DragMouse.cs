@@ -34,7 +34,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	{
 		public DragMouse() : base( "Drag Mouse" )
 		{
-			icon = Properties.Resources.Mouse;
+			Icon = Properties.Resources.Mouse;
 		}
 
 		private string control = "";
@@ -86,22 +86,22 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 			try
 			{
 				UIControlBase c = UIControlBase.FindControlByPath( control );
 
 				if( !c.Exists ) {
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw new InvalidOperationException("Control not found");
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					Log.Default.Error( "Control not found." );
 				}
 
 				c.Drag(button, point1, point2);
 			}
 			catch (System.Reflection.TargetInvocationException)
 			{
-				actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 
 

@@ -35,7 +35,7 @@ namespace QAliber.TestModel
 	{
 		public BreakLoopTestCase() : base( "Cut Branches" )
 		{
-			icon = Properties.Resources.BreakFolder;
+			Icon = Properties.Resources.BreakFolder;
 		}
 
 		protected uint numOfLoopsToBreak = 1;
@@ -57,7 +57,7 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			branchesToBreak = numOfLoopsToBreak;
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		public override string Description

@@ -36,7 +36,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 		/// </summary>
 		public StopTimerTestCase() : base( "Stop Timer" )
 		{
-			icon = Properties.Resources.Timing;
+			Icon = Properties.Resources.Timing;
 		}
 
 		private string key = "";
@@ -75,12 +75,12 @@ namespace QAliber.Repository.CommonTestCases.Timers
 				if (val > maxTimeAllowed)
 				{
 					LogFailedByExpectedResult("Operation exceeded requested time", string.Format("Maximum = {0}, Actual = {1}", maxTimeAllowed, val));
-					actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				}
 				else
 				{
 					LogPassedByExpectedResult(string.Format("Operation ended {0}", val), "");
-					actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 				}
 			}
 		}

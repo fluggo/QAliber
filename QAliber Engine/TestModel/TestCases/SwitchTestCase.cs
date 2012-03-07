@@ -19,7 +19,7 @@ namespace QAliber.TestModel
 	{
 		public SwitchTestCase() : base( "Switch" )
 		{
-			icon = Properties.Resources.Switch;
+			Icon = Properties.Resources.Switch;
 		}
 
 		private string cSharpExpression;

@@ -71,7 +71,7 @@ namespace QAliber.TestModel
 					}
 					break;
 			}
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private varTypes variableType;

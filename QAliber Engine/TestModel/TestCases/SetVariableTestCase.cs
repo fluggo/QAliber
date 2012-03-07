@@ -35,7 +35,7 @@ namespace QAliber.TestModel
 	{
 		public SetVariableTestCase() : base( "Set Variable" )
 		{
-			icon = null;
+			Icon = null;
 		}
 
 		private string cSharpExpression;
@@ -85,7 +85,7 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			object retVal = null;
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, retType, out retVal);
 			Scenario.Variables.AddOrReplaceByName(new QAliber.TestModel.Variables.ScenarioVariable<string>(
 				varName.Selected, retVal.ToString(), this));

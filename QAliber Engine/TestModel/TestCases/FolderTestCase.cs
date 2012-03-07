@@ -37,8 +37,7 @@ namespace QAliber.TestModel
 		}
 
 		protected FolderTestCase( string name ) : base( name ) {
-			expectedResult = TestCaseResult.Passed;
-			icon = Properties.Resources.Folder;
+			Icon = Properties.Resources.Folder;
 		}
 
 		protected List<TestCase> children = new List<TestCase>();
@@ -55,7 +54,7 @@ namespace QAliber.TestModel
 		
 		public override void Body()
 		{
-			actualResult = TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			bool stopRunning = false;
 
 			foreach (TestCase child in children)
@@ -69,7 +68,7 @@ namespace QAliber.TestModel
 					
 					if (child.ExpectedResult != TestCaseResult.None && child.ActualResult != child.ExpectedResult)
 					{
-						actualResult = TestCaseResult.Failed;
+						ActualResult = TestCaseResult.Failed;
 						if (child.ExitOnError)
 						{
 							Log.Default.Error("Stop on error was requested for this step, exiting");

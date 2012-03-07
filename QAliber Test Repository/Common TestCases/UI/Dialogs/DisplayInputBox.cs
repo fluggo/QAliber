@@ -41,7 +41,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	{
 		public DisplayInputBox() : base( "Display Input Box" )
 		{
-			icon = Properties.Resources.Dialog;
+			Icon = Properties.Resources.Dialog;
 		}
 
 		private string title = "";
@@ -83,7 +83,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 	
 		public override void Body()
 		{
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			InputForm inputForm = new InputForm(title, text);
 			inputForm.ShowDialog();
 			inputString = inputForm.Input;

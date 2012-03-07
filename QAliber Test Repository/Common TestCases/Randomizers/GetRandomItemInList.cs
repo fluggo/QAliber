@@ -42,7 +42,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 	{
 		public GetRandomItemInListTestCase() : base( "Get Random Item in List" )
 		{
-			icon = null;
+			Icon = null;
 			listName = new ListVariableDropDownList();
 		}
 
@@ -60,7 +60,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			}
 			generatedItem = i.Current.ToString();
 			Log.Default.Info("Item picked = '" + generatedItem + "'");
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private ListVariableDropDownList listName;

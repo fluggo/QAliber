@@ -39,7 +39,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 	{
 		public StartProcess() : base( "Start Process" )
 		{
-			icon = Properties.Resources.StartProcess;
+			Icon = Properties.Resources.StartProcess;
 		}
 
 		public override void Body()
@@ -53,7 +53,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 				p.WaitForExit();
 			else if (waitForUserInteraction)
 				p.WaitForInputIdle();
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		private string filename = "";

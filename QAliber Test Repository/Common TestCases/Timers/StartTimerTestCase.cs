@@ -34,7 +34,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 	{
 		public StartTimerTestCase() : base( "Start Timer" )
 		{
-			icon = Properties.Resources.Timing;
+			Icon = Properties.Resources.Timing;
 		}
 
 		private string key = "";
@@ -53,7 +53,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 		public override void Body()
 		{
 			TimersCollection.AddTimer(key);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		public override string Description

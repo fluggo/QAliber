@@ -35,8 +35,7 @@ namespace QAliber.TestModel
 	{
 		public ActualTestCase() : base( "Test Case" )
 		{
-			expectedResult = TestCaseResult.Passed;
-			icon = Properties.Resources.ApproveReject;
+			Icon = Properties.Resources.ApproveReject;
 		}
 
 		protected override bool ExitBranchOnErrorDefaultValue {

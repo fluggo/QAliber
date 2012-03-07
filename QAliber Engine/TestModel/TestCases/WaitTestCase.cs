@@ -35,7 +35,7 @@ namespace QAliber.TestModel
 	{
 		public WaitTestCase() : base( "Wait" )
 		{
-			icon = Properties.Resources.Clock;
+			Icon = Properties.Resources.Clock;
 		}
 
 		private int delay = 1000;
@@ -54,7 +54,7 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			System.Threading.Thread.Sleep(delay);
-			actualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 
 		public override string Description

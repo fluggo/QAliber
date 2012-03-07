@@ -51,7 +51,7 @@ namespace QAliber.Repository.CommonTestCases.Macros
 
 		public override void Body()
 		{
-			actualResult = TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			TestScenario scenario = TestScenario.Load(sourceFile);
 			scenario.Run();
 		}

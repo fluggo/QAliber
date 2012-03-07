@@ -39,7 +39,7 @@ namespace QAliber.TestModel
 	{
 		public ForEachRowInTableTestCase() : base( "For Each Row In Table" )
 		{
-			icon = Properties.Resources.Loop;
+			Icon = Properties.Resources.Loop;
 		}
 
 		private TableVariableDropDownList tableName = new TableVariableDropDownList();
@@ -60,7 +60,7 @@ namespace QAliber.TestModel
 		public override void Setup()
 		{
 			base.Setup();
-			table = scenario.Tables[tableName.Selected];
+			table = Scenario.Tables[tableName.Selected];
 			if (table == null)
 				throw new ArgumentException("Table '" + tableName + "' is not recognized");
 		}
@@ -73,7 +73,7 @@ namespace QAliber.TestModel
 			{
 				for (int i = 0; i < dataTable.Columns.Count; i++)
 				{
-					scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(tableName + ".CurrentRow." + dataTable.Columns[i].ColumnName, row[i].ToString(), this));
+					Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(tableName + ".CurrentRow." + dataTable.Columns[i].ColumnName, row[i].ToString(), this));
 				}
 				Log.Default.IndentIn("Iteration on row '" + j + "'");
 				base.Body();

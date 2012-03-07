@@ -37,7 +37,7 @@ namespace QAliber.TestModel
 	{
 		public ForEachTestCase() : base( "For Each Item In List" )
 		{
-			icon = Properties.Resources.Loop;
+			Icon = Properties.Resources.Loop;
 		}
 
 		private ListVariableDropDownList listName = new ListVariableDropDownList();
@@ -59,7 +59,7 @@ namespace QAliber.TestModel
 		public override void Setup()
 		{
 			base.Setup();
-			list = scenario.Lists[listName.Selected];
+			list = Scenario.Lists[listName.Selected];
 			if (list == null)
 				throw new ArgumentException("List '" + listName + "' is not recognized");
 		}
@@ -69,7 +69,7 @@ namespace QAliber.TestModel
 			string[] vals = list.Value as string[];
 			foreach (string obj in vals)
 			{
-				scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
+				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
 				Log.Default.IndentIn("Iteration on item '" + obj.ToString() + "'");
 				base.Body();
 				Log.Default.IndentOut();

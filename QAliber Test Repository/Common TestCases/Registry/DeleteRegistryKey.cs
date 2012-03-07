@@ -44,13 +44,13 @@ namespace QAliber.Repository.CommonTestCases.Registry
 	{
 		public DeleteRegistryKey() : base( "Delete Registry Key" )
 		{
-			icon = Properties.Resources.Registry;
+			Icon = Properties.Resources.Registry;
 		}
 
 		public override void Setup()
 		{
 			base.Setup();
-			actualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 		}
 
 		public override void Body()
