@@ -71,8 +71,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
-			if (!c.Exists)
-				throw new ArgumentException("Couldn't retrieve control " + control);
+			if( !c.Exists ) {
+				Logger.Log.Default.Error( "Couldn't find control", control );
+				ActualResult = RemotingModel.TestCaseResult.Failed;
+				return;
+			}
 
 			IText textPattern = c.GetControlInterface<IText>();
 
