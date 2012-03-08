@@ -581,12 +581,17 @@ namespace QAliber.Engine.Controls.UIA
 		private object GetControlInterface( Type type ) {
 			if( type == typeof(IText) ) {
 				// Qaliber's IText covers both automations Text and Value patterns
-				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsTextPatternAvailableProperty )) &&
-					!((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsValuePatternAvailableProperty )) )
-					return null;
+				ValuePattern valuePattern = null;
+				TextPattern textPattern = null;
 
-				ValuePattern valuePattern = (ValuePattern) automationElement.GetCurrentPattern( ValuePattern.Pattern );
-				TextPattern textPattern = (TextPattern) automationElement.GetCurrentPattern( TextPattern.Pattern );
+				if( (bool) automationElement.GetCachedPropertyValue( AutomationElement.IsValuePatternAvailableProperty ) )
+					valuePattern = (ValuePattern) automationElement.GetCurrentPattern( ValuePattern.Pattern );
+
+				if( (bool) automationElement.GetCachedPropertyValue( AutomationElement.IsTextPatternAvailableProperty ) )
+					textPattern = (TextPattern) automationElement.GetCurrentPattern( TextPattern.Pattern );
+
+				if( valuePattern == null && textPattern == null )
+					return null;
 
 				return new TextPatternImpl( textPattern, valuePattern );
 			}
