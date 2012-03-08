@@ -1061,17 +1061,17 @@ namespace QAliber.Engine {
 			}
 		}
 
-		public static XPathExpression Parse( string input ) {
-			return Parse( input, DefaultOperatorComparer );
+		public static XPathExpression Parse( string input, bool allowStringEscapes ) {
+			return Parse( input, allowStringEscapes, DefaultOperatorComparer );
 		}
 
-		public static XPathExpression Parse( string input,	Comparison<string> operatorPrecedenceComparison ) {
-			XPathToken[] tokens = Tokenize( input ).ToArray();
+		public static XPathExpression Parse( string input, bool allowStringEscapes, Comparison<string> operatorPrecedenceComparison ) {
+			XPathToken[] tokens = Tokenize( input, allowStringEscapes ).ToArray();
 
-			return Parse( tokens, operatorPrecedenceComparison );
+			return Parse( tokens, allowStringEscapes, operatorPrecedenceComparison );
 		}
 
-		static XPathExpression Parse( XPathToken[] tokens, Comparison<string> operatorPrecedenceComparison ) {
+		static XPathExpression Parse( XPathToken[] tokens, bool allowStringEscapes, Comparison<string> operatorPrecedenceComparison ) {
 			// This is Dijkstra's Shunting-Yard Algorithm for infix expressions
 			// http://en.wikipedia.org/wiki/Shunting_yard_algorithm
 			Stack<XPathExpression> expressions = new Stack<XPathExpression>();
@@ -1080,8 +1080,13 @@ namespace QAliber.Engine {
 
 			for( int pos = 0; pos < tokens.Length; pos++ ) {
 				if( tokens[pos].Type == XPathTokenType.Literal ) {
+					string value = tokens[pos].Value.Substring( 1, tokens[pos].Value.Length - 2 );
+
+					if( allowStringEscapes )
+						value = UnescapeLiteral( value );
+
 					expressions.Push( new XPathLiteral() {
-						Value = tokens[pos].Value.Substring( 1, tokens[pos].Value.Length - 2 )
+						Value = value
 					} );
 				}
 				else if( tokens[pos].Type == XPathTokenType.Number ) {
@@ -1306,6 +1311,10 @@ namespace QAliber.Engine {
 								throw new ArgumentException( "Expected literal at " + (tokens[pos - 1].TokenEnd + 1).ToString() );
 
 							step.Literal = tokens[pos].Value.Substring( 1, tokens[pos].Value.Length - 2 );
+
+							if( allowStringEscapes )
+								step.Literal = UnescapeLiteral( step.Literal );
+
 							pos++;
 						}
 
@@ -1357,6 +1366,137 @@ namespace QAliber.Engine {
 			return expressions.Pop();
 		}
 
+		const string __hexChars = "0123456789ABCDEF";
+
+		/// <summary>
+		/// Unescapes a string literal.
+		/// </summary>
+		/// <param name="input">A string literal (not including quotes) that might contain escape characters.</param>
+		/// <returns>A string with the escapes interpreted as characters.</returns>
+		public static string UnescapeLiteral( string input ) {
+			// Handle the usual C# escapes
+			char[] result = new char[input.Length];
+			int outPos = 0, inPos = 0;
+
+			for( inPos = 0; inPos < input.Length; inPos++ ) {
+				if( input[inPos] == '\\' ) {
+					inPos++;
+
+					if( input[inPos] == '\\' )
+						result[outPos++] = '\\';
+					else if( input[inPos] == '\'' )
+						result[outPos++] = '\'';
+					else if( input[inPos] == '\"' )
+						result[outPos++] = '\"';
+					else if( input[inPos] == '0' )
+						result[outPos++] = '\0';
+					else if( input[inPos] == 'a' )
+						result[outPos++] = '\a';
+					else if( input[inPos] == 'b' )
+						result[outPos++] = '\b';
+					else if( input[inPos] == 'f' )
+						result[outPos++] = '\f';
+					else if( input[inPos] == 'n' )
+						result[outPos++] = '\n';
+					else if( input[inPos] == 'r' )
+						result[outPos++] = '\r';
+					else if( input[inPos] == 't' )
+						result[outPos++] = '\t';
+					else if( input[inPos] == 'v' )
+						result[outPos++] = '\v';
+					else if( input[inPos] == 'x' ) {
+						// Up to four characters
+						int charValue = 0;
+						inPos++;
+
+						for( int i = 0; i < 4 && inPos < input.Length; i++ ) {
+							int hexValue = __hexChars.IndexOf( char.ToUpperInvariant( input[inPos] ) );
+
+							if( hexValue == -1 )
+								break;
+
+							charValue = (charValue << 4) | hexValue;
+							inPos++;
+						}
+
+						result[outPos++] = (char) charValue;
+						inPos--;
+					}
+					else if( input[inPos] == 'u' ) {
+						// Exactly four characters
+						int charValue = 0;
+						inPos++;
+
+						for( int i = 0; i < 4 && inPos < input.Length; i++ ) {
+							int hexValue = __hexChars.IndexOf( char.ToUpperInvariant( input[inPos] ) );
+
+							if( hexValue == -1 )
+								throw new ArgumentException( "Bad hex digit in the middle of Unicode escape sequence.", "input" );
+
+							charValue = (charValue << 4) | hexValue;
+							inPos++;
+						}
+
+						result[outPos++] = (char) charValue;
+						inPos--;
+					}
+				}
+				else {
+					result[outPos++] = input[inPos];
+				}
+			}
+
+			return new string( result, 0, outPos );
+		}
+
+		/// <summary>
+		/// Escapes the given string.
+		/// </summary>
+		/// <param name="input">String to escape.</param>
+		/// <returns>Escaped string.</returns>
+		public static string EscapeLiteral( string input ) {
+			StringBuilder output = new StringBuilder( input.Length * 2 );
+
+			for( int i = 0; i < input.Length; i++ ) {
+				char value = input[i];
+
+				if( value == '\n' )
+					output.Append( "\\n" );
+				else if( value == '\r' )
+					output.Append( "\\r" );
+				else if( value == '\\' )
+					output.Append( "\\\\" );
+				else if( value == '\'' )
+					output.Append( "\\\'" );
+				else if( value == '\"' )
+					output.Append( "\\\"" );
+				else if( value == '\0' )
+					output.Append( "\\0" );
+				else if( value == '\a' )
+					output.Append( "\\a" );
+				else if( value == '\b' )
+					output.Append( "\\b" );
+				else if( value == '\f' )
+					output.Append( "\\f" );
+				else if( value == '\t' )
+					output.Append( "\\t" );
+				else if( value == '\v' )
+					output.Append( "\\v" );
+				else if( char.IsControl( value ) ) {
+					output.Append( "\\u" );
+					output.Append( __hexChars[(((int) value) >> 12) & 0xF] );
+					output.Append( __hexChars[(((int) value) >> 8) & 0xF] );
+					output.Append( __hexChars[(((int) value) >> 4) & 0xF] );
+					output.Append( __hexChars[(((int) value) >> 0) & 0xF] );
+				}
+				else {
+					output.Append( value );
+				}
+			}
+
+			return output.ToString();
+		}
+
 		static void ResolveOperator( Stack<XPathExpression> expressions, XPathToken op ) {
 			if( expressions.Count < 2 )
 				throw new ArgumentException( "Too many operators in expression" );
@@ -1401,7 +1541,7 @@ namespace QAliber.Engine {
 			} );
 		}
 
-		static IEnumerable<XPathToken> Tokenize( string input ) {
+		static IEnumerable<XPathToken> Tokenize( string input, bool allowStringEscapes ) {
 			int pos = 0;
 			XPathToken lastToken = null;
 
@@ -1468,7 +1608,12 @@ namespace QAliber.Engine {
 						// Literal
 						char startChar = input[pos];
 
-						do pos++; while( pos < input.Length && input[pos] != startChar );
+						do {
+							if( allowStringEscapes && pos < input.Length && input[pos] == '\\' )
+								pos++;
+
+							pos++;
+						} while( pos < input.Length && input[pos] != startChar );
 
 						if( pos == input.Length )
 							throw new ArgumentException( "Unterminated literal starting at " + start.ToString() );

@@ -294,26 +294,14 @@ namespace QAliber.Engine.Controls.UIA
 						List<string> conditions = new List<string>();
 
 						// The name, which we leave out for title bars because it's redundant
-						if( Name != null && automationElement.Cached.ControlType != ControlType.TitleBar ) {
-							if( Name.Contains( '\'' ) )
-								conditions.Add( "@Name=\"" + Name + "\"" );
-							else
-								conditions.Add( "@Name=\'" + Name + "\'" );
-						}
+						if( Name != null && automationElement.Cached.ControlType != ControlType.TitleBar )
+							conditions.Add( "@Name=\'" + XPath.EscapeLiteral( Name ) + "\'" );
 
-						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null ) {
-							if( ClassName.Contains( '\'' ) )
-								conditions.Add( "@ClassName=\"" + ClassName + "\"" );
-							else
-								conditions.Add( "@ClassName=\'" + ClassName + "\'" );
-						}
+						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null )
+							conditions.Add( "@ClassName=\'" + XPath.EscapeLiteral( ClassName ) + "\'" );
 
-						if( ID != null ) {
-							if( ID.Contains( '\'' ) )
-								conditions.Add( "@ID=\"" + ID + "\"" );
-							else
-								conditions.Add( "@ID=\'" + ID + "\'" );
-						}
+						if( ID != null )
+							conditions.Add( "@ID=\'" + XPath.EscapeLiteral( ID ) + "\'" );
 
 						if( conditions.Count != 0 )
 							_codePath = prefix + "[" + string.Join( " and ", conditions ) + "]";
@@ -332,7 +320,7 @@ namespace QAliber.Engine.Controls.UIA
 		/// <returns>A <see cref="UIAControl"/> if the expression evaluates to one,
 		///   or a <see cref="UIANullControl"/> if the result returns empty.</returns>
 		public static UIAControl FindControlByXPath( string xpath ) {
-			XPathExpression exp = XPath.Parse( xpath );
+			XPathExpression exp = XPath.Parse( xpath, true );
 			UIAXPathEvaluator evaluator = new UIAXPathEvaluator();
 
 			IXPathNode[] expResult = evaluator.Evaluate( exp ) as IXPathNode[];
