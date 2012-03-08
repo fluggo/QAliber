@@ -384,7 +384,7 @@ namespace QAliber.Engine.Controls
 							return child;
 						if (!useRegex &&
 							StringComparer.InvariantCultureIgnoreCase.Equals( name, child.Name ) &&
-							StringComparer.InvariantCultureIgnoreCase.Equals( id, child.ID ))
+							StringComparer.InvariantCultureIgnoreCase.Equals( id, child.ID ?? child.UIType ))
 							return child;
 					}
 					System.Threading.Thread.Sleep(50);
@@ -414,17 +414,20 @@ namespace QAliber.Engine.Controls
 		public UIControlBase FindFirstChildByNameClassId( string name, string className, string id ) {
 			if (Exists)
 			{
+				StringComparer comp = StringComparer.InvariantCultureIgnoreCase;
+
 				Stopwatch watch = new Stopwatch();
 				watch.Start();
+
 				while (watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl)
 				{
 					foreach (UIControlBase child in GetChildren()) {
 						// BJC: For reasons I can't discern, the automation API returns names for
 						// controls that don't have any. For that reason, if name is an empty string,
 						// I'll skip searching on name
-						if ( (string.IsNullOrEmpty( name ) || child.Name.ToLowerInvariant() == name.ToLowerInvariant()) &&
-							(id == null || child.ID.ToLowerInvariant() == id.ToLowerInvariant()) &&
-							child.ClassName.ToLowerInvariant() == className.ToLowerInvariant())
+						if ( (string.IsNullOrEmpty( name ) || comp.Equals( child.Name, name )) &&
+							(string.IsNullOrEmpty( id ) || comp.Equals( child.ID ?? child.UIType, id )) &&
+							(string.IsNullOrEmpty( className ) || comp.Equals( child.ClassName, className )) )
 							return child;
 					}
 					System.Threading.Thread.Sleep(50);
