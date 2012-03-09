@@ -652,6 +652,28 @@ namespace QAliber.Engine.Controls.UIA
 				return new InvokePatternImpl( pattern );
 			}
 
+			if( type == typeof(IValuePattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsValuePatternAvailableProperty )) )
+					return null;
+
+				ValuePattern pattern = (ValuePattern) automationElement.GetCurrentPattern( ValuePattern.Pattern );
+				return new ValuePatternImpl( pattern );
+			}
+
+			if( type == typeof(IGridPattern) ) {
+				if( (bool) automationElement.GetCachedPropertyValue( AutomationElement.IsGridPatternAvailableProperty ) ) {
+					// Return the real thing
+					return new GridPatternImpl( automationElement,
+						(GridPattern) automationElement.GetCurrentPattern( GridPattern.Pattern ) );
+				}
+
+				// Pull up the .NET DataGridView control (which does not have UI automation support) if we can
+				if( automationElement.Cached.Name == "DataGridView" && automationElement.Cached.ControlType == ControlType.Table )
+					return new DataGridViewGridImpl( automationElement );
+
+				return null;
+			}
+
 			return null;
 		}
 
@@ -905,6 +927,209 @@ namespace QAliber.Engine.Controls.UIA
 
 			public void Invoke() {
 				_pattern.Invoke();
+			}
+		}
+
+		class ValuePatternImpl : IValuePattern {
+			ValuePattern _pattern;
+
+			public ValuePatternImpl( ValuePattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public bool IsReadOnly {
+				get { return _pattern.Current.IsReadOnly; }
+			}
+
+			public string Value {
+				get { return _pattern.Current.Value; }
+			}
+
+			public void SetValue( string value ) {
+				_pattern.SetValue( value );
+			}
+		}
+
+		class GridPatternImpl : IGridPattern {
+			AutomationElement _element;
+			GridPattern _pattern;
+
+			public GridPatternImpl( AutomationElement element, GridPattern pattern ) {
+				_element = element;
+				_pattern = pattern;
+			}
+
+			public int ColumnCount {
+				get { return _pattern.Current.ColumnCount; }
+			}
+
+			public int RowCount {
+				get { return _pattern.Current.RowCount; }
+			}
+
+			public UIControlBase GetItem( int row, int column ) {
+				return GetControlByType( _pattern.GetItem( row, column ) );
+			}
+
+			public string[][] CaptureGrid(out string[] headers) {
+				throw new NotImplementedException();
+			}
+		}
+
+		/// <summary>
+		/// Implements the <see cref="IGridPattern"/> for <see cref="DataGridView"/> controls that
+		/// don't implement their own.
+		/// </summary>
+		class DataGridViewGridImpl : IGridPattern {
+			AutomationElement _element;
+			AutomationElement[] _headers;
+			AutomationElement[][] _cells;
+			string[] _columnNames;
+			int _columnCount, _rowCount;
+
+			static CacheRequest __gridCacheRequest;
+
+			static DataGridViewGridImpl() {
+				__gridCacheRequest = new CacheRequest();
+				__gridCacheRequest.Add( AutomationElement.ControlTypeProperty );
+				__gridCacheRequest.Add( AutomationElement.NameProperty );
+				__gridCacheRequest.Add( ValuePattern.ValueProperty );
+				__gridCacheRequest.TreeScope = TreeScope.Element | TreeScope.Children;
+			}
+
+			public DataGridViewGridImpl( AutomationElement element ) {
+				// We don't have much of a choice; we have to capture the whole
+				// grid to know anything about what's going on
+				_element = element;
+
+				for( int i = 0; i < 5; i++ ) {
+					// Here's the deal: The contents of the DataGridView could be changing right
+					// underneath us. We will make five attempts to get the whole grid, as best
+					// we can.
+
+					// The structure of a raw DataGridView is:
+					//		custom[@Name="Top Row"]
+					//			header["@Name="H"]
+					//			...
+					//		custom[@Name="Row 0"]
+					//			custom[@Name="H Row 0"]
+					//			...
+					//		custom[@Name="Row 1"]
+					//			custom[@Name="H Row 1"]
+					//			...
+					//
+					// The following code assumes that all rows are present and appear sequentially in the tree.
+					// It does not assume the presence of all columns.
+					AutomationElement[] rows;
+
+					using( __gridCacheRequest.Activate() ) {
+						rows = _element.FindAll( TreeScope.Children,
+								new PropertyCondition( AutomationElement.IsControlElementProperty, true ) )
+							.Cast<AutomationElement>()
+							.ToArray();
+					}
+
+					// Now figure out the columns
+					AutomationElement topRow = rows.FirstOrDefault( elem => elem.Cached.Name == "Top Row" );
+
+					if( topRow != null ) {
+						_headers = topRow.CachedChildren.Cast<AutomationElement>()
+							.Where( cell => cell.Cached.ControlType == ControlType.Header )
+							.ToArray();
+
+						_columnNames = _headers.Select( cell => cell.Cached.Name ).ToArray();
+						_columnCount = _columnNames.Length;
+
+						// Since we know the column names, we can try to find every cell
+						_cells = rows
+							.Where( row => row.Cached.Name.StartsWith( "Row " ) )
+
+							// Create dictionary by cell name
+							.Select( row => new {
+								Row = row,
+								Cells = row.CachedChildren.Cast<AutomationElement>()
+									.ToDictionary( cell => cell.Cached.Name )
+							} )
+							// Use the column names to look up the cells proper
+							.Select( row => _columnNames.Select( column => {
+								AutomationElement cell;
+
+								if( row.Cells.TryGetValue( column + " " + row.Row.Cached.Name, out cell ) )
+									return cell;
+
+								return null;
+							} ).ToArray() )
+							.ToArray();
+
+						_rowCount = _cells.Length;
+					}
+					else {
+						// Without a header, make no attempt to put the cells in the right order
+						_cells = rows
+							.Where( row => row.Cached.Name.StartsWith( "Row " ) )
+							.Select( row => row.CachedChildren.Cast<AutomationElement>().ToArray() )
+							.ToArray();
+
+						_columnCount = _cells.Select( row => row.Length ).Max();
+						_rowCount = _cells.Length;
+					}
+
+					// Try to verify we have the whole thing
+					if( _cells.Any( row => row.Length != _columnCount || row.Any( cell => cell == null ) ) ) {
+						if( i == 4 )
+							throw new InvalidOperationException( "Tried to capture the grid five times. Could not get a complete copy of the grid." );
+						else
+							continue;
+					}
+
+					break;
+				}
+			}
+
+			public int ColumnCount {
+				get { return _columnCount; }
+			}
+
+			public int RowCount {
+				get { return _rowCount; }
+			}
+
+			public UIControlBase GetItem( int row, int column ) {
+				if( row < 0 || row >= _rowCount )
+					throw new ArgumentOutOfRangeException( "row" );
+
+				if( column < 0 || column >= _columnCount )
+					throw new ArgumentOutOfRangeException( "column" );
+
+				AutomationElement[] rowCells = _cells[row];
+				AutomationElement cell = null;
+
+				if( column < rowCells.Length )
+					cell = rowCells[column];
+
+				if( cell == null )
+					return new UIANullControl();
+
+				return GetControlByType( cell );
+			}
+
+			public string[][] CaptureGrid( out string[] headers ) {
+				// We already have everything, just fill in the numbers
+				headers = _columnNames;
+
+				return _cells.Select( row =>
+						row.Select( cell => {
+							if( cell == null )
+								return null;
+
+							object value = cell.GetCachedPropertyValue( ValuePattern.ValueProperty );
+
+							if( value == AutomationElement.NotSupported )
+								return null;
+
+							return (string) value;
+						} ).ToArray()
+					).ToArray();
 			}
 		}
 

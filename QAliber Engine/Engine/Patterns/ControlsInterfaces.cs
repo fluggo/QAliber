@@ -85,4 +85,27 @@ namespace QAliber.Engine.Patterns
 	public interface IInvokePattern {
 		void Invoke();
 	}
+
+	public interface IValuePattern {
+		bool IsReadOnly { get; }
+		string Value { get; }
+
+		void SetValue( string value );
+	}
+
+	public interface IGridPattern {
+		int ColumnCount { get; }
+		int RowCount { get; }
+
+		UIControlBase GetItem( int row, int column );
+
+		/// <summary>
+		/// Captures the values in the grid in one sweep.
+		/// </summary>
+		/// <param name="headers">On return, contains the names in the header row if one was found,
+		///   otherwise <see langword='null'/>.</param>
+		/// <returns>A jagged object array that contains the values in each row of the grid.
+		///   If there's a header row, it will be the first row returned.</returns>
+		string[][] CaptureGrid( out string[] headers );
+	}
 }
