@@ -26,23 +26,29 @@ namespace QAliber.Builder.Presentation
 {
 	public partial class EditTableForm : Form
 	{
+		DataTable _originalTable, _table;
+
+		private string columnHeaderChanging;
+		private int columnIndexRightClicked = -1;
+
 		public EditTableForm(DataTable table)
 		{
-			this.table = table;
+			_originalTable = table;
+
+			// Clone the original table
+			_table = table.Clone();
+			_table.Load( table.CreateDataReader() );
+
 			DialogResult = DialogResult.Cancel;
 			InitializeComponent();
-			tableDataGridView.DataSource = table;
+
+			tableDataGridView.DataSource = _table;
 			BlockSort();
 		}
 
 		public DataTable Table
 		{
-			get { return table; }
-			set 
-			{ 
-				table = value;
-				tableDataGridView.DataSource = table;
-			}
+			get { return (DialogResult == DialogResult.OK) ? _table : _originalTable; }
 		}
 
 		private void BlockSort()
@@ -56,13 +62,12 @@ namespace QAliber.Builder.Presentation
 		
 		private void btnOk_Click(object sender, EventArgs e)
 		{
-			table.AcceptChanges();
+			_table.AcceptChanges();
 			DialogResult = DialogResult.OK;
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
-			table.RejectChanges();
 			DialogResult = DialogResult.Cancel;
 		}
 
@@ -70,14 +75,13 @@ namespace QAliber.Builder.Presentation
 		{
 			string headerName = "Header 0";
 			int i = 0;
-			while (table.Columns.Contains(headerName))
+			while( _table.Columns.Contains( headerName ) )
 			{
 				i++;
 				headerName = "Header " + i;
 			}
-			table.Columns.Add(headerName);
+			_table.Columns.Add(headerName);
 
-			tableDataGridView.Refresh();
 			BlockSort();
 		}
 
@@ -85,9 +89,7 @@ namespace QAliber.Builder.Presentation
 		{
 			if (columnIndexRightClicked >= 0)
 			{
-				table.Columns.RemoveAt(columnIndexRightClicked);
-				tableDataGridView.Refresh();
-				
+				_table.Columns.RemoveAt( columnIndexRightClicked );
 			}
 		}
 
@@ -99,9 +101,29 @@ namespace QAliber.Builder.Presentation
 				box.Leave += new EventHandler(box_Leave);
 				box.Bounds = tableDataGridView.GetCellDisplayRectangle(e.ColumnIndex, 0, false);
 				box.Bounds = new Rectangle(box.Bounds.X, 0, box.Bounds.Width, box.Bounds.Height);
-				tableDataGridView.Controls.Add(box);
+				this.Controls.Add(box);
+				box.BringToFront();
 				box.Text = tableDataGridView.Columns[e.ColumnIndex].HeaderText;
 				box.Focus();
+
+				// Hand focus back to data grid view on Enter or Escape
+				box.PreviewKeyDown += (senderBox, ev) => {
+					if( ev.KeyCode == Keys.Enter || ev.KeyCode == Keys.Escape )
+						ev.IsInputKey = true;
+				};
+
+				box.KeyDown += (senderBox, ev) => {
+					if( ev.KeyCode == Keys.Enter ) {
+						ev.Handled = true;
+						tableDataGridView.Focus();
+					}
+
+					if( ev.KeyCode == Keys.Escape ) {
+						ev.Handled = true;
+						box.Text = string.Empty;
+						tableDataGridView.Focus();
+					}
+				};
 
 				columnHeaderChanging = tableDataGridView.Columns[e.ColumnIndex].HeaderText;
 			}
@@ -152,9 +174,10 @@ namespace QAliber.Builder.Presentation
 			{
 				try
 				{
-					table.Columns[columnHeaderChanging].ColumnName = table.Columns[columnHeaderChanging].Caption = box.Text;
-					tableDataGridView.Controls.Remove(box);
-					tableDataGridView.Refresh();
+					_table.Columns[columnHeaderChanging].Caption = box.Text;
+					_table.Columns[columnHeaderChanging].ColumnName = box.Text;
+
+					this.Controls.Remove( box );
 				}
 				catch (Exception ex)
 				{
@@ -163,24 +186,11 @@ namespace QAliber.Builder.Presentation
 			}
 			else
 			{
-				tableDataGridView.Controls.Remove(box);
-				tableDataGridView.Refresh();
+				this.Controls.Remove( box );
 			}
+
+			BlockSort();
 		}
 
-
-		private DataTable table;
-		private string columnHeaderChanging;
-		private int columnIndexRightClicked = -1;
-
-	   
-		
-
-		
-
-	   
-		
-
-		
 	}
 }
