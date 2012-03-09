@@ -30,6 +30,7 @@ using System.Collections;
 using QAliber.TestModel.Variables;
 using QAliber.Logger;
 using QAliber.RemotingModel;
+using System.Data;
 
 namespace QAliber.TestModel
 {
@@ -93,38 +94,42 @@ namespace QAliber.TestModel
 					PropertyDescriptor foundProp = null;
 					foreach (string name in _outputProperties.Keys)
 					{
-						foreach (PropertyDescriptor prop in props)
-						{
-							if (prop.DisplayName == _outputProperties[name])
-							{
-								foundProp = prop;
-								break;
-							}
+						foundProp = props.Find( name, false );
+						string variableName = _outputProperties[name];
 
-						}
 						if (foundProp != null)
 						{
 							object val = foundProp.GetValue(this);
+
+							DataTable table = val as DataTable;
 							ICollection list = val as ICollection;
-							if (list != null)
-							{
+
+							if( table != null ) {
+								ScenarioVariable<DataTable> tableVar = _scenario.Tables[variableName];
+
+								if( tableVar != null )
+									tableVar.Value = table;
+								else
+									_scenario.Tables.AddOrReplaceByName( new ScenarioVariable<DataTable>( variableName, table, this ) );
+							}
+							else if( list != null ) {
 								string[] stringList = list.Cast<object>().Select(
 									obj => (obj == null) ? "(null)" : obj.ToString() ).ToArray();
 
-								ScenarioVariable<string[]> l = _scenario.Lists[name];
+								ScenarioVariable<string[]> l = _scenario.Lists[variableName];
 								if (l != null)
 									l.Value = stringList;
 								else
-									_scenario.Lists.AddOrReplaceByName(new ScenarioVariable<string[]>(name, stringList, this));
+									_scenario.Lists.AddOrReplaceByName(new ScenarioVariable<string[]>(variableName, stringList, this));
 
 							}
 							else if (val != null)
 							{
-								ScenarioVariable<string> v = _scenario.Variables[name];
+								ScenarioVariable<string> v = _scenario.Variables[variableName];
 								if (v != null)
 									v.Value = val.ToString();
 								else
-									_scenario.Variables.AddOrReplaceByName(new ScenarioVariable<string>(name, val.ToString(), this));
+									_scenario.Variables.AddOrReplaceByName(new ScenarioVariable<string>(variableName, val.ToString(), this));
 							}
 
 						}
@@ -514,9 +519,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Results")]
 		[DisplayName("Output To Variables")]
 		[Description("Choose here the parameters you want to save for future use")]
-		[Editor(typeof(TypeEditors.OutputPropertiesTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
-		[XmlIgnore]
-		public Dictionary<string, string> OutputProperties
+		public OutputPropertiesMap OutputProperties
 		{
 			get { return _outputProperties; }
 			set { _outputProperties = value; }
@@ -749,7 +752,7 @@ namespace QAliber.TestModel
 		private static TestCase currenTestCase;
 		internal static int maxID = 1;
 
-		private Dictionary<string, string> _outputProperties;
+		private OutputPropertiesMap _outputProperties;
 		private Dictionary<string, string> _changedProperties = new Dictionary<string,string>();
 		private bool _capturing;
 		private int _currentRetryNumber = 0;

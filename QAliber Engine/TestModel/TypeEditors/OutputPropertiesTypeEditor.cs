@@ -35,15 +35,21 @@ namespace QAliber.TestModel.TypeEditors
 		public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
 		{
 			TestCase testcase = context.Instance as TestCase;
+
 			if (value == null)
-				value = new Dictionary<string, string>();
-			Dictionary<string, string> output = value as Dictionary<string, string>;
+				value = new OutputPropertiesMap();
+
+			OutputPropertiesMap output = value as OutputPropertiesMap;
+
 			if (testcase != null)
 			{
 				OutputPropertiesForm form = new OutputPropertiesForm(testcase, output);
-				form.ShowDialog();
+
+				if( form.ShowDialog() == DialogResult.OK )
+					return form.Output;
 			}
-			return base.EditValue(context, provider, value);
+
+			return output;
 		}
 	}
 }

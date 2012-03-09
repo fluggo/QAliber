@@ -21,74 +21,93 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using System.Linq;
 
 namespace QAliber.TestModel.TypeEditors
 {
 	public partial class OutputPropertiesForm : Form
 	{
-		public OutputPropertiesForm(TestCase testcase, Dictionary<string, string> output)
+		public OutputPropertiesForm( TestCase testcase, OutputPropertiesMap output )
 		{
 			InitializeComponent();
 			DialogResult = DialogResult.Cancel;
 			this.testcase = testcase;
-			this.output = output;
+
+			this.output = new OutputPropertiesMap();
+
+			foreach( var kv in output ) {
+				this.output.Add( kv.Key, kv.Value );
+			}
+
 			FillList();
 		}
 
-		
-
-		public Dictionary<string, string> Output
+		public OutputPropertiesMap Output
 		{
 			get { return output; }
 			set { output = value; }
 		}
-	
+
+		class Property {
+			public ListViewItem Item;
+			public PropertyDescriptor Descriptor;
+			public string AssignedVariable;
+		}
 
 		private void FillList()
 		{
-			foreach (PropertyDescriptor propDesc in TypeDescriptor.GetProperties(testcase))
-			{
-				if (propDesc.IsBrowsable)
-				{
-					ListViewItem item = new ListViewItem(
-						new string[] { propDesc.DisplayName, testcase.GetType().Name + "." + propDesc.Name });
-					item.SubItems[1].Tag = "TextBox";
-					object curVal = propDesc.GetValue(testcase);
-					if (curVal != null)
-					{
-						ICollection collectionVal = curVal as ICollection;
-						if (collectionVal != null)
-						{
-							string listVal = "{ ";
-							foreach (object itemVal in collectionVal)
-							{
-								listVal += itemVal.ToString() + ", ";
-							}
-							listVal += "}";
-							item.SubItems.Add(listVal);
-							item.BackColor = Color.LightYellow;
-						}
-						else
-							item.SubItems.Add(curVal.ToString());
-					}
-					if (output.ContainsValue(propDesc.DisplayName))
-					{
-						item.Checked = true;
-						item.SubItems[1].Text = GetVarNameByPropDesc(propDesc.DisplayName);
-					}
-					propsListView.Items.Add(item);
+			foreach( PropertyDescriptor propDesc in TypeDescriptor.GetProperties( testcase ) ) {
+				if( !propDesc.IsBrowsable )
+					continue;
+
+				Property prop = new Property {
+					Descriptor = propDesc,
+					AssignedVariable = testcase.GetType().Name + "." + propDesc.Name
+				};
+
+				ListViewItem item = new ListViewItem(
+					new string[] { propDesc.DisplayName, prop.AssignedVariable } ) {
+					Tag = prop
+				};
+
+				item.SubItems[1].Tag = "TextBox";
+				prop.Item = item;
+
+				object curVal = propDesc.GetValue( testcase );
+
+				if( curVal != null ) {
+					ICollection collectionVal = curVal as ICollection;
+
+					if( collectionVal != null )
+						item.SubItems.Add( "[" + string.Join( ", ", collectionVal ) + "]" );
+					else
+						item.SubItems.Add( curVal.ToString() );
 				}
+
+				string alreadyAssignedVariable;
+
+				if( output.TryGetValue( propDesc.Name, out alreadyAssignedVariable ) ) {
+					item.Checked = true;
+					prop.AssignedVariable = alreadyAssignedVariable;
+				}
+
+				propsListView.Items.Add( item );
 			}
 		}
 
-		private string GetVarNameByPropDesc(string propDesc)
-		{
-			foreach (string key in output.Keys)
-			{
-				if (output[key] == propDesc)
-					return key;
+		private void FillOutput() {
+			testcase.Scenario.Variables.RemoveAllByTestCase( testcase );
+			testcase.Scenario.Lists.RemoveAllByTestCase( testcase );
+			testcase.Scenario.Tables.RemoveAllByTestCase( testcase );
+
+			output.Clear();
+
+			foreach( ListViewItem item in propsListView.Items ) {
+				Property prop = (Property) item.Tag;
+
+				if( item.Checked )
+					output.Add( prop.Descriptor.Name, prop.AssignedVariable );
 			}
-			return "";
 		}
 
 		#region Events
@@ -107,7 +126,7 @@ namespace QAliber.TestModel.TypeEditors
 							TextBox box = new TextBox();
 							box.Bounds = subItem.Bounds;
 							box.Text = subItem.Text;
-							box.Tag = subItem;
+							box.Tag = item.Tag;
 							box.Leave += new EventHandler(BoxLostFocus);
 							propsListView.Controls.Add(box);
 							box.Focus();
@@ -122,12 +141,10 @@ namespace QAliber.TestModel.TypeEditors
 		private void BoxLostFocus(object sender, EventArgs e)
 		{
 			TextBox box = sender as TextBox;
-			ListViewItem.ListViewSubItem subItem = box.Tag as ListViewItem.ListViewSubItem;
-			subItem.Text = box.Text;
-			
+			Property prop = (Property) box.Tag as Property;
+			prop.AssignedVariable = box.Text;
+
 			propsListView.Controls.Remove(box);
-			
-				
 		}
 
 		private bool IsVarExists(string name)
@@ -140,24 +157,18 @@ namespace QAliber.TestModel.TypeEditors
 
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
-			Close();
+			DialogResult = DialogResult.Cancel;
 		}
 
 		private void okButton_Click(object sender, EventArgs e)
 		{
+			FillOutput();
 			DialogResult = DialogResult.OK;
 		}
 		#endregion
 
-		private Dictionary<string, string> output = new Dictionary<string,string>();
+		private OutputPropertiesMap output = new OutputPropertiesMap();
 		private TestCase testcase;
 
-		
-
-		
-
-		
-
-		
 	}
 }
