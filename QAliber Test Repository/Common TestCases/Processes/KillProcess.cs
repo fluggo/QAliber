@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.RemotingModel;
 
 
 
@@ -45,20 +46,21 @@ namespace QAliber.Repository.CommonTestCases.Processes
 		public override void Body()
 		{
 			Process[] processes = Process.GetProcessesByName(filename);
-			if (processes.Length > 0)
-			{
-				if (killAll)
-				{
-					foreach (Process p in processes)
-					{
+
+			if( processes.Length > 0 ) {
+				if( killAll ) {
+					foreach( Process p in processes ) {
 						p.Kill();
+						p.WaitForExit();
 					}
 				}
-				else
+				else {
 					processes[0].Kill();
-				
+					processes[0].WaitForExit();
+				}
 			}
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string filename = "";
@@ -66,9 +68,9 @@ namespace QAliber.Repository.CommonTestCases.Processes
 		/// <summary>
 		/// The name of the process to kill
 		/// </summary>
-		[Category("Process")]
-		[Description("The process to kill")]
-		[DisplayName("1) Process Name")]
+		[Category("Behavior")]
+		[Description("The process to kill.")]
+		[DisplayName("Process Name")]
 		public string Filename
 		{
 			get { return filename; }
@@ -80,16 +82,16 @@ namespace QAliber.Repository.CommonTestCases.Processes
 		/// <summary>
 		/// If multiple processes exist with the same name, kill them all ?
 		/// </summary>
-		[Category("Process")]
-		[DisplayName("2) Kill All Processes With Same Name ?")]
+		[Category("Behavior")]
+		[DisplayName("Kill All")]
+		[Description("True to kill all processes with the same name, or false to just kill the first one.")]
+		[DefaultValue(true)]
 		public bool KillAll
 		{
 			get { return killAll; }
 			set { killAll = value; }
 		}
-	
 
-		
 		public override string Description
 		{
 			get
@@ -97,8 +99,5 @@ namespace QAliber.Repository.CommonTestCases.Processes
 				return "Killing process '" + filename + "'";
 			}
 		}
-	
-	
-	
 	}
 }
