@@ -294,7 +294,7 @@ namespace QAliber.Engine.Controls.UIA
 						List<string> conditions = new List<string>();
 
 						// The name, which we leave out for title bars because it's redundant
-						if( Name != null && automationElement.Cached.ControlType != ControlType.TitleBar )
+						if( !string.IsNullOrEmpty( Name ) && automationElement.Cached.ControlType != ControlType.TitleBar )
 							conditions.Add( "@Name=\'" + XPath.EscapeLiteral( Name ) + "\'" );
 
 						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null )
