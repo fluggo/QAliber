@@ -54,7 +54,8 @@ namespace QAliber.TestModel.TypeEditors
 
 				foreach (string item in list)
 				{
-					listBox.SelectedItems.Add(item);
+					if( listBox.Items.Contains( item ) )
+						listBox.SelectedItems.Add(item);
 				}
 
 
