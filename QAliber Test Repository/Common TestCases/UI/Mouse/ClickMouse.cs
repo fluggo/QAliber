@@ -73,24 +73,18 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		public override void Body()
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 
-			try
-			{
-				UIControlBase c = UIControlBase.FindControlByPath( control );
+			UIControlBase c = UIControlBase.FindControlByPath( control );
 
-				if( !c.Exists ) {
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw new InvalidOperationException("Control not found");
-				}
-
-				c.Click(button, point);
-			}
-			catch (System.Reflection.TargetInvocationException)
-			{
+			if( !c.Exists ) {
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				Log.Default.Error( "Control not found" );
+				return;
 			}
-			
+
+			c.Click(button, point);
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 		}
 
