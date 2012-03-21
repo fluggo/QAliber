@@ -125,6 +125,7 @@
     <Compile Include="UI\Controls\SelectListItemByString.cs" />
     <Compile Include="UI\Controls\RetrieveListItems.cs" />
     <Compile Include="UI\Controls\ReadTextFromControl.cs" />
+    <Compile Include="UI\Controls\ToggleCheckBox.cs" />
     <Compile Include="UI\Dialogs\DisplayBalloonTip.cs" />
     <Compile Include="UI\Dialogs\DisplayInputBox.cs" />
     <Compile Include="UI\Dialogs\DisplayMessageBox.cs" />
@@ -211,6 +212,7 @@
   <ItemGroup>
     <None Include="Resources\Bitmap.png" />
     <None Include="Resources\combobox.bmp" />
+    <Content Include="Resources\CheckBox.png" />
     <Content Include="Resources\CrossIcon.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

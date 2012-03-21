@@ -67,6 +67,13 @@ namespace QAliber.Repository.CommonTestCases.Properties {
 			}
 		}
 		
+		internal static System.Drawing.Bitmap CheckBox {
+			get {
+				object obj = ResourceManager.GetObject("CheckBox", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
 		internal static System.Drawing.Bitmap Combobox {
 			get {
 				object obj = ResourceManager.GetObject("Combobox", resourceCulture);
