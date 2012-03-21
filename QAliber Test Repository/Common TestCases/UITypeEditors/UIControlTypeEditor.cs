@@ -19,6 +19,9 @@ using System.Text;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using System.Linq;
+using System.ComponentModel;
+using System.Windows;
 
 namespace QAliber.Repository.CommonTestCases.UITypeEditors
 {
@@ -42,17 +45,25 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				if( editor == null )
 					return null;
 
-				ICoordinate coordable = context.Instance as ICoordinate;
+				CoordinatePropertyAttribute attrib = context.PropertyDescriptor.Attributes
+					.OfType<CoordinatePropertyAttribute>().FirstOrDefault();
+
+				PropertyDescriptor coordProp = null;
+
+				if( attrib != null ) {
+					PropertyDescriptorCollection propCollection = TypeDescriptor.GetProperties( context.Instance );
+					coordProp = propCollection.Find( attrib.PropertyName, false );
+				}
 
 				UIControlLocatorForm dialog = new UIControlLocatorForm();
 				dialog.ControlPath = (string) value;
 
-				if( coordable != null )
-					dialog.Coordinate = coordable.Coordinate;
+				if( coordProp != null )
+					dialog.Coordinate = (Point) coordProp.GetValue( context.Instance );
 
 				if( editor.ShowDialog( dialog ) == DialogResult.OK ) {
-					if( coordable != null )
-						coordable.Coordinate = dialog.Coordinate;
+					if( coordProp != null )
+						coordProp.SetValue( context.Instance, dialog.Coordinate );
 
 					return dialog.ControlPath;
 				}
@@ -63,9 +74,20 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		}
 	}
 
-	public interface ICoordinate
-	{
-		System.Windows.Point Coordinate { get; set; }
-	}
+	/// <summary>
+	/// Marks the property related to a control property that holds coordinates on the control.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+	sealed class CoordinatePropertyAttribute : Attribute {
+		readonly string _propertyName;
 
+		// This is a positional argument
+		public CoordinatePropertyAttribute( string propertyName ) {
+			_propertyName = propertyName;
+		}
+
+		public string PropertyName {
+			get { return _propertyName; }
+		}
+	}
 }

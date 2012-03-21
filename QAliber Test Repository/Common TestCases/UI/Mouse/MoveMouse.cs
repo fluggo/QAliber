@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
+using QAliber.Repository.CommonTestCases.UITypeEditors;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -30,7 +31,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
 	[XmlType("MoveMouse", Namespace=Util.XmlNamespace)]
-	public class MoveMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
+	public class MoveMouse : TestCase
 	{
 		public MoveMouse() : base( "Move Mouse" )
 		{
@@ -40,7 +41,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		private string control = "";
 
 		[Category("Behavior")]
-		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[CoordinateProperty("Coordinate")]
 		public string Control
 		{
 			get { return control; }

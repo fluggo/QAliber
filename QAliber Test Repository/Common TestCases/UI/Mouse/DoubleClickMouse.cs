@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
+using QAliber.Repository.CommonTestCases.UITypeEditors;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -30,7 +31,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[Serializable]
 	[global::QAliber.TestModel.Attributes.VisualPath(@"GUI\Mouse")]
 	[XmlType("DoubleClickMouse", Namespace=Util.XmlNamespace)]
-	public class DoubleClickMouse : TestCase, QAliber.Repository.CommonTestCases.UITypeEditors.ICoordinate
+	public class DoubleClickMouse : TestCase
 	{
 		public DoubleClickMouse() : base( "Double-Click Mouse" )
 		{
@@ -41,7 +42,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 		[Category("Behavior")]
 		[DisplayName("Control")]
-		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Editor(typeof(UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[CoordinateProperty("Coordinate")]
 		public string Control
 		{
 			get { return control; }
