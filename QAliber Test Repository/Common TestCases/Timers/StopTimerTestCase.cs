@@ -61,6 +61,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 		[Category("Timer")]
 		[DisplayName("Maximum Time Allowed")]
 		[Description("Enter the maximum timing for this measurement (if the timing will be above it the test case result will be failed)\nEnter 0 for no limit")]
+		[DefaultValue(0.0)]
 		public double MaxTimeAllowed
 		{
 			get { return maxTimeAllowed; }

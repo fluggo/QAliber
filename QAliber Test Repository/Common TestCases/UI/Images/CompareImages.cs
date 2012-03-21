@@ -65,6 +65,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		[Category("Image")]
 		[DisplayName("Tolerance")]
 		[Description("The amount (in percents) of allowed different pixels")]
+		[DefaultValue(5)]
 		public int Tolerance
 		{
 			get { return tolerance; }
