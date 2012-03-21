@@ -173,10 +173,37 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			if (control != null)
 			{
 				textBox.Text = control.CodePath;
-				labelTypeDyn.Text = control.UIType;
 				coordinate = new System.Windows.Point((int)(Cursor.Position.X - control.Layout.X), (int)(Cursor.Position.Y - control.Layout.Y));
 				textBoxXY.Text = coordinate.ToString();
+
+				_controlPropertyGrid.SelectedObject = null;
+
+				_hierarchyList.BeginUpdate();
+				_hierarchyList.Items.Clear();
+
+				UIControlBase pass = control;
+
+				while( pass != null ) {
+					_hierarchyList.Items.Add( new ListViewItem() {
+						Text = string.Format( "{0} {1}", pass.ID, pass.Name ),
+						Tag = pass
+					} );
+
+					pass = pass.Parent;
+				}
+
+				_hierarchyList.EndUpdate();
+				_hierarchyList.Items[0].Selected = true;
 			}
+		}
+
+		private void HandleHierarchyControlSelected( object sender, EventArgs e ) {
+			if( _hierarchyList.SelectedItems.Count == 0 ) {
+				_controlPropertyGrid.SelectedObject = null;
+				return;
+			}
+
+			_controlPropertyGrid.SelectedObject = _hierarchyList.SelectedItems[0].Tag;
 		}
 
 		private void btnCursor_MouseDown(object sender, MouseEventArgs e)
