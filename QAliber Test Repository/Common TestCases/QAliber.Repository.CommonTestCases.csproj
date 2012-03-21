@@ -121,6 +121,7 @@
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
     <Compile Include="UI\Controls\SetFocus.cs" />
+    <Compile Include="UI\Controls\VerifyText.cs" />
     <Compile Include="UI\Controls\SelectListItemByIdx.cs" />
     <Compile Include="UI\Controls\SelectListItemByString.cs" />
     <Compile Include="UI\Controls\RetrieveListItems.cs" />
