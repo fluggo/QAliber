@@ -120,6 +120,7 @@
     <Compile Include="UITypeEditors\UIControlTypeEditor.cs" />
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
+    <Compile Include="UI\Controls\VerifyPropertyFromControl.cs" />
     <Compile Include="UI\Controls\SetFocus.cs" />
     <Compile Include="UI\Controls\VerifyText.cs" />
     <Compile Include="UI\Controls\SelectListItemByIdx.cs" />
