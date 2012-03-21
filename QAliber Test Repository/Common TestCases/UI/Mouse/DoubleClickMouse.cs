@@ -24,6 +24,7 @@ using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
+using QAliber.Engine.Patterns;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -73,25 +74,38 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { point = value; }
 		}
 
+		private bool _scrollIntoView = true;
+
+		[Category("Behavior")]
+		[DisplayName("Scroll Into View")]
+		[Description("If the control to click is a scroll item, set this to true to scroll it into view before trying to click it.")]
+		[DefaultValue(true)]
+		public bool ScrollIntoView
+		{
+			get { return _scrollIntoView; }
+			set { _scrollIntoView = value; }
+		}
+
 		public override void Body()
 		{
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( !c.Exists ) {
+				Log.Default.Error( "Control not found" );
+				return;
+			}
+
+			IScrollItemPattern pattern = c.GetControlInterface<IScrollItemPattern>();
+
+			if( pattern != null && _scrollIntoView ) {
+				pattern.ScrollIntoView();
+			}
+
+			c.DoubleClick( button, point );
+
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-
-			try
-			{
-				UIControlBase c = UIControlBase.FindControlByPath( control );
-
-				if( !c.Exists ) {
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw new InvalidOperationException("Control not found");
-				}
-
-				c.DoubleClick(button, point);
-			}
-			catch (System.Reflection.TargetInvocationException)
-			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-			}
 
 		}
 

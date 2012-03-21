@@ -24,6 +24,7 @@ using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
+using QAliber.Engine.Patterns;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -73,6 +74,18 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { point = value; }
 		}
 
+		private bool _scrollIntoView = true;
+
+		[Category("Behavior")]
+		[DisplayName("Scroll Into View")]
+		[Description("If the control to click is a scroll item, set this to true to scroll it into view before trying to click it.")]
+		[DefaultValue(true)]
+		public bool ScrollIntoView
+		{
+			get { return _scrollIntoView; }
+			set { _scrollIntoView = value; }
+		}
+
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
@@ -83,6 +96,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				Log.Default.Error( "Control not found" );
 				return;
+			}
+
+			IScrollItemPattern pattern = c.GetControlInterface<IScrollItemPattern>();
+
+			if( pattern != null && _scrollIntoView ) {
+				pattern.ScrollIntoView();
 			}
 
 			c.Click(button, point);

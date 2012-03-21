@@ -25,6 +25,7 @@ using QAliber.Engine.Controls;
 using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
 using QAliber.RemotingModel;
+using QAliber.Engine.Patterns;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -98,6 +99,18 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { button = value; }
 		}
 
+		private bool _scrollIntoView = true;
+
+		[Category("Behavior")]
+		[DisplayName("Scroll Into View")]
+		[Description("If either control is a scroll item, set this to true to scroll it into view before trying to click it.")]
+		[DefaultValue(true)]
+		public bool ScrollIntoView
+		{
+			get { return _scrollIntoView; }
+			set { _scrollIntoView = value; }
+		}
+
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
@@ -107,6 +120,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			if( !c.Exists ) {
 				Log.Default.Error( "Start control not found." );
 				return;
+			}
+
+			IScrollItemPattern pattern = c.GetControlInterface<IScrollItemPattern>();
+
+			if( pattern != null && _scrollIntoView ) {
+				pattern.ScrollIntoView();
 			}
 
 			if( !c.Visible ) {
@@ -122,6 +141,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				if( !endControl.Exists ) {
 					Log.Default.Error( "End control not found." );
 					return;
+				}
+
+				pattern = endControl.GetControlInterface<IScrollItemPattern>();
+
+				if( pattern != null && _scrollIntoView ) {
+					pattern.ScrollIntoView();
 				}
 
 				if( !endControl.Visible ) {

@@ -108,4 +108,8 @@ namespace QAliber.Engine.Patterns
 		///   If there's a header row, it will be the first row returned.</returns>
 		string[][] CaptureGrid( out string[] headers );
 	}
+
+	public interface IScrollItemPattern {
+		void ScrollIntoView();
+	}
 }

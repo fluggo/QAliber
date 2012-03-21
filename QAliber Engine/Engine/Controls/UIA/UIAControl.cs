@@ -573,6 +573,11 @@ namespace QAliber.Engine.Controls.UIA
 			return new UIAControl( element.GetUpdatedCache( SearchCache ) );
 		}
 
+		private void UpdateCache() {
+			automationElement = automationElement.GetUpdatedCache( SearchCache );
+			Refresh();
+		}
+
 		public override T GetControlInterface<T>() {
 			T result = GetControlInterface( typeof(T) ) as T;
 			return result ?? base.GetControlInterface<T>();
@@ -672,6 +677,14 @@ namespace QAliber.Engine.Controls.UIA
 					return new DataGridViewGridImpl( automationElement );
 
 				return null;
+			}
+
+			if( type == typeof(IScrollItemPattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsScrollItemPatternAvailableProperty )) )
+					return null;
+
+				ScrollItemPattern pattern = (ScrollItemPattern) automationElement.GetCurrentPattern( ScrollItemPattern.Pattern );
+				return new ScrollItemPatternImpl( this, pattern );
 			}
 
 			return null;
@@ -1112,6 +1125,21 @@ namespace QAliber.Engine.Controls.UIA
 							return (string) value;
 						} ).ToArray()
 					).ToArray();
+			}
+		}
+
+		class ScrollItemPatternImpl : IScrollItemPattern {
+			ScrollItemPattern _pattern;
+			UIAControl _owner;
+
+			public ScrollItemPatternImpl( UIAControl owner, ScrollItemPattern pattern ) {
+				_owner = owner;
+				_pattern = pattern;
+			}
+
+			public void ScrollIntoView() {
+				_pattern.ScrollIntoView();
+				_owner.UpdateCache();
 			}
 		}
 
