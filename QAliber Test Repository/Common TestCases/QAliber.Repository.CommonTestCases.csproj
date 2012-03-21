@@ -103,6 +103,8 @@
     <Compile Include="Timers\StopTimerTestCase.cs" />
     <Compile Include="Timers\StartTimerTestCase.cs" />
     <Compile Include="Timers\TimersCollection.cs" />
+    <Compile Include="UITypeEditors\DisplayListConverter.cs" />
+    <Compile Include="UITypeEditors\MultipleSelectionIndexTypeEditor.cs" />
     <Compile Include="UITypeEditors\DesktopGrabberTypeEditor.cs" />
     <Compile Include="UITypeEditors\DesktopMaskForm.cs">
       <SubType>Form</SubType>
@@ -120,6 +122,8 @@
     <Compile Include="UITypeEditors\UIControlTypeEditor.cs" />
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
+    <Compile Include="UI\Controls\CaptureGrid.cs" />
+    <Compile Include="UI\Controls\VerifyGrid.cs" />
     <Compile Include="UI\Controls\VerifyPropertyFromControl.cs" />
     <Compile Include="UI\Controls\SetFocus.cs" />
     <Compile Include="UI\Controls\VerifyText.cs" />
@@ -215,6 +219,7 @@
     <None Include="Resources\Bitmap.png" />
     <None Include="Resources\combobox.bmp" />
     <Content Include="Resources\CheckBox.png" />
+    <Content Include="Resources\Control_DataGridView.bmp" />
     <Content Include="Resources\CrossIcon.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

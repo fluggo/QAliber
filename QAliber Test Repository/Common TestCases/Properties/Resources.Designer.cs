@@ -95,6 +95,13 @@ namespace QAliber.Repository.CommonTestCases.Properties {
 			}
 		}
 		
+		internal static System.Drawing.Bitmap DataGridView {
+			get {
+				object obj = ResourceManager.GetObject("DataGridView", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
 		internal static System.Drawing.Bitmap Dialog {
 			get {
 				object obj = ResourceManager.GetObject("Dialog", resourceCulture);

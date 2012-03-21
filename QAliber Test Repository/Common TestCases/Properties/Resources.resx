@@ -133,6 +133,9 @@
   <data name="DatabaseQuery" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DatabaseQuery.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DataGridView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Control_DataGridView.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Dialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Dialog.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
