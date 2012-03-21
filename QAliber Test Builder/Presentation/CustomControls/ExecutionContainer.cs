@@ -45,6 +45,10 @@ namespace QAliber.Builder.Presentation
 			TestController.Default.OnLogResultArrived += new LogResultArrivedCallback(sink.FireLogResultArrivedCallback);
 			TestController.Default.OnBreakPointReached += new BreakPointReachedCallback(sink.FireBreakPointReachedCallback);
 
+			// Ugly solution to setting currentPlayingScenarioControl
+			ScenarioControl.ScenarioPlaying += (sender, e) => {
+				currentPlayingScenarioControl = (ScenarioControl) sender;
+			};
 		}
 
 		internal void playToolStripButton_Click(object sender, EventArgs e)

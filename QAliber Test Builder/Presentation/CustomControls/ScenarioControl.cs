@@ -585,11 +585,20 @@ namespace QAliber.Builder.Presentation
 		{
 			if (scenarioTreeView.SelectedNode != null && scenarioTreeView.SelectedNode is QAliberTreeNode)
 			{
-			   
+				OnScenarioPlaying();
 				//SetNodeIDs();
 				TestController.Default.Run(((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase);
 			}
 		}
+
+		private void OnScenarioPlaying() {
+			EventHandler handler = ScenarioPlaying;
+
+			if( handler != null )
+				handler( this, EventArgs.Empty );
+		}
+
+		public static event EventHandler ScenarioPlaying;
 
 		private void helpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
