@@ -1012,14 +1012,17 @@ namespace QAliber.Engine.Controls.UIA
 					//			header["@Name="H"]
 					//			...
 					//		custom[@Name="Row 0"]
+					//			header[@Name="Row 0"]
 					//			custom[@Name="H Row 0"]
 					//			...
 					//		custom[@Name="Row 1"]
+					//			header[@Name="Row 1"]
 					//			custom[@Name="H Row 1"]
 					//			...
 					//
 					// The following code assumes that all rows are present and appear sequentially in the tree.
-					// It does not assume the presence of all columns.
+					// It also assumes every row has a complete set of cells, and that the cells and row headers
+					// are the only things in the row and they're in order.
 					AutomationElement[] rows;
 
 					using( __gridCacheRequest.Activate() ) {
@@ -1038,44 +1041,23 @@ namespace QAliber.Engine.Controls.UIA
 							.ToArray();
 
 						_columnNames = _headers.Select( cell => cell.Cached.Name ).ToArray();
-						_columnCount = _columnNames.Length;
-
-						// Since we know the column names, we can try to find every cell
-						_cells = rows
-							.Where( row => row.Cached.Name.StartsWith( "Row " ) )
-
-							// Create dictionary by cell name
-							.Select( row => new {
-								Row = row,
-								Cells = row.CachedChildren.Cast<AutomationElement>()
-									.ToDictionary( cell => cell.Cached.Name )
-							} )
-							// Use the column names to look up the cells proper
-							.Select( row => _columnNames.Select( column => {
-								AutomationElement cell;
-
-								if( row.Cells.TryGetValue( column + " " + row.Row.Cached.Name, out cell ) )
-									return cell;
-
-								return null;
-							} ).ToArray() )
-							.ToArray();
-
-						_rowCount = _cells.Length;
 					}
-					else {
-						// Without a header, make no attempt to put the cells in the right order
-						_cells = rows
-							.Where( row => row.Cached.Name.StartsWith( "Row " ) )
-							.Select( row => row.CachedChildren.Cast<AutomationElement>().ToArray() )
-							.ToArray();
 
-						_columnCount = _cells.Select( row => row.Length ).Max();
-						_rowCount = _cells.Length;
-					}
+					_cells = rows
+						.Where( row => row.Cached.Name.StartsWith( "Row " ) )
+						.Select( row => row.CachedChildren.Cast<AutomationElement>()
+							.Where( cell => cell.Cached.ControlType != ControlType.Header )
+							.ToArray() )
+						.ToArray();
+
+					_columnCount = _cells.Select( row => row.Length ).Max();
+					_rowCount = _cells.Length;
 
 					// Try to verify we have the whole thing
-					if( _cells.Any( row => row.Length != _columnCount || row.Any( cell => cell == null ) ) ) {
+					bool complete = (_columnNames == null || _columnCount == _columnNames.Length) &&
+						_cells.All( row => row.Length == _columnCount && row.All( cell => cell != null ) );
+
+					if( !complete ) {
 						if( i == 4 )
 							throw new InvalidOperationException( "Tried to capture the grid five times. Could not get a complete copy of the grid." );
 						else
