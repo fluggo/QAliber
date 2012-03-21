@@ -30,7 +30,6 @@ namespace QAliber.Logger
 	{
 		public LogEntry()
 		{
-			xmlSerializer = new XmlSerializer(GetType());
 			link = "";
 			enabled = true;
 			
@@ -164,7 +163,5 @@ namespace QAliber.Logger
 
   
 		}
-	
-		private XmlSerializer xmlSerializer;
 	}
 }
