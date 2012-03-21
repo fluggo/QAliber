@@ -24,6 +24,7 @@ using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
+using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -41,13 +42,48 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		private string control = "";
 
 		[Category("Behavior")]
-		[DisplayName("Control")]
+		[DisplayName("Start Control")]
 		[Editor(typeof(UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[CoordinateProperty("Coordinate")]
 		public string Control
 		{
 			get { return control; }
 			set { control = value; }
+		}
+
+		private Point point1;
+
+		[Category("Behavior")]
+		[DisplayName("Start Point")]
+		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected, to start the drag from.")]
+		public Point Coordinate
+		{
+			get { return point1; }
+			set { point1 = value; }
+		}
+
+		private string _endControl = "";
+
+		[Category("Behavior")]
+		[DisplayName("End Control")]
+		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
+		[Description("The control where the drag will end. This can be blank if you want to end up in the same control.")]
+		[CoordinateProperty("BottomRightCoordinate")]
+		public string EndControl
+		{
+			get { return _endControl; }
+			set { _endControl = value; }
+		}
+
+		private Point _point2;
+
+		[Category("Behavior")]
+		[DisplayName("End Point")]
+		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected, to end the drag.")]
+		public Point BottomRightCoordinate
+		{
+			get { return _point2; }
+			set { _point2 = value; }
 		}
 
 		private MouseButtons button = MouseButtons.Left;
@@ -62,49 +98,45 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { button = value; }
 		}
 
-		private Point point1;
-
-		[Category("Behavior")]
-		[DisplayName("Start Point")]
-		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected, to start the drag from.")]
-		public Point Coordinate
-		{
-			get { return point1; }
-			set { point1 = value; }
-		}
-
-		private Point point2;
-
-		[Category("Behavior")]
-		[DisplayName("End Point")]
-		[Description("The coordinate in pixels, relative to the upper left corner of the control you selected, to end the drag.")]
-		public Point BottomRightCoordinate
-		{
-			get { return point2; }
-			set { point2 = value; }
-		}
-
 		public override void Body()
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 
-			try
-			{
-				UIControlBase c = UIControlBase.FindControlByPath( control );
+			UIControlBase c = UIControlBase.FindControlByPath( control );
 
-				if( !c.Exists ) {
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					Log.Default.Error( "Control not found." );
+			if( !c.Exists ) {
+				Log.Default.Error( "Start control not found." );
+				return;
+			}
+
+			if( !c.Visible ) {
+				Log.Default.Error( "Start control not visible." );
+				return;
+			}
+
+			Point point2 = _point2;
+
+			if( !string.IsNullOrEmpty( _endControl ) ) {
+				UIControlBase endControl = UIControlBase.FindControlByPath( _endControl );
+
+				if( !endControl.Exists ) {
+					Log.Default.Error( "End control not found." );
+					return;
 				}
 
-				c.Drag(button, point1, point2);
-			}
-			catch (System.Reflection.TargetInvocationException)
-			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				if( !endControl.Visible ) {
+					Log.Default.Error( "End control not visible." );
+					return;
+				}
+
+				// Figure out end coordinate relative to begin coord
+				Vector offset = endControl.Layout.TopLeft - c.Layout.TopLeft;
+				point2 += offset;
 			}
 
+			c.Drag(button, point1, point2);
 
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description
