@@ -61,6 +61,7 @@
     <Reference Include="QAliber.RemotingModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7ca69bfcd2253fef, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />

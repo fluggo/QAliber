@@ -31,6 +31,8 @@ using QAliber.TestModel.Variables;
 using QAliber.Logger;
 using QAliber.RemotingModel;
 using System.Data;
+using System.Drawing.Design;
+using System.ComponentModel.Design;
 
 namespace QAliber.TestModel
 {
@@ -442,6 +444,18 @@ namespace QAliber.TestModel
 			Name = _defaultName;
 		}
 
+		private string _notes = string.Empty;
+
+		[Category("Test Step Details")]
+		[Description("User-provided description of the step.")]
+		[Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+		[DefaultValue("")]
+		public string Notes
+		{
+			get { return _notes; }
+			set { _notes = value; }
+		}
+
 		/// <summary>
 		/// The description of the test csae, the description will be logged as a remark by the QAliber runner.
 		/// A good practice is to set it according to the parameters the user chosen for the test case
@@ -702,6 +716,10 @@ namespace QAliber.TestModel
 			_actualResult = TestCaseResult.None;
 			GetVariables();
 			Log.Default.IndentIn(_name, Description, true);
+
+			if( !string.IsNullOrWhiteSpace( _notes ) )
+				Log.Default.Info( "Notes", _notes );
+
 			if (_videoOptions != null && _videoOptions.CaptureVideo
 				&& !Logger.Slideshow.SlideshowRecorder.Default.IsCapturing)
 			{
