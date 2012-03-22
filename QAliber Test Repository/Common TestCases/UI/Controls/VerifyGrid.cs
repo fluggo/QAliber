@@ -416,12 +416,11 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 						targetRows.RemoveAt( index );
 				}
 
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-
 				if( missingRows.Count != 0 ) {
 					LogFailedByExpectedResult( "Expected row(s) missing", "These rows were expected but not found in the target grid:\r\n\r\n" +
 						string.Join( "\r\n",
 							missingRows.Select( row => "[" + string.Join( ", ", row ) + "]" ) ) );
+					return;
 				}
 
 				// Make sure there are none left if we aren't supposed to allow extra rows
@@ -429,9 +428,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 					LogFailedByExpectedResult( "Found extra row(s)", "Found these rows in the target grid while \"Allow Extra Rows\" was off:\r\n\r\n" +
 						string.Join( "\r\n",
 							targetRows.Select( row => "[" + string.Join( ", ", row ) + "]" ) ) );
+					return;
 				}
-
-				return;
 			}
 
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
