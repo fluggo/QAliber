@@ -999,6 +999,7 @@ namespace QAliber.Engine.Controls.UIA
 			AutomationElement[][] _cells;
 			string[] _columnNames;
 			int _columnCount, _rowCount;
+			string[][] _capturedValues;
 
 			static CacheRequest __gridCacheRequest;
 
@@ -1016,6 +1017,9 @@ namespace QAliber.Engine.Controls.UIA
 				_element = element;
 
 				for( int i = 0; i < 5; i++ ) {
+					bool complete = false;
+
+				try {
 					// Here's the deal: The contents of the DataGridView could be changing right
 					// underneath us. We will make five attempts to get the whole grid, as best
 					// we can.
@@ -1067,8 +1071,25 @@ namespace QAliber.Engine.Controls.UIA
 					_rowCount = _cells.Length;
 
 					// Try to verify we have the whole thing
-					bool complete = (_columnNames == null || _columnCount == _columnNames.Length) &&
+					complete = (_columnNames == null || _columnCount == _columnNames.Length) &&
 						_cells.All( row => row.Length == _columnCount && row.All( cell => cell != null ) );
+
+					_capturedValues = _cells.Select( row =>
+							row.Select( cell => {
+								if( cell == null )
+									return null;
+
+								object value = cell.GetCachedPropertyValue( ValuePattern.ValueProperty );
+
+								if( value == AutomationElement.NotSupported )
+									return null;
+
+								return (string) value;
+							} ).ToArray()
+						).ToArray();
+				}
+				catch( ElementNotAvailableException ) {
+				}
 
 					if( !complete ) {
 						if( i == 4 )
@@ -1111,20 +1132,7 @@ namespace QAliber.Engine.Controls.UIA
 			public string[][] CaptureGrid( out string[] headers ) {
 				// We already have everything, just fill in the numbers
 				headers = _columnNames;
-
-				return _cells.Select( row =>
-						row.Select( cell => {
-							if( cell == null )
-								return null;
-
-							object value = cell.GetCachedPropertyValue( ValuePattern.ValueProperty );
-
-							if( value == AutomationElement.NotSupported )
-								return null;
-
-							return (string) value;
-						} ).ToArray()
-					).ToArray();
+				return _capturedValues;
 			}
 		}
 
