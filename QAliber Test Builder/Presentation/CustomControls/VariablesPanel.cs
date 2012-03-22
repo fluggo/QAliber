@@ -85,7 +85,16 @@ namespace QAliber.Builder.Presentation
 
 		private void listsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex == _listsTestStepColumn.Index && e.RowIndex >= 0)
+			if( e.ColumnIndex == _listsValueColumn.Index && e.RowIndex >= 0 ) {
+				var variable = (ScenarioVariable<string[]>) listsDataGridView.Rows[e.RowIndex].DataBoundItem;
+
+				ListItemsForm form = new ListItemsForm( variable.Value );
+
+				if( form.ShowDialog() == DialogResult.OK ) {
+					variable.Value = form.Strings;
+				}
+			}
+			else if (e.ColumnIndex == _listsTestStepColumn.Index && e.RowIndex >= 0)
 			{
 				var variable = (ScenarioVariable<string[]>) listsDataGridView.Rows[e.RowIndex].DataBoundItem;
 
