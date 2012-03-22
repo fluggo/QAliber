@@ -687,6 +687,14 @@ namespace QAliber.Engine.Controls.UIA
 				return new ScrollItemPatternImpl( this, pattern );
 			}
 
+			if( type == typeof(IExpandCollapsePattern) ) {
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsExpandCollapsePatternAvailableProperty )) )
+					return null;
+
+				ExpandCollapsePattern pattern = (ExpandCollapsePattern) automationElement.GetCurrentPattern( ExpandCollapsePattern.Pattern );
+				return new ExpandCollapsePatternImpl( pattern );
+			}
+
 			return null;
 		}
 
@@ -1148,6 +1156,26 @@ namespace QAliber.Engine.Controls.UIA
 			public void ScrollIntoView() {
 				_pattern.ScrollIntoView();
 				_owner.UpdateCache();
+			}
+		}
+
+		class ExpandCollapsePatternImpl : IExpandCollapsePattern {
+			ExpandCollapsePattern _pattern;
+
+			public ExpandCollapsePatternImpl( ExpandCollapsePattern pattern ) {
+				_pattern = pattern;
+			}
+
+			public void Collapse() {
+				_pattern.Collapse();
+			}
+
+			public void Expand() {
+				_pattern.Expand();
+			}
+
+			public QAliber.Engine.Patterns.ExpandCollapseState ExpandCollapseState {
+				get { return (QAliber.Engine.Patterns.ExpandCollapseState)(int) _pattern.Current.ExpandCollapseState; }
 			}
 		}
 
