@@ -113,6 +113,10 @@ namespace QAliber.Engine.Patterns
 		void ScrollIntoView();
 	}
 
+	public interface IListPattern {
+		string[] CaptureList();
+	}
+
 	public enum ExpandCollapseState {
 		Collapsed = System.Windows.Automation.ExpandCollapseState.Collapsed,
 		Expanded = System.Windows.Automation.ExpandCollapseState.Expanded,
