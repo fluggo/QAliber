@@ -245,7 +245,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Tells the QAliber Runner whether to continue the scenario on the next branch, if this test case fails
 		/// </summary>
-		[Category("Test Case Flow Control")]
+		[Category("Test Step Flow Control")]
 		[DisplayName("Stop Parent on Fail")]
 		[Description("Should the current tree branch terminate if the current test case fails ?")]
 		[XmlAttribute]
@@ -284,7 +284,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Tells the QAliber Runner whether to quit the scenario, if this test case fails
 		/// </summary>
-		[Category("Test Case Flow Control")]
+		[Category("Test Step Flow Control")]
 		[DisplayName("Stop All on Fail")]
 		[Description("Should the current test case stop the entire scenario if it fails ?")]
 		[DefaultValue(false)]
@@ -296,7 +296,7 @@ namespace QAliber.TestModel
 
 		private bool _alwaysRun;
 
-		[Category("Test Case Flow Control")]
+		[Category("Test Step Flow Control")]
 		[DisplayName("Always Run")]
 		[Description("Run this step even if the folder has already failed.")]
 		[XmlAttribute]
@@ -334,7 +334,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Tells the QAliber Runner how many times to retry this test case, if this test case fails
 		/// </summary>
-		[Category("Test Case Flow Control")]
+		[Category("Test Step Flow Control")]
 		[DisplayName("Number of Retries")]
 		[Description("How many times to retry in case of failure")]
 		[DefaultValue(0)]
@@ -350,7 +350,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Tells the QAliber runner when to take screenshots in the test case life cycle
 		/// </summary>
-		[Category("Test Case Results")]
+		[Category("Test Step Results")]
 		[DisplayName("Take Screenshot?")]
 		[Description("When to take a screenshot during the execution of the test case")]
 		[DefaultValue(TakeScreenshotOption.No)]
@@ -363,7 +363,7 @@ namespace QAliber.TestModel
 
 		private VideoOptions _videoOptions = new VideoOptions();
 
-		[Category("Test Case Results")]
+		[Category("Test Step Results")]
 		[DisplayName("Video Settings")]
 		[TypeConverter(typeof(ExpandableObjectConverter))]
 		public VideoOptions VideoOptions
@@ -419,7 +419,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The logical name of the test case
 		/// </summary>
-		[Category("Test Case Details")]
+		[Category("Test Step Details")]
 		[Description("The name of the test case")]
 		public string Name
 		{
@@ -446,8 +446,8 @@ namespace QAliber.TestModel
 		/// The description of the test csae, the description will be logged as a remark by the QAliber runner.
 		/// A good practice is to set it according to the parameters the user chosen for the test case
 		/// </summary>
-		[Category("Test Case Details")]
-		[Description("The description of the test case")]
+		[Category("Test Step Details")]
+		[Description("Automatic description of the step.")]
 		[XmlIgnore, ReadOnly(true)]
 		public virtual string Description
 		{
@@ -460,7 +460,7 @@ namespace QAliber.TestModel
 		/// The description of the test csae, the description will be logged as a remark by the QAliber runner.
 		/// A good practice is to set it according to the parameters the user chosen for the test case
 		/// </summary>
-		[Category("Test Case Details")]
+		[Category("Test Step Details")]
 		[Description("The origin of the test case")]
 		[DisplayName("Repository Location")]
 		[ReadOnly(true)]
@@ -476,7 +476,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The expected result for this test case, for support of both positive and negative tests in the same test case
 		/// </summary>
-		[Category("Test Case Results")]
+		[Category("Test Step Results")]
 		[DisplayName("Expected Result")]
 		[Description("The expected result from this test case")]
 		[DefaultValue(TestCaseResult.Passed)]
@@ -493,7 +493,7 @@ namespace QAliber.TestModel
 		/// <remarks>It is recommended to set the actual result on any code path inside the Body method (much like return)</remarks>
 		/// </summary>
 		[ReadOnly(true)]
-		[Category("Test Case Results")]
+		[Category("Test Step Results")]
 		[DisplayName("Actual Result")]
 		[Description("The actual result this test case returned")]
 		[XmlIgnore]
@@ -516,7 +516,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		[Category("Test Case Results")]
+		[Category("Test Step Results")]
 		[DisplayName("Output To Variables")]
 		[Description("Choose here the parameters you want to save for future use")]
 		public OutputPropertiesMap OutputProperties

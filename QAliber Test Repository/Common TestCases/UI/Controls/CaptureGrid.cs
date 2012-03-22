@@ -47,6 +47,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		[Category("Results")]
 		[DisplayName("Result Table")]
 		[Description("Table that was captured.")]
+		[XmlIgnore]
 		public DataTable ResultTable {
 			get { return _resultTable; }
 		}

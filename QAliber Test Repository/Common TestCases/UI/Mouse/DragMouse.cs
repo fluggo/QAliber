@@ -70,6 +70,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		[Description("The control where the drag will end. This can be blank if you want to end up in the same control.")]
 		[CoordinateProperty("BottomRightCoordinate")]
+		[DefaultValue("")]
 		public string EndControl
 		{
 			get { return _endControl; }
