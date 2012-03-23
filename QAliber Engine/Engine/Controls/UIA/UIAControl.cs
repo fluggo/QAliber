@@ -1044,6 +1044,7 @@ namespace QAliber.Engine.Controls.UIA
 				__gridCacheRequest.Add( AutomationElement.NameProperty );
 				__gridCacheRequest.Add( ValuePattern.ValueProperty );
 				__gridCacheRequest.TreeScope = TreeScope.Element | TreeScope.Children;
+				__gridCacheRequest.AutomationElementMode = AutomationElementMode.None;
 			}
 
 			public DataGridViewGridImpl( AutomationElement element ) {
@@ -1051,7 +1052,7 @@ namespace QAliber.Engine.Controls.UIA
 				// grid to know anything about what's going on
 				_element = element;
 
-				for( int i = 0; i < 5; i++ ) {
+				for( int i = 0; i < 10; i++ ) {
 					bool complete = false;
 
 				try {
@@ -1109,6 +1110,15 @@ namespace QAliber.Engine.Controls.UIA
 					complete = (_columnNames == null || _columnCount == _columnNames.Length) &&
 						_cells.All( row => row.Length == _columnCount && row.All( cell => cell != null ) );
 
+					if( !complete ) {
+						if( (_columnNames != null && _columnCount != _columnNames.Length) )
+							Debug.WriteLine( "Missing column names" );
+						else if( _cells.Any( row => row.Length != _columnCount ) )
+							Debug.WriteLine( "Row incomplete, " + _cells.Min( row => row.Length ).ToString() + " vs " + _columnCount.ToString() );
+						else if( _cells.Any( row => row.Any( cell => cell == null ) ) )
+							Debug.WriteLine( "Cell missing" );
+					}
+
 					_capturedValues = _cells.Select( row =>
 							row.Select( cell => {
 								if( cell == null )
@@ -1124,11 +1134,12 @@ namespace QAliber.Engine.Controls.UIA
 						).ToArray();
 				}
 				catch( ElementNotAvailableException ) {
+					Debug.WriteLine( "Caught ElementNotAvailableException" );
 				}
 
 					if( !complete ) {
 						if( i == 4 )
-							throw new InvalidOperationException( "Tried to capture the grid five times. Could not get a complete copy of the grid." );
+							throw new InvalidOperationException( "Tried to capture the grid ten times. Could not get a complete copy of the grid." );
 						else
 							continue;
 					}
