@@ -49,6 +49,9 @@ namespace QAliber.Builder.Presentation.Commands
 				{
 					addAsChild = true;
 				}
+
+				int insertIndex = sourceNode.Index + 1;
+
 				foreach (QAliberTreeNode target in targetNodes)
 				{
 					if (target.ForeColor == System.Drawing.Color.LightGray)
@@ -58,7 +61,7 @@ namespace QAliber.Builder.Presentation.Commands
 					else //add after
 					{
 						if (sourceNode.Parent != null)
-							((QAliberTreeNode)sourceNode.Parent).InsertChild(sourceNode.Index + 1, target);
+							((QAliberTreeNode)sourceNode.Parent).InsertChild( insertIndex++, target);
 					}
 					
 					target.EnsureVisible();

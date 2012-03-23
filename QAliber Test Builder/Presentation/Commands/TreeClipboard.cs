@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using QAliber.TestModel;
+using System.Linq;
 
 namespace QAliber.Builder.Presentation.Commands
 {
@@ -84,7 +85,7 @@ namespace QAliber.Builder.Presentation.Commands
 		{
 			List<QAliberTreeNode> nodesList = new List<QAliberTreeNode>();
 			nodesList.AddRange(nodes);
-			nodesList.Sort(new NodeLevelSorter());
+			nodesList = nodesList.OrderBy( n => n.Level * 1000 + n.Index ).ToList();
 			for (int i = 0; i < nodesList.Count - 1; i++)
 			{
 				if (nodesList[i].TreeView != null)
@@ -102,26 +103,11 @@ namespace QAliber.Builder.Presentation.Commands
 					}
 				}
 			}
-			nodesList.Sort(new NodeLevelSorter());
-			return nodesList.ToArray();
+			return nodesList.OrderBy( n => n.Level * 1000 + n.Index ).ToArray();
 		}
 
 		private bool cutted;
 		private QAliberTreeNode[] clipNodes;
 		private static TreeClipboard instance = new TreeClipboard();
-	}
-
-	class NodeLevelSorter : IComparer<QAliberTreeNode>
-	{
-
-
-		#region IComparer<TreeNode> Members
-
-		public int Compare(QAliberTreeNode x, QAliberTreeNode y)
-		{
-			return x.Level * 1000 - y.Level * 1000 + x.Index - y.Index;
-		}
-
-		#endregion
 	}
 }

@@ -22,6 +22,7 @@ using System.Text;
 using System.Windows.Forms;
 using QAliber.TestModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace QAliber.Builder.Presentation
 {
@@ -41,7 +42,7 @@ namespace QAliber.Builder.Presentation
 		{
 			get
 			{
-				return selectedNodes.ToArray();
+				return selectedNodes.OrderBy( a => a.Index ).ToArray();
 			}
 			set
 			{
