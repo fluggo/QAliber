@@ -77,21 +77,15 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 		protected abstract string[] GetTestList();
 
-		public override void Body() {
-			ActualResult = TestCaseResult.Failed;
-			_resultList = null;
-
-			string[] testList = GetTestList();
-
-			if( testList == null )
-				return;
-
+		public static string[] CaptureList( string control, bool logErrors ) {
 			// Capture the list
-			UIControlBase c = UIControlBase.FindControlByPath( _control );
+			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( c == null || !c.Exists ) {
-				Log.Default.Error( "Control not found", _control );
-				return;
+				if( logErrors )
+					Log.Default.Error( "Control not found", control );
+
+				return null;
 			}
 
 			IListPattern list = c.GetControlInterface<IListPattern>();
@@ -101,12 +95,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 				c = c.Parent;
 
 				if( c == null || (list = c.GetControlInterface<IListPattern>()) == null ) {
-					Log.Default.Error( "Couldn't find a way to read the list." );
-					return;
+					if( logErrors )
+						Log.Default.Error( "Couldn't find a way to read the list." );
+
+					return null;
 				}
 			}
 
-			_resultList = Array.ConvertAll( list.CaptureList(), str => XPath.EscapeLiteral( str ) );
+			return list.CaptureList();
+		}
+
+		public override void Body() {
+			ActualResult = TestCaseResult.Failed;
+			_resultList = null;
+
+			string[] testList = GetTestList();
+
+			if( testList == null )
+				return;
+
+			string[] captureList = CaptureList( _control, true );
+
+			if( captureList == null )
+				return;
+
+			_resultList = Array.ConvertAll( captureList, str => XPath.EscapeLiteral( str ) );
 
 			string[] items = _resultList;
 
@@ -311,6 +324,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		public string VerifyItems {
 			get { return _list; }
 			set { _list = value; }
+		}
+
+		public void ControlPropertyChanging( string control ) {
+			if( string.IsNullOrWhiteSpace( _list ) ) {
+				try {
+					_list = string.Join( "\r\n", CaptureList( control, false ) );
+				}
+				catch {
+				}
+			}
 		}
 
 		protected override string[] GetTestList() {

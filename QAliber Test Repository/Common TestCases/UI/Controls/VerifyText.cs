@@ -16,6 +16,7 @@ using System.Diagnostics;
 using QAliber.Engine;
 using System.Reflection;
 using System.Xml.Serialization;
+using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls {
 	[Serializable]
@@ -37,6 +38,19 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		public string Control {
 			get { return _control; }
 			set { _control = value; }
+		}
+
+		public void ControlPropertyChanging( string value ) {
+			if( string.IsNullOrWhiteSpace( _expectedText ) && _caseSensitive && !_useRegex ) {
+				try {
+					string text = GetText( value, false );
+
+					if( text != null )
+						_expectedText = text;
+				}
+				catch {
+				}
+			}
 		}
 
 		private string _expectedText = string.Empty;
@@ -84,8 +98,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			set { _foundText = value; }
 		}
 
+		private static string GetText( string control, bool logErrors ) {
+			UIControlBase c = UIControlBase.FindControlByPath( control );
+
+			if( c == null || !c.Exists ) {
+				if( logErrors )
+					Log.Default.Error( "Control not found" );
+
+				return null;
+			}
+
+			IText text = c.GetControlInterface<IText>();
+
+			if( text == null ) {
+				// TODO: Add support for HTML controls (or REALLY do generic implementations on the interfaces)
+				if( logErrors )
+					Log.Default.Error( "Couldn't find an appropriate way to get text from the control." );
+
+				return null;
+			}
+
+			return text.Text;
+		}
+
 		public override void Body() {
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 			_foundText = string.Empty;
 			Regex regex = null;
 
@@ -93,23 +130,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 				regex = new Regex( _expectedText, RegexOptions.Singleline | (_caseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase) );
 			}
 
-			UIControlBase c = UIControlBase.FindControlByPath( _control );
+			_foundText = GetText( _control, true );
 
-			if( c == null || !c.Exists ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				throw new InvalidOperationException("Control not found");
-			}
-
-			IText text = c.GetControlInterface<IText>();
-
-			if( text == null ) {
-				// TODO: Add support for HTML controls (or REALLY do generic implementations on the interfaces)
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				Log.Default.Error( "Couldn't find an appropriate way to get text from the control." );
+			if( _foundText == null )
 				return;
-			}
-
-			_foundText = text.Text;
 
 			Log.Default.Info( "Control's text: \"" + _foundText + "\"" );
 

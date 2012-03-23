@@ -22,6 +22,7 @@ using System.Windows.Forms.Design;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows;
+using System.Reflection;
 
 namespace QAliber.Repository.CommonTestCases.UITypeEditors
 {
@@ -64,6 +65,16 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				if( editor.ShowDialog( dialog ) == DialogResult.OK ) {
 					if( coordProp != null )
 						coordProp.SetValue( context.Instance, dialog.Coordinate );
+
+					// Notify the instance that we changed the property; this
+					// gives them the chance to react to the change, unlike reacting
+					// on the property change, which can happen during XML deserialization
+					MethodInfo method = context.Instance.GetType().GetMethod(
+						context.PropertyDescriptor.Name + "PropertyChanging" );
+
+					if( method != null ) {
+						method.Invoke( context.Instance, new object[] { dialog.ControlPath } );
+					}
 
 					return dialog.ControlPath;
 				}
