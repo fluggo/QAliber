@@ -28,6 +28,7 @@ using QAliber.Engine.Controls.Web;
 using QAliber.Engine.Patterns;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -45,9 +46,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		private string control = "";
 
 		
-		[Category("Control")]
-		[DisplayName("1) Control")]
-		[Description("The control must be of type UIACombobox, UIAListBox or HTMLSelect")]
+		[Category("Behavior")]
+		[DisplayName("Control")]
+		[Description("Control to select from.")]
 		[Editor(typeof(UITypeEditors.UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public string Control
 		{
@@ -55,15 +56,15 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			set { control = value; }
 		}
 
-		private string item;
+		private string _item;
 
-		[Category("Control")]
-		[DisplayName("2) Item")]
-		[Description("Item (string) to select")]
+		[Category("Behavior")]
+		[DisplayName("Item")]
+		[Description("Name of the item to select.")]
 		public string Item
 		{
-			get {return item;}
-			set { item = value; }
+			get {return _item;}
+			set { _item = value; }
 		}
 
 		
@@ -71,55 +72,52 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	
 		public override void Body()
 		{
-			try
-			{
-				UIControlBase c = UIControlBase.FindControlByPath( control );
+			ActualResult = TestCaseResult.Failed;
+			UIControlBase c = UIControlBase.FindControlByPath( control );
 
-			   if (!c.Exists)
-				{
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw new InvalidOperationException("Control not found");
-				}
-
-				ISelector selectorPattern = c.GetControlInterface<ISelector>();
-
-				if( selectorPattern != null ) {
-					selectorPattern.Select( item );
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-				}
-				else if (c is HTMLSelect)
-				{
-					HTMLOption selectedOp = ((HTMLSelect)c).SelectItem(item);
-					if (selectedOp != null)
-						ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-
-					else
-					{
-						ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-						Logger.Log.Default.Error("Item was not selected");
-					}
-
-				}
-
-				else
-				{
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw new InvalidOperationException("Control is not a list type");
-				}
-
+			if( c == null || !c.Exists ) {
+				Log.Default.Error( "Control not found" );
+				return;
 			}
-			catch (Exception ex)
-			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				throw ex;
+
+			IListPattern listPattern = c.GetControlInterface<IListPattern>();
+
+			if( listPattern == null ) {
+				// Try one control up; we could be on the combo box's edit or button controls
+				c = c.Parent;
+
+				if( c == null || (listPattern = c.GetControlInterface<IListPattern>()) == null ) {
+					Log.Default.Error( "Control doesn't look like a list",
+						"Couldn't find an appropriate way to find and select items in the list." );
+					return;
+				}
 			}
+
+			UIAControl item = listPattern.GetItem( _item );
+
+			if( item == null || !item.Exists ) {
+				Log.Default.Error( "Item \"" + _item + "\" not found" );
+				return;
+			}
+
+			ISelectionItemPattern selectionPattern = item.GetControlInterface<ISelectionItemPattern>();
+
+			if( selectionPattern == null ) {
+				// There are probably other ways to select an item, but we'll
+				// leave it at this for now
+				Log.Default.Error( "Item not selectable", "Couldn't find an appropriate way to select the item." );
+				return;
+			}
+
+			selectionPattern.Select();
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description
 		{
 			get
 			{
-				return "Selecting '" + item + "' item from control '" + control + "'";
+				return "Selecting '" + _item + "' item from control '" + control + "'";
 			}
 		}
 
