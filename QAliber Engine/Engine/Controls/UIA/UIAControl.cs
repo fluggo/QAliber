@@ -1214,6 +1214,15 @@ namespace QAliber.Engine.Controls.UIA
 			public string[] CaptureList() {
 				return _itemList;
 			}
+
+			public UIAControl GetItem( string name ) {
+				int index = Array.IndexOf( _itemList, name );
+
+				if( index == -1 )
+					return null;
+
+				return _items[index];
+			}
 		}
 
 		class ExpandCollapsePatternImpl : IExpandCollapsePattern {

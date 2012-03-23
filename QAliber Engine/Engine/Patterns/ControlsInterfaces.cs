@@ -115,6 +115,7 @@ namespace QAliber.Engine.Patterns
 
 	public interface IListPattern {
 		string[] CaptureList();
+		UIAControl GetItem( string name );
 	}
 
 	public enum ExpandCollapseState {
