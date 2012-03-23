@@ -337,7 +337,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		}
 
 		protected override string[] GetTestList() {
-			return _list.TrimEnd().Split( new string[] { "\r\n" }, StringSplitOptions.None );
+			// Test list could either have \r\n line endings (from UI) or \n endings (from XML)
+			return Array.ConvertAll( _list.TrimEnd().Split( '\n' ), str => str.TrimEnd( '\r' ) );
 		}
 	}
 }
