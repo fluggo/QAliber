@@ -29,7 +29,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 	[XmlType("VerifyGrid", Namespace=Util.XmlNamespace)]
 	public class VerifyGrid : TestCase
 	{
-		public VerifyGrid() : base( "Verify Grid" )
+		public VerifyGrid() : base( "Verify Grid from Variable" )
 		{
 			Icon = Properties.Resources.DataGridView;
 		}
