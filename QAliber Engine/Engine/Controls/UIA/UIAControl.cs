@@ -156,8 +156,10 @@ namespace QAliber.Engine.Controls.UIA
 				_xpathElementName = "null";
 			}
 			else {
+				ControlType controlType = automationElement.Cached.ControlType;
+
 				foreach( var map in __idToElementName ) {
-					if( map.ControlType == automationElement.Cached.ControlType ) {
+					if( map.ControlType == controlType ) {
 						_xpathElementName = map.ElementName;
 						break;
 					}
