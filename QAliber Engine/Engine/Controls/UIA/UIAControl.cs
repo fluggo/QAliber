@@ -707,12 +707,15 @@ namespace QAliber.Engine.Controls.UIA
 				if( controlType == ControlType.ComboBox ) {
 					IExpandCollapsePattern expCollapse = listControl.GetControlInterface<IExpandCollapsePattern>();
 
-					if( expCollapse != null )
+					if( expCollapse != null && expCollapse.ExpandCollapseState != Patterns.ExpandCollapseState.Expanded )
 						expCollapse.Expand();
 
 					listControl = listControl.GetChildren().Cast<UIAControl>()
 						.Where( c => c.automationElement.Cached.ControlType == ControlType.List )
 						.FirstOrDefault();
+
+					if( expCollapse != null )
+						expCollapse.Collapse();
 
 					if( listControl == null )
 						throw new ElementNotAvailableException( "Couldn't find the list associated with the combo box." );
