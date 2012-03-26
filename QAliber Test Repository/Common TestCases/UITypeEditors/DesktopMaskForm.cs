@@ -34,14 +34,21 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				width += scr.Bounds.Width;
 			}
 			Size = new Size(width, Screen.PrimaryScreen.Bounds.Height);
-			
+
+			_desktop = Logger.Slideshow.ScreenCapturer.Capture( false );
 		}
 
 		public string ImageFile
 		{
 			get
 			{
-				return imageFile;
+				return saveFileDialog.FileName;
+			}
+			set {
+				try {
+					saveFileDialog.FileName = value;
+				}
+				catch {}
 			}
 		}
 
@@ -53,7 +60,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				Font, Brushes.White, new PointF(Width / 2 - size.Width / 2, 100));
 			if (isMouseDown)
 			{
-				e.Graphics.DrawRectangle(new Pen(Color.Red, 4f), rect);
+				e.Graphics.DrawRectangle(new Pen(Color.Red, 1f), rect);
 			}
 			base.OnPaint(e);
 		}
@@ -67,16 +74,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			}
 			if (e.Button == MouseButtons.Right)
 			{
-				try
-				{
-					SaveImage();
-					Close();
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message, "Error Saving Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-				
+				SaveImage();
 			}
 			base.OnMouseDown(e);
 		}
@@ -107,36 +105,38 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
-				try
-				{
-					SaveImage();
-					Close();
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message, "Error Saving Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
+				SaveImage();
 			}
 			base.OnKeyUp(e);
 		}
 		private void SaveImage()
 		{
+			if( rect.IsEmpty ) {
+				DialogResult = DialogResult.Cancel;
+				return;
+			}
+
 			DialogResult dr = saveFileDialog.ShowDialog();
 			if (dr == DialogResult.OK)
 			{
-				Visible = false;
-				Bitmap desktop = Logger.Slideshow.ScreenCapturer.Capture(false);
-				Bitmap image = desktop.Clone(rect, desktop.PixelFormat);
-				image.Save(saveFileDialog.FileName);
-				imageFile = saveFileDialog.FileName;
-				Visible = true;
+				try {
+					Visible = false;
+					Bitmap image = _desktop.Clone( rect, _desktop.PixelFormat );
+					image.Save(saveFileDialog.FileName);
+				}
+				catch( Exception ex ) {
+					MessageBox.Show( this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop );
+					DialogResult = DialogResult.Cancel;
+				}
 			}
+
+			DialogResult = dr;
 		}
 
 		Rectangle rect = new Rectangle();
 		Point endPoint = new Point();
 		Point startPoint = new Point();
 		bool isMouseDown = false;
-		string imageFile = string.Empty;
+		Bitmap _desktop = null;
 	}
 }

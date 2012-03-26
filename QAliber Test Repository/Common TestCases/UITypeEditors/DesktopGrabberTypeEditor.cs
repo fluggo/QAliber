@@ -41,10 +41,18 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 			{
 				IntPtr mainHandle = UIControlLocatorForm.FindWindowByCaption(IntPtr.Zero, "QAliber Test Builder");
 				Form form = (Form)Form.FromHandle(mainHandle);
-				form.Visible = false;
+
 				DesktopMaskForm dialog = new DesktopMaskForm();
-				dialog.ShowDialog();
-				form.Visible = true;
+				form.Visible = false;
+				dialog.ImageFile = (string) value;
+
+				try {
+					if( dialog.ShowDialog() != DialogResult.OK )
+						return value;
+				}
+				finally {
+					form.Visible = true;
+				}
 
 				string path = dialog.ImageFile;
 
