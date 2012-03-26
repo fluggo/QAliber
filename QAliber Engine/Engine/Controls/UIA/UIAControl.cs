@@ -302,8 +302,14 @@ namespace QAliber.Engine.Controls.UIA
 						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null )
 							conditions.Add( "@ClassName=\'" + XPath.EscapeLiteral( ClassName ) + "\'" );
 
-						if( ID != null )
-							conditions.Add( "@ID=\'" + XPath.EscapeLiteral( ID ) + "\'" );
+						// The ID, which we leave out for scroll bars because it keeps changing
+						if( ID != null ) {
+							bool useId = !(automationElement.Cached.ControlType == ControlType.Pane && Name == "Horizontal Scroll Bar")
+								&& !(automationElement.Cached.ControlType == ControlType.Pane && Name == "Vertical Scroll Bar");
+
+							if( useId )
+								conditions.Add( "@ID=\'" + XPath.EscapeLiteral( ID ) + "\'" );
+						}
 
 						if( conditions.Count != 0 )
 							_codePath = prefix + "[" + string.Join( " and ", conditions ) + "]";
