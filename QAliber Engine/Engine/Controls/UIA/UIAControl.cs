@@ -1011,9 +1011,25 @@ namespace QAliber.Engine.Controls.UIA
 			AutomationElement _element;
 			GridPattern _pattern;
 
+			static CacheRequest __gridCacheRequest;
+
+			static GridPatternImpl() {
+				__gridCacheRequest = new CacheRequest();
+				__gridCacheRequest.Add( AutomationElement.ControlTypeProperty );
+				__gridCacheRequest.Add( AutomationElement.NameProperty );
+				__gridCacheRequest.Add( AutomationElement.OrientationProperty );
+				__gridCacheRequest.Add( AutomationElement.IsTablePatternAvailableProperty );
+				__gridCacheRequest.Add( ValuePattern.ValueProperty );
+				__gridCacheRequest.Add( TablePattern.Pattern );
+				__gridCacheRequest.Add( TablePattern.ColumnHeadersProperty );
+				__gridCacheRequest.TreeScope = TreeScope.Element | TreeScope.Children | TreeScope.Descendants;
+				__gridCacheRequest.AutomationElementMode = AutomationElementMode.Full;
+			}
+
 			public GridPatternImpl( AutomationElement element, GridPattern pattern ) {
 				_element = element;
 				_pattern = pattern;
+				_element = element.GetUpdatedCache( __gridCacheRequest );
 			}
 
 			public int ColumnCount {
@@ -1028,8 +1044,102 @@ namespace QAliber.Engine.Controls.UIA
 				return GetControlByType( _pattern.GetItem( row, column ) );
 			}
 
-			public string[][] CaptureGrid(out string[] headers) {
-				throw new NotImplementedException();
+			public string[][] CaptureGrid( out string[] headers ) {
+				AutomationElement element = _element.GetUpdatedCache( __gridCacheRequest );
+				TablePattern tablePattern = null;
+
+				if( (bool) element.GetCachedPropertyValue( AutomationElement.IsTablePatternAvailableProperty ) )
+					tablePattern = (TablePattern) element.GetCachedPattern( TablePattern.Pattern );
+
+				for( int i = 0; i < 10; i++ ) {
+					bool complete = false;
+
+					try {
+						// The structure of a our enhanced DataGridView is:
+						//		header[@Orientation=Horizontal]
+						//			headeritem["@Name="H"]
+						//			...
+						//		group[@Name="Row 0"]
+						//			// headeritem[@Name="Row 0"] - not yet
+						//			dataitem[@Name="H Row 0"]
+						//			...
+						//		group[@Name="Row 1"]
+						//			headeritem[@Name="Row 1"]
+						//			dataitem[@Name="H Row 1"]
+						//			...
+						headers = null;
+						AutomationElement[] children = element.CachedChildren.Cast<AutomationElement>().ToArray();
+
+						if( tablePattern != null ) {
+							// Try just getting the headers directly
+							var headerItems = tablePattern.Cached.GetColumnHeaders();
+
+							if( headerItems != null && headerItems.Length != 0 )
+								headers = headerItems.Select( item => item.Cached.Name ).ToArray();
+						}
+
+						if( headers == null ) {
+							AutomationElement headerRow = children.FirstOrDefault( child =>
+								child.Cached.ControlType == ControlType.Header &&
+								child.Cached.Orientation == OrientationType.Horizontal );
+
+							headers = headerRow.CachedChildren.Cast<AutomationElement>()
+								.Select( child => child.Cached.Name ).ToArray();
+						}
+
+						AutomationElement[][] rows = children
+							.Where( child => child.Cached.ControlType == ControlType.Group )
+							.Select( row => row.CachedChildren.Cast<AutomationElement>()
+								.Where( rowItem => rowItem.Cached.ControlType == ControlType.DataItem )
+								.ToArray() )
+							.ToArray();
+
+						if( rows.Length == 0 )
+							return new string[0][];
+
+						int columnCount = rows.Select( row => row.Length ).Max();
+						int rowCount = rows.Length;
+
+						// Try to verify we have the whole thing
+						complete = (headers == null || columnCount == headers.Length) &&
+							rows.All( row => row.Length == columnCount && row.All( cell => cell != null ) );
+
+						if( !complete ) {
+							if( (headers != null && columnCount != headers.Length) )
+								Debug.WriteLine( "Missing column names" );
+							else if( rows.Any( row => row.Length != columnCount ) )
+								Debug.WriteLine( "Row incomplete, " + rows.Min( row => row.Length ).ToString() + " vs " + columnCount.ToString() );
+							else if( rows.Any( row => row.Any( cell => cell == null ) ) )
+								Debug.WriteLine( "Cell missing" );
+						}
+
+						if( !complete ) {
+							if( i == 9 )
+								break;
+						}
+
+						// Now walk through the rows
+						return children.Where( child => child.Cached.ControlType == ControlType.Group )
+							.Select( row => row.CachedChildren.Cast<AutomationElement>()
+								.Where( rowItem => rowItem.Cached.ControlType != ControlType.HeaderItem )
+								.Select( cell => {
+									if( cell == null )
+										return null;
+
+									object value = cell.GetCachedPropertyValue( ValuePattern.ValueProperty );
+
+									if( value == AutomationElement.NotSupported )
+										return null;
+
+									return (string) value;
+								} ).ToArray() ).ToArray();
+					}
+					catch( ElementNotAvailableException ) {
+						Debug.WriteLine( "Caught ElementNotAvailableException" );
+					}
+				}
+
+				throw new InvalidOperationException( "Tried to capture the grid ten times. Could not get a complete copy of the grid." );
 			}
 		}
 
