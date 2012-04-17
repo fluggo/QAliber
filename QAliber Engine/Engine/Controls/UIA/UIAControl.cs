@@ -1147,7 +1147,7 @@ namespace QAliber.Engine.Controls.UIA
 				}
 
 					if( !complete ) {
-						if( i == 4 )
+						if( i == 9 )
 							throw new InvalidOperationException( "Tried to capture the grid ten times. Could not get a complete copy of the grid." );
 						else
 							continue;
