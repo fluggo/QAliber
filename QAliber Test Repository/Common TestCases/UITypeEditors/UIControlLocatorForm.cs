@@ -215,9 +215,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 				form.Visible = false;
 				User32.SetCapture(this.Handle);
 				btnCursor.BackgroundImage = Properties.Resources.EmptyCrosshair;
-				Cursor = new Cursor(
-					Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location),
-						@"Resources\CrossIcon.cur"));
+				Cursor = new Cursor( new MemoryStream( Properties.Resources.CrossIcon ) );
 				capturing = true;
 			}
 		}
