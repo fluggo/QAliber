@@ -99,6 +99,7 @@
     <Compile Include="TestController.cs" />
     <Compile Include="TestScenario.cs" />
     <Compile Include="OutputPropertiesMap.cs" />
+    <Compile Include="TypeEditors\StringSuggestionEditor.cs" />
     <Compile Include="TypeEditors\OutputPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
