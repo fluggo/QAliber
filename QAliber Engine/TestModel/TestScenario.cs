@@ -39,9 +39,9 @@ namespace QAliber.TestModel
 	{
 		public TestScenario()
 		{
-			variables = new BindingVariableList<string>();
-			lists = new BindingVariableList<string[]>();
-			tables = new BindingVariableList<DataTable>();
+			variables = new BindingVariableList<ScenarioVariable<string>, string>();
+			lists = new BindingVariableList<ScenarioVariable<string[]>, string[]>();
+			tables = new BindingVariableList<ScenarioTable, DataTable>();
 			rootTestCase = new FolderTestCase();
 			rootTestCase.Scenario = this;
 			rootTestCase.Name = "Unknown Scenario";
@@ -101,28 +101,28 @@ namespace QAliber.TestModel
 		#endregion
 
 		#region Global Variables
-		private BindingVariableList<string> variables;
+		private BindingVariableList<ScenarioVariable<string>, string> variables;
 
 		[Browsable(false)]
-		public BindingVariableList<string> Variables
+		public BindingVariableList<ScenarioVariable<string>, string> Variables
 		{
 			get { return variables; }
 			set { variables = value; }
 		}
 
-		private BindingVariableList<string[]> lists;
+		private BindingVariableList<ScenarioVariable<string[]>, string[]> lists;
 
 		[Browsable(false)]
-		public BindingVariableList<string[]> Lists
+		public BindingVariableList<ScenarioVariable<string[]>, string[]> Lists
 		{
 			get { return lists; }
 			set { lists = value; }
 		}
 
-		private BindingVariableList<DataTable> tables;
+		private BindingVariableList<ScenarioTable, DataTable> tables;
 
 		[Browsable(false)]
-		public BindingVariableList<DataTable> Tables
+		public BindingVariableList<ScenarioTable, DataTable> Tables
 		{
 			get { return tables; }
 			set { tables = value; }
@@ -165,9 +165,9 @@ namespace QAliber.TestModel
 				XmlType = new XmlTypeAttribute() { TypeName = "ListVariable", Namespace = Util.XmlNamespace }
 			} );
 
-			attributeOverrides.Add( typeof(ScenarioVariable<DataTable>), new XmlAttributes() {
+/*			attributeOverrides.Add( typeof(ScenarioTable), new XmlAttributes() {
 				XmlType = new XmlTypeAttribute() { TypeName = "TableVariable", Namespace = Util.XmlNamespace }
-			} );
+			} );*/
 
 			return new XmlSerializer( typeof(TestScenario), attributeOverrides,
 				extraTypes.ToArray(), new XmlRootAttribute() { Namespace=Util.XmlNamespace }, Util.XmlNamespace );
@@ -265,9 +265,9 @@ namespace QAliber.TestModel
 
 		private void SaveUserVariables()
 		{
-			variablesCopy = new BindingVariableList<string>();
-			listsCopy = new BindingVariableList<string[]>();
-			tablesCopy = new BindingVariableList<DataTable>();
+			variablesCopy = new BindingVariableList<ScenarioVariable<string>, string>();
+			listsCopy = new BindingVariableList<ScenarioVariable<string[]>, string[]>();
+			tablesCopy = new BindingVariableList<ScenarioTable, DataTable>();
 
 			foreach (ScenarioVariable<string> var in variables)
 			{
@@ -284,11 +284,11 @@ namespace QAliber.TestModel
 					var.Name, copyList, var.TestStep));
 			}
 
-			foreach (ScenarioVariable<DataTable> var in tables)
+			foreach (ScenarioTable var in tables)
 			{
 				DataTable table = var.Value as DataTable;
 				DataTable copyTable = table.Copy();
-				tablesCopy.Add(new ScenarioVariable<DataTable>(
+				tablesCopy.Add(new ScenarioTable(
 					var.Name, copyTable, var.TestStep));
 			}
 		}
@@ -300,7 +300,8 @@ namespace QAliber.TestModel
 			ReloadUserVariables( tables, tablesCopy );
 		}
 
-		private void ReloadUserVariables<T>( BindingVariableList<T> list, BindingVariableList<T> savedList ) {
+		private void ReloadUserVariables<TVar, TValue>( BindingVariableList<TVar, TValue> list, BindingVariableList<TVar, TValue> savedList )
+				where TVar : ScenarioVariable<TValue> {
 			list.RaiseListChangedEvents = false;
 			list.Clear();
 
@@ -417,9 +418,9 @@ namespace QAliber.TestModel
 		}
 		#endregion
 
-		private BindingVariableList<string> variablesCopy;
-		private BindingVariableList<string[]> listsCopy;
-		private BindingVariableList<DataTable> tablesCopy;
+		private BindingVariableList<ScenarioVariable<string>, string> variablesCopy;
+		private BindingVariableList<ScenarioVariable<string[]>, string[]> listsCopy;
+		private BindingVariableList<ScenarioTable, DataTable> tablesCopy;
 	}
 
 	sealed class DeserializationBinder : SerializationBinder

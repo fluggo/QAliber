@@ -22,13 +22,13 @@ using System.Text.RegularExpressions;
 namespace QAliber.TestModel.Variables
 {
 	[Serializable]
-	public class BindingVariableList<T> : BindingList<ScenarioVariable<T>>
+	public class BindingVariableList<TVar, TValue> : BindingList<TVar> where TVar : ScenarioVariable<TValue>
 	{
-		public void AddOrReplace(ScenarioVariable<T> obj)
+		public void AddOrReplace(TVar obj)
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				ScenarioVariable<T> item = this[i];
+				TVar item = this[i];
 				if (item.Name == obj.Name && item.TestStep == obj.TestStep)
 				{
 					this[i] = obj;
@@ -38,11 +38,11 @@ namespace QAliber.TestModel.Variables
 			Add(obj);
 		}
 
-		public void AddOrReplaceByName(ScenarioVariable<T> obj)
+		public void AddOrReplaceByName(TVar obj)
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				ScenarioVariable<T> item = this[i];
+				TVar item = this[i];
 				if (item.Name == obj.Name)
 				{
 					this[i] = obj;
@@ -52,11 +52,11 @@ namespace QAliber.TestModel.Variables
 			Add(obj);
 		}
 
-		public void RemoveIfFound(ScenarioVariable<T> obj)
+		public void RemoveIfFound(TVar obj)
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				ScenarioVariable<T> item = this[i];
+				TVar item = this[i];
 				if (item.Name == obj.Name && item.TestStep == obj.TestStep)
 				{
 					this.RemoveAt(i);
@@ -69,7 +69,7 @@ namespace QAliber.TestModel.Variables
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				ScenarioVariable<T> item = this[i];
+				TVar item = this[i];
 				if (item.TestStep != null && item.TestStep.Equals(testcase))
 				{
 					this.RemoveAt(i);
@@ -78,13 +78,13 @@ namespace QAliber.TestModel.Variables
 			}
 		}
 
-		public ScenarioVariable<T> this[string name]
+		public TVar this[string name]
 		{
 			get
 			{
 				for (int i = 0; i < Count; i++)
 				{
-					ScenarioVariable<T> item = this[i];
+					TVar item = this[i];
 					if (item.Name == name)
 					{
 						return item;
@@ -100,7 +100,7 @@ namespace QAliber.TestModel.Variables
 			{
 				if ((e.ListChangedType == ListChangedType.ItemAdded && e.PropertyDescriptor == null) || (e.PropertyDescriptor != null && e.PropertyDescriptor.Name == "Name"))
 				{
-					ScenarioVariable<T> obj = this[e.NewIndex];
+					TVar obj = this[e.NewIndex];
 					if (string.IsNullOrEmpty(obj.Name))
 						obj.Name = "ChangeThisName";
 					string res = ChangeDuplicateNames(obj.Name, e.NewIndex);
@@ -119,7 +119,7 @@ namespace QAliber.TestModel.Variables
 			{
 				if (i != indexToIgnore)
 				{
-					ScenarioVariable<T> item = this[i];
+					TVar item = this[i];
 					if (item.Name == name)
 					{
 						Regex regex = new Regex("_[0-9]+$");

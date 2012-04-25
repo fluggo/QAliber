@@ -112,7 +112,7 @@ namespace QAliber.TestModel
 								if( tableVar != null )
 									tableVar.Value = table;
 								else
-									_scenario.Tables.AddOrReplaceByName( new ScenarioVariable<DataTable>( variableName, table, this ) );
+									_scenario.Tables.AddOrReplaceByName( new ScenarioTable( variableName, table, this ) );
 							}
 							else if( list != null ) {
 								string[] stringList = list.Cast<object>().Select(

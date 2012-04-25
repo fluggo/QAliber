@@ -25,7 +25,7 @@ using System.Xml.Serialization;
 namespace QAliber.TestModel.Variables
 {
 	[Serializable]
-	public sealed class ScenarioVariable<T> : INotifyPropertyChanged {
+	public class ScenarioVariable<T> : INotifyPropertyChanged {
 		private string _name;
 		private T _value;
 		private TestCase _testStep;
@@ -67,12 +67,43 @@ namespace QAliber.TestModel.Variables
 			get { return _testStep; }
 		}
 
-		public T Value {
+		public virtual T Value {
 			get { return _value; }
 			set {
 				_value = value;
 				NotifyPropertyChanged("Value");
 			}
+		}
+
+		public virtual bool ShouldSerializeValue() {
+			return true;
+		}
+	}
+
+	/// <summary>
+	/// Specialization to work around empty DataTable serialization bug.
+	/// </summary>
+	[XmlType("TableVariable", Namespace=Util.XmlNamespace)]
+	public class ScenarioTable : ScenarioVariable<DataTable> {
+		public ScenarioTable() {
+			Value = new DataTable();
+		}
+
+		public ScenarioTable( string name, DataTable value, TestCase testStep )
+			: base( name, value, testStep ) {
+		}
+
+		public override DataTable Value {
+			get {
+				return base.Value;
+			}
+			set {
+				base.Value = value;
+			}
+		}
+
+		public override bool ShouldSerializeValue() {
+			return Value != null && Value.Columns.Count != 0;
 		}
 	}
 }

@@ -137,7 +137,7 @@ namespace QAliber.Builder.Presentation
 
 		private void tablesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex == _listsValueColumn.Index && e.RowIndex >= 0)
+			if (e.ColumnIndex == _tablesValueColumn.Index && e.RowIndex >= 0)
 			{
 				DataTable table = tablesDataGridView[e.ColumnIndex, e.RowIndex].Value as DataTable;
 
@@ -150,7 +150,7 @@ namespace QAliber.Builder.Presentation
 					tablesDataGridView[e.ColumnIndex, e.RowIndex].Value = form.Table;
 				}
 			}
-			else if (e.ColumnIndex == _listsTestStepColumn.Index && e.RowIndex >= 0)
+			else if (e.ColumnIndex == _tablesTestStepColumn.Index && e.RowIndex >= 0)
 			{
 				var variable = (ScenarioVariable<string[]>) tablesDataGridView.Rows[e.RowIndex].DataBoundItem;
 

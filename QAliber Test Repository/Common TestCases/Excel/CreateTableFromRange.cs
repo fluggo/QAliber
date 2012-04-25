@@ -59,7 +59,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 
 			adapter.Fill(dataTable);
 			dataTable.TableName = "Table from Excel (" + sourceFile + ")";
-			QAliber.TestModel.Variables.ScenarioVariable<DataTable> table = new QAliber.TestModel.Variables.ScenarioVariable<DataTable>(rangeName, dataTable, this);
+			QAliber.TestModel.Variables.ScenarioTable table = new QAliber.TestModel.Variables.ScenarioTable(rangeName, dataTable, this);
 			
 			Scenario.Tables.Add(table);
 			conn.Close();
