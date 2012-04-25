@@ -24,12 +24,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 	[XmlType("SetFocus", Namespace=Util.XmlNamespace)]
 	public class SetFocus : TestCase
 	{
-		public SetFocus() : base( "Set Focus" )
+		public SetFocus() : base( "Set focus" )
 		{
 			Icon = Properties.Resources.Keyboard;
 		}
 
 		private string _control = "";
+		string _targetName = null;
 
 		[Category("Behavior")]
 		[DisplayName("Control")]
@@ -38,7 +39,26 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		[DefaultValue("")]
 		public string Control {
 			get { return _control; }
-			set { _control = value; }
+			set {
+				try {
+					_targetName = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_targetName = null;
+				}
+
+				OnDefaultNameChanged();
+				_control = value;
+			}
+		}
+
+		protected override string DefaultName {
+			get {
+				if( _targetName == null )
+					return base.DefaultName;
+
+				return string.Format( "Set focus on \"{0}\"", _targetName );
+			}
 		}
 
 		public override void Body() {
@@ -49,6 +69,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			if( c == null || !c.Exists ) {
 				Log.Default.Error( "Control not found" );
 				return;
+			}
+
+			UIAControl uia = c as UIAControl;
+
+			if( uia != null && uia.XPathElementName == "titlebar" ) {
+				// Go with the parent
+				c = uia.Parent;
 			}
 
 			c.SetFocus();

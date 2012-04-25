@@ -41,6 +41,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		}
 
 		private string control = "";
+		string _target1Name, _target2Name;
 
 		[Category("Behavior")]
 		[DisplayName("Start Control")]
@@ -49,7 +50,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public string Control
 		{
 			get { return control; }
-			set { control = value; }
+			set {
+				try {
+					_target1Name = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_target1Name = null;
+				}
+
+				OnDefaultNameChanged();
+				control = value;
+			}
 		}
 
 		private Point point1;
@@ -74,7 +85,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public string EndControl
 		{
 			get { return _endControl; }
-			set { _endControl = value; }
+			set {
+				try {
+					_target2Name = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_target2Name = null;
+				}
+
+				OnDefaultNameChanged();
+				_endControl = value;
+			}
+		}
+
+		protected override string DefaultName {
+			get {
+				if( _target1Name == null || _target2Name == null )
+					return base.DefaultName;
+
+				if( button == MouseButtons.Right )
+					return string.Format( "Right-click and drag \"{0}\" onto \"{1}\"", _target1Name, _target2Name );
+				else if( button == MouseButtons.Middle )
+					return string.Format( "Middle-click and drag \"{0}\" onto \"{1}\"", _target1Name, _target2Name );
+
+				return string.Format( "Drag \"{0}\" onto \"{1}\"", _target1Name, _target2Name );
+			}
 		}
 
 		private Point _point2;
@@ -97,7 +132,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public MouseButtons Button
 		{
 			get { return button; }
-			set { button = value; }
+			set { button = value; OnDefaultNameChanged(); }
 		}
 
 		private bool _scrollIntoView = true;

@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
+using QAliber.Engine;
 
 namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 {
@@ -58,7 +59,24 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 		public string Control
 		{
 			get { return control; }
-			set { control = value; }
+			set { control = value; OnDefaultNameChanged(); }
+		}
+
+		protected override string DefaultName {
+			get {
+				string targetName = null;
+
+				try {
+					targetName = Util.GetControlNameFromXPath( control );
+				}
+				catch {
+				}
+
+				if( targetName == null )
+					return base.DefaultName;
+
+				return string.Format( "Type \"{0}\" in \"{1}\"", keystrokes, targetName );
+			}
 		}
 
 		private string keystrokes;
@@ -75,7 +93,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 		public string Keystrokes
 		{
 			get { return keystrokes; }
-			set { keystrokes = value; }
+			set { keystrokes = value; OnDefaultNameChanged(); }
 		}
 	
 		public override void Body()

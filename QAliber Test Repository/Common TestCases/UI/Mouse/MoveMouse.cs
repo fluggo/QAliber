@@ -33,12 +33,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[XmlType("MoveMouse", Namespace=Util.XmlNamespace)]
 	public class MoveMouse : TestCase
 	{
-		public MoveMouse() : base( "Move Mouse" )
+		public MoveMouse() : base( "Move mouse" )
 		{
 			Icon = Properties.Resources.Mouse;
 		}
 
 		private string control = "";
+		private string _targetName = null;
 
 		[Category("Behavior")]
 		[Editor(typeof(UIControlTypeEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -46,7 +47,26 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public string Control
 		{
 			get { return control; }
-			set { control = value; }
+			set {
+				try {
+					_targetName = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_targetName = null;
+				}
+
+				OnDefaultNameChanged();
+				control = value;
+			}
+		}
+
+		protected override string DefaultName {
+			get {
+				if( _targetName == null )
+					return base.DefaultName;
+
+				return string.Format( "Move mouse over \"{0}\"", _targetName );
+			}
 		}
 
 		private Point point;

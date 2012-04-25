@@ -43,12 +43,38 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The length of the pause in miliseconds
 		/// </summary>
-		[Category(" Wait")]
-		[Description("The amount of time (in miliseconds) to suspend the execution")]
+		[Category("Behavior")]
+		[Description("The amount of time (in milliseconds) to suspend the execution")]
 		public int Delay
 		{
 			get { return delay; }
-			set { delay = value; }
+			set {
+				if( delay <= 0 )
+					throw new ArgumentOutOfRangeException();
+
+				delay = value;
+				OnDefaultNameChanged();
+			}
+		}
+
+		static string[] __countingNumbers = new string[] {
+			"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"
+		};
+
+		protected override string DefaultName {
+			get {
+				if( delay % 1000 == 0 ) {
+					int seconds = delay / 1000;
+
+					if( seconds <= 10 ) {
+						return "Wait " + __countingNumbers[seconds - 1] + ((seconds == 1) ? " second" : " seconds");
+					}
+
+					return string.Format( "Wait {0} seconds", seconds );
+				}
+
+				return string.Format( "Wait {0:0.###} seconds", ((decimal) delay) / 1000m );
+			}
 		}
 
 		public override void Body()

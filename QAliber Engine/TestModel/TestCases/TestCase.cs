@@ -48,7 +48,6 @@ namespace QAliber.TestModel
 			AlwaysRun = AlwaysRunDefaultValue;
 
 			_defaultName = name;
-			Name = _defaultName;
 		}
 
 		#region Virtuals
@@ -416,6 +415,15 @@ namespace QAliber.TestModel
 		#endregion
 
 		#region Test Case Descriptors
+		protected virtual string DefaultName {
+			get { return _defaultName; }
+		}
+
+		protected virtual void OnDefaultNameChanged() {
+			if( _name == null )
+				OnPropertyChanged( "Name" );
+		}
+
 		private string _name;
 
 		/// <summary>
@@ -425,8 +433,15 @@ namespace QAliber.TestModel
 		[Description("The name of the test case")]
 		public string Name
 		{
-			get { return _name; }
-			set { _name = value; OnPropertyChanged( "Name" ); }
+			get { return _name ?? DefaultName; }
+			set {
+				if( string.IsNullOrWhiteSpace( value ) )
+					_name = null;
+				else
+					_name = value;
+
+				OnPropertyChanged( "Name" );
+			}
 		}
 
 		/// <summary>
@@ -434,14 +449,14 @@ namespace QAliber.TestModel
 		/// </summary>
 		/// <returns>False if it has its default value, true otherwise.</returns>
 		public bool ShouldSerializeName() {
-			return Name != _defaultName;
+			return Name != DefaultName;
 		}
 
 		/// <summary>
 		/// Resets <see cref="Name"/> to its default value.
 		/// </summary>
 		public void ResetName() {
-			Name = _defaultName;
+			_name = null;
 		}
 
 		private string _notes = string.Empty;
@@ -663,14 +678,14 @@ namespace QAliber.TestModel
 				Log.Default.Result(TestCaseResult.Failed);
 				if (_screenshotOption == TakeScreenshotOption.OnError)
 				{
-					Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + _name);
+					Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + Name );
 				}
 				
 				if (_currentRetryNumber < _numOfRetries)
 				{
 					_currentRetryNumber++;
 					Log.Default.IndentOut();
-					Log.Default.Warning(_name + " - Retry #" + _currentRetryNumber);
+					Log.Default.Warning( Name + " - Retry #" + _currentRetryNumber );
 					Run();
 				}
 				
@@ -715,7 +730,7 @@ namespace QAliber.TestModel
 		{
 			_actualResult = TestCaseResult.None;
 			GetVariables();
-			Log.Default.IndentIn(_name, Description, true);
+			Log.Default.IndentIn( Name, Description, true );
 
 			if( !string.IsNullOrWhiteSpace( _notes ) )
 				Log.Default.Info( "Notes", _notes );
@@ -725,11 +740,11 @@ namespace QAliber.TestModel
 			{
 				_capturing = true;
 				Logger.Slideshow.SlideshowRecorder.Default.Interval = _videoOptions.Interval;
-				Logger.Slideshow.SlideshowRecorder.Default.Start(_name);
+				Logger.Slideshow.SlideshowRecorder.Default.Start( Name );
 			}
 			if (_screenshotOption == TakeScreenshotOption.BeforeTestCase || _screenshotOption == TakeScreenshotOption.Both)
 			{
-				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "Begin - " + _name);
+				Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Begin - " + Name );
 			}
 		}
 
@@ -746,7 +761,7 @@ namespace QAliber.TestModel
 			}
 			if (_screenshotOption == TakeScreenshotOption.AfterTestCase || _screenshotOption == TakeScreenshotOption.Both)
 			{
-				Log.Default.Image(Logger.Slideshow.ScreenCapturer.Capture(), "End - " + _name);
+				Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "End - " + Name );
 			}
 			Log.Default.IndentOut();
 			System.Windows.Forms.Application.DoEvents();

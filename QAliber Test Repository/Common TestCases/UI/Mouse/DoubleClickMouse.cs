@@ -34,12 +34,13 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 	[XmlType("DoubleClickMouse", Namespace=Util.XmlNamespace)]
 	public class DoubleClickMouse : TestCase
 	{
-		public DoubleClickMouse() : base( "Double-Click Mouse" )
+		public DoubleClickMouse() : base( "Double-click mouse" )
 		{
 			Icon = Properties.Resources.Mouse;
 		}
 
 		private string control = "";
+		private string _targetName = null;
 
 		[Category("Behavior")]
 		[DisplayName("Control")]
@@ -48,7 +49,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public string Control
 		{
 			get { return control; }
-			set { control = value; }
+			set {
+				try {
+					_targetName = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_targetName = null;
+				}
+
+				OnDefaultNameChanged();
+				control = value;
+			}
+		}
+
+		protected override string DefaultName {
+			get {
+				if( _targetName == null )
+					return base.DefaultName;
+
+				if( button == MouseButtons.Right )
+					return string.Format( "Double-right-click \"{0}\"", _targetName );
+				else if( button == MouseButtons.Middle )
+					return string.Format( "Double-middle-click \"{0}\"", _targetName );
+
+				return string.Format( "Double-click \"{0}\"", _targetName );
+			}
 		}
 
 		private Point point;
@@ -62,7 +87,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public MouseButtons Button
 		{
 			get { return button; }
-			set { button = value; }
+			set { button = value; OnDefaultNameChanged(); }
 		}
 
 		[Category("Behavior")]

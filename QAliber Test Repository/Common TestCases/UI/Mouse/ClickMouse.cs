@@ -25,6 +25,7 @@ using QAliber.Engine.Controls;
 using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
 using QAliber.Engine.Patterns;
+using QAliber.Engine;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -40,6 +41,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		}
 
 		private string control = "";
+		private string _targetName = null;
 
 		[Category("Behavior")]
 		[DisplayName("Control")]
@@ -48,7 +50,31 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public string Control
 		{
 			get { return control; }
-			set { control = value; }
+			set {
+				try {
+					_targetName = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_targetName = null;
+				}
+
+				OnDefaultNameChanged();
+				control = value;
+			}
+		}
+
+		protected override string DefaultName {
+			get {
+				if( _targetName == null )
+					return base.DefaultName;
+
+				if( button == MouseButtons.Right )
+					return string.Format( "Right-click \"{0}\"", _targetName );
+				else if( button == MouseButtons.Middle )
+					return string.Format( "Middle-click \"{0}\"", _targetName );
+
+				return string.Format( "Click \"{0}\"", _targetName );
+			}
 		}
 
 		private MouseButtons button = MouseButtons.Left;
@@ -60,7 +86,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		public MouseButtons Button
 		{
 			get { return button; }
-			set { button = value; }
+			set { button = value; OnDefaultNameChanged(); }
 		}
 
 		private Point point;
