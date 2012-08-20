@@ -305,8 +305,18 @@ namespace QAliber.Engine.Controls.UIA
 									((UIAControl) Parent).automationElement.Cached.ControlType == ControlType.ComboBox) )
 							conditions.Add( "@Name=\'" + XPath.EscapeLiteral( Name ) + "\'" );
 
-						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null )
-							conditions.Add( "@ClassName=\'" + XPath.EscapeLiteral( ClassName ) + "\'" );
+						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null ) {
+							Match match = Regex.Match( ClassName, @"^WindowsForms10\.[^.]+\." );
+
+							if( match.Success ) {
+								// We have a windows forms class name, which we can only trust the first part of
+								conditions.Add( "starts-with(@ClassName, \'" + XPath.EscapeLiteral( match.Value ) + "\')" );
+							}
+							else {
+								// Go ahead and match the whole thing
+								conditions.Add( "@ClassName=\'" + XPath.EscapeLiteral( ClassName ) + "\'" );
+							}
+						}
 
 						// The ID, which we leave out for scroll bars because it keeps changing
 						if( ID != null ) {
