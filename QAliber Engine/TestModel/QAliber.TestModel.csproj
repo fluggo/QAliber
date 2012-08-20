@@ -100,6 +100,7 @@
     <Compile Include="TestScenario.cs" />
     <Compile Include="OutputPropertiesMap.cs" />
     <Compile Include="TypeEditors\DisplayListConverter.cs" />
+    <Compile Include="TypeEditors\EnumDescriptionConverter.cs" />
     <Compile Include="TypeEditors\MultilineStringListConverter.cs" />
     <Compile Include="TypeEditors\MultipleSelectionIndexTypeEditor.cs" />
     <Compile Include="TypeEditors\MultipleSelectionTypeEditor.cs" />
