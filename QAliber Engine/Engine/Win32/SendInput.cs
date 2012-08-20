@@ -302,8 +302,11 @@ namespace QAliber.Engine.Win32
 			input.mi.time = 0;
 			input.mi.dx = (int)(p.X * (65535f / Screen.PrimaryScreen.Bounds.Width));
 			input.mi.dy = (int)(p.Y * (65535f / Screen.PrimaryScreen.Bounds.Height));
-			input.mi.dwFlags = (uint)(evt | MouseEvents.MOVE | MouseEvents.ABSOLUTE);
-			SendInput(1, ref input, Marshal.SizeOf(input));
+			input.mi.dwFlags = (uint)(evt | MouseEvents.MOVE | MouseEvents.ABSOLUTE | MouseEvents.VIRTUALDESK);
+
+			if( SendInput(1, ref input, Marshal.SizeOf(input)) == 0 ) {
+				Marshal.ThrowExceptionForHR( Marshal.GetHRForLastWin32Error() );
+			}
 		}
 
 		private static void PressKey(char unicodeChar)
