@@ -27,6 +27,20 @@ namespace QAliber.Repository.CommonTestCases {
 			XPathPredicate pred = expr as XPathPredicate;
 
 			if( pred != null ) {
+				// Try to identify when the XPath actually refers to a combo box
+				XPathStep step = pred.Left as XPathStep;
+
+				if( step != null && step.LocalPart == "edit" ) {
+					XPathPredicate tempPred = step.Left as XPathPredicate;
+
+					if( tempPred != null ) {
+						XPathStep tempStep = tempPred.Left as XPathStep;
+
+						if( tempStep != null && tempStep.LocalPart == "combobox" )
+							pred = tempPred;
+					}
+				}
+
 				XPathOperatorExpression op = pred.Filter as XPathOperatorExpression;
 
 				if( op != null )
