@@ -24,6 +24,7 @@ using QAliber.RemotingModel;
 using QAliber.Builder.Presentation;
 using System.Xml;
 using System.IO;
+using System.Deployment.Application;
 
 namespace QAliber.Builder.Presentation
 {
@@ -124,7 +125,7 @@ namespace QAliber.Builder.Presentation
 			QAliber.Engine.PlayerConfig.Default.DelayAfterAction = (int)Properties.Settings.Default.DelayAfterAction;
 			QAliber.Engine.PlayerConfig.Default.BlockUserInput = Properties.Settings.Default.BlockUserInput;
 
-			if (!Directory.Exists(Properties.Settings.Default.TestCasesAssemblyDir))
+			if (Properties.Settings.Default.TestCasesAssemblyDir == "User Assemblies")
 			{
 				Properties.Settings.Default.TestCasesAssemblyDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\QAliber\\User Assemblies";
 				if (!Directory.Exists(Properties.Settings.Default.TestCasesAssemblyDir))
@@ -133,7 +134,7 @@ namespace QAliber.Builder.Presentation
 
 			if (!Directory.Exists(Properties.Settings.Default.LogLocation))
 			{
-				Properties.Settings.Default.LogLocation = Environment.CurrentDirectory + @"\Log";
+				Properties.Settings.Default.LogLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\QAliber\Log";
 			}
 
 			TestController.Default.RemoteAssemblyDirectory = Properties.Settings.Default.TestCasesAssemblyDir;
@@ -141,21 +142,12 @@ namespace QAliber.Builder.Presentation
 			TestController.Default.LogPath = Properties.Settings.Default.LogLocation;
 
 
-			foreach (string arg in args)
-			{
-				if (arg.StartsWith("-"))
-				{
-					switch (arg.ToLower())
-					{
-						case "-update":
-							new TestModel.AssembliesRetriever(true).CopyRemoteToLocal();
-							break;
-						default:
-							break;
-					}
-				}
+			try {
+				new TestModel.AssembliesRetriever(true).CopyRemoteToLocal();
 			}
-			
+			catch( Exception ex ) {
+				MessageBox.Show( "Could not read from \"" + Properties.Settings.Default.TestCasesAssemblyDir + "\". Check that the path is correct in the settings.\r\n\r\nThe error message was: " + ex.Message, "QAliber", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+			}
 		}
 	}
 }

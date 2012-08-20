@@ -37,18 +37,18 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\User Assemblies\</OutputPath>
+    <OutputPath>..\..\QAliber Test Builder\Presentation\bin\Debug\User Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Binaries\User Assemblies\QAliber.Repository.CommonTestCases.XML</DocumentationFile>
+    <DocumentationFile>..\..\QAliber Test Builder\Presentation\bin\Debug\User Assemblies\QAliber.Repository.CommonTestCases.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\QAliber Test Builder\Presentation\bin\Release\User Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -257,7 +257,7 @@
     <ProjectReference Include="..\..\QAliber Engine\OCR\QAliber.ImageHandling.csproj">
       <Project>{357618F5-959D-4DAB-BCB6-63E1CEB556E6}</Project>
       <Name>QAliber.ImageHandling</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\RemotingModel\QAliber.RemotingModel.csproj">
       <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>

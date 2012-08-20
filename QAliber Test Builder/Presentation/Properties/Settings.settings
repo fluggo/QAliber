@@ -15,7 +15,7 @@
       <Value Profile="(Default)">5000</Value>
     </Setting>
     <Setting Name="TestCasesAssemblyDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TestCases</Value>
+      <Value Profile="(Default)">User Assemblies</Value>
     </Setting>
     <Setting Name="LogLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)">Logs</Value>
