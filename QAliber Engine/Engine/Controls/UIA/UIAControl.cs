@@ -296,7 +296,13 @@ namespace QAliber.Engine.Controls.UIA
 						List<string> conditions = new List<string>();
 
 						// The name, which we leave out for title bars because it's redundant
-						if( !string.IsNullOrEmpty( Name ) && automationElement.Cached.ControlType != ControlType.TitleBar )
+						// We also leave it out for the edits of combo boxes, because it tends to be
+						// just the contents of the combo box
+						if( !string.IsNullOrEmpty( Name )
+								&& automationElement.Cached.ControlType != ControlType.TitleBar
+								&& !(automationElement.Cached.ControlType == ControlType.Edit &&
+									automationElement.Cached.AutomationId == "1001" &&
+									((UIAControl) Parent).automationElement.Cached.ControlType == ControlType.ComboBox) )
 							conditions.Add( "@Name=\'" + XPath.EscapeLiteral( Name ) + "\'" );
 
 						if( (automationElement.Cached.ControlType == ControlType.Window || ID == null) && ClassName != null )
