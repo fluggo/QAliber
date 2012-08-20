@@ -104,9 +104,6 @@
     <Compile Include="Timers\StopTimerTestCase.cs" />
     <Compile Include="Timers\StartTimerTestCase.cs" />
     <Compile Include="Timers\TimersCollection.cs" />
-    <Compile Include="UITypeEditors\MultilineStringListConverter.cs" />
-    <Compile Include="UITypeEditors\DisplayListConverter.cs" />
-    <Compile Include="UITypeEditors\MultipleSelectionIndexTypeEditor.cs" />
     <Compile Include="UITypeEditors\DesktopGrabberTypeEditor.cs" />
     <Compile Include="UITypeEditors\DesktopMaskForm.cs">
       <SubType>Form</SubType>
@@ -114,7 +111,6 @@
     <Compile Include="UITypeEditors\DesktopMaskForm.Designer.cs">
       <DependentUpon>DesktopMaskForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UITypeEditors\MultipleSelectionTypeEditor.cs" />
     <Compile Include="UITypeEditors\UIControlLocatorForm.cs">
       <SubType>Form</SubType>
     </Compile>

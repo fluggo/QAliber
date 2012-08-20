@@ -99,7 +99,11 @@
     <Compile Include="TestController.cs" />
     <Compile Include="TestScenario.cs" />
     <Compile Include="OutputPropertiesMap.cs" />
-    <Compile Include="TypeEditors\StringSuggestionEditor.cs" />
+    <Compile Include="TypeEditors\DisplayListConverter.cs" />
+    <Compile Include="TypeEditors\MultilineStringListConverter.cs" />
+    <Compile Include="TypeEditors\MultipleSelectionIndexTypeEditor.cs" />
+    <Compile Include="TypeEditors\MultipleSelectionTypeEditor.cs" />
+    <Compile Include="TypeEditors\StringSuggestionConverter.cs" />
     <Compile Include="TypeEditors\OutputPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
