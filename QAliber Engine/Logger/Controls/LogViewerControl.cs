@@ -107,8 +107,16 @@ namespace QAliber.Logger.Controls
 			}
 			else  if (keyData == (Keys.Control | Keys.C))
 			{
-				copyThisMessageToolStripMenuItem_Click(this, EventArgs.Empty);
-				return true;
+				// Don't accept this unless the tree itself has focus
+				TreeView visibleTree = logTree.Visible ? logTree : logTreeFiltered;
+				if( visibleTree.ContainsFocus && visibleTree.SelectedNode != null ) {
+					CopyFromNode( visibleTree.SelectedNode );
+					return true;
+				}
+
+				// None of our copy commands will apply to it; hopefully the control
+				// with focus will know what to do
+				return false;
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
@@ -216,17 +224,19 @@ namespace QAliber.Logger.Controls
 			TreeView visibleTree = logTree.Visible ? logTree : logTreeFiltered;
 			Point treePoint = visibleTree.PointToClient(new Point(nodeMenuStrip.Left, nodeMenuStrip.Top));
 			TreeNode clickedNode = visibleTree.GetNodeAt(treePoint.X, treePoint.Y);
-			if (clickedNode != null)
-			{
-				LogEntry entry = clickedNode.Tag as LogEntry;
-				if (entry != null)
-				{
-					Clipboard.SetText(string.Format("{0},{1},{2},{3}",
-						clickedNode.FullPath, entry.Time, entry.Message, entry.ExtendedMessage));
-				}
-			}
-			
+			CopyFromNode( clickedNode );
+		}
 
+		private void CopyFromNode( TreeNode node ) {
+			if( node == null )
+				return;
+
+			LogEntry entry = node.Tag as LogEntry;
+			if (entry != null)
+			{
+				Clipboard.SetText(string.Format("{0},{1},{2},{3}",
+					node.FullPath, entry.Time, entry.Message, entry.ExtendedMessage));
+			}
 		}
 
 		private void countAllTheChildrenToolStripMenuItem_Click(object sender, EventArgs e)
