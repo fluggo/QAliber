@@ -38,7 +38,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 	[XmlType("SelectListItemByString", Namespace=Util.XmlNamespace)]
 	public class SelectListItemByString : TestCase
 	{
-		public SelectListItemByString() : base( "Select List Item by String" )
+		public SelectListItemByString() : base( "Select list item by string" )
 		{
 			Icon = Properties.Resources.Combobox;
 		}
@@ -53,7 +53,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public string Control
 		{
 			get { return control; }
-			set { control = value; }
+			set { control = value; OnDefaultNameChanged(); }
 		}
 
 		private string _item;
@@ -64,11 +64,22 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		public string Item
 		{
 			get {return _item;}
-			set { _item = value; }
+			set { _item = value; OnDefaultNameChanged(); }
 		}
 
-		
-	
+		protected override string DefaultName {
+			get {
+				if( !string.IsNullOrEmpty( _item ) && !string.IsNullOrEmpty( control ) ) {
+					string name = Util.GetControlNameFromXPath( control );
+
+					if( name != null ) {
+						return string.Format( "Select \"{0}\" from \"{1}\"", _item, name );
+					}
+				}
+
+				return base.DefaultName;
+			}
+		}
 	
 		public override void Body()
 		{
