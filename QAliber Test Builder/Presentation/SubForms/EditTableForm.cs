@@ -37,6 +37,7 @@ namespace QAliber.Builder.Presentation
 
 			// Clone the original table
 			_table = table.Clone();
+			_table.TableName = "TableVarName";
 			_table.Load( table.CreateDataReader() );
 
 			DialogResult = DialogResult.Cancel;
