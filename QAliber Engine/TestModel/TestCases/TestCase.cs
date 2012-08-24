@@ -676,6 +676,8 @@ namespace QAliber.TestModel
 			if (_expectedResult != TestCaseResult.None && _actualResult != _expectedResult)
 			{
 				Log.Default.Result(TestCaseResult.Failed);
+				Log.Default.IndentOut();
+
 				if (_screenshotOption == TakeScreenshotOption.OnError)
 				{
 					Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + Name );
@@ -684,8 +686,6 @@ namespace QAliber.TestModel
 				if (_currentRetryNumber < _numOfRetries)
 				{
 					_currentRetryNumber++;
-					Log.Default.IndentOut();
-					Log.Default.Warning( Name + " - Retry #" + _currentRetryNumber );
 					Run();
 				}
 				
@@ -693,6 +693,7 @@ namespace QAliber.TestModel
 			else
 			{
 				Log.Default.Result(TestCaseResult.Passed);
+				Log.Default.IndentOut();
 			}
 		}
 
@@ -730,7 +731,13 @@ namespace QAliber.TestModel
 		{
 			_actualResult = TestCaseResult.None;
 			GetVariables();
-			Log.Default.IndentIn( Name, Description, true );
+
+			string name = Name;
+
+			if( _currentRetryNumber > 0 )
+				name += " - Retry #" + _currentRetryNumber.ToString();
+
+			Log.Default.IndentIn( name, Description, true );
 
 			if( !string.IsNullOrWhiteSpace( _notes ) )
 				Log.Default.Info( "Notes", _notes );
@@ -763,7 +770,6 @@ namespace QAliber.TestModel
 			{
 				Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "End - " + Name );
 			}
-			Log.Default.IndentOut();
 			System.Windows.Forms.Application.DoEvents();
 		}
 
