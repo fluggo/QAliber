@@ -180,7 +180,16 @@ namespace ManagedWinapi
 				bool success = RegisterHotKey(hWnd, hotkeyIndex, 
 					(_shift ? MOD_SHIFT : 0) + (_ctrl ? MOD_CONTROL : 0) +
 					(_alt ? MOD_ALT : 0) + (_windows ? MOD_WIN : 0), (int)_keyCode);
-				if (!success) throw new HotkeyAlreadyInUseException();
+
+				if( !success ) {
+					uint error = unchecked((uint)Marshal.GetLastWin32Error());
+
+					if( error == 1409 )
+						throw new HotkeyAlreadyInUseException();
+
+					Marshal.ThrowExceptionForHR( HRESULT_FROM_WIN32( unchecked((uint)Marshal.GetLastWin32Error()) ) );
+				}
+
 				isRegistered = true;
 			}
 		}
@@ -196,6 +205,19 @@ namespace ManagedWinapi
 			MOD_CONTROL = 0x0002, MOD_SHIFT = 0x0004, MOD_WIN = 0x0008;
 
 		private static readonly int WM_HOTKEY = 0x0312;
+
+		const uint FACILITY_WIN32 = 7;
+
+		static int HRESULT_FROM_WIN32( uint win32 ) {
+			unchecked {
+				int error = unchecked((int) win32);
+
+				if( (int) win32 <= 0 )
+					return (int) win32;
+
+				return (int)((win32 & 0x0000FFFF) | (FACILITY_WIN32 << 16) | 0x80000000);
+			}
+		}
 
 		#endregion
 	}
