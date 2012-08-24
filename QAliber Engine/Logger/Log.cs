@@ -359,11 +359,7 @@ namespace QAliber.Logger
 		{
 			if (enabled)
 			{
-				string tabs = "";
-				for (int i = 0; i < indents + 1; i++)
-				{
-					tabs += "\t";
-				}
+				string tabs = new string( '\t', indents + 1 );
 				if (isTestCase)
 					writer.WriteLine(tabs + "<TestCase>" + System.Security.SecurityElement.Escape(message) + "</TestCase>");
 				writer.WriteLine(tabs + "<ChildEntries>");
@@ -398,11 +394,7 @@ namespace QAliber.Logger
 		{
 			if ((enabled || disposing) && indents > 0)
 			{
-				string tabs = "";
-				for (int i = 0; i < indents; i++)
-				{
-					tabs += "\t";
-				}
+				string tabs = new string( '\t', indents );
 				writer.WriteLine(tabs + "</ChildEntries>");
 				indents--;
 				writer.Flush();
@@ -416,11 +408,7 @@ namespace QAliber.Logger
 		/// <param name="result">The result of the test case</param>
 		public void Result(QAliber.RemotingModel.TestCaseResult result)
 		{
-			string tabs = "";
-			for (int i = 0; i < indents + 1; i++)
-			{
-				tabs += "\t";
-			}
+			string tabs = new string( '\t', indents + 1 );
 			lock (this)
 			{
 				writer.WriteLine(tabs + "<LogResult>" + result.ToString() + "</LogResult>");

@@ -138,11 +138,7 @@ namespace QAliber.Logger
 
 		internal void ToXml(StreamWriter sw, int indents)
 		{
-			string tabs = "";
-			for (int i = 0; i < indents + 1; i++)
-			{
-				tabs += "\t";
-			}
+			string tabs = new string( '\t', indents + 1 );
 			lock (this)
 			{
 				sw.WriteLine(tabs + "<LogEntry>");
