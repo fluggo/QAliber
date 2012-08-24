@@ -721,12 +721,13 @@ namespace QAliber.Engine.Controls.UIA
 
 			if( type == typeof(IListPattern) ) {
 				ControlType controlType = automationElement.Cached.ControlType;
-				UIAControl listControl = this;
+				UIAControl listControl = this, comboBox = null;
 
 				if( controlType != ControlType.List && controlType != ControlType.ComboBox )
 					return null;
 
 				if( controlType == ControlType.ComboBox ) {
+					comboBox = listControl;
 					IExpandCollapsePattern expCollapse = listControl.GetControlInterface<IExpandCollapsePattern>();
 
 					if( expCollapse != null && expCollapse.ExpandCollapseState != Patterns.ExpandCollapseState.Expanded )
@@ -744,7 +745,7 @@ namespace QAliber.Engine.Controls.UIA
 				}
 
 				// Finally, listControl should be of type List
-				return new ListPatternImpl( listControl );
+				return new ListPatternImpl( listControl, comboBox );
 			}
 
 			return null;
@@ -1336,12 +1337,13 @@ namespace QAliber.Engine.Controls.UIA
 			// The list pattern isn't a pattern offered by UIA;
 			// we offer it as a way of discovering list items in
 			// a convenient, common way. The owner should be of type List.
-			UIAControl _owner;
+			UIAControl _owner, _comboBox;
 			UIAControl[] _items;
 			string[] _itemList;
 
-			public ListPatternImpl( UIAControl owner ) {
+			public ListPatternImpl( UIAControl owner, UIAControl comboBox ) {
 				_owner = owner;
+				_comboBox = comboBox;
 				_items = Array.ConvertAll( owner.GetChildren(), c => (UIAControl) c );
 				_itemList = Array.ConvertAll( _items, c => c.Name );
 			}
