@@ -185,7 +185,7 @@ namespace QAliber.Repository.CommonTestCases.UITypeEditors
 
 				while( pass != null ) {
 					_hierarchyList.Items.Add( new ListViewItem() {
-						Text = string.Format( "{0} {1}", pass.ID, pass.Name ),
+						Text = pass.VisibleName,
 						Tag = pass
 					} );
 

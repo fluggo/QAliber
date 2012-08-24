@@ -401,6 +401,18 @@ namespace QAliber.Engine.Controls.UIA
 			}
 		}
 
+		public override string VisibleName {
+			get {
+				if( !string.IsNullOrWhiteSpace( Name ) )
+					return Name;
+
+				if( !string.IsNullOrWhiteSpace( ID ) )
+					return ID;
+
+				return XPathElementName;
+			}
+		}
+
 		public override IntPtr Handle
 		{
 			get
