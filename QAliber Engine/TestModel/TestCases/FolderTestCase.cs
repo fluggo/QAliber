@@ -85,7 +85,7 @@ namespace QAliber.TestModel
 					if (branchesToBreak > 0)
 					{
 						branchesToBreak--;
-						break;
+						stopRunning = true;
 					}
 					if (exitTotally)
 						stopRunning = true;
