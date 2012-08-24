@@ -42,27 +42,42 @@ namespace QAliber.TestModel
 			Icon = Properties.Resources.Loop;
 		}
 
-		private string tableName = string.Empty;
+		private string _tableName = string.Empty;
 
 		/// <summary>
 		/// The table to iterate on (excluding $)
 		/// </summary>
-		[Category(" Table")]
+		[Category("Behavior")]
 		[DisplayName("Table Name")]
 		[Description("The table to iterate on (excluding $)")]
 		[TypeConverter(typeof(TableVariableNameTypeConverter))]
 		public string TableName
 		{
-			get { return tableName; }
-			set { tableName = value; }
+			get { return _tableName; }
+			set { _tableName = value; }
+		}
+
+		private bool _prefixTableName = true;
+
+		/// <summary>
+		/// The table to iterate on (excluding $)
+		/// </summary>
+		[Category("Behavior")]
+		[DisplayName("Prefix Table Name")]
+		[Description("True to prefix each column name with the name of the table, or false otherwise.")]
+		[DefaultValue(true)]
+		public bool PrefixTableName
+		{
+			get { return _prefixTableName; }
+			set { _prefixTableName = value; }
 		}
 
 		public override void Body()
 		{
-			ScenarioVariable<DataTable> table = Scenario.Tables[tableName];
+			ScenarioVariable<DataTable> table = Scenario.Tables[_tableName];
 
 			if (table == null)
-				throw new ArgumentException("Table '" + tableName + "' is not recognized");
+				throw new ArgumentException("Table '" + _tableName + "' is not recognized");
 
 			DataTable dataTable = table.Value as DataTable;
 			int j = 0;
@@ -70,7 +85,12 @@ namespace QAliber.TestModel
 			{
 				for (int i = 0; i < dataTable.Columns.Count; i++)
 				{
-					Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(tableName + ".CurrentRow." + dataTable.Columns[i].ColumnName, row[i].ToString(), this));
+					string name = dataTable.Columns[i].ColumnName;
+
+					if( _prefixTableName )
+						name = _tableName + "." + name;
+
+					Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(name, row[i].ToString(), this));
 				}
 				Log.Default.IndentIn("Iteration on row '" + j + "'");
 				base.Body();
@@ -90,7 +110,7 @@ namespace QAliber.TestModel
 		{
 			get
 			{
-				return "For Each Item In '" + tableName + "'";
+				return "For Each Item In '" + _tableName + "'";
 			}
 		}
 	}
