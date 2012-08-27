@@ -143,27 +143,27 @@ namespace QAliber.Engine.Win32
 		{
 			try
 			{
+				// This is no worse than the original code, but it still doesn't draw
+				// on multiple monitors. See here for a possible solution:
+				// http://stackoverflow.com/questions/576476/get-devicecontext-of-entire-screen-with-multiple-montiors
 
-				System.Windows.Rect r = element.Current.BoundingRectangle;
-				int startX = 2;
-				int startY = 2;
-				IntPtr dc = IntPtr.Zero;
-				if (element.Current.NativeWindowHandle != 0)
-					dc = User32.GetWindowDC(new IntPtr(element.Current.NativeWindowHandle));
-				else
-				{
-					dc = GDI32.CreateDC("DISPLAY", null, null, IntPtr.Zero);
-					startX += (int)r.Left;
-					startY += (int)r.Top;
-				}
+				// TODO: The following code will not necessarily work in a DPI-aware environment;
+				// see http://msdn.microsoft.com/en-us/library/aa970067.aspx
+				IntPtr desktop = User32.GetDesktopWindow();
+				IntPtr dc = User32.GetDCEx( desktop, IntPtr.Zero, 0 );
 
-				using (Graphics g = Graphics.FromHdc(dc))
-				{
-					using (Pen red = new Pen(Color.Red, 4))
-					{
-						g.DrawRectangle(red, new Rectangle(startX, startY, (int)r.Width - 4, (int)r.Height - 4));
+				using( Graphics g = Graphics.FromHdc( dc ) ) {
+					Rect rect = element.Current.BoundingRectangle;
+
+					using( Pen red = new Pen( Color.Red, 4 ) ) {
+						g.DrawRectangle( red, new Rectangle( (int) rect.Left + 2, (int) rect.Top + 2, (int) rect.Width - 4, (int) rect.Height - 4 ) );
 					}
+
+					g.Flush();
 				}
+
+				User32.ReleaseDC( desktop, dc );
+
 			}
 			catch 
 			{
@@ -219,6 +219,8 @@ namespace QAliber.Engine.Win32
 		public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 		[DllImport("User32.dll")]
 		public static extern IntPtr GetDC(IntPtr hwnd);
+		[DllImport("User32.dll")]
+		public static extern IntPtr GetDCEx(IntPtr hwnd, IntPtr clipRegion, int flags);
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetActiveWindow();
 		[DllImport("user32.dll")]
