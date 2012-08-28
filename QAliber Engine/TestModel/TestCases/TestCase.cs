@@ -111,7 +111,7 @@ namespace QAliber.TestModel
 								if( tableVar != null )
 									tableVar.Value = table;
 								else
-									_scenario.Tables.AddOrReplaceByName( new ScenarioTable( variableName, table, this ) );
+									_scenario.Tables.AddOrReplace( new ScenarioTable( variableName, table, this ) );
 							}
 							else if( list != null ) {
 								string[] stringList = list.Cast<object>().Select(
@@ -121,7 +121,7 @@ namespace QAliber.TestModel
 								if (l != null)
 									l.Value = stringList;
 								else
-									_scenario.Lists.AddOrReplaceByName(new ScenarioVariable<string[]>(variableName, stringList, this));
+									_scenario.Lists.AddOrReplace(new ScenarioVariable<string[]>(variableName, stringList, this));
 
 							}
 							else if (val != null)
@@ -130,7 +130,7 @@ namespace QAliber.TestModel
 								if (v != null)
 									v.Value = val.ToString();
 								else
-									_scenario.Variables.AddOrReplaceByName(new ScenarioVariable<string>(variableName, val.ToString(), this));
+									_scenario.Variables.AddOrReplace(new ScenarioVariable<string>(variableName, val.ToString(), this));
 							}
 
 						}

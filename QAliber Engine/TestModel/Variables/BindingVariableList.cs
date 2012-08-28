@@ -29,20 +29,6 @@ namespace QAliber.TestModel.Variables
 			for (int i = 0; i < Count; i++)
 			{
 				TVar item = this[i];
-				if (item.Name == obj.Name && item.TestStep == obj.TestStep)
-				{
-					this[i] = obj;
-					return;
-				}
-			}
-			Add(obj);
-		}
-
-		public void AddOrReplaceByName(TVar obj)
-		{
-			for (int i = 0; i < Count; i++)
-			{
-				TVar item = this[i];
 				if (item.Name == obj.Name)
 				{
 					this[i] = obj;
