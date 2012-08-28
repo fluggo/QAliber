@@ -46,6 +46,9 @@ namespace QAliber.Builder.Presentation
 			this.varsTabControl = new System.Windows.Forms.TabControl();
 			this.varsTabPage = new System.Windows.Forms.TabPage();
 			this.varsDataGridView = new System.Windows.Forms.DataGridView();
+			this._variablesNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._variablesValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._variablesTestStepColumn = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.listsTabPage = new System.Windows.Forms.TabPage();
 			this.listsDataGridView = new System.Windows.Forms.DataGridView();
 			this._listsNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,9 +59,6 @@ namespace QAliber.Builder.Presentation
 			this._tablesNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this._tablesValueColumn = new System.Windows.Forms.DataGridViewLinkColumn();
 			this._tablesTestStepColumn = new System.Windows.Forms.DataGridViewLinkColumn();
-			this._variablesNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._variablesValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._variablesTestStepColumn = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.varsTabControl.SuspendLayout();
 			this.varsTabPage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.varsDataGridView)).BeginInit();
@@ -97,11 +97,10 @@ namespace QAliber.Builder.Presentation
 			this.varsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.varsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.varsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this._variablesNameColumn,
-			this._variablesValueColumn,
-			this._variablesTestStepColumn});
+            this._variablesNameColumn,
+            this._variablesValueColumn,
+            this._variablesTestStepColumn});
 			this.varsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.varsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.varsDataGridView.Location = new System.Drawing.Point(3, 3);
 			this.varsDataGridView.Name = "varsDataGridView";
 			this.varsDataGridView.Size = new System.Drawing.Size(537, 182);
@@ -109,6 +108,28 @@ namespace QAliber.Builder.Presentation
 			this.varsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.varsDataGridView_CellContentClick);
 			this.varsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.HandleVariablesFormatting);
 			this.varsDataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.HandleVariablesDefaultValues);
+			// 
+			// _variablesNameColumn
+			// 
+			this._variablesNameColumn.DataPropertyName = "Name";
+			this._variablesNameColumn.HeaderText = "Name";
+			this._variablesNameColumn.Name = "_variablesNameColumn";
+			// 
+			// _variablesValueColumn
+			// 
+			this._variablesValueColumn.DataPropertyName = "Value";
+			this._variablesValueColumn.HeaderText = "Value";
+			this._variablesValueColumn.Name = "_variablesValueColumn";
+			// 
+			// _variablesTestStepColumn
+			// 
+			this._variablesTestStepColumn.DataPropertyName = "TestStep";
+			this._variablesTestStepColumn.HeaderText = "Defined By";
+			this._variablesTestStepColumn.Name = "_variablesTestStepColumn";
+			this._variablesTestStepColumn.ReadOnly = true;
+			this._variablesTestStepColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this._variablesTestStepColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this._variablesTestStepColumn.TrackVisitedState = false;
 			// 
 			// listsTabPage
 			// 
@@ -127,11 +148,10 @@ namespace QAliber.Builder.Presentation
 			this.listsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.listsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.listsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this._listsNameColumn,
-			this._listsValueColumn,
-			this._listsTestStepColumn});
+            this._listsNameColumn,
+            this._listsValueColumn,
+            this._listsTestStepColumn});
 			this.listsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.listsDataGridView.Location = new System.Drawing.Point(3, 3);
 			this.listsDataGridView.Name = "listsDataGridView";
 			this.listsDataGridView.Size = new System.Drawing.Size(537, 182);
@@ -182,11 +202,10 @@ namespace QAliber.Builder.Presentation
 			this.tablesDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.tablesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.tablesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this._tablesNameColumn,
-			this._tablesValueColumn,
-			this._tablesTestStepColumn});
+            this._tablesNameColumn,
+            this._tablesValueColumn,
+            this._tablesTestStepColumn});
 			this.tablesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tablesDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.tablesDataGridView.Location = new System.Drawing.Point(3, 3);
 			this.tablesDataGridView.Name = "tablesDataGridView";
 			this.tablesDataGridView.Size = new System.Drawing.Size(537, 182);
@@ -215,28 +234,6 @@ namespace QAliber.Builder.Presentation
 			this._tablesTestStepColumn.Name = "_tablesTestStepColumn";
 			this._tablesTestStepColumn.ReadOnly = true;
 			this._tablesTestStepColumn.TrackVisitedState = false;
-			// 
-			// _variablesNameColumn
-			// 
-			this._variablesNameColumn.DataPropertyName = "Name";
-			this._variablesNameColumn.HeaderText = "Name";
-			this._variablesNameColumn.Name = "_variablesNameColumn";
-			// 
-			// _variablesValueColumn
-			// 
-			this._variablesValueColumn.DataPropertyName = "Value";
-			this._variablesValueColumn.HeaderText = "Value";
-			this._variablesValueColumn.Name = "_variablesValueColumn";
-			// 
-			// _variablesTestStepColumn
-			// 
-			this._variablesTestStepColumn.DataPropertyName = "TestStep";
-			this._variablesTestStepColumn.HeaderText = "Defined By";
-			this._variablesTestStepColumn.Name = "_variablesTestStepColumn";
-			this._variablesTestStepColumn.ReadOnly = true;
-			this._variablesTestStepColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this._variablesTestStepColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this._variablesTestStepColumn.TrackVisitedState = false;
 			// 
 			// VariablesPanel
 			// 
