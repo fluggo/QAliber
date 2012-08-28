@@ -123,36 +123,39 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 		public override void Body() {
 			ActualResult = TestCaseResult.Failed;
-			_foundText = string.Empty;
-			Regex regex = null;
-
-			if( _useRegex ) {
-				regex = new Regex( _expectedText, RegexOptions.Singleline | (_caseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase) );
-			}
 
 			_foundText = GetText( _control, true );
 
 			if( _foundText == null )
 				return;
 
-			Log.Default.Info( "Control's text: \"" + _foundText + "\"" );
+			Log.Default.Info( "Found text", _foundText );
 
-			if( regex != null ) {
-				if( !regex.IsMatch( _foundText ) ) {
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-					throw new ArgumentException( "The control's text didn't match the regular expression." );
+			if( _useRegex ) {
+				RegexOptions options = RegexOptions.Singleline;
+
+				if( !_caseSensitive )
+					options |= RegexOptions.IgnoreCase;
+
+				if( !Regex.IsMatch( _foundText, _expectedText, options ) ) {
+					LogFailedByExpectedResult( "Did not match regex",
+						string.Format( "The control's text didn't match the regular expression. Expected \"{0}\", but saw \"{1}\".",
+							_expectedText, _foundText ) );
+					return;
 				}
 			}
-			else if( _caseSensitive && _foundText != _expectedText ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				throw new ArgumentException( "The control's text didn't match the specified text." );
+			else if( _caseSensitive && StringComparer.CurrentCulture.Equals( _foundText, _expectedText ) ) {
+				LogFailedByExpectedResult( "Did not match",
+					string.Format( "The control's text didn't match in a case-sensitive comparison. Expected \"{0}\", but saw \"{1}\".",
+						_expectedText, _foundText ) );
 			}
 			else if( !_caseSensitive && StringComparer.CurrentCultureIgnoreCase.Compare( _foundText, _expectedText ) != 0 ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				throw new ArgumentException( "The control's text didn't match the specified text." );
+				LogFailedByExpectedResult( "Did not match",
+					string.Format( "The control's text didn't match in a case-insensitive comparison. Expected \"{0}\", but saw \"{1}\".",
+						_expectedText, _foundText ) );
 			}
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description {
