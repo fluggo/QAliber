@@ -175,7 +175,6 @@ namespace QAliber.Engine.Win32
 		public static void DoubleClick(MouseButtons button, Point point)
 		{
 			Click(button, point, false);
-			System.Threading.Thread.Sleep(200);
 			Click(button, point, false);
 			System.Threading.Thread.Sleep(PlayerConfig.Default.DelayAfterAction);
 		}
