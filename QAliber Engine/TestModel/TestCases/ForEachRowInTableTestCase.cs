@@ -83,6 +83,9 @@ namespace QAliber.TestModel
 			int j = 0;
 			foreach (DataRow row in dataTable.Rows)
 			{
+				StringBuilder extra = new StringBuilder();
+				extra.AppendLine( "Variables:" );
+
 				for (int i = 0; i < dataTable.Columns.Count; i++)
 				{
 					string name = dataTable.Columns[i].ColumnName;
@@ -91,8 +94,10 @@ namespace QAliber.TestModel
 						name = _tableName + "." + name;
 
 					Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(name, row[i].ToString(), this));
+
+					extra.AppendFormat( "   {0}: {1}", name, row[i].ToString() ).AppendLine();
 				}
-				Log.Default.IndentIn("Iteration on row '" + j + "'");
+				Log.Default.IndentIn("Iteration on row '" + j + "'", extra.ToString());
 				base.Body();
 				Log.Default.IndentOut();
 				if (exitTotally)
