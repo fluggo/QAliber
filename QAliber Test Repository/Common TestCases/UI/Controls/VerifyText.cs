@@ -144,15 +144,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 					return;
 				}
 			}
-			else if( _caseSensitive && StringComparer.CurrentCulture.Equals( _foundText, _expectedText ) ) {
+			else if( _caseSensitive && !StringComparer.CurrentCulture.Equals( _foundText, _expectedText ) ) {
 				LogFailedByExpectedResult( "Did not match",
 					string.Format( "The control's text didn't match in a case-sensitive comparison. Expected \"{0}\", but saw \"{1}\".",
 						_expectedText, _foundText ) );
+				return;
 			}
-			else if( !_caseSensitive && StringComparer.CurrentCultureIgnoreCase.Compare( _foundText, _expectedText ) != 0 ) {
+			else if( !_caseSensitive && !StringComparer.CurrentCultureIgnoreCase.Equals( _foundText, _expectedText ) ) {
 				LogFailedByExpectedResult( "Did not match",
 					string.Format( "The control's text didn't match in a case-insensitive comparison. Expected \"{0}\", but saw \"{1}\".",
 						_expectedText, _foundText ) );
+				return;
 			}
 
 			ActualResult = TestCaseResult.Passed;
