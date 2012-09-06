@@ -7,6 +7,7 @@ using QAliber.Engine.Patterns;
 using System.Xml;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Windows.Automation;
 
 namespace QAliber.Engine.Controls.UIA {
 	/// <summary>
@@ -94,8 +95,15 @@ namespace QAliber.Engine.Controls.UIA {
 				throw new ArgumentNullException( "axis" );
 
 			if( axis == XPath.ChildAxis ) {
-				return new HashSet<IXPathNode>(
-					_owner.GetChildren().Cast<UIAControl>().Select( c => new XPathAdapter( c ) ) );
+				// ElementNotAvailableExceptions are often thrown here; we're going to just
+				// not return any elements in that case
+				try {
+					return new HashSet<IXPathNode>(
+						_owner.GetChildren().Cast<UIAControl>().Select( c => new XPathAdapter( c ) ) );
+				}
+				catch( ElementNotAvailableException ) {
+					return new HashSet<IXPathNode>();
+				}
 			}
 			else if( axis == XPath.AttributeAxis ) {
 				// Find the appropriate attribute on this node
