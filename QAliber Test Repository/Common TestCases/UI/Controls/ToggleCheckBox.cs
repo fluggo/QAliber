@@ -31,7 +31,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		}
 
 		private string _control = "";
-
+		string _targetName = null;
 
 		[Category("Control")]
 		[DisplayName("Control")]
@@ -40,7 +40,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		[DefaultValue("")]
 		public string Control {
 			get { return _control; }
-			set { _control = value; }
+			set {
+				try {
+					_targetName = Util.GetControlNameFromXPath( value );
+				}
+				catch {
+					_targetName = null;
+				}
+
+				OnDefaultNameChanged();
+				_control = value;
+			}
 		}
 
 		private ToggleAction _action = ToggleAction.Toggle;
@@ -51,9 +61,35 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		[DefaultValue(ToggleAction.Toggle)]
 		public ToggleAction Action {
 			get { return _action; }
-			set { _action = value; }
+			set { _action = value; OnDefaultNameChanged(); }
 		}
 
+		protected override string DefaultName {
+			get {
+				if( _targetName != null ) {
+					string name;
+
+					switch( _action ) {
+						case ToggleAction.Off:
+							name = "Uncheck";
+							break;
+
+						case ToggleAction.On:
+							name = "Check";
+							break;
+
+						default:
+						case ToggleAction.Toggle:
+							name = "Toggle";
+							break;
+					}
+
+					return string.Format( "{0} \"{1}\"", name, _targetName );
+				}
+
+				return base.DefaultName;
+			}
+		}
 
 		public override void Body() {
 			ActualResult = TestCaseResult.Failed;
