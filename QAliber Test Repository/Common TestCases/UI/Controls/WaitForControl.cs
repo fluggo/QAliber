@@ -24,6 +24,7 @@ using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -64,10 +65,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 		public override void Body()
 		{
-			string code;
-			bool res = false;
-			
-			code = "UIControlBase c = " + control + ";return c;\n";
+			ActualResult = TestCaseResult.Failed;
+
 			Stopwatch watch = new Stopwatch();
 			string lastException = string.Empty;
 			watch.Start();
@@ -79,27 +78,21 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 					if (c.Exists)
 					{
-						res = true;
-						break;
+						ActualResult = TestCaseResult.Passed;
+						return;
 					}
 				}
 				catch (Exception ex)
 				{
-					lastException = ex.Message;
+					lastException = ex.ToString();
 				}
-			}
-			if (res)
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			else
-			{
-				LogFailedByExpectedResult("Control not found after " + timeout + " miliseconds",control);
-				if (lastException != string.Empty)
-				{
-					Log.Default.Warning("Exception caught", lastException, EntryVerbosity.Debug);
-				}
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 
+			LogFailedByExpectedResult("Control not found after " + timeout + " milliseconds",control);
+			if (lastException != string.Empty)
+			{
+				Log.Default.Warning("Exception caught", lastException, EntryVerbosity.Debug);
+			}
 		}
 
 		public override string Description
