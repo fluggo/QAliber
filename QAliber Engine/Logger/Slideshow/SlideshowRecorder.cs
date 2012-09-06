@@ -73,7 +73,13 @@ namespace QAliber.Logger.Slideshow
 		{
 			if (timer.Enabled)
 				timer.Stop();
-			path = Log.Default.Path + @"\Video";
+
+			Log current = Log.Current;
+
+			if( current == null )
+				return;
+
+			path = current.Path + @"\Video";
 			this.name = name;
 			currentIndex = 0;
 			Directory.CreateDirectory(path);

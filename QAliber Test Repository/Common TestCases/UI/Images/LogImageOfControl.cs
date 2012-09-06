@@ -74,7 +74,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			}
 
 			Bitmap image = c.GetImage();
-			Logger.Log.Default.Image(image, logDescription);
+			Log.Image(image, logDescription);
 
 		}
 

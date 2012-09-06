@@ -43,7 +43,7 @@ namespace QAliber.TestModel
 			object conditionResult = null;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Text, out conditionResult);
 			switchConditionValue = conditionResult.ToString();
-			Log.Default.Info("Switch value = " + switchConditionValue);
+			Log.Info("Switch value = " + switchConditionValue);
 			base.Body();
 		}
 

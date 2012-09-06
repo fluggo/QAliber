@@ -118,7 +118,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				Log.Default.Error( "Control not found" );
+				Log.Error( "Control not found" );
 				return;
 			}
 

@@ -83,7 +83,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 			if( c == null || !c.Exists ) {
 				if( logErrors )
-					Log.Default.Error( "Control not found", control );
+					Log.Error( "Control not found", control );
 
 				return null;
 			}
@@ -96,7 +96,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 				if( c == null || (list = c.GetControlInterface<IListPattern>()) == null ) {
 					if( logErrors )
-						Log.Default.Error( "Couldn't find a way to read the list." );
+						Log.Error( "Couldn't find a way to read the list." );
 
 					return null;
 				}
@@ -124,7 +124,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			string[] items = _resultList;
 
 			// Go ahead and log the capture
-			Log.Default.Info( "Captured list", string.Join( "\r\n", _resultList ) );
+			Log.Info( "Captured list", string.Join( "\r\n", _resultList ) );
 
 			// Shortcut out on some special cases
 			if( items.Length < testList.Length ) {
@@ -282,7 +282,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			ScenarioVariable<string[]> testListVar = Scenario.Lists[_variable];
 
 			if( testListVar == null ) {
-				Log.Default.Error( "Could not find variable \"" + _variable + "\"" );
+				Log.Error( "Could not find variable \"" + _variable + "\"" );
 				return null;
 			}
 
@@ -292,7 +292,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			if( _verifyItems.Length != 0 ) {
 				foreach( int index in _verifyItems ) {
 					if( index >= _verifyItems.Length ) {
-						Log.Default.Error( "Verify Items refers to an invalid item",
+						Log.Error( "Verify Items refers to an invalid item",
 							"The Verify Items property refers to an item that's not in the source list." );
 						return null;
 					}

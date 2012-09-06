@@ -72,7 +72,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				Logger.Log.Default.Error( "Couldn't find control", control );
+				Logger.Log.Error( "Couldn't find control", control );
 				ActualResult = RemotingModel.TestCaseResult.Failed;
 				return;
 			}
@@ -81,21 +81,21 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 			if( textPattern != null ) {
 				text = textPattern.Text;
-				Logger.Log.Default.Info("Found text property", text);
+				Logger.Log.Info("Found text property", text);
 				return;
 			}
 
 			if (c is QAliber.Engine.Controls.Web.WebControl)
 			{
 				text = ((QAliber.Engine.Controls.Web.WebControl)c).InnerText;
-				Logger.Log.Default.Info("Found inner text property of web control", text);
+				Logger.Log.Info("Found inner text property of web control", text);
 				return;
 			}
 
-			Logger.Log.Default.Info("Couldn't find a text property, trying to do optical character recognition");
+			Logger.Log.Info("Couldn't find a text property, trying to do optical character recognition");
 			OCRItem ocrItem = new OCRItem(c.GetImage());
 			text = ocrItem.ProcessImage();
-			Logger.Log.Default.Info("OCR result = " + text);
+			Logger.Log.Info("OCR result = " + text);
 			
 		}
 

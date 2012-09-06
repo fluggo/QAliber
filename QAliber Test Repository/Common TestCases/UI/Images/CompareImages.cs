@@ -98,12 +98,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			Bitmap image2 = Bitmap.FromFile(file2) as Bitmap;
 			if (postDifference)
 			{
-				Log.Default.Image(image1, "Image of '" + file1 + "'");
-				Log.Default.Image(image2, "Image of '" + file2 + "'");
+				Log.Image(image1, "Image of '" + file1 + "'");
+				Log.Image(image2, "Image of '" + file2 + "'");
 			}
 			if (image1.Width != image2.Width || image1.Height != image2.Height)
 			{
-				Log.Default.Error("Sizes are different", image1.Size + "\n" + image2.Size);
+				Log.Error("Sizes are different", image1.Size + "\n" + image2.Size);
 				ActualResult = TestCaseResult.Failed;
 			}
 			else
@@ -125,8 +125,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 				}
 				if (diffPixels / totalPixels > (double)tolerance / 100.0)
 				{
-					Log.Default.Error("Images are not equal!");
-					Log.Default.Image(diffImage, "Difference Image");
+					Log.Error("Images are not equal!");
+					Log.Image(diffImage, "Difference Image");
 					ActualResult = TestCaseResult.Failed;
 				}
 			}

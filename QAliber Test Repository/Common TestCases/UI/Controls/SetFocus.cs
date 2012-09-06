@@ -95,10 +95,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			}
 
 			if( c == null || !c.Exists ) {
-				Log.Default.Error( "Control not found after " + _timeout + " milliseconds", _control );
+				Log.Error( "Control not found after " + _timeout + " milliseconds", _control );
 
 				if( lastException != null ) {
-					Log.Default.Warning( "Exception caught", lastException, EntryVerbosity.Debug );
+					Log.Warning( "Exception caught", lastException, EntryVerbosity.Debug );
 				}
 
 				return;

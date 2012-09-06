@@ -47,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(regkey))
 			{
 				if (key == null)
-					Log.Default.Warning("Key does not exist in registry");
+					Log.Warning("Key does not exist in registry");
 				else
 					key.DeleteValue(regVal);
 			}

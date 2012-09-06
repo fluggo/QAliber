@@ -195,7 +195,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			ScenarioVariable<DataTable> testTableVar = Scenario.Tables[_variable];
 
 			if( testTableVar == null ) {
-				Log.Default.Error( "Could not find variable \"" + _variable + "\"" );
+				Log.Error( "Could not find variable \"" + _variable + "\"" );
 				return;
 			}
 
@@ -209,7 +209,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			else {
 				foreach( int rowIndex in _verifyRows ) {
 					if( rowIndex >= testTableVar.Value.Rows.Count ) {
-						Log.Default.Error( "Verify Rows refers to an invalid row",
+						Log.Error( "Verify Rows refers to an invalid row",
 							"The Verify Rows property refers to a row that's not in the source table." );
 						return;
 					}
@@ -225,7 +225,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 					verifyColumns.Except( testTable.Columns.Cast<DataColumn>().Select( col => col.ColumnName ) ).ToArray();
 
 				if( verifyColumnsNotFound.Length != 0 ) {
-					Log.Default.Error( "Verify Columns refers to an invalid column",
+					Log.Error( "Verify Columns refers to an invalid column",
 						"The Verify Columns property refers to one or more invalid columns: " +
 							string.Join( ", ", verifyColumnsNotFound ) );
 					return;
@@ -241,14 +241,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			UIControlBase c = UIControlBase.FindControlByPath( _control );
 
 			if( c == null || !c.Exists ) {
-				Log.Default.Error( "Control not found", _control );
+				Log.Error( "Control not found", _control );
 				return;
 			}
 
 			IGridPattern grid = c.GetControlInterface<IGridPattern>();
 
 			if( grid == null ) {
-				Log.Default.Error( "Can't capture grid", "Couldn't find an appropriate way to get at grid data." );
+				Log.Error( "Can't capture grid", "Couldn't find an appropriate way to get at grid data." );
 				return;
 			}
 
@@ -264,7 +264,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 			if( headers != null && headers.Distinct().Count() != headers.Length ) {
 				columnsUnique = false;
-				Log.Default.Warning( "Duplicate column names", "Could not produce an output table because there are two columns with the same name." );
+				Log.Warning( "Duplicate column names", "Could not produce an output table because there are two columns with the same name." );
 			}
 
 			// Create the grid result table
@@ -299,7 +299,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			if( headers != null )
 				rowText = "[" + string.Join( ", ", headers ) + "]\r\n" + rowText;
 
-			Log.Default.Info( "Captured grid", rowText );
+			Log.Info( "Captured grid", rowText );
 
 			// Shortcut out on some special cases
 			if( rows.Length < testTable.Rows.Count ) {

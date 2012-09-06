@@ -120,7 +120,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 			if( !c.Exists ) {
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				Log.Default.Error( "Control not found" );
+				Log.Error( "Control not found" );
 				return;
 			}
 

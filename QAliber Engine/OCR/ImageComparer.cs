@@ -56,13 +56,13 @@ namespace QAliber.ImageHandling
 			
 			if (postDiff)
 			{
-				Log.Default.Image(bmp1, "First Image");
-				Log.Default.Image(bmp2, "Second Image");
+				Log.Image(bmp1, "First Image");
+				Log.Image(bmp2, "Second Image");
 			}
 			if (bmp1.Width != bmp2.Width || bmp1.Height != bmp2.Height)
 			{
 				if (postDiff)
-					Log.Default.Error("Sizes are different", bmp1.Size + "\n" + bmp2.Size);
+					Log.Error("Sizes are different", bmp1.Size + "\n" + bmp2.Size);
 				return false;
 			}
 			else
@@ -86,8 +86,8 @@ namespace QAliber.ImageHandling
 				{
 					if (postDiff)
 					{
-						Log.Default.Error("Images are not equal!");
-						Log.Default.Image(diffImage, "Difference Image");
+						Log.Error("Images are not equal!");
+						Log.Image(diffImage, "Difference Image");
 					}
 					return false;
 					

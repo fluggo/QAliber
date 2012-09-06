@@ -236,7 +236,7 @@ namespace QAliber.TestModel
 		/// </summary>
 		public void Stop()
 		{
-			Log.Default.Warning("Automatic run was aborted by the user", "", EntryVerbosity.Internal);
+			Log.Warning("Automatic run was aborted by the user", "", EntryVerbosity.Internal);
 			TestCase.ExitTotally = true;
 			new Thread(new ThreadStart(StopAsync)).Start();
 		}
@@ -412,39 +412,43 @@ namespace QAliber.TestModel
 
 		private void ExecutionWorker()
 		{
-			try
-			{
-				Log.Default.Filename = CreateLogDirectory() + @"\Run.qlog";
-				TestCase.ExitTotally = false;
-				TestCase.BranchesToBreak = 0;
-				scenario.Run();
+			string logfile = CreateLogDirectory() + @"\Run.qlog";
+
+			try {
+				using( Log log = new Log( logfile ) ) {
+					Log.Current = log;
+					TestCase.ExitTotally = false;
+					TestCase.BranchesToBreak = 0;
+					scenario.Run();
+				}
 			}
-			finally
-			{
-				Log.Default.Dispose();
-				RaiseExecutionStateChanged(ExecutionState.Executed);
-				RaiseLogResultArrived(Log.Default.Filename);
+			finally {
+				Log.Current = null;
+
+				RaiseExecutionStateChanged( ExecutionState.Executed );
+				RaiseLogResultArrived( logfile );
 			}
 		}
 
 		private void TestExecutionWorker(object testcase)
 		{
 			bool oldEnabled = ((TestCase) testcase).MarkedForExecution;
+			string logfile = CreateLogDirectory() + @"\Testcase.qlog";
 
-			try
-			{
-				Log.Default.Filename = CreateLogDirectory() + @"\Testcase.qlog";
-				TestCase.ExitTotally = false;
-				TestCase.BranchesToBreak = 0;
-				((TestCase) testcase).MarkedForExecution = true;
-				((TestCase)testcase).Run();
+			try {
+				using( Log log = new Log( logfile ) ) {
+					Log.Current = log;
+					TestCase.ExitTotally = false;
+					TestCase.BranchesToBreak = 0;
+					((TestCase) testcase).MarkedForExecution = true;
+					((TestCase)testcase).Run();
+				}
 			}
-			finally
-			{
+			finally {
+				Log.Current = null;
 				((TestCase) testcase).MarkedForExecution = oldEnabled;
-				Log.Default.Dispose();
 				RaiseExecutionStateChanged(ExecutionState.Executed);
-				RaiseLogResultArrived(Log.Default.Filename);
+				RaiseLogResultArrived(logfile);
 			}
 		}
 

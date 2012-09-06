@@ -44,7 +44,7 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			ProcessStartInfo psi = new ProcessStartInfo("logman",
-				string.Format("update {0} -f csv -o \"{1}\\perflog.csv\"", perfname, Log.Default.Path));
+				string.Format("update {0} -f csv -o \"{1}\\perflog.csv\"", perfname, Log.Current.Path));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;
 			Process p = Process.Start(psi);
 			if (!p.WaitForExit(20000))

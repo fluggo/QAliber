@@ -103,7 +103,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 			if( c == null || !c.Exists ) {
 				if( logErrors )
-					Log.Default.Error( "Control not found" );
+					Log.Error( "Control not found" );
 
 				return null;
 			}
@@ -113,7 +113,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			if( text == null ) {
 				// TODO: Add support for HTML controls (or REALLY do generic implementations on the interfaces)
 				if( logErrors )
-					Log.Default.Error( "Couldn't find an appropriate way to get text from the control." );
+					Log.Error( "Couldn't find an appropriate way to get text from the control." );
 
 				return null;
 			}
@@ -129,7 +129,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			if( _foundText == null )
 				return;
 
-			Log.Default.Info( "Found text", _foundText );
+			Log.Info( "Found text", _foundText );
 
 			if( _useRegex ) {
 				RegexOptions options = RegexOptions.Singleline;

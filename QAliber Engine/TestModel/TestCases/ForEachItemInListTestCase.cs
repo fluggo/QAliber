@@ -67,9 +67,9 @@ namespace QAliber.TestModel
 			foreach (string obj in vals)
 			{
 				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
-				Log.Default.IndentIn("Iteration on item '" + obj.ToString() + "'");
+				Log.IndentIn("Iteration on item '" + obj.ToString() + "'");
 				base.Body();
-				Log.Default.IndentOut();
+				Log.IndentOut();
 				if (exitTotally)
 					break;
 				if (branchesToBreak > 0)

@@ -102,7 +102,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			string path = Path.Combine( Path.GetDirectoryName( Scenario.Filename ), file );
 
 			if( !System.IO.File.Exists( path ) ) {
-				Log.Default.Error( "Could not find image file",
+				Log.Error( "Could not find image file",
 					"Could not find image file at " + path, EntryVerbosity.Normal );
 				ActualResult = TestCaseResult.Failed;
 				return;
@@ -131,7 +131,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 			} while( watch.ElapsedMilliseconds < timeout + 3000 );
 
 			LogFailedByExpectedResult("Couldn't find the image within the desktop in the timeout given", "");
-			Log.Default.Info( "Best match", string.Format(
+			Log.Info( "Best match", string.Format(
 				"Best match was at {0}, but only matched {1:p} (expected {2})", rect, correlation, _correlationPercent ) );
 			ActualResult = TestCaseResult.Failed;
 

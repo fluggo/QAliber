@@ -87,7 +87,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( c == null || !c.Exists ) {
-				Log.Default.Error( "Control not found" );
+				Log.Error( "Control not found" );
 				return;
 			}
 
@@ -98,7 +98,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 				c = c.Parent;
 
 				if( c == null || (listPattern = c.GetControlInterface<IListPattern>()) == null ) {
-					Log.Default.Error( "Control doesn't look like a list",
+					Log.Error( "Control doesn't look like a list",
 						"Couldn't find an appropriate way to find and select items in the list." );
 					return;
 				}
@@ -107,7 +107,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			UIAControl item = listPattern.GetItem( _item );
 
 			if( item == null || !item.Exists ) {
-				Log.Default.Error( "Item \"" + _item + "\" not found" );
+				Log.Error( "Item \"" + _item + "\" not found" );
 				return;
 			}
 
@@ -116,7 +116,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			if( selectionPattern == null ) {
 				// There are probably other ways to select an item, but we'll
 				// leave it at this for now
-				Log.Default.Error( "Item not selectable", "Couldn't find an appropriate way to select the item." );
+				Log.Error( "Item not selectable", "Couldn't find an appropriate way to select the item." );
 				return;
 			}
 

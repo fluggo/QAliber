@@ -34,7 +34,7 @@ namespace QAliber.TestModel
 
 			if (expectedCase == SwitchTestCase.switchConditionValue)
 			{
-				Log.Default.Info("Last switch = " + SwitchTestCase.switchConditionValue);
+				Log.Info("Last switch = " + SwitchTestCase.switchConditionValue);
 				base.Body();
 			}
 		}

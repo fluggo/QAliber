@@ -72,13 +72,13 @@ namespace QAliber.TestModel
 						ActualResult = TestCaseResult.Failed;
 						if (child.ExitOnError)
 						{
-							Log.Default.Error("Stop on error was requested for this step, exiting");
+							Log.Error("Stop on error was requested for this step, exiting");
 							exitTotally = true;
 							break;
 						}
 						if (child.ExitBranchOnError)
 						{
-							Log.Default.Info("Exiting from branch on error as requested");
+							Log.Info("Exiting from branch on error as requested");
 							stopRunning = true;
 						}
 					}

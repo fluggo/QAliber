@@ -523,7 +523,7 @@ namespace QAliber.Engine.Controls.UIA
 					}
 					System.Threading.Thread.Sleep(50);
 				}
-				QAliber.Logger.Log.Default.Warning(
+				Log.Warning(
 					string.Format("Cannot find control [{0}, {1}] for control {2}",
 									id, idIndex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 			}
@@ -818,7 +818,7 @@ namespace QAliber.Engine.Controls.UIA
 					.FirstOrDefault( child => StringComparer.InvariantCultureIgnoreCase.Equals( child.Cached.Name, name ) );
 
 				if( target == null ) {
-					Log.Default.Error( "Could not find name " + name + " in '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal );
+					Log.Error( "Could not find name " + name + " in '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal );
 					return;
 				}
 
@@ -828,7 +828,7 @@ namespace QAliber.Engine.Controls.UIA
 				}
 				else {
 					// Try to click it
-					QAliber.Logger.Log.Default.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
+					Log.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
 					new UIAControl( target ).Click();
 				}
 			}
@@ -848,7 +848,7 @@ namespace QAliber.Engine.Controls.UIA
 				AutomationElement target = children.Cast<AutomationElement>().ElementAtOrDefault( index );
 
 				if( target == null ) {
-					Log.Default.Error( "Could not find index " + index + " in '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal );
+					Log.Error( "Could not find index " + index + " in '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal );
 					return;
 				}
 
@@ -858,7 +858,7 @@ namespace QAliber.Engine.Controls.UIA
 				}
 				else {
 					// Try to click it
-					QAliber.Logger.Log.Default.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
+					Log.Warning( "Could not find the item selectable, trying to click it", "", EntryVerbosity.Internal );
 					new UIAControl( target ).Click();
 				}
 			}
@@ -866,7 +866,7 @@ namespace QAliber.Engine.Controls.UIA
 			public UIAControl[] SelectedItems {
 				get {
 					if( _pattern == null ) {
-						Log.Default.Error( "Could not get selection for " + _element.Cached.ControlType.ProgrammaticName +
+						Log.Error( "Could not get selection for " + _element.Cached.ControlType.ProgrammaticName +
 							" '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal);
 
 						return new UIAControl[0];
@@ -895,7 +895,7 @@ namespace QAliber.Engine.Controls.UIA
 			public bool CanSelectMultiple {
 				get {
 					if( _pattern == null ) {
-						Log.Default.Error( "Selection pattern not supported on " + _element.Cached.ControlType.ProgrammaticName +
+						Log.Error( "Selection pattern not supported on " + _element.Cached.ControlType.ProgrammaticName +
 							" '" + _element.Cached.Name + "'", "", EntryVerbosity.Internal);
 
 						return false;

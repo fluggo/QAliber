@@ -62,12 +62,12 @@ namespace QAliber.TestModel
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			if ((bool)conditionResult)
 			{
-				Log.Default.Info(cSharpExpression + " = true");
+				Log.Info(cSharpExpression + " = true");
 				base.Body();
 			}
 			else
 			{
-				Log.Default.Info(cSharpExpression + " = false");
+				Log.Info(cSharpExpression + " = false");
 			}
 		}
 

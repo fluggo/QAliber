@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Globalization;
+using QAliber.RemotingModel;
 
 namespace QAliber.Logger
 {
@@ -26,325 +28,290 @@ namespace QAliber.Logger
 	/// </summary>
 	public class Log : IDisposable
 	{
-		private Log()
-		{
+		string _filename;
+		StreamWriter _writer;
+		int _indents = 0;
+		int _imageCount = 0;
+
+		public Log( string filename ) {
+			_filename = filename;
+			_writer = new StreamWriter(filename);
+			_writer.WriteLine(@"<?xml version=""1.0"" encoding=""utf-8""?>");
+			_writer.WriteLine("<LogEntries>");
 		}
 
 		/// <summary>
-		/// Logs an information entry to the log
+		/// Writes a text entry to the log.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		/// <param name="style">The style of the message</param>
-		public void Info(string message, string extra, EntryVerbosity verbosity, EntryStyle style)
-		{
-			if (enabled)
-			{
-				LogEntry entry = new LogEntry();
-				entry.Time = DateTime.Now;
-				entry.Message = message;
-				entry.ExtendedMessage = extra;
-				entry.Body = BodyType.Text;
-				entry.Type = EntryType.Info;
-				entry.Verbosity = verbosity;
-				entry.Style = style;
+		/// <param name="type">The type of message.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public void WriteEntry( EntryType type, string message, string details, EntryVerbosity verbosity ) {
+			LogEntry entry = new LogEntry();
+			entry.Time = DateTime.Now;
+			entry.Message = message;
+			entry.ExtendedMessage = details ?? string.Empty;
+			entry.Body = BodyType.Text;
+			entry.Type = type;
+			entry.Verbosity = verbosity;
+			entry.Style = new EntryStyle(verbosity);
 
-				entry.ToXml(writer, indents);
-				writer.Flush();
+			EventHandler<LogEventArgs> handler = null;
+
+			if( type == EntryType.Warning )
+				handler = BeforeWarningIsPosted;
+			else if( type == EntryType.Error )
+				handler = BeforeErrorIsPosted;
+
+			if( handler != null )
+				handler( this, new LogEventArgs( entry ) );
+
+			if( entry.Enabled ) {
+				entry.ToXml(_writer, _indents);
+				_writer.Flush();
 			}
-
 		}
 
 		/// <summary>
-		/// Logs an information entry to the log
+		/// Writes an image entry to the log.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		public void Info(string message, string extra, EntryVerbosity verbosity)
-		{
-			Info(message, extra, verbosity, new EntryStyle(verbosity));
+		/// <param name="image">The image to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public void WriteImageEntry( Image image, string message, string details, EntryVerbosity verbosity ) {
+			LogEntry entry = new LogEntry();
+			entry.Time = DateTime.Now;
+			entry.Message = message;
+			entry.ExtendedMessage = details;
+			entry.Body = BodyType.Picture;
+			entry.Type = EntryType.Info;
+			entry.Verbosity = verbosity;
+			entry.Style = new EntryStyle( verbosity );
+
+			string imageFile = Path + @"\image" + _imageCount.ToString( CultureInfo.InvariantCulture ) + ".png";
+			image.Save(imageFile, System.Drawing.Imaging.ImageFormat.Png);
+			entry.Link = imageFile;
+			_imageCount++;
+
+			entry.ToXml(_writer, _indents);
+			_writer.Flush();
 		}
 
 		/// <summary>
-		/// Logs an information entry to the log
+		/// Writes a link entry to the log.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		public void Info(string message, string extra)
-		{
-			Info(message, extra, EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="link">The link to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public void WriteLinkEntry( string link, string message, string details, EntryVerbosity verbosity ) {
+			LogEntry entry = new LogEntry();
+			entry.Time = DateTime.Now;
+			entry.Message = message;
+			entry.ExtendedMessage = details;
+			entry.Body = BodyType.Link;
+			entry.Type = EntryType.Info;
+			entry.Verbosity = verbosity;
+			entry.Style = new EntryStyle( verbosity );
+			entry.Link = link;
+
+			entry.ToXml(_writer, _indents);
+			_writer.Flush();
 		}
 
 		/// <summary>
-		/// Logs an information entry to the log
+		/// Creates a new level in the test log.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		public void Info(string message)
-		{
-			Info(message, "", EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="isTestStep">True if this is the start of a new test step, false otherwise.</param>
+		public void StartFolder( string message, string details, bool isTestStep ) {
+			string tabs = new string( '\t', _indents + 1 );
 
+			if( isTestStep )
+				_writer.WriteLine(tabs + "<TestCase>" + System.Security.SecurityElement.Escape(message) + "</TestCase>");
+
+			_writer.WriteLine(tabs + "<ChildEntries>");
+				
+			_indents++;
+			WriteEntry( EntryType.Info, message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a warning entry to the log
+		/// Ends a level in the test log.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		/// <param name="style">The style of the message</param>
-		public void Warning(string message, string extra, EntryVerbosity verbosity, EntryStyle style)
-		{
-			if (enabled)
-			{
-				LogEntry entry = new LogEntry();
-				entry.Time = DateTime.Now;
-				entry.Message = message;
-				entry.ExtendedMessage = extra;
-				entry.Body = BodyType.Text;
-				entry.Type = EntryType.Warning;
-				entry.Verbosity = verbosity;
-				entry.Style = style;
-
-				if (BeforeWarningIsPosted != null)
-					BeforeWarningIsPosted(this, new LogEventArgs(entry));
-				if (entry.Enabled)
-				{
-					entry.ToXml(writer, indents);
-					writer.Flush();
-				}
+		private void EndFolder() {
+			if( _indents > 0 ) {
+				string tabs = new string( '\t', _indents );
+				_writer.WriteLine(tabs + "</ChildEntries>");
+				_indents--;
+				_writer.Flush();
 			}
-
 		}
 
 		/// <summary>
-		/// Logs a warning entry to the log
+		/// Writes an info log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		public void Warning(string message, string extra, EntryVerbosity verbosity)
-		{
-			Warning(message, extra, verbosity, new EntryStyle(verbosity));
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public static void Info( string message, string details, EntryVerbosity verbosity ) {
+			Log log = _currentLog;
+
+			if( log != null )
+				log.WriteEntry( EntryType.Info, message, details, verbosity );
 		}
 
 		/// <summary>
-		/// Logs a warning entry to the log
+		/// Writes an info log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		public void Warning(string message, string extra)
-		{
-			Warning(message, extra, EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		public static void Info( string message, string details ) {
+			Info( message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a warning entry to the log
+		/// Writes an info log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		public void Warning(string message)
-		{
-			Warning(message, "", EntryVerbosity.Normal, new EntryStyle());
-
+		/// <param name="message">The message for this entry.</param>
+		public static void Info( string message ) {
+			Info( message, null, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs an error entry to the log
+		/// Writes a warning log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		/// <param name="style">The style of the message</param>
-		public void Error(string message, string extra, EntryVerbosity verbosity, EntryStyle style)
-		{
-			if (enabled)
-			{
-				LogEntry entry = new LogEntry();
-				entry.Time = DateTime.Now;
-				entry.Message = message;
-				entry.ExtendedMessage = extra;
-				entry.Body = BodyType.Text;
-				entry.Type = EntryType.Error;
-				entry.Verbosity = verbosity;
-				entry.Style = style;
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public static void Warning( string message, string details, EntryVerbosity verbosity ) {
+			Log log = _currentLog;
 
-				if (BeforeErrorIsPosted != null)
-					BeforeErrorIsPosted(this, new LogEventArgs(entry));
-
-				if (entry.Enabled)
-				{
-					entry.ToXml(writer, indents);
-					writer.Flush();
-				}
-			}
-
+			if( log != null )
+				log.WriteEntry( EntryType.Warning, message, details, verbosity );
 		}
 
 		/// <summary>
-		/// Logs an error entry to the log
+		/// Writes a warning log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		public void Error(string message, string extra, EntryVerbosity verbosity)
-		{
-			Error(message, extra, verbosity, new EntryStyle(verbosity));
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		public static void Warning( string message, string details ) {
+			Warning( message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs an error entry to the log
+		/// Writes a warning log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		public void Error(string message, string extra)
-		{
-			Error(message, extra, EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="message">The message for this entry.</param>
+		public static void Warning( string message ) {
+			Warning( message, null, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs an error entry to the log
+		/// Writes an error log entry to the current log, if any.
 		/// </summary>
-		/// <param name="message">The message to log</param>
-		public void Error(string message)
-		{
-			Error(message, "", EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public static void Error( string message, string details, EntryVerbosity verbosity ) {
+			Log log = _currentLog;
 
+			if( log != null )
+				log.WriteEntry( EntryType.Error, message, details, verbosity );
 		}
 
 		/// <summary>
-		/// Logs a picture entry to the log
+		/// Writes an error log entry to the current log, if any.
 		/// </summary>
-		/// <param name="image">The image to log</param>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		/// <param name="style">The style of the message</param>
-		public void Image(Image image, string message, string extra, EntryVerbosity verbosity, EntryStyle style)
-		{
-			if (enabled)
-			{
-				LogEntry entry = new LogEntry();
-				entry.Time = DateTime.Now;
-				entry.Message = message;
-				entry.ExtendedMessage = extra;
-				entry.Body = BodyType.Picture;
-				entry.Type = EntryType.Info;
-				entry.Verbosity = verbosity;
-				entry.Style = style;
-
-				string imageFile = System.IO.Path.GetDirectoryName(filename) + @"\image" + imageCounter + ".jpg";
-				image.Save(imageFile, System.Drawing.Imaging.ImageFormat.Jpeg);
-				entry.Link = imageFile;
-				imageCounter++;
-
-				entry.ToXml(writer, indents);
-				writer.Flush();
-			}
-
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		public static void Error( string message, string details ) {
+			Error( message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a picture entry to the log
+		/// Writes an error log entry to the current log, if any.
 		/// </summary>
-		/// <param name="image">The image to log</param>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		public void Image(Image image, string message, string extra, EntryVerbosity verbosity)
-		{
-			Image(image, message, extra, verbosity, new EntryStyle(verbosity));
+		/// <param name="message">The message for this entry.</param>
+		public static void Error( string message ) {
+			Error( message, null, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a picture entry to the log
+		/// Writes an image entry to the current log, if any.
 		/// </summary>
-		/// <param name="image">The image to log</param>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		public void Image(Image image, string message, string extra)
-		{
-			Image(image, message, extra, EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="image">The image to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public static void Image( Image image, string message, string details, EntryVerbosity verbosity ) {
+			Log log = _currentLog;
+
+			if( log != null )
+				log.WriteImageEntry( image, message, details, verbosity );
 		}
 
 		/// <summary>
-		/// Logs a picture entry to the log
+		/// Writes an image entry to the current log, if any.
 		/// </summary>
-		/// <param name="image">The image to log</param>
-		/// <param name="message">The message to log</param>
-		public void Image(Image image, string message)
-		{
-			Image(image, message, "", EntryVerbosity.Normal, new EntryStyle());
-
+		/// <param name="image">The image to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		public static void Image( Image image, string message, string details ) {
+			Image( image, message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a link entry to the log
+		/// Writes an image entry to the current log, if any.
 		/// </summary>
-		/// <param name="link">The link to launch</param>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		/// <param name="style">The style of the message</param>
-		public void Link(string link, string message, string extra, EntryVerbosity verbosity, EntryStyle style)
-		{
-			if (enabled)
-			{
-				LogEntry entry = new LogEntry();
-				entry.Time = DateTime.Now;
-				entry.Message = message;
-				entry.ExtendedMessage = extra;
-				entry.Body = BodyType.Link;
-				entry.Type = EntryType.Info;
-				entry.Verbosity = verbosity;
-				entry.Style = style;
-				entry.Link = link;
-
-				entry.ToXml(writer, indents);
-				writer.Flush();
-			}
-
+		/// <param name="image">The image to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		public static void Image( Image image, string message ) {
+			Image( image, message, null, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a link entry to the log
+		/// Writes a link log entry to the current log, if any.
 		/// </summary>
-		/// <param name="link">The link to launch</param>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="verbosity">The verbosity of the message</param>
-		public void Link(string link, string message, string extra, EntryVerbosity verbosity)
-		{
-			Link(link, message, extra, verbosity, new EntryStyle(verbosity));
+		/// <param name="link">The link to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		/// <param name="verbosity">The verbosity level of this entry.</param>
+		public static void Link( string link, string message, string details, EntryVerbosity verbosity ) {
+			Log log = _currentLog;
+
+			if( log != null )
+				log.WriteLinkEntry( link, message, details, verbosity );
 		}
 
 		/// <summary>
-		/// Logs a link entry to the log
+		/// Writes a link log entry to the current log, if any.
 		/// </summary>
-		/// <param name="link">The link to launch</param>
-		/// <param name="message">The message to log</param>
-		/// <param name="extra">An additional info to log</param>
-		public void Link(string link, string message, string extra)
-		{
-			Link(link, message, extra, EntryVerbosity.Normal, new EntryStyle());
+		/// <param name="link">The link to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		/// <param name="details">Optional detailed information for this entry.</param>
+		public static void Link( string link, string message, string details ) {
+			Link( link, message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
-		/// Logs a link entry to the log
+		/// Writes a link log entry to the current log, if any.
 		/// </summary>
-		/// <param name="link">The link to launch</param>
-		/// <param name="message">The message to log</param>
-		public void Link(string link, string message)
-		{
-			Link(link, message, "", EntryVerbosity.Normal, new EntryStyle());
-
+		/// <param name="link">The link to log.</param>
+		/// <param name="message">The message for this entry.</param>
+		public static void Link( string link, string message ) {
+			Link( link, message, null, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
 		/// Creates a folder in the log (for structured report)
 		/// </summary>
 		/// <param name="message">The message to show on the folder</param>
-		public void IndentIn(string message)
+		public static void IndentIn(string message)
 		{
 			IndentIn(message, "");
 		}
@@ -355,18 +322,12 @@ namespace QAliber.Logger
 		/// <param name="message">The message to show on the folder</param>
 		/// <param name="extra">An additional info to log</param>
 		/// <param name="isTestCase">For internal use, this should always be set to false</param>
-		public void IndentIn(string message, string extra, bool isTestCase)
+		public static void IndentIn(string message, string extra, bool isTestCase)
 		{
-			if (enabled)
-			{
-				string tabs = new string( '\t', indents + 1 );
-				if (isTestCase)
-					writer.WriteLine(tabs + "<TestCase>" + System.Security.SecurityElement.Escape(message) + "</TestCase>");
-				writer.WriteLine(tabs + "<ChildEntries>");
-				
-				indents++;
-				Info(message, extra);
-			}
+			Log log = _currentLog;
+
+			if( log != null )
+				log.StartFolder( message, extra, isTestCase );
 		}
 
 		/// <summary>
@@ -374,7 +335,7 @@ namespace QAliber.Logger
 		/// </summary>
 		/// <param name="message">The message to show on the folder</param>
 		/// <param name="extra">An additional info to log</param>
-		public void IndentIn(string message, string extra)
+		public static void IndentIn(string message, string extra)
 		{
 			IndentIn(message, extra, false);
 		}
@@ -382,39 +343,34 @@ namespace QAliber.Logger
 		/// <summary>
 		/// Close a floder
 		/// </summary>
-		public void IndentOut()
+		public static void IndentOut()
 		{
-			IndentOut(false);
+			Log log = _currentLog;
+
+			if( log != null )
+				log.EndFolder();
 		}
 
 		/// <summary>
-		/// Close a floder
+		/// Logs the result of a test case.
 		/// </summary>
-		private void IndentOut(bool disposing)
+		/// <param name="result">The result of the test case.</param>
+		/// <remarks>TestCase uses this method to mark the final result of a test step. Please don't call it yourself.</remarks>
+		public void WriteResult(TestCaseResult result)
 		{
-			if ((enabled || disposing) && indents > 0)
-			{
-				string tabs = new string( '\t', indents );
-				writer.WriteLine(tabs + "</ChildEntries>");
-				indents--;
-				writer.Flush();
-			}
+			string tabs = new string( '\t', _indents + 1 );
+			_writer.WriteLine(tabs + "<LogResult>" + result.ToString() + "</LogResult>");
+			_writer.Flush();
 		}
 
 		/// <summary>
-		/// Logs the result of a testcase
-		/// <remarks>This method should not be called outside of QAliber engine</remarks>
+		/// Logs the result of a test case.
 		/// </summary>
-		/// <param name="result">The result of the test case</param>
-		public void Result(QAliber.RemotingModel.TestCaseResult result)
-		{
-			string tabs = new string( '\t', indents + 1 );
-			lock (this)
-			{
-				writer.WriteLine(tabs + "<LogResult>" + result.ToString() + "</LogResult>");
-				writer.Flush();
-			   
-			}
+		/// <param name="result">The result of the test case.</param>
+		/// <remarks>TestCase uses this method to mark the final result of a test step. Please don't call it yourself.</remarks>
+		public static void Result( TestCaseResult result ) {
+			if( _currentLog != null )
+				_currentLog.WriteResult( result );
 		}
 
 		#region IDisposable Members
@@ -426,32 +382,25 @@ namespace QAliber.Logger
 		{
 			try
 			{
-				lock (this)
-				{
-					while (indents > 0)
-						IndentOut(true);
-					writer.WriteLine("</LogEntries>");
-					writer.Close();
-					writer = null;
-				}
+				while (_indents > 0)
+					EndFolder();
+				_writer.WriteLine("</LogEntries>");
+				_writer.Close();
+				_writer = null;
 			}
 			catch { }
 		}
 
 		#endregion
 
+		private static Log _currentLog = null;
+
 		/// <summary>
-		/// The singleton access to the log
+		/// The current log that all static methods will use.
 		/// </summary>
-		public static Log Default
-		{
-			get 
-			{
-				if (instance == null)
-					instance = new Log();
-				return instance; 
-			}
-			
+		public static Log Current {
+			get { return _currentLog; }
+			set { _currentLog = value; }
 		}
 
 		/// <summary>
@@ -463,16 +412,7 @@ namespace QAliber.Logger
 		/// </summary>
 		public string Filename
 		{
-			get { return filename; }
-			set 
-			{ 
-				filename = value;
-				if (writer != null)
-					Dispose();
-				writer = new StreamWriter(filename);
-				writer.WriteLine(@"<?xml version=""1.0"" encoding=""utf-8""?>");
-				writer.WriteLine("<LogEntries>");
-			}
+			get { return _filename; }
 		}
 
 		/// <summary>
@@ -482,18 +422,8 @@ namespace QAliber.Logger
 		{
 			get
 			{
-				return System.IO.Path.GetDirectoryName(filename);
+				return System.IO.Path.GetDirectoryName(_filename);
 			}
-		}
-
-		/// <summary>
-		/// Turns logging on and off 
-		/// If Enabled = false, all logging methods will be ignored
-		/// </summary>
-		public bool Enabled
-		{
-			get { return enabled; }
-			set { enabled = value; }
 		}
 
 		/// <summary>
@@ -505,14 +435,6 @@ namespace QAliber.Logger
 		/// This event is fired before a warning is posted to the log
 		/// </summary>
 		public event EventHandler<LogEventArgs> BeforeWarningIsPosted; 
-
-		private bool enabled = true;
-		private int indents = 0;
-		private int imageCounter = 0;
-		private string filename = "";
-		private StreamWriter writer = null;
-		private static Log instance = null;
-		
 	}
 
 	/// <summary>

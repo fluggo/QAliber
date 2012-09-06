@@ -47,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			int range = (int)((maxVal - minVal) / step);
 			int rndVal = new Random().Next(0, range);
 			generatedNum = minVal + rndVal * step;
-			Log.Default.Info("The generated number is " + generatedNum);
+			Log.Info("The generated number is " + generatedNum);
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 

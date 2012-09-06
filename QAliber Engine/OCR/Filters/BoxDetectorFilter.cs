@@ -23,6 +23,8 @@ namespace QAliber.ImageHandling
 		/// Constructs the filter
 		/// </summary>
 		/// <param name="image">The image to be filtered</param>
+		/// <param name="minHue">Not sure.</param>
+		/// <param name="maxHue">Also not sure.</param>
 		public BoxDetectorFilter(Bitmap image, double minHue, double maxHue)
 		{
 			this.image = image;

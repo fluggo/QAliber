@@ -70,13 +70,13 @@ namespace QAliber.TestModel
 		{
 			if (e.InnerException != null)
 			{
-				Log.Default.Error(e.GetType().Name + " Caught", e.InnerException.Message, EntryVerbosity.Internal);
+				Log.Error(e.GetType().Name + " Caught", e.InnerException.Message, EntryVerbosity.Internal);
 			}
 			else
 			{
-				Log.Default.Error(e.GetType().Name + " Caught", e.Message, EntryVerbosity.Internal);
+				Log.Error(e.GetType().Name + " Caught", e.Message, EntryVerbosity.Internal);
 			}
-			Log.Default.Info("Exception Details", e.ToString(), EntryVerbosity.Debug);
+			Log.Info("Exception Details", e.ToString(), EntryVerbosity.Debug);
 			_actualResult = TestCaseResult.Failed;
 		}
 		
@@ -675,12 +675,12 @@ namespace QAliber.TestModel
 		{
 			if (_expectedResult != TestCaseResult.None && _actualResult != _expectedResult)
 			{
-				Log.Default.Result(TestCaseResult.Failed);
-				Log.Default.IndentOut();
+				Log.Result(TestCaseResult.Failed);
+				Log.IndentOut();
 
 				if (_screenshotOption == TakeScreenshotOption.OnError)
 				{
-					Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + Name );
+					Log.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Error - " + Name );
 				}
 				
 				if (_currentRetryNumber < _numOfRetries)
@@ -692,8 +692,8 @@ namespace QAliber.TestModel
 			}
 			else
 			{
-				Log.Default.Result(TestCaseResult.Passed);
-				Log.Default.IndentOut();
+				Log.Result(TestCaseResult.Passed);
+				Log.IndentOut();
 			}
 		}
 
@@ -706,9 +706,9 @@ namespace QAliber.TestModel
 		protected void LogFailedByExpectedResult(string message, string extra)
 		{
 			if (_expectedResult == TestCaseResult.Failed)
-				Log.Default.Info(message, extra);
+				Log.Info(message, extra);
 			else
-				Log.Default.Error(message, extra);
+				Log.Error(message, extra);
 
 		}
 
@@ -721,9 +721,9 @@ namespace QAliber.TestModel
 		protected void LogPassedByExpectedResult(string message, string extra)
 		{
 			if (_expectedResult != TestCaseResult.Failed)
-				Log.Default.Info(message, extra);
+				Log.Info(message, extra);
 			else
-				Log.Default.Error(message, extra);
+				Log.Error(message, extra);
 
 		}
 
@@ -737,10 +737,10 @@ namespace QAliber.TestModel
 			if( _currentRetryNumber > 0 )
 				name += " - Retry #" + _currentRetryNumber.ToString();
 
-			Log.Default.IndentIn( name, Description, true );
+			Log.IndentIn( name, Description, true );
 
 			if( !string.IsNullOrWhiteSpace( _notes ) )
-				Log.Default.Info( "Notes", _notes );
+				Log.Info( "Notes", _notes );
 
 			if (_videoOptions != null && _videoOptions.CaptureVideo
 				&& !Logger.Slideshow.SlideshowRecorder.Default.IsCapturing)
@@ -751,7 +751,7 @@ namespace QAliber.TestModel
 			}
 			if (_screenshotOption == TakeScreenshotOption.BeforeTestCase || _screenshotOption == TakeScreenshotOption.Both)
 			{
-				Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Begin - " + Name );
+				Log.Image( Logger.Slideshow.ScreenCapturer.Capture(), "Begin - " + Name );
 			}
 		}
 
@@ -768,7 +768,7 @@ namespace QAliber.TestModel
 			}
 			if (_screenshotOption == TakeScreenshotOption.AfterTestCase || _screenshotOption == TakeScreenshotOption.Both)
 			{
-				Log.Default.Image( Logger.Slideshow.ScreenCapturer.Capture(), "End - " + Name );
+				Log.Image( Logger.Slideshow.ScreenCapturer.Capture(), "End - " + Name );
 			}
 			System.Windows.Forms.Application.DoEvents();
 		}

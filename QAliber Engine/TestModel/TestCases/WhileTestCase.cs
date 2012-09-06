@@ -77,7 +77,7 @@ namespace QAliber.TestModel
 			{
 				if (timeout > 0 && watch.ElapsedMilliseconds > timeout)
 				{
-					Log.Default.Warning("While loop exited after timeout of " + timeout + " milliseconds");
+					Log.Warning("While loop exited after timeout of " + timeout + " milliseconds");
 					break;
 				}
 				base.Body();

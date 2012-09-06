@@ -49,12 +49,18 @@ namespace QAliber.TestModel
 		{
 			lastError = string.Empty;
 			SetExitOnErrorRec(this);
-			Log.Default.BeforeErrorIsPosted += new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
+			Log currentLog = Log.Current;
+
+			if( currentLog != null )
+				currentLog.BeforeErrorIsPosted += new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
+
 			base.Body();
 			exitTotally = false;
 			if (ActualResult == TestCaseResult.Failed)
 				lastError = errListener;
-			Log.Default.BeforeErrorIsPosted -= new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
+
+			if( currentLog != null )
+				currentLog.BeforeErrorIsPosted -= new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
 		}
 
 		private void BeforeErrorIsPosted(object sender, LogEventArgs e)

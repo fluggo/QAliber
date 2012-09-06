@@ -96,7 +96,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 			dialogResult = MessageBox.Show(text, title, buttons);
-			Log.Default.Info("The user pressed '" + dialogResult + "'");
+			Log.Info("The user pressed '" + dialogResult + "'");
 		}
 
 	}

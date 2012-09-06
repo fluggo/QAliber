@@ -113,7 +113,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 			if( c == null || !c.Exists ) {
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				Log.Default.Error( "Control not found", "Could not find control " + _control );
+				Log.Error( "Control not found", "Could not find control " + _control );
 				return;
 			}
 
@@ -121,12 +121,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			PropertyDescriptorCollection properties = TypeDescriptor.GetProperties( c );
 			PropertyDescriptor prop = properties.Find( _property, false );
 
-			Log.Default.Info( "Properties found were...", "Properties found were: " +
+			Log.Info( "Properties found were...", "Properties found were: " +
 				string.Join( ", ", properties.Cast<PropertyDescriptor>().Select( p => p.Name ) ) );
 
 			if( prop == null ) {
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				Log.Default.Warning( _property + " property not found",
+				Log.Warning( _property + " property not found",
 					"Could not find property " + _property + " on control " + _control );
 
 				return;
@@ -135,7 +135,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			// Read the value
 			_foundValue = Convert.ToString( prop.GetValue( c ), CultureInfo.CurrentCulture );
 
-			Log.Default.Info( "Found value: \"" + _foundValue + "\"" );
+			Log.Info( "Found value: \"" + _foundValue + "\"" );
 
 			// Verify it
 			if( regex != null ) {

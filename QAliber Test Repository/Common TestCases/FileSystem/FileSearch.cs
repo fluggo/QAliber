@@ -59,7 +59,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						if (Regex.Match(line, pattern).Success)
 						{
 							textOutput = line;
-							Log.Default.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
+							Log.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
 							ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 							break;
 						}
@@ -69,7 +69,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						if (line.Contains(pattern))
 						{
 							textOutput = line;
-							Log.Default.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
+							Log.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
 							ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 							break;
 						}
@@ -79,7 +79,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 				}
 				if (ActualResult != QAliber.RemotingModel.TestCaseResult.Passed)
 				{
-					Log.Default.Error("Pattern '" + pattern + "' was not found");
+					Log.Error("Pattern '" + pattern + "' was not found");
 					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
 				}
 			}

@@ -59,7 +59,7 @@ namespace QAliber.TestModel
 			if (!string.IsNullOrEmpty(TryTestCase.lastError) && TryTestCase.lastError.Contains(errorToCatch))
 				base.Body();
 			else
-				Log.Default.Info("Recovery is not needed");
+				Log.Info("Recovery is not needed");
 		}
 		
 	}

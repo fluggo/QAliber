@@ -91,7 +91,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			LogFailedByExpectedResult("Control not found after " + timeout + " milliseconds",control);
 			if (lastException != string.Empty)
 			{
-				Log.Default.Warning("Exception caught", lastException, EntryVerbosity.Debug);
+				Log.Warning("Exception caught", lastException, EntryVerbosity.Debug);
 			}
 		}
 

@@ -42,7 +42,7 @@ namespace QAliber.TestModel
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
-			Log.Default.Info("Last If result = " + IfTestCase.ifConditionValue);
+			Log.Info("Last If result = " + IfTestCase.ifConditionValue);
 			if (!IfTestCase.ifConditionValue)
 			{
 				base.Body();

@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 using WatiN.Core;
 using QAliber.Engine.Controls.Web;
 using System.Text.RegularExpressions;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls.Watin
 {
@@ -51,7 +52,7 @@ namespace QAliber.Engine.Controls.Watin
 				if (((WatBrowser)b).BrowserType == browserType.FireFox && ((WatBrowser)b).Name == url)
 					return (FireFox) ((WatBrowser)b).BrowserPage;
 			}
-			Logger.Log.Default.Error("No FireFox browser found,with provided title found","",QAliber.Logger.EntryVerbosity.Internal);
+			Log.Error("No FireFox browser found,with provided title found","",QAliber.Logger.EntryVerbosity.Internal);
 			return null;
 		}
 
@@ -67,7 +68,7 @@ namespace QAliber.Engine.Controls.Watin
 				if (((WatBrowser)b).BrowserType == browserType.IE && ((WatBrowser)b).Name == url)
 					return (IE)((WatBrowser)b).BrowserPage;
 			}
-			Logger.Log.Default.Error("No IE browser found,with provided URL found", "", QAliber.Logger.EntryVerbosity.Internal);
+			Log.Error("No IE browser found,with provided URL found", "", QAliber.Logger.EntryVerbosity.Internal);
 			return null;
 		}
 
@@ -86,7 +87,7 @@ namespace QAliber.Engine.Controls.Watin
 				if (((WatBrowser)b).BrowserType == browserType.IE && regex.IsMatch(((WatBrowser)b).Name.ToLower()))
 					return (IE)((WatBrowser)b).BrowserPage;
 			}
-			Logger.Log.Default.Error("No IE browser found,with provided URL regex found", "", QAliber.Logger.EntryVerbosity.Internal);
+			Log.Error("No IE browser found,with provided URL regex found", "", QAliber.Logger.EntryVerbosity.Internal);
 			return null;
 		}
 
@@ -114,7 +115,7 @@ namespace QAliber.Engine.Controls.Watin
 				}
 				generalIdx++;
 			}
-			Logger.Log.Default.Error("No IE browser found in the index", "", QAliber.Logger.EntryVerbosity.Internal);
+			Log.Error("No IE browser found in the index", "", QAliber.Logger.EntryVerbosity.Internal);
 			return null;
 		}
 

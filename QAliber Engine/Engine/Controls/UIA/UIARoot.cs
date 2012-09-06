@@ -20,6 +20,7 @@ using QAliber.Engine.Controls.UIA;
 using System.Windows.Automation;
 using System.Windows;
 using System.Runtime.InteropServices;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls.UIA
 {
@@ -90,7 +91,7 @@ namespace QAliber.Engine.Controls.UIA
 			}
 			catch (COMException)
 			{
-				QAliber.Logger.Log.Default.Error("Could not recognize object at point", pt.ToString(), QAliber.Logger.EntryVerbosity.Internal);
+				Log.Error("Could not recognize object at point", pt.ToString(), QAliber.Logger.EntryVerbosity.Internal);
 			}
 			catch (ElementNotAvailableException)
 			{

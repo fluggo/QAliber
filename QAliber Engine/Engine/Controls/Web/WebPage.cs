@@ -26,6 +26,7 @@ using SHDocVw;
 using System.ComponentModel;
 using QAliber.Engine.Controls.UIA;
 using System.Diagnostics;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls.Web
 {
@@ -93,7 +94,7 @@ namespace QAliber.Engine.Controls.Web
 			{
 				if (element.tagName.ToLower() != tagName.ToLower())
 				{
-					QAliber.Logger.Log.Default.Error("The requested ID (" + id + " does not match the requested tag (" + tagName + ") it matched " +element.tagName
+					Log.Error("The requested ID (" + id + " does not match the requested tag (" + tagName + ") it matched " +element.tagName
 						,"",QAliber.Logger.EntryVerbosity.Internal);
 					return null;
 				}
@@ -167,7 +168,7 @@ namespace QAliber.Engine.Controls.Web
 
 				if (element.tagName.ToLower() != tagName.ToLower() && tagName != "unknown")
 				{
-					QAliber.Logger.Log.Default.Error("Expected tag name (" + tagName +") did not match any of the elements found","",QAliber.Logger.EntryVerbosity.Internal);
+					Log.Error("Expected tag name (" + tagName +") did not match any of the elements found","",QAliber.Logger.EntryVerbosity.Internal);
 					return null;
 				}
 

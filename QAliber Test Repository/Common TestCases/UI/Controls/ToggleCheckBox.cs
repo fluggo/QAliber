@@ -97,12 +97,12 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			UIControlBase c = UIControlBase.FindControlByPath( _control );
 
 			if( !c.Exists ) {
-				Log.Default.Error( "Control not found" );
+				Log.Error( "Control not found" );
 				return;
 			}
 
 			if( !c.Enabled ) {
-				Log.Default.Error( "Control not enabled" );
+				Log.Error( "Control not enabled" );
 				return;
 			}
 
@@ -120,7 +120,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 						}
 
 						if( toggle.ToggleState != ToggleState.On ) {
-							Log.Default.Error( "Tried three times, but couldn't set the checkbox to On." );
+							Log.Error( "Tried three times, but couldn't set the checkbox to On." );
 							return;
 						}
 
@@ -133,7 +133,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 						}
 
 						if( toggle.ToggleState != ToggleState.Off ) {
-							Log.Default.Error( "Tried three times, but couldn't set the checkbox to Off." );
+							Log.Error( "Tried three times, but couldn't set the checkbox to Off." );
 							return;
 						}
 
@@ -148,14 +148,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			}
 			else if( invoke != null ) {
 				if( _action != ToggleAction.Toggle ) {
-					Log.Default.Error( "The target control only supports invoke operations. Try toggle action instead." );
+					Log.Error( "The target control only supports invoke operations. Try toggle action instead." );
 					return;
 				}
 
 				switch( _action ) {
 					case ToggleAction.On:
 					case ToggleAction.Off:
-						Log.Default.Error( "The target control only supports invoke operations. Try toggle action instead." );
+						Log.Error( "The target control only supports invoke operations. Try toggle action instead." );
 						return;
 
 					case ToggleAction.Toggle:
@@ -187,7 +187,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 				ActualResult = TestCaseResult.Passed;
 			}
 			else {
-				Log.Default.Error( "Couldn't find an appropriate way to toggle the control." );
+				Log.Error( "Couldn't find an appropriate way to toggle the control." );
 				ActualResult = TestCaseResult.Failed;
 			}
 		}

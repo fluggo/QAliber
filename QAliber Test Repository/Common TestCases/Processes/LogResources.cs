@@ -61,13 +61,13 @@ namespace QAliber.Repository.CommonTestCases.Processes
 					cpu = cpuCounter.NextValue();
 				}
 
-				Log.Default.Info(string.Format("CPU = {0:0.00}%", cpu));
-				Log.Default.Info(string.Format("Physical Memory = {0} KB", (int)memory));
-				Log.Default.Info(string.Format("Virtual Memory = {0} KB", (int)virtualMemory));
+				Log.Info(string.Format("CPU = {0:0.00}%", cpu));
+				Log.Info(string.Format("Physical Memory = {0} KB", (int)memory));
+				Log.Info(string.Format("Virtual Memory = {0} KB", (int)virtualMemory));
 
 			}
 			else
-				Log.Default.Warning("Process is not available");
+				Log.Warning("Process is not available");
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 

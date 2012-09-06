@@ -154,7 +154,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				Log.Default.Error( "Start control not found." );
+				Log.Error( "Start control not found." );
 				return;
 			}
 
@@ -165,7 +165,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			}
 
 			if( !c.Visible ) {
-				Log.Default.Error( "Start control not visible." );
+				Log.Error( "Start control not visible." );
 				return;
 			}
 
@@ -175,7 +175,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				UIControlBase endControl = UIControlBase.FindControlByPath( _endControl );
 
 				if( !endControl.Exists ) {
-					Log.Default.Error( "End control not found." );
+					Log.Error( "End control not found." );
 					return;
 				}
 
@@ -186,7 +186,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				}
 
 				if( !endControl.Visible ) {
-					Log.Default.Error( "End control not visible." );
+					Log.Error( "End control not visible." );
 					return;
 				}
 

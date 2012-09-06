@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using mshtml;
 using System.ComponentModel;
+using QAliber.Logger;
 
 namespace QAliber.Engine.Controls.Web
 {
@@ -75,7 +76,7 @@ namespace QAliber.Engine.Controls.Web
 		public HTMLOption SelectItem(int index)
 		{
 			if (index >= Options.Length)
-				QAliber.Logger.Log.Default.Error("Index out of bounds", "", QAliber.Logger.EntryVerbosity.Internal);
+				Log.Error("Index out of bounds", "", QAliber.Logger.EntryVerbosity.Internal);
 
 			HTMLOption[] itemsArr = Options;
 			SelectedIndex = index;

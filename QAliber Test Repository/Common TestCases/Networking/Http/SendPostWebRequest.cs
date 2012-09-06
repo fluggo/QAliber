@@ -63,7 +63,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 
 			if (response.StatusCode != expectedCode)
 			{
-				Log.Default.Error("Http status code was different than expected", "Actual : " + response.StatusCode + "\nExpected : " + expectedCode);
+				Log.Error("Http status code was different than expected", "Actual : " + response.StatusCode + "\nExpected : " + expectedCode);
 				ActualResult = global::QAliber.RemotingModel.TestCaseResult.Failed;
 			}
 			// we will read data via the response stream

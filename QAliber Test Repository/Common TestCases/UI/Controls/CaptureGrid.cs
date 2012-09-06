@@ -59,14 +59,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			UIControlBase c = UIControlBase.FindControlByPath( _control );
 
 			if( c == null || !c.Exists ) {
-				Log.Default.Error( "Control not found", _control );
+				Log.Error( "Control not found", _control );
 				return;
 			}
 
 			IGridPattern grid = c.GetControlInterface<IGridPattern>();
 
 			if( grid == null ) {
-				Log.Default.Error( "Couldn't find an appropriate way to get at grid data." );
+				Log.Error( "Couldn't find an appropriate way to get at grid data." );
 				return;
 			}
 
@@ -74,7 +74,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			string[][] rows = grid.CaptureGrid( out headers );
 
 			if( headers != null && headers.Distinct().Count() != headers.Length ) {
-				Log.Default.Error( "Duplicate column names", "Could not produce an output table because there are two columns with the same name." );
+				Log.Error( "Duplicate column names", "Could not produce an output table because there are two columns with the same name." );
 				return;
 			}
 

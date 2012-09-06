@@ -97,9 +97,9 @@ namespace QAliber.TestModel
 
 					extra.AppendFormat( "   {0}: {1}", name, row[i].ToString() ).AppendLine();
 				}
-				Log.Default.IndentIn("Iteration on row '" + j + "'", extra.ToString());
+				Log.IndentIn("Iteration on row '" + j + "'", extra.ToString());
 				base.Body();
-				Log.Default.IndentOut();
+				Log.IndentOut();
 				if (exitTotally)
 					break;
 				if (branchesToBreak > 0)

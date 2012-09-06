@@ -95,7 +95,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 				case WindowOperationType.Maximize:
 					if( !window.CanMaximize ) {
-						Log.Default.Error( "Window does not support maximizing.", string.Empty, EntryVerbosity.Internal );
+						Log.Error( "Window does not support maximizing.", string.Empty, EntryVerbosity.Internal );
 						return;
 					}
 
@@ -104,7 +104,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 
 				case WindowOperationType.Minimize:
 					if( !window.CanMinimize ) {
-						Log.Default.Error( "Window does not support maximizing.", string.Empty, EntryVerbosity.Internal );
+						Log.Error( "Window does not support maximizing.", string.Empty, EntryVerbosity.Internal );
 						return;
 					}
 

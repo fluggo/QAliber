@@ -50,7 +50,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			string[] collection = Scenario.Lists[listName].Value;
 			int index = new Random().Next(collection.Length);
 			generatedItem = collection[index];
-			Log.Default.Info("Item picked = '" + generatedItem + "'");
+			Log.Info("Item picked = '" + generatedItem + "'");
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 		}
 

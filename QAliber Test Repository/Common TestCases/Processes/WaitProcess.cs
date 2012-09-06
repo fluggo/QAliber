@@ -51,7 +51,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 				Process[] processes = Process.GetProcessesByName(filename);
 				if (processes.Length > 0)
 				{
-					Log.Default.Info("Process arrived");
+					Log.Info("Process arrived");
 					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 					break;
 				}
@@ -60,7 +60,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			if (ActualResult != QAliber.RemotingModel.TestCaseResult.Passed)
 			{
 				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
-				Log.Default.Error("Process did not load after " + timeout);
+				Log.Error("Process did not load after " + timeout);
 			}
 		}
 

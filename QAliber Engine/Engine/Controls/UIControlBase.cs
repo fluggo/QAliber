@@ -346,7 +346,7 @@ namespace QAliber.Engine.Controls
 				System.Threading.Thread.Sleep(50);
 			}
 
-			QAliber.Logger.Log.Default.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
+			Log.Warning(string.Format("Cannot find control [{0}, {1}] for control {2}",
 																name, useRegex, CodePath), "",
 												QAliber.Logger.EntryVerbosity.Internal);
 
@@ -389,7 +389,7 @@ namespace QAliber.Engine.Controls
 					}
 					System.Threading.Thread.Sleep(50);
 				}
-				QAliber.Logger.Log.Default.Warning(
+				Log.Warning(
 					string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
 									name, id, useRegex, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 			}
@@ -432,7 +432,7 @@ namespace QAliber.Engine.Controls
 					}
 					System.Threading.Thread.Sleep(50);
 				}
-				QAliber.Logger.Log.Default.Warning(
+				Log.Warning(
 					string.Format("Cannot find control [{0}, {1}, {2}] for control {3}",
 									name, className, id, CodePath), "", QAliber.Logger.EntryVerbosity.Internal);
 			}
@@ -741,7 +741,7 @@ return c;";
 				if( p.X > 10000.0 || p.Y > 10000.0 || p.X < -10000.0 || p.Y < -10000.0 )
 					throw new Exception( string.Format( "Couldn't find point to click ({0}, {1}).", p.X, p.Y ) );
 
-				Logger.Log.Default.Info("Clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
+				Log.Info("Clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.Click(button, p);
 			}
 		}
@@ -781,7 +781,7 @@ return c;";
 			if (CheckExistence())
 			{
 				Point p = new Point(Layout.Left + rel.X, Layout.Top + rel.Y);
-				Logger.Log.Default.Info("Double clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
+				Log.Info("Double clicking mouse on control " + CodePath, "Button : " + button + " , Coordinate : " + rel, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.DoubleClick(button, p);
 			}
 		}
@@ -836,7 +836,7 @@ return c;";
 			{
 				Point p1 = new Point(Layout.Left + rel1.X, Layout.Top + rel1.Y);
 				Point p2 = new Point(Layout.Left + rel2.X, Layout.Top + rel2.Y);
-				Logger.Log.Default.Info("Dragging mouse on control " + CodePath, "Button : " + button + " , From : " + rel1 + " To : " + rel2, QAliber.Logger.EntryVerbosity.Internal);
+				Log.Info("Dragging mouse on control " + CodePath, "Button : " + button + " , From : " + rel1 + " To : " + rel2, QAliber.Logger.EntryVerbosity.Internal);
 				Win32.LowLevelInput.DragMouse(button, p1, p2);
 			}
 		}
@@ -900,7 +900,7 @@ return c;";
 			if (CheckExistence())
 			{
 				SetFocus();
-				Logger.Log.Default.Info("Sending keys to control " + CodePath, "Keys : " + text, QAliber.Logger.EntryVerbosity.Internal);
+				Log.Info("Sending keys to control " + CodePath, "Keys : " + text, QAliber.Logger.EntryVerbosity.Internal);
 				//System.Threading.Thread.Sleep(200);
 				Win32.LowLevelInput.SendKeystrokes(text);
 			}
@@ -1027,12 +1027,12 @@ return c;";
 		protected bool CheckExistence()
 		{
 			if( !Visible ) {
-				QAliber.Logger.Log.Default.Error("Control '" + Name + "' was not found on screen", CodePath, QAliber.Logger.EntryVerbosity.Internal);
+				Log.Error("Control '" + Name + "' was not found on screen", CodePath, QAliber.Logger.EntryVerbosity.Internal);
 				return false;
 			}
 		   
 			if (!Enabled)
-				QAliber.Logger.Log.Default.Warning("Control '" + Name + "' is disabled", CodePath, QAliber.Logger.EntryVerbosity.Internal);
+				Log.Warning("Control '" + Name + "' is disabled", CodePath, QAliber.Logger.EntryVerbosity.Internal);
 			return true;
 		}
 
