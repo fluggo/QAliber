@@ -52,6 +52,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			}
 		}
 
+		private int _timeout = 1000;
+
+		[Category("Behavior")]
+		[DisplayName("Timeout")]
+		[Description("The timeout in milliseconds to wait for the control.")]
+		[DefaultValue(1000)]
+		public int Timeout {
+			get { return _timeout; }
+			set { _timeout = value; }
+		}
+
 		protected override string DefaultName {
 			get {
 				if( _targetName == null )
@@ -64,10 +75,32 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 		public override void Body() {
 			ActualResult = TestCaseResult.Failed;
 
-			UIControlBase c = UIControlBase.FindControlByPath( _control );
+			Stopwatch watch = new Stopwatch();
+			string lastException = null;
+			UIControlBase c = null;
+
+			watch.Start();
+			while (watch.ElapsedMilliseconds < _timeout + 10)
+			{
+				try
+				{
+					c = UIControlBase.FindControlByPath( _control );
+
+					if( c.Exists )
+						break;
+				}
+				catch( Exception ex ) {
+					lastException = ex.ToString();
+				}
+			}
 
 			if( c == null || !c.Exists ) {
-				Log.Default.Error( "Control not found" );
+				Log.Default.Error( "Control not found after " + _timeout + " milliseconds", _control );
+
+				if( lastException != null ) {
+					Log.Default.Warning( "Exception caught", lastException, EntryVerbosity.Debug );
+				}
+
 				return;
 			}
 
