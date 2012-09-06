@@ -58,11 +58,10 @@ namespace QAliber.Builder.Presentation
 			// 
 			this.tableDataGridView.AllowUserToOrderColumns = true;
 			this.tableDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.tableDataGridView.ContextMenuStrip = this.gridContextMenuStrip;
-			this.tableDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.tableDataGridView.Location = new System.Drawing.Point(0, 1);
 			this.tableDataGridView.Name = "tableDataGridView";
 			this.tableDataGridView.Size = new System.Drawing.Size(424, 245);
@@ -74,8 +73,8 @@ namespace QAliber.Builder.Presentation
 			// gridContextMenuStrip
 			// 
 			this.gridContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.insertColumnToolStripMenuItem,
-			this.removeColumnToolStripMenuItem});
+            this.insertColumnToolStripMenuItem,
+            this.removeColumnToolStripMenuItem});
 			this.gridContextMenuStrip.Name = "gridContextMenuStrip";
 			this.gridContextMenuStrip.Size = new System.Drawing.Size(152, 48);
 			// 
