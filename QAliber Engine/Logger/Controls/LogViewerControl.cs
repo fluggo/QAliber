@@ -174,25 +174,6 @@ namespace QAliber.Logger.Controls
 			}
 		}
 
-		private void logTree_MouseMove(object sender, MouseEventArgs e)
-		{
-			try
-			{
-				TreeNode node = logTree.GetNodeAt(e.X, e.Y);
-				if (node != null && node.Tag != null && node.Tag is LogEntry)
-				{
-/*					  LogEntry entry = (LogEntry)node.Tag;
-					DateTime start = DateTime.Parse(toolStripTime.Text.Replace("Time : ", ""));
-					DateTime end = entry.Time;
-					toolStripSpan.Text = "Diff : " + ((TimeSpan)(end - start)).ToString();*/
-				}
-			}
-			catch
-			{
-
-			}
-		}
-
 		private void countThisMessageToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			counter = 0;

@@ -124,9 +124,8 @@ namespace QAliber.Logger.Controls
 			this.logTree.SelectedImageIndex = 0;
 			this.logTree.Size = new System.Drawing.Size(312, 628);
 			this.logTree.TabIndex = 0;
-			this.logTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.logTree_NodeMouseDoubleClick);
 			this.logTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.logTree_AfterSelect);
-			this.logTree.MouseMove += new System.Windows.Forms.MouseEventHandler(this.logTree_MouseMove);
+			this.logTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.logTree_NodeMouseDoubleClick);
 			// 
 			// imageTree
 			// 
@@ -178,9 +177,8 @@ namespace QAliber.Logger.Controls
 			this.logTreeFlattened.Size = new System.Drawing.Size(312, 628);
 			this.logTreeFlattened.TabIndex = 3;
 			this.logTreeFlattened.Visible = false;
-			this.logTreeFlattened.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.logTree_NodeMouseDoubleClick);
 			this.logTreeFlattened.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.logTree_AfterSelect);
-			this.logTreeFlattened.MouseMove += new System.Windows.Forms.MouseEventHandler(this.logTree_MouseMove);
+			this.logTreeFlattened.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.logTree_NodeMouseDoubleClick);
 			// 
 			// logTreeFiltered
 			// 
@@ -195,9 +193,8 @@ namespace QAliber.Logger.Controls
 			this.logTreeFiltered.Size = new System.Drawing.Size(312, 628);
 			this.logTreeFiltered.TabIndex = 2;
 			this.logTreeFiltered.Visible = false;
-			this.logTreeFiltered.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.logTree_NodeMouseDoubleClick);
 			this.logTreeFiltered.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.logTree_AfterSelect);
-			this.logTreeFiltered.MouseMove += new System.Windows.Forms.MouseEventHandler(this.logTree_MouseMove);
+			this.logTreeFiltered.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.logTree_NodeMouseDoubleClick);
 			// 
 			// statusStrip
 			// 
