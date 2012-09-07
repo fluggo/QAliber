@@ -115,7 +115,6 @@ namespace QAliber.Logger.Controls
 			// logTree
 			// 
 			this.logTree.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.logTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.logTree.HideSelection = false;
 			this.logTree.ImageIndex = 0;
 			this.logTree.ImageList = this.imageTree;
@@ -168,7 +167,6 @@ namespace QAliber.Logger.Controls
 			// 
 			this.logTreeFlattened.BackColor = System.Drawing.Color.Azure;
 			this.logTreeFlattened.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.logTreeFlattened.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.logTreeFlattened.ImageIndex = 0;
 			this.logTreeFlattened.ImageList = this.imageTree;
 			this.logTreeFlattened.Location = new System.Drawing.Point(0, 0);
@@ -184,7 +182,6 @@ namespace QAliber.Logger.Controls
 			// 
 			this.logTreeFiltered.BackColor = System.Drawing.Color.LightYellow;
 			this.logTreeFiltered.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.logTreeFiltered.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.logTreeFiltered.ImageIndex = 0;
 			this.logTreeFiltered.ImageList = this.imageTree;
 			this.logTreeFiltered.Location = new System.Drawing.Point(0, 0);
@@ -199,9 +196,9 @@ namespace QAliber.Logger.Controls
 			// statusStrip
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripTime,
-			this.toolStripSpan,
-			this.toolStripCount});
+            this.toolStripTime,
+            this.toolStripSpan,
+            this.toolStripCount});
 			this.statusStrip.Location = new System.Drawing.Point(0, 628);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -242,7 +239,7 @@ namespace QAliber.Logger.Controls
 			this.splitContainerRight.Panel2.Controls.Add(this.slideShowControl);
 			this.splitContainerRight.Panel2.Controls.Add(this.perfGraphControl);
 			this.splitContainerRight.Size = new System.Drawing.Size(484, 650);
-			this.splitContainerRight.SplitterDistance = 97;
+			this.splitContainerRight.SplitterDistance = 234;
 			this.splitContainerRight.TabIndex = 0;
 			// 
 			// groupBoxRemarks
@@ -251,7 +248,7 @@ namespace QAliber.Logger.Controls
 			this.groupBoxRemarks.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxRemarks.Location = new System.Drawing.Point(0, 0);
 			this.groupBoxRemarks.Name = "groupBoxRemarks";
-			this.groupBoxRemarks.Size = new System.Drawing.Size(484, 97);
+			this.groupBoxRemarks.Size = new System.Drawing.Size(484, 234);
 			this.groupBoxRemarks.TabIndex = 0;
 			this.groupBoxRemarks.TabStop = false;
 			this.groupBoxRemarks.Text = "Remarks";
@@ -262,7 +259,7 @@ namespace QAliber.Logger.Controls
 			this.richTextBoxRemarks.Location = new System.Drawing.Point(3, 16);
 			this.richTextBoxRemarks.Name = "richTextBoxRemarks";
 			this.richTextBoxRemarks.ReadOnly = true;
-			this.richTextBoxRemarks.Size = new System.Drawing.Size(478, 78);
+			this.richTextBoxRemarks.Size = new System.Drawing.Size(478, 215);
 			this.richTextBoxRemarks.TabIndex = 0;
 			this.richTextBoxRemarks.Text = "";
 			// 
@@ -273,7 +270,7 @@ namespace QAliber.Logger.Controls
 			this.groupBoxPicture.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxPicture.Location = new System.Drawing.Point(0, 0);
 			this.groupBoxPicture.Name = "groupBoxPicture";
-			this.groupBoxPicture.Size = new System.Drawing.Size(484, 549);
+			this.groupBoxPicture.Size = new System.Drawing.Size(484, 412);
 			this.groupBoxPicture.TabIndex = 1;
 			this.groupBoxPicture.TabStop = false;
 			this.groupBoxPicture.Text = "Picture";
@@ -287,7 +284,7 @@ namespace QAliber.Logger.Controls
 			this.pictureBox.Location = new System.Drawing.Point(3, 41);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.PanLocation = new System.Drawing.Point(0, 0);
-			this.pictureBox.Size = new System.Drawing.Size(478, 505);
+			this.pictureBox.Size = new System.Drawing.Size(478, 368);
 			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
@@ -297,8 +294,8 @@ namespace QAliber.Logger.Controls
 			// 
 			this.toolStripPicture.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStripPicture.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.zoomPicture,
-			this.panPicture});
+            this.zoomPicture,
+            this.panPicture});
 			this.toolStripPicture.Location = new System.Drawing.Point(3, 16);
 			this.toolStripPicture.Name = "toolStripPicture";
 			this.toolStripPicture.Size = new System.Drawing.Size(478, 25);
@@ -334,7 +331,7 @@ namespace QAliber.Logger.Controls
 			this.slideShowControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.slideShowControl.Location = new System.Drawing.Point(0, 0);
 			this.slideShowControl.Name = "slideShowControl";
-			this.slideShowControl.Size = new System.Drawing.Size(484, 549);
+			this.slideShowControl.Size = new System.Drawing.Size(484, 412);
 			this.slideShowControl.TabIndex = 2;
 			this.slideShowControl.Visible = false;
 			// 
@@ -343,7 +340,7 @@ namespace QAliber.Logger.Controls
 			this.perfGraphControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.perfGraphControl.Location = new System.Drawing.Point(0, 0);
 			this.perfGraphControl.Name = "perfGraphControl";
-			this.perfGraphControl.Size = new System.Drawing.Size(484, 549);
+			this.perfGraphControl.Size = new System.Drawing.Size(484, 412);
 			this.perfGraphControl.TabIndex = 2;
 			this.perfGraphControl.Visible = false;
 			// 
@@ -351,27 +348,27 @@ namespace QAliber.Logger.Controls
 			// 
 			this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.infoFilter,
-			this.warningFilter,
-			this.errorFilter,
-			this.pictureFilter,
-			this.linkFilter,
-			this.toolStripSeparator3,
-			this.normalFilter,
-			this.debugFilter,
-			this.internalFilter,
-			this.criticalFilter,
-			this.toolStripSeparator6,
-			this.stringFilter,
-			this.toolStripSeparator2,
-			this.processFilter,
-			this.toolStripSeparator5,
-			this.videoPanelToolStripButton,
-			this.resourcesGraphToolStripButton,
-			this.toolStripSeparator7,
-			this.refreshToolStripButton,
-			this.toolStripSeparator1,
-			this.helpToolStripButton});
+            this.infoFilter,
+            this.warningFilter,
+            this.errorFilter,
+            this.pictureFilter,
+            this.linkFilter,
+            this.toolStripSeparator3,
+            this.normalFilter,
+            this.debugFilter,
+            this.internalFilter,
+            this.criticalFilter,
+            this.toolStripSeparator6,
+            this.stringFilter,
+            this.toolStripSeparator2,
+            this.processFilter,
+            this.toolStripSeparator5,
+            this.videoPanelToolStripButton,
+            this.resourcesGraphToolStripButton,
+            this.toolStripSeparator7,
+            this.refreshToolStripButton,
+            this.toolStripSeparator1,
+            this.helpToolStripButton});
 			this.toolStripMain.Location = new System.Drawing.Point(0, 0);
 			this.toolStripMain.Name = "toolStripMain";
 			this.toolStripMain.Size = new System.Drawing.Size(800, 25);
@@ -552,15 +549,15 @@ namespace QAliber.Logger.Controls
 			// nodeMenuStrip
 			// 
 			this.nodeMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.copyThisMessageToolStripMenuItem,
-			this.jumpNextErrorToolStripMenuItem,
-			this.jumpPrevErrorToolStripMenuItem,
-			this.toolStripSeparator8,
-			this.countThisMessageToolStripMenuItem,
-			this.countItemsToolStripMenuItem,
-			this.countAllTheChildrenToolStripMenuItem,
-			this.toolStripSeparator4,
-			this.showLeavesToolStripMenuItem});
+            this.copyThisMessageToolStripMenuItem,
+            this.jumpNextErrorToolStripMenuItem,
+            this.jumpPrevErrorToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.countThisMessageToolStripMenuItem,
+            this.countItemsToolStripMenuItem,
+            this.countAllTheChildrenToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.showLeavesToolStripMenuItem});
 			this.nodeMenuStrip.Name = "nodeMenuStrip";
 			this.nodeMenuStrip.Size = new System.Drawing.Size(279, 192);
 			// 

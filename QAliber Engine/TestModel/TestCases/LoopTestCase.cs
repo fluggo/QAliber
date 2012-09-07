@@ -54,12 +54,20 @@ namespace QAliber.TestModel
 
 		public override void Body()
 		{
+			Log log = Log.Current;
+
 			for (int i = 0; i < numOfLoops; i++)
 			{
 				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
-				Log.IndentIn(Name + " - Loop #" + (int)(i + 1));
+
+				if( log != null )
+					log.StartFolder( Name + " - Loop #" + (int)(i + 1), null );
+
 				base.Body();
-				Log.IndentOut();
+
+				if( log != null )
+					log.EndFolder();
+
 				if (exitTotally)
 					break;
 				if (branchesToBreak > 0)

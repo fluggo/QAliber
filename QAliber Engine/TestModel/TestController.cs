@@ -415,7 +415,7 @@ namespace QAliber.TestModel
 			string logfile = CreateLogDirectory() + @"\Run.qlog";
 
 			try {
-				using( Log log = new Log( logfile ) ) {
+				using( Log log = new Log( logfile, scenario.Filename, false ) ) {
 					Log.Current = log;
 					TestCase.ExitTotally = false;
 					TestCase.BranchesToBreak = 0;
@@ -436,7 +436,7 @@ namespace QAliber.TestModel
 			string logfile = CreateLogDirectory() + @"\Testcase.qlog";
 
 			try {
-				using( Log log = new Log( logfile ) ) {
+				using( Log log = new Log( logfile, scenario.Filename, true ) ) {
 					Log.Current = log;
 					TestCase.ExitTotally = false;
 					TestCase.BranchesToBreak = 0;

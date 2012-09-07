@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Reflection;
 using QAliber.Logger;
 using QAliber.RemotingModel;
+using System.Globalization;
 
 namespace QAliber.Logger.Controls
 {
@@ -566,30 +567,16 @@ namespace QAliber.Logger.Controls
 
 		private void FillTree()
 		{
-			logTree.BackColor = Color.White;
 			if (File.Exists(filename))
 			{
 				XmlDocument xmlDoc = new XmlDocument();
-				try
-				{
-					xmlDoc.Load(filename);
-				}
-				catch
-				{
-					PartialLog partLog = new PartialLog(filename);
-					if (partLog.TryToFix())
-					{
-						xmlDoc.Load(partLog.FixedPath);
-						logTree.BackColor = Color.LightYellow;
-					}
-					else
-						throw;
-				}
+				xmlDoc.Load(filename);
+
 				logTree.Nodes.Clear();
 
 				foreach (XmlNode node in xmlDoc.ChildNodes)
 				{
-					if (node.Name == "LogEntries")
+					if (node.Name == "Log")
 					{
 						FillTreeRec(logTree.Nodes, node, 0);
 					}
@@ -604,23 +591,49 @@ namespace QAliber.Logger.Controls
 
 		private void FillTreeRec(TreeNodeCollection tNodes, XmlNode xNode, int resLevel)
 		{
-			TreeNode newNode = null;
-			LogEntry logEntry;
 			foreach (XmlNode node in xNode.ChildNodes)
 			{
-				
-				if (node.Name == "ChildEntries")
+				if( node.Name == "LogResult" ) {
+					BubbleIconUp((TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
+					nodesStack.Pop();
+					if (nodesStack.Count >	0)
+						currentTestCaseNodes = nodesStack.Peek();
+				}
+				else if( node.Name == "TestStep" ) {
+					LogEntry logEntry = new LogEntry() {
+						Message = node.Attributes["name"].Value,
+						Time = DateTime.ParseExact( node.Attributes["startTimeUtc"].Value, "s", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal ),
+						Body = BodyType.Text,
+						Verbosity = EntryVerbosity.Normal,
+						Type = EntryType.Info
+					};
+
+					if( node.Attributes["description"] != null )
+						logEntry.ExtendedMessage = node.Attributes["description"].Value;
+
+					TreeNode newNode = new TreeNode( logEntry.Message );
+					newNode.Tag = logEntry;
+					newNode.SelectedImageKey = newNode.ImageKey = GetImageKeyByEntry(logEntry);
+					newNode.ContextMenuStrip = nodeMenuStrip;
+
+					List<TreeNode> newList = new List<TreeNode>();
+					currentTestCaseNodes = newList;
+					nodesStack.Push(newList);
+
+					tNodes.Add(newNode);
+
+					currentTestCaseNodes.Add(newNode);
+					FillTreeRec(newNode.Nodes, node, resLevel + 1);
+				}
+				else if (node.Name == "Folder")
 				{
-					logEntry = GetEntry(node.FirstChild);
+					LogEntry logEntry = GetEntry(node.FirstChild);
 					if (logEntry != null)
 					{
 						
 
-						newNode = new TreeNode(logEntry.Message);
+						TreeNode newNode = new TreeNode(logEntry.Message);
 						newNode.Tag = logEntry;
-						newNode.BackColor = logEntry.Style.BackgroundColor;
-						newNode.ForeColor = logEntry.Style.ForegroundColor;
-						newNode.NodeFont = new Font(logTree.Font.Name, logTree.Font.Size, logEntry.Style.FontStyle);
 						newNode.SelectedImageKey = newNode.ImageKey = GetImageKeyByEntry(logEntry);
 						newNode.ContextMenuStrip = nodeMenuStrip;
 
@@ -632,30 +645,12 @@ namespace QAliber.Logger.Controls
 						
 					}
 				}
-				else if (node.Name == "LogResult")
-				{
-
-					BubbleIconUp((TestCaseResult)Enum.Parse(typeof(TestCaseResult), node.InnerText));
-					nodesStack.Pop();
-					if (nodesStack.Count >	0)
-						currentTestCaseNodes = nodesStack.Peek();
-				}
-				else if (node.Name == "TestCase")
-				{
-
-					List<TreeNode> newList = new List<TreeNode>();
-					currentTestCaseNodes = newList;
-					nodesStack.Push(newList);
-				}
 				else
 				{
-					logEntry = GetEntry(node);
+					LogEntry logEntry = GetEntry(node);
 					if (logEntry != null)
 					{
-						newNode = new TreeNode(logEntry.Message);
-						newNode.BackColor = logEntry.Style.BackgroundColor;
-						newNode.ForeColor = logEntry.Style.ForegroundColor;
-						newNode.NodeFont = new Font(logTree.Font.Name, logTree.Font.Size, logEntry.Style.FontStyle);
+						TreeNode newNode = new TreeNode(logEntry.Message);
 						newNode.Tag = logEntry;
 
 						newNode.SelectedImageKey = newNode.ImageKey = GetImageKeyByEntry(logEntry);
@@ -679,16 +674,15 @@ namespace QAliber.Logger.Controls
 				{
 					result = new LogEntry();
 					result.Message = node["Message"].InnerText;
-					result.ExtendedMessage = node["ExtendedMessage"].InnerText;
+					result.ExtendedMessage = node["Details"].InnerText;
 					result.Link = node["Link"].InnerText;
-					result.Time = DateTime.Parse(node["Time"].InnerText);
+					result.Time = DateTime.ParseExact( node.Attributes["timeUtc"].Value, "s", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal );
 					result.Body = (BodyType)Enum.Parse(typeof(BodyType), node["Body"].InnerText);
-					result.Verbosity = (EntryVerbosity)Enum.Parse(typeof(EntryVerbosity), node["Verbosity"].InnerText);
-					result.Type = (EntryType)Enum.Parse(typeof(EntryType), node["Type"].InnerText);
-					result.Style = new EntryStyle();
-					result.Style.FGColorVal = int.Parse(node["Style"]["FGColorVal"].InnerText);
-					result.Style.BGColorVal = int.Parse(node["Style"]["BGColorVal"].InnerText);
-					result.Style.FontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), node["Style"]["FontStyle"].InnerText);
+
+					if( node.Attributes["verbosity"] != null )
+						result.Verbosity = (EntryVerbosity)Enum.Parse(typeof(EntryVerbosity), node.Attributes["Verbosity"].Value);
+
+					result.Type = (EntryType)Enum.Parse(typeof(EntryType), node.Attributes["type"].Value);
 				}
 			}
 			catch { }
@@ -790,28 +784,6 @@ namespace QAliber.Logger.Controls
 				return node;
 			}
 			
-		}
-
-		private Font BuildFont(string name, float size, int style)
-		{
-			FontStyle fontStyle = FontStyle.Regular;
-			
-			int bold = style & 1;
-			int italic = style & 2;
-			int underline = style & 4;
-			int strikeout = style & 8;
-
-			if (bold > 0)
-				fontStyle |= FontStyle.Bold;
-			if (italic > 0)
-				fontStyle |= FontStyle.Italic;
-			if (underline > 0)
-				fontStyle |= FontStyle.Underline;
-			if (strikeout > 0)
-				fontStyle |= FontStyle.Strikeout;
-
-			return new Font(name, size, fontStyle);
-		   
 		}
 
 		private static TreeNode CloneNode(TreeNode node)

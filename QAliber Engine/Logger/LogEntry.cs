@@ -19,6 +19,8 @@ using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 using System.Security;
+using System.Xml;
+using System.Globalization;
 
 namespace QAliber.Logger
 {
@@ -30,7 +32,6 @@ namespace QAliber.Logger
 	{
 		public LogEntry()
 		{
-			link = "";
 			enabled = true;
 			
 		}
@@ -113,17 +114,6 @@ namespace QAliber.Logger
 			set { verbosity = value; }
 		}
 
-		private EntryStyle style;
-
-		/// <summary>
-		/// The font style and colors of the message
-		/// </summary>
-		public EntryStyle Style
-		{
-			get { return style; }
-			set { style = value; }
-		}
-
 		private bool enabled;
 
 		/// <summary>
@@ -136,28 +126,29 @@ namespace QAliber.Logger
 		}
 	
 
-		internal void ToXml(StreamWriter sw, int indents)
-		{
-			string tabs = new string( '\t', indents + 1 );
-			lock (this)
-			{
-				sw.WriteLine(tabs + "<LogEntry>");
-				sw.WriteLine(tabs + "\t<Time>" + SecurityElement.Escape(time.ToString()) + "</Time>");
-				sw.WriteLine(tabs + "\t<Message>" + SecurityElement.Escape(message) + "</Message>");
-				sw.WriteLine(tabs + "\t<ExtendedMessage>" + SecurityElement.Escape(ext) + "</ExtendedMessage>");
-				sw.WriteLine(tabs + "\t<Link>" + SecurityElement.Escape(link) + "</Link>");
-				sw.WriteLine(tabs + "\t<Type>" + type + "</Type>");
-				sw.WriteLine(tabs + "\t<Body>" + bodyType + "</Body>");
-				sw.WriteLine(tabs + "\t<Verbosity>" + verbosity + "</Verbosity>");
-				sw.WriteLine(tabs + "\t<Style>");
-				sw.WriteLine(tabs + "\t\t<FontStyle>" + style.FontStyle + "</FontStyle>");
-				sw.WriteLine(tabs + "\t\t<FGColorVal>" + style.FGColorVal + "</FGColorVal>");
-				sw.WriteLine(tabs + "\t\t<BGColorVal>" + style.BGColorVal + "</BGColorVal>");
-				sw.WriteLine(tabs + "\t</Style>");
-				sw.WriteLine(tabs + "</LogEntry>");
+		internal void ToXml( XmlWriter writer ) {
+			writer.WriteStartElement( "LogEntry" );
+			writer.WriteAttributeString( "timeUtc", time.ToString( "s", CultureInfo.InvariantCulture ) );
+			writer.WriteAttributeString( "type", type.ToString() );
+			writer.WriteAttributeString( "bodyType", bodyType.ToString() );
+
+			if( verbosity != EntryVerbosity.Normal )
+				writer.WriteAttributeString( "verbosity", verbosity.ToString() );
+
+			if( link != null )
+				writer.WriteAttributeString( "link", link );
+
+			writer.WriteStartElement( "Message" );
+			writer.WriteString( message );
+			writer.WriteEndElement();
+
+			if( !string.IsNullOrEmpty( ext ) ) {
+				writer.WriteStartElement( "Details" );
+				writer.WriteString( ext );
+				writer.WriteEndElement();
 			}
 
-  
+			writer.WriteEndElement();
 		}
 	}
 }

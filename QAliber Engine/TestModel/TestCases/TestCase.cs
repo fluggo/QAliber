@@ -676,7 +676,7 @@ namespace QAliber.TestModel
 			if (_expectedResult != TestCaseResult.None && _actualResult != _expectedResult)
 			{
 				Log.Result(TestCaseResult.Failed);
-				Log.IndentOut();
+				Log.Current.EndFolder();
 
 				if (_screenshotOption == TakeScreenshotOption.OnError)
 				{
@@ -693,7 +693,7 @@ namespace QAliber.TestModel
 			else
 			{
 				Log.Result(TestCaseResult.Passed);
-				Log.IndentOut();
+				Log.Current.EndFolder();
 			}
 		}
 
@@ -737,7 +737,8 @@ namespace QAliber.TestModel
 			if( _currentRetryNumber > 0 )
 				name += " - Retry #" + _currentRetryNumber.ToString();
 
-			Log.IndentIn( name, Description, true );
+			XmlTypeAttribute attr = (XmlTypeAttribute) Attribute.GetCustomAttribute( GetType(), typeof(XmlTypeAttribute) );
+			Log.Current.StartTestStep( attr.Namespace, attr.TypeName, name, Description );
 
 			if( !string.IsNullOrWhiteSpace( _notes ) )
 				Log.Info( "Notes", _notes );

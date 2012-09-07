@@ -20,6 +20,8 @@ using System.IO;
 using System.Drawing;
 using System.Globalization;
 using QAliber.RemotingModel;
+using System.Xml;
+using System.Net;
 
 namespace QAliber.Logger
 {
@@ -29,15 +31,28 @@ namespace QAliber.Logger
 	public class Log : IDisposable
 	{
 		string _filename;
-		StreamWriter _writer;
-		int _indents = 0;
+		XmlWriter _writer;
 		int _imageCount = 0;
 
-		public Log( string filename ) {
+		public Log( string filename, string scenarioFile, bool partialRun ) {
 			_filename = filename;
-			_writer = new StreamWriter(filename);
-			_writer.WriteLine(@"<?xml version=""1.0"" encoding=""utf-8""?>");
-			_writer.WriteLine("<LogEntries>");
+
+			XmlWriterSettings settings = new XmlWriterSettings() {
+				Encoding = Encoding.UTF8,
+				Indent = true,
+				CloseOutput = true
+			};
+
+			_writer = XmlWriter.Create( filename, settings );
+			_writer.WriteStartDocument();
+			_writer.WriteStartElement( "Log" );
+
+			if( scenarioFile != null )
+				_writer.WriteAttributeString( "scenario", scenarioFile );
+
+			_writer.WriteAttributeString( "partialRun", partialRun ? "true" : "false" );
+			_writer.WriteAttributeString( "startTimeUtc", DateTime.UtcNow.ToString( "s", CultureInfo.InvariantCulture ) );
+			_writer.WriteAttributeString( "machine", Dns.GetHostName() );
 		}
 
 		/// <summary>
@@ -49,13 +64,12 @@ namespace QAliber.Logger
 		/// <param name="verbosity">The verbosity level of this entry.</param>
 		public void WriteEntry( EntryType type, string message, string details, EntryVerbosity verbosity ) {
 			LogEntry entry = new LogEntry();
-			entry.Time = DateTime.Now;
+			entry.Time = DateTime.UtcNow;
 			entry.Message = message;
-			entry.ExtendedMessage = details ?? string.Empty;
+			entry.ExtendedMessage = details;
 			entry.Body = BodyType.Text;
 			entry.Type = type;
 			entry.Verbosity = verbosity;
-			entry.Style = new EntryStyle(verbosity);
 
 			EventHandler<LogEventArgs> handler = null;
 
@@ -68,7 +82,7 @@ namespace QAliber.Logger
 				handler( this, new LogEventArgs( entry ) );
 
 			if( entry.Enabled ) {
-				entry.ToXml(_writer, _indents);
+				entry.ToXml(_writer);
 				_writer.Flush();
 			}
 		}
@@ -82,20 +96,19 @@ namespace QAliber.Logger
 		/// <param name="verbosity">The verbosity level of this entry.</param>
 		public void WriteImageEntry( Image image, string message, string details, EntryVerbosity verbosity ) {
 			LogEntry entry = new LogEntry();
-			entry.Time = DateTime.Now;
+			entry.Time = DateTime.UtcNow;
 			entry.Message = message;
 			entry.ExtendedMessage = details;
 			entry.Body = BodyType.Picture;
 			entry.Type = EntryType.Info;
 			entry.Verbosity = verbosity;
-			entry.Style = new EntryStyle( verbosity );
 
 			string imageFile = Path + @"\image" + _imageCount.ToString( CultureInfo.InvariantCulture ) + ".png";
 			image.Save(imageFile, System.Drawing.Imaging.ImageFormat.Png);
 			entry.Link = imageFile;
 			_imageCount++;
 
-			entry.ToXml(_writer, _indents);
+			entry.ToXml(_writer);
 			_writer.Flush();
 		}
 
@@ -108,16 +121,15 @@ namespace QAliber.Logger
 		/// <param name="verbosity">The verbosity level of this entry.</param>
 		public void WriteLinkEntry( string link, string message, string details, EntryVerbosity verbosity ) {
 			LogEntry entry = new LogEntry();
-			entry.Time = DateTime.Now;
+			entry.Time = DateTime.UtcNow;
 			entry.Message = message;
 			entry.ExtendedMessage = details;
 			entry.Body = BodyType.Link;
 			entry.Type = EntryType.Info;
 			entry.Verbosity = verbosity;
-			entry.Style = new EntryStyle( verbosity );
 			entry.Link = link;
 
-			entry.ToXml(_writer, _indents);
+			entry.ToXml(_writer);
 			_writer.Flush();
 		}
 
@@ -126,29 +138,36 @@ namespace QAliber.Logger
 		/// </summary>
 		/// <param name="message">The message for this entry.</param>
 		/// <param name="details">Optional detailed information for this entry.</param>
-		/// <param name="isTestStep">True if this is the start of a new test step, false otherwise.</param>
-		public void StartFolder( string message, string details, bool isTestStep ) {
-			string tabs = new string( '\t', _indents + 1 );
-
-			if( isTestStep )
-				_writer.WriteLine(tabs + "<TestCase>" + System.Security.SecurityElement.Escape(message) + "</TestCase>");
-
-			_writer.WriteLine(tabs + "<ChildEntries>");
-				
-			_indents++;
+		public void StartFolder( string message, string details ) {
+			_writer.WriteStartElement( "Folder" );
 			WriteEntry( EntryType.Info, message, details, EntryVerbosity.Normal );
 		}
 
 		/// <summary>
 		/// Ends a level in the test log.
 		/// </summary>
-		private void EndFolder() {
-			if( _indents > 0 ) {
-				string tabs = new string( '\t', _indents );
-				_writer.WriteLine(tabs + "</ChildEntries>");
-				_indents--;
-				_writer.Flush();
-			}
+		public void EndFolder() {
+			_writer.WriteEndElement();
+			_writer.Flush();
+		}
+
+		/// <summary>
+		/// Starts a test step in the log. The step should be finished with <see cref="WriteResult"/> followed by <see cref="EndFolder"/>.
+		/// </summary>
+		///	<param name="namespace">The namespace of the test step.</param>
+		/// <param name="type">The type of the test step.</param>
+		/// <param name="name">The name of the test step.</param>
+		/// <param name="description">A description of what the test step does.</param>
+		public void StartTestStep( string @namespace, string type, string name, string description ) {
+			_writer.WriteStartElement( "TestStep" );
+			_writer.WriteAttributeString( "namespace", @namespace );
+			_writer.WriteAttributeString( "type", type );
+			_writer.WriteAttributeString( "name", name );
+
+			if( !string.IsNullOrEmpty( description ) )
+				_writer.WriteAttributeString( "description", description );
+
+			_writer.WriteAttributeString( "startTimeUtc", DateTime.UtcNow.ToString( "s", CultureInfo.InvariantCulture ) );
 		}
 
 		/// <summary>
@@ -308,58 +327,15 @@ namespace QAliber.Logger
 		}
 
 		/// <summary>
-		/// Creates a folder in the log (for structured report)
-		/// </summary>
-		/// <param name="message">The message to show on the folder</param>
-		public static void IndentIn(string message)
-		{
-			IndentIn(message, "");
-		}
-
-		/// <summary>
-		/// Creates a folder in the log (for structured report)
-		/// </summary>
-		/// <param name="message">The message to show on the folder</param>
-		/// <param name="extra">An additional info to log</param>
-		/// <param name="isTestCase">For internal use, this should always be set to false</param>
-		public static void IndentIn(string message, string extra, bool isTestCase)
-		{
-			Log log = _currentLog;
-
-			if( log != null )
-				log.StartFolder( message, extra, isTestCase );
-		}
-
-		/// <summary>
-		/// Creates a folder in the log (for structured report)
-		/// </summary>
-		/// <param name="message">The message to show on the folder</param>
-		/// <param name="extra">An additional info to log</param>
-		public static void IndentIn(string message, string extra)
-		{
-			IndentIn(message, extra, false);
-		}
-
-		/// <summary>
-		/// Close a floder
-		/// </summary>
-		public static void IndentOut()
-		{
-			Log log = _currentLog;
-
-			if( log != null )
-				log.EndFolder();
-		}
-
-		/// <summary>
 		/// Logs the result of a test case.
 		/// </summary>
 		/// <param name="result">The result of the test case.</param>
 		/// <remarks>TestCase uses this method to mark the final result of a test step. Please don't call it yourself.</remarks>
 		public void WriteResult(TestCaseResult result)
 		{
-			string tabs = new string( '\t', _indents + 1 );
-			_writer.WriteLine(tabs + "<LogResult>" + result.ToString() + "</LogResult>");
+			_writer.WriteStartElement( "LogResult" );
+			_writer.WriteString( result.ToString() );
+			_writer.WriteEndElement();
 			_writer.Flush();
 		}
 
@@ -378,17 +354,10 @@ namespace QAliber.Logger
 		/// <summary>
 		/// Saves the log file, if not saved and cleans any resources associated with the log
 		/// </summary>
-		public void Dispose()
-		{
-			try
-			{
-				while (_indents > 0)
-					EndFolder();
-				_writer.WriteLine("</LogEntries>");
-				_writer.Close();
-				_writer = null;
-			}
-			catch { }
+		public void Dispose() {
+			_writer.WriteEndDocument();
+			_writer.Close();
+			_writer = null;
 		}
 
 		#endregion

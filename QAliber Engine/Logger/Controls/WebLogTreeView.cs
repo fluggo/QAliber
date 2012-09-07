@@ -71,8 +71,7 @@ namespace QAliber.Logger.Controls
 
 
 						newNode = new TreeNode();
-						newNode.Text = string.Format("<span style='color: {0}; background-color: {1};'>{2}</span>",
-							ColorTranslator.ToHtml(logEntry.Style.ForegroundColor), ColorTranslator.ToHtml(logEntry.Style.BackgroundColor), logEntry.Message);
+						newNode.Text = logEntry.Message;
 						newNode.ImageUrl = GetImageURLByEntry(logEntry);
 						newNode.Target = logEntry.ExtendedMessage + ";" + logEntry.Link;
 						tNodes.Add(newNode);
@@ -104,8 +103,7 @@ namespace QAliber.Logger.Controls
 					if (logEntry != null)
 					{
 						newNode = new TreeNode();
-						newNode.Text = string.Format("<span style=\"color: {0}; background-color: {1};\">{2}</span>",
-						   ColorTranslator.ToHtml(logEntry.Style.ForegroundColor), ColorTranslator.ToHtml(logEntry.Style.BackgroundColor), logEntry.Message);
+						newNode.Text = logEntry.Message;
 						newNode.Target = logEntry.ExtendedMessage + ";" + logEntry.Link;
 						newNode.ImageUrl = GetImageURLByEntry(logEntry);
 						tNodes.Add(newNode);
@@ -170,10 +168,6 @@ namespace QAliber.Logger.Controls
 					result.Body = (BodyType)Enum.Parse(typeof(BodyType), node["Body"].InnerText);
 					result.Verbosity = (EntryVerbosity)Enum.Parse(typeof(EntryVerbosity), node["Verbosity"].InnerText);
 					result.Type = (EntryType)Enum.Parse(typeof(EntryType), node["Type"].InnerText);
-					result.Style = new EntryStyle();
-					result.Style.FGColorVal = int.Parse(node["Style"]["FGColorVal"].InnerText);
-					result.Style.BGColorVal = int.Parse(node["Style"]["BGColorVal"].InnerText);
-					result.Style.FontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), node["Style"]["FontStyle"].InnerText);
 				}
 			}
 			catch { }

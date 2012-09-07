@@ -74,6 +74,7 @@ namespace QAliber.TestModel
 
 		public override void Body()
 		{
+			Log log = Log.Current;
 			ScenarioVariable<DataTable> table = Scenario.Tables[_tableName];
 
 			if (table == null)
@@ -97,9 +98,15 @@ namespace QAliber.TestModel
 
 					extra.AppendFormat( "   {0}: {1}", name, row[i].ToString() ).AppendLine();
 				}
-				Log.IndentIn("Iteration on row '" + j + "'", extra.ToString());
+
+				if( log != null )
+					log.StartFolder( "Iteration on row '" + j + "'", extra.ToString() );
+
 				base.Body();
-				Log.IndentOut();
+
+				if( log != null )
+					log.EndFolder();
+
 				if (exitTotally)
 					break;
 				if (branchesToBreak > 0)
