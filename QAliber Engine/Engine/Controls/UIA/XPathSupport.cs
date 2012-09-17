@@ -8,6 +8,7 @@ using System.Xml;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Automation;
+using System.IO;
 
 namespace QAliber.Engine.Controls.UIA {
 	/// <summary>
@@ -61,7 +62,7 @@ namespace QAliber.Engine.Controls.UIA {
 	}
 
 	class UIAXPathEvaluator : XPathEvaluator {
-		public UIAXPathEvaluator() : base( new XPathAdapter( Desktop.UIA ),
+		public UIAXPathEvaluator( TextWriter log ) : base( new XPathAdapter( Desktop.UIA, log ),
 			new XmlNamespaceManager( new NameTable() ),
 			new XPathOrderComparer() ) {
 		}
@@ -74,9 +75,7 @@ namespace QAliber.Engine.Controls.UIA {
 					throw new ArgumentException( "Wrong number of parameters for the match-regex function." );
 
 				string str = ToString( parameters[0] ), reg = ToString( parameters[1] );
-				Regex regex = new Regex( reg, RegexOptions.CultureInvariant );
-
-				return regex.IsMatch( str );
+				return Regex.IsMatch( str, reg, RegexOptions.CultureInvariant );
 			}
 
 			return base.EvaluateFunction( context, name, parameters );
@@ -85,9 +84,11 @@ namespace QAliber.Engine.Controls.UIA {
 
 	class XPathAdapter : IXPathNode {
 		UIAControl _owner;
+		TextWriter _log;
 
-		public XPathAdapter( UIAControl owner ) {
+		public XPathAdapter( UIAControl owner, TextWriter log ) {
 			_owner = owner;
+			_log = log;
 		}
 
 		public HashSet<IXPathNode> FindNodesByAxis( string axis ) {
@@ -97,16 +98,54 @@ namespace QAliber.Engine.Controls.UIA {
 			if( axis == XPath.ChildAxis ) {
 				// ElementNotAvailableExceptions are often thrown here; we're going to just
 				// not return any elements in that case
+				if( _log != null ) {
+					_log.WriteLine( "Checking children of {0}:", _owner.CodePath );
+				}
+
 				try {
+					UIControlBase[] children = _owner.GetChildren();
+
+					if( _log != null ) {
+						foreach( UIAControl child in children ) {
+							_log.WriteLine( "  /{0}[@Name='{1}' and @ID='{2}' and @ClassName='{3}']", child.XPathElementName, child.Name, child.ID, child.ClassName );
+						}
+					}
+
 					return new HashSet<IXPathNode>(
-						_owner.GetChildren().Cast<UIAControl>().Select( c => new XPathAdapter( c ) ) );
+						children.Cast<UIAControl>().Select( c => new XPathAdapter( c, _log ) ) );
 				}
 				catch( ElementNotAvailableException ) {
+					if( _log != null ) {
+						_log.WriteLine( "  Failed with ElementNotAvailableException" );
+					}
+
 					return new HashSet<IXPathNode>();
+				}
+				catch( Exception ex ) {
+					if( _log != null ) {
+						_log.WriteLine( "  Failed with exception: " + ex.ToString() );
+					}
+
+					throw;
 				}
 			}
 			else if( axis == XPath.AttributeAxis ) {
 				// Find the appropriate attribute on this node
+				PropertyDescriptor[] descs = TypeDescriptor.GetProperties( _owner ).Cast<PropertyDescriptor>().ToArray();
+
+				if( _log != null ) {
+					_log.WriteLine( "Fetching properties of {0}:", _owner.CodePath );
+
+					foreach( PropertyDescriptor desc in descs ) {
+						try {
+							_log.WriteLine( "  @{0}: {1}", desc.Name, desc.GetValue( _owner ) );
+						}
+						catch( Exception ex ) {
+							_log.WriteLine( "  @{0}: ({1})", desc.Name, ex.GetType().Name );
+						}
+					}
+				}
+
 				return new HashSet<IXPathNode>(
 					TypeDescriptor.GetProperties( _owner ).Cast<PropertyDescriptor>()
 						.Select( prop => new XPathAttributeAdapter( this, prop ) ) );

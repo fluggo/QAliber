@@ -441,6 +441,10 @@ namespace QAliber.Engine.Controls
 		#endregion
 
 		public static UIControlBase FindControlByPath( string path ) {
+			return FindControlByPath( path, false );
+		}
+
+		public static UIControlBase FindControlByPath( string path, bool logDetails ) {
 			// This is an attempt to standardize how control paths work. Currently,
 			// control paths are all C# expressions; in the future we may want to
 			// change them to something that could be evaluated a little more smartly.
@@ -469,7 +473,7 @@ return c;";
 				watch.Start();
 
 				while ( watch.ElapsedMilliseconds < PlayerConfig.Default.AutoWaitForControl ) {
-					UIControlBase control = QAliber.Engine.Controls.UIA.UIAControl.FindControlByXPath( path.Substring( 4 ) );
+					UIControlBase control = QAliber.Engine.Controls.UIA.UIAControl.FindControlByXPath( path.Substring( 4 ), logDetails );
 
 					if( control.Exists )
 						return control;

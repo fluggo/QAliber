@@ -189,10 +189,15 @@ namespace QAliber.Engine.Controls.UIA
 			using( SearchCache.Activate() ) {
 				elements = automationElement.FindAll(
 					TreeScope.Children, new PropertyCondition( AutomationElement.IsControlElementProperty, true ) );
+				Debug.WriteLine( "Items: " + elements.Count.ToString() );
 			}
+
+			Debug.WriteLine( string.Format( "Children of {0}", this.ID ) );
 
 			foreach (AutomationElement element in elements)
 			{
+				Debug.WriteLine( string.Format( "  {0}", element.Cached.AutomationId ) );
+
 				UIAControl control = new UIAControl( element );
 				if (control != null)
 				{
@@ -341,13 +346,23 @@ namespace QAliber.Engine.Controls.UIA
 		/// Returns the first control identified by the given XPath expression.
 		/// </summary>
 		/// <param name="xpath">XPath expression to evaluate.</param>
+		///	<param name="logDetails">True to log the details of the search to the current log, false otherwise.</param>
 		/// <returns>A <see cref="UIAControl"/> if the expression evaluates to one,
 		///   or a <see cref="UIANullControl"/> if the result returns empty.</returns>
-		public static UIAControl FindControlByXPath( string xpath ) {
+		public static UIAControl FindControlByXPath( string xpath, bool logDetails ) {
+			StringWriter log = null;
+
+			if( logDetails )
+				log = new StringWriter( CultureInfo.InvariantCulture );
+
 			XPathExpression exp = XPath.Parse( xpath, true );
-			UIAXPathEvaluator evaluator = new UIAXPathEvaluator();
+			UIAXPathEvaluator evaluator = new UIAXPathEvaluator( log );
 
 			IXPathNode[] expResult = evaluator.Evaluate( exp ) as IXPathNode[];
+
+			if( logDetails ) {
+				Log.Info( "XPath search details", log.ToString(), EntryVerbosity.Internal );
+			}
 
 			if( expResult == null )
 				throw new ArgumentException( "XPath did not evaluate to a control." );

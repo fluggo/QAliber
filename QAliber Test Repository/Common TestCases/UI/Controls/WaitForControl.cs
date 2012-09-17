@@ -63,6 +63,18 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			set { timeout = value; }
 		}
 
+		private bool _logControlSearch = false;
+
+		[Category("Behavior")]
+		[DisplayName("Log Control Search")]
+		[Description("True to log the details of searching for the given control.")]
+		[DefaultValue(false)]
+		public bool LogControlSearch
+		{
+			get { return _logControlSearch; }
+			set { _logControlSearch = value; }
+		}
+
 		public override void Body()
 		{
 			ActualResult = TestCaseResult.Failed;
@@ -74,7 +86,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			{
 				try
 				{
-					UIControlBase c = UIControlBase.FindControlByPath( control );
+					UIControlBase c = UIControlBase.FindControlByPath( control, _logControlSearch );
 
 					if (c.Exists)
 					{
