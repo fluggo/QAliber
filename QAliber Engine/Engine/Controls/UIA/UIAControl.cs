@@ -184,27 +184,18 @@ namespace QAliber.Engine.Controls.UIA
 		public override UIControlBase[] GetChildren() {
 			List<UIControlBase> children = new List<UIControlBase>();
 
-			AutomationElementCollection elements;
+			// Unfortunately, FindAll( TreeScope.Children ) seems to be giving us trouble now.
+			// I can't find the reason. We now walk the tree ourselves, which isn't all that
+			// much slower.
+			AutomationElement child = TreeWalker.ControlViewWalker.GetFirstChild( automationElement, SearchCache );
 
-			using( SearchCache.Activate() ) {
-				elements = automationElement.FindAll(
-					TreeScope.Children, new PropertyCondition( AutomationElement.IsControlElementProperty, true ) );
-				Debug.WriteLine( "Items: " + elements.Count.ToString() );
-			}
+			while( child != null ) {
+				UIAControl control = new UIAControl( child );
+				control.SetIndex( children.Count );
+				children.Add( control );
+				control._parent = this;
 
-			Debug.WriteLine( string.Format( "Children of {0}", this.ID ) );
-
-			foreach (AutomationElement element in elements)
-			{
-				Debug.WriteLine( string.Format( "  {0}", element.Cached.AutomationId ) );
-
-				UIAControl control = new UIAControl( element );
-				if (control != null)
-				{
-					control.SetIndex( children.Count );
-					children.Add(control);
-					control._parent = this;
-				}
+				child = TreeWalker.ControlViewWalker.GetNextSibling( child, SearchCache );
 			}
 
 			return children.ToArray();
