@@ -370,6 +370,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 				foreach( var testRow in testRows ) {
 					// We must find this row in the target to proceed
 					bool matched = false;
+					int expectedPosition = targetRowIndex;
 
 					while( targetRowIndex < targetRows.Length ) {
 						if( targetRows[targetRowIndex].Equals( testRow ) ) {
@@ -388,8 +389,21 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 						continue;
 
 					// Made it to the end of the target rows without finding it
-					LogFailedByExpectedResult( "Expected row missing", "Could not find this row in the target grid: (" +
-						string.Join( ", ", testRow ) + ")" );
+					if( extraRows.Contains( testRow ) ) {
+						LogFailedByExpectedResult( "Row in wrong place", "This row was in the wrong position while \"Verify Row Order\" was on: [" +
+							string.Join( ", ", testRow ) + "]\r\n\r\nIt was expected at or after row " + (expectedPosition + 1).ToString() + "." );
+					}
+					else {
+						LogFailedByExpectedResult( "Expected row missing", "Could not find this row in the target grid: [" +
+							string.Join( ", ", testRow ) + "]\r\n\r\nIt was expected at or after row " + (expectedPosition + 1).ToString() + "." );
+
+						if( extraRows.Count != 0 && !_allowExtraRows ) {
+							LogFailedByExpectedResult( "Found extra row(s)", "Found these rows in the target grid while \"Allow Extra Rows\" was off:\r\n\r\n" +
+								string.Join( "\r\n",
+									extraRows.Select( row => "[" + string.Join( ", ", row ) + "]" ) ) );
+						}
+					}
+
 					return;
 				}
 
