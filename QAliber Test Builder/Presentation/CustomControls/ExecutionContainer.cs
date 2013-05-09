@@ -337,7 +337,10 @@ namespace QAliber.Builder.Presentation
 						control.pauseToolStripButton.Enabled = false;
 						control.stopToolStripButton.Enabled = true;
 						control.statusToolStripLabel.Text = "Breakpoint Reached";
-						control.FindForm().WindowState = control.winState;
+						if (Properties.Settings.Default.MinimizeOnRun)
+						{
+							control.FindForm().WindowState = control.winState;
+						}
 					}
 			}
 		}
@@ -354,7 +357,10 @@ namespace QAliber.Builder.Presentation
 				control.Invoke(new System.Threading.ThreadStart(DelayedActivationWorker));
 			else
 			{
-				control.FindForm().WindowState = control.winState;
+				if (Properties.Settings.Default.MinimizeOnRun)
+				{
+					control.FindForm().WindowState = control.winState;
+				}
 				control.FindForm().Activate();
 			}
 		}
