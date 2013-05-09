@@ -26,6 +26,7 @@ using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
 using QAliber.RemotingModel;
 using QAliber.Engine.Patterns;
+using QAliber.Engine.Win32;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -147,6 +148,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { _scrollIntoView = value; }
 		}
 
+		public string _modifierKeys = string.Empty;
+
+		[Category("Behavior")]
+		[DisplayName("Modifier Keys")]
+		[Description("Keys to hold down during the drag. Try {LeftShift}, {LeftControl}, and {LeftAlt}.")]
+		[DefaultValue("")]
+		public string ModifierKeys {
+			get { return _modifierKeys; }
+			set { _modifierKeys = value; }
+		}
+
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
@@ -195,7 +207,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				point2 += offset;
 			}
 
+			LowLevelInput.PressKeys( _modifierKeys );
 			c.Drag(button, point1, point2);
+			LowLevelInput.ReleaseKeys( _modifierKeys );
 
 			ActualResult = TestCaseResult.Passed;
 		}

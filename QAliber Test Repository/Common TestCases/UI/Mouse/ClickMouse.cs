@@ -26,6 +26,7 @@ using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
 using QAliber.Engine.Patterns;
 using QAliber.Engine;
+using QAliber.Engine.Win32;
 
 namespace QAliber.Repository.CommonTestCases.UI.Mouse
 {
@@ -112,6 +113,17 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { _scrollIntoView = value; }
 		}
 
+		public string _modifierKeys = string.Empty;
+
+		[Category("Behavior")]
+		[DisplayName("Modifier Keys")]
+		[Description("Keys to hold down during the click. Try {LeftShift}, {LeftControl}, and {LeftAlt}.")]
+		[DefaultValue("")]
+		public string ModifierKeys {
+			get { return _modifierKeys; }
+			set { _modifierKeys = value; }
+		}
+
 		public override void Body()
 		{
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
@@ -130,7 +142,10 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 				pattern.ScrollIntoView();
 			}
 
+			LowLevelInput.PressKeys( _modifierKeys );
 			c.Click(button, point);
+			LowLevelInput.ReleaseKeys( _modifierKeys );
+
 			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
 
 		}

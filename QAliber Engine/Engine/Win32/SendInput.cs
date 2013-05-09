@@ -219,6 +219,66 @@ namespace QAliber.Engine.Win32
 			
 		}
 
+		static void ParseKeyPressSequence( string str, out char[] characters, out Key[] keys ) {
+			List<char> pressedDownChars = new List<char>();
+			List<Key> pressedDownKeys = new List<Key>();
+			for (int i = 0; i < str.Length; i++)
+			{
+				char c = str[i];
+
+				switch (c)
+				{
+					case '{':
+						Key key = ParseKeyInBraces(str, i + 1, out i);
+						if (key != Key.None)
+						{
+							pressedDownKeys.Add(key);
+						}
+						break;
+					default:
+						pressedDownChars.Add(c);
+						break;
+				}
+			}
+
+			characters = pressedDownChars.ToArray();
+			keys = pressedDownKeys.ToArray();
+		}
+
+		/// <summary>
+		/// Presses and holds the given keys.
+		/// </summary>
+		/// <param name="str">String with the keys to hold.</param>
+		public static void PressKeys( string str ) {
+			char[] pressedChars;
+			Key[] pressedKeys;
+
+			ParseKeyPressSequence( str, out pressedChars, out pressedKeys );
+
+			foreach( char c in pressedChars )
+				PressAnsiKey( c );
+
+			foreach( Key key in pressedKeys )
+				PressExtendedKey( key );
+		}
+
+		/// <summary>
+		/// Releases the given keys.
+		/// </summary>
+		/// <param name="str">String with the keys to release.</param>
+		public static void ReleaseKeys( string str ) {
+			char[] pressedChars;
+			Key[] pressedKeys;
+
+			ParseKeyPressSequence( str, out pressedChars, out pressedKeys );
+
+			foreach( char c in pressedChars )
+				ReleaseKey( c );
+
+			foreach( Key key in pressedKeys )
+				ReleaseExtendedKey( key );
+		}
+
 		/// <summary>
 		/// Sends key strokes to the keyboard
 		/// </summary>
