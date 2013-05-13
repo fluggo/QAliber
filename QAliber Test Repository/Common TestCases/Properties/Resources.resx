@@ -196,4 +196,13 @@
   <data name="CrossIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CrossIcon.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Clipboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Clipboard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipboardClear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClipboardClear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipboardVerify" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClipboardVerify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -120,6 +120,9 @@
     <Compile Include="UITypeEditors\UIControlTypeEditor.cs" />
     <Compile Include="UITypeEditors\DirectoryBrowseTypeEditor.cs" />
     <Compile Include="UITypeEditors\FileBrowseTypeEditor.cs" />
+    <Compile Include="UI\Clipboard\ClearClipboard.cs" />
+    <Compile Include="UI\Clipboard\SetClipboard.cs" />
+    <Compile Include="UI\Clipboard\VerifyClipboard.cs" />
     <Compile Include="UI\Controls\CaptureGrid.cs" />
     <Compile Include="UI\Controls\VerifyList.cs" />
     <Compile Include="UI\Controls\VerifyGrid.cs" />
@@ -218,6 +221,9 @@
     <None Include="Resources\Bitmap.png" />
     <None Include="Resources\combobox.bmp" />
     <Content Include="Resources\CheckBox.png" />
+    <None Include="Resources\Clipboard.png" />
+    <None Include="Resources\ClipboardClear.png" />
+    <None Include="Resources\ClipboardVerify.png" />
     <Content Include="Resources\Control_DataGridView.bmp" />
     <Content Include="Resources\CrossIcon.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -292,6 +298,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
