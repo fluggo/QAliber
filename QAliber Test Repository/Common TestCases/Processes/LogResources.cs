@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -42,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			Icon = Properties.Resources.StartProcess;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Process[] processes = Process.GetProcessesByName(filename);
 			if (processes.Length > 0)
@@ -68,7 +69,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			}
 			else
 				Log.Warning("Process is not available");
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string filename = "";

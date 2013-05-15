@@ -21,7 +21,6 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 
 namespace QAliber.TestModel
 {
@@ -45,7 +44,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			lastError = string.Empty;
 			SetExitOnErrorRec(this);
@@ -54,7 +53,7 @@ namespace QAliber.TestModel
 			if( currentLog != null )
 				currentLog.BeforeErrorIsPosted += new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
 
-			base.Body();
+			base.Body( run );
 			exitTotally = false;
 			if (ActualResult == TestCaseResult.Failed)
 				lastError = errListener;

@@ -22,7 +22,6 @@ using System.Text;
 using System.Windows.Forms;
 using QAliber.TestModel;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 using System.IO;
 using System.Diagnostics;
 
@@ -38,7 +37,7 @@ namespace QAliber.Builder.Presentation
 		private void FillTree()
 		{
 			typesTreeView.Nodes.Clear();
-			string path = TestController.Default.LocalAssemblyPath + @"\\Macros";
+			string path = TestController.LocalAssemblyPath + @"\\Macros";
 			if (!Directory.Exists(path))
 			{
 				try
@@ -140,7 +139,7 @@ namespace QAliber.Builder.Presentation
 		private void CopyMacros()
 		{
 			ProcessStartInfo psi = new ProcessStartInfo("xcopy",
-			  string.Format("\"{0}\\*.macro\" \"{1}\\Macros\\\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, TestController.Default.LocalAssemblyPath));
+			  string.Format("\"{0}\\*.macro\" \"{1}\\Macros\\\" /c /i /s /y", TestController.RemoteAssemblyDirectory, TestController.LocalAssemblyPath));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;
 			Process.Start(psi).WaitForExit(10000);
 		}

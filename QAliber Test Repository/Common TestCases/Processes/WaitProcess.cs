@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -42,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			Icon = Properties.Resources.StartProcess;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Stopwatch watch = new Stopwatch();
 			watch.Start();
@@ -52,14 +53,14 @@ namespace QAliber.Repository.CommonTestCases.Processes
 				if (processes.Length > 0)
 				{
 					Log.Info("Process arrived");
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = TestCaseResult.Passed;
 					break;
 				}
 				System.Threading.Thread.Sleep(50);
 			}
-			if (ActualResult != QAliber.RemotingModel.TestCaseResult.Passed)
+			if (ActualResult != TestCaseResult.Passed)
 			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				Log.Error("Process did not load after " + timeout);
 			}
 		}

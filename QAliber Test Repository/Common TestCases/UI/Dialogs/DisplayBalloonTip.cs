@@ -103,9 +103,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 			}
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			Notifier.Instance.notifyIcon.ShowBalloonTip(timeout, title, text, messageIcon);
 		}
 

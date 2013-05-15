@@ -29,7 +29,6 @@ using System.Reflection;
 using System.Collections;
 using QAliber.TestModel.Variables;
 using QAliber.Logger;
-using QAliber.RemotingModel;
 using System.Data;
 using System.Drawing.Design;
 using System.ComponentModel.Design;
@@ -59,7 +58,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The entry point for the 'heart' of the test case.
 		/// </summary>
-		public virtual void Body() { }
+		public virtual void Body( TestRun run ) { }
 
 		/// <summary>
 		/// The entry point for the clean-up of the test case in case it is ended by unhandled exception
@@ -401,12 +400,14 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// A static property which indicates the QAliber runner to stop all subsequent test cases execution, setting this to true, should lead to an end of the test scenario
 		/// </summary>
+		[Obsolete("Should transfer this to the test context.")]
 		public static bool ExitTotally
 		{
 			get { return exitTotally; }
 			set { exitTotally = value; }
 		}
 
+		[Obsolete("Should transfer this to the test context.")]
 		public static uint BranchesToBreak
 		{
 			get { return branchesToBreak; }
@@ -628,6 +629,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The current test case being run by the QAliber runner
 		/// </summary>
+		[Obsolete("Should transfer this to the test context.")]
 		public static TestCase Current
 		{
 			get { return currenTestCase; }
@@ -637,17 +639,18 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The method that executes the entire test case with all its parts (Setup, Body and Cleanup)
 		/// </summary>
-		public void Run()
+		/// <param name="run">The current test context.</param>
+		public void Run( TestRun run )
 		{
 			if (!_markedForExecution || exitTotally)
 				return;
 			currenTestCase = this;
-			TestController.Default.RaiseStepStarted(_id);
+			TestController.RaiseStepStarted(_id);
 			if (_hasBreakPoint)
 			{
 				try
 				{
-					TestController.Default.RaiseBreakPointReached();
+					TestController.RaiseBreakPointReached();
 					System.Threading.Thread.CurrentThread.Join();
 				}
 				catch (System.Threading.ThreadInterruptedException)
@@ -658,7 +661,7 @@ namespace QAliber.TestModel
 			{
 				InitRun();
 				Setup();
-				Body();
+				Body( run );
 				Cleanup();
 			}
 			catch (Exception e)
@@ -667,11 +670,11 @@ namespace QAliber.TestModel
 			}
 			finally
 			{
-				FinalizeRun();
+				FinalizeRun( run );
 			}
 		}
 
-		protected void HandleResult()
+		protected void HandleResult( TestRun run )
 		{
 			if (_expectedResult != TestCaseResult.None && _actualResult != _expectedResult)
 			{
@@ -686,7 +689,7 @@ namespace QAliber.TestModel
 				if (_currentRetryNumber < _numOfRetries)
 				{
 					_currentRetryNumber++;
-					Run();
+					Run( run );
 				}
 				
 			}
@@ -756,12 +759,12 @@ namespace QAliber.TestModel
 			}
 		}
 
-		private void FinalizeRun()
+		private void FinalizeRun( TestRun run )
 		{
-			HandleResult();
+			HandleResult( run );
 			SetVariables();
 			RestoreVariables();
-			TestController.Default.RaiseStepResultArrived(expectedVsActual);
+			TestController.RaiseStepResultArrived(expectedVsActual);
 			if (_capturing)
 			{
 				_capturing = false;

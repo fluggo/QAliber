@@ -19,7 +19,6 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Globalization;
-using QAliber.RemotingModel;
 using System.Xml;
 using System.Net;
 

@@ -187,8 +187,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			get { return _resultTable; }
 		}
 
-		public override void Body() {
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+		public override void Body( TestRun run ) {
+			ActualResult = TestCaseResult.Failed;
 			_resultTable = null;
 
 			// Get the variable we're testing against
@@ -446,7 +446,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 				}
 			}
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		class HashedRow : IEquatable<HashedRow>, IEnumerable<string> {

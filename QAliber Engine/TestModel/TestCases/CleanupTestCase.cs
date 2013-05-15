@@ -21,7 +21,6 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 
 namespace QAliber.TestModel
 {

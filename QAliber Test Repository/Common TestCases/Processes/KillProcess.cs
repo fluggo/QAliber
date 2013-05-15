@@ -24,7 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
-using QAliber.RemotingModel;
+using QAliber.TestModel;
 
 
 
@@ -43,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			Icon = Properties.Resources.ProcessRemove;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Process[] processes = Process.GetProcessesByName(filename);
 

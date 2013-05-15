@@ -56,7 +56,7 @@ namespace QAliber.TestModel
 			set { listName = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Log log = Log.Current;
 			ScenarioVariable<string[]> list = Scenario.Lists[listName];
@@ -72,7 +72,7 @@ namespace QAliber.TestModel
 				if( log != null )
 					log.StartFolder( "Iteration on item '" + obj.ToString() + "'", null );
 
-				base.Body();
+				base.Body( run );
 
 				if( log != null )
 					log.EndFolder();

@@ -22,7 +22,6 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Drawing;
-using QAliber.RemotingModel;
 using System.Xml.Serialization;
 
 namespace QAliber.Repository.CommonTestCases.UI.Images
@@ -91,7 +90,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 	
 
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ActualResult = TestCaseResult.Passed;
 			Bitmap image1 = Bitmap.FromFile(file1) as Bitmap;

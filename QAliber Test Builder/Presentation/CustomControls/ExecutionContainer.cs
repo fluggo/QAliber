@@ -22,7 +22,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.Remoting;
 using QAliber.TestModel;
-using QAliber.RemotingModel;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
 using QAliber.Logger;
@@ -39,11 +38,12 @@ namespace QAliber.Builder.Presentation
 			InitHotkeys();
 			sink = new NotifySink();
 			sink.Control = this;
-			TestController.Default.OnExecutionStateChanged += new ExecutionStateChangedCallback(sink.FireExecutionStateChangedCallback);
-			TestController.Default.OnStepStarted += new StepStartedCallback(sink.FireStepStartedCallback);
-			TestController.Default.OnStepResultArrived += new StepResultArrivedCallback(sink.FireStepResultArrivedCallback);
-			TestController.Default.OnLogResultArrived += new LogResultArrivedCallback(sink.FireLogResultArrivedCallback);
-			TestController.Default.OnBreakPointReached += new BreakPointReachedCallback(sink.FireBreakPointReachedCallback);
+
+			TestController.OnExecutionStateChanged += new ExecutionStateChangedCallback(sink.FireExecutionStateChangedCallback);
+			TestController.OnStepStarted += new StepStartedCallback(sink.FireStepStartedCallback);
+			TestController.OnStepResultArrived += new StepResultArrivedCallback(sink.FireStepResultArrivedCallback);
+			TestController.OnLogResultArrived += new LogResultArrivedCallback(sink.FireLogResultArrivedCallback);
+			TestController.OnBreakPointReached += new BreakPointReachedCallback(sink.FireBreakPointReachedCallback);
 
 			// Ugly solution to setting currentPlayingScenarioControl
 			ScenarioControl.ScenarioPlaying += (sender, e) => {
@@ -66,7 +66,7 @@ namespace QAliber.Builder.Presentation
 					}
 					dockManager.tabbedScenarioControl.SaveItem(currentPlayingScenarioControl);
 					//TODO : extern to cfg
-					TestController.Default.Run(currentPlayingScenarioControl.TestScenario.Filename);
+					TestController.Run(currentPlayingScenarioControl.TestScenario.Filename);
 				}
 			}
 			catch (Exception ex)
@@ -88,7 +88,7 @@ namespace QAliber.Builder.Presentation
 				}
 				if (isInBP)
 				{
-					TestController.Default.ContinueFromBreakPoint();
+					TestController.ContinueFromBreakPoint();
 					debugPlayToolStripButton.Enabled = false;
 					pauseToolStripButton.Enabled = true;
 					stopToolStripButton.Enabled = true;
@@ -98,7 +98,7 @@ namespace QAliber.Builder.Presentation
 				else
 				{
 					//currentPlayingScenarioControl.SetNodeIDs();
-					TestController.Default.Run(currentPlayingScenarioControl.TestScenario.RootTestCase);
+					TestController.Run(currentPlayingScenarioControl.TestScenario.RootTestCase);
 				}
 			}
 		}
@@ -106,19 +106,19 @@ namespace QAliber.Builder.Presentation
 		internal void pauseToolStripButton_Click(object sender, EventArgs e)
 		{
 			if (!pauseToolStripButton.Checked)
-				TestController.Default.Resume();
+				TestController.Resume();
 			else
-				TestController.Default.Pause();
+				TestController.Pause();
 		}
 
 		internal void stopToolStripButton_Click(object sender, EventArgs e)
 		{
 			if (isInBP)
 			{
-				TestController.Default.ContinueFromBreakPoint();
+				TestController.ContinueFromBreakPoint();
 				isInBP = false;
 			}
-			TestController.Default.Stop();
+			TestController.Stop();
 		}
 
 		void PlayHotKeyPressed(object sender, EventArgs e)

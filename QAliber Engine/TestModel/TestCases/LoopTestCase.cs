@@ -52,7 +52,7 @@ namespace QAliber.TestModel
 			set { numOfLoops = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Log log = Log.Current;
 
@@ -63,7 +63,7 @@ namespace QAliber.TestModel
 				if( log != null )
 					log.StartFolder( Name + " - Loop #" + (int)(i + 1), null );
 
-				base.Body();
+				base.Body( run );
 
 				if( log != null )
 					log.EndFolder();

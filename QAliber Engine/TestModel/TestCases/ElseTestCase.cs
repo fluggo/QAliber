@@ -39,13 +39,13 @@ namespace QAliber.TestModel
 			Icon = Properties.Resources.If;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			Log.Info("Last If result = " + IfTestCase.ifConditionValue);
 			if (!IfTestCase.ifConditionValue)
 			{
-				base.Body();
+				base.Body( run );
 			}
 		}
 

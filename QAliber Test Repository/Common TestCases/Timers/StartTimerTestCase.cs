@@ -21,6 +21,7 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
+using QAliber.TestModel;
 
 namespace QAliber.Repository.CommonTestCases.Timers
 {
@@ -50,10 +51,10 @@ namespace QAliber.Repository.CommonTestCases.Timers
 			set { key = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			TimersCollection.AddTimer(key);
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description

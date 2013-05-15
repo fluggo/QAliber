@@ -22,12 +22,12 @@ using System.Text;
 using System.Windows.Forms;
 using QAliber.TestModel;
 using QAliber.Builder.Presentation.Commands;
-using QAliber.RemotingModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.IO;
 using Darwen.Windows.Forms.Controls.TabbedDocuments;
 using System.Linq;
+using QAliber.Logger;
 
 namespace QAliber.Builder.Presentation
 {
@@ -587,7 +587,7 @@ namespace QAliber.Builder.Presentation
 			{
 				OnScenarioPlaying();
 				//SetNodeIDs();
-				TestController.Default.Run(((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase);
+				TestController.Run(((QAliberTreeNode)scenarioTreeView.SelectedNode).Testcase);
 			}
 		}
 

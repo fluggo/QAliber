@@ -7,7 +7,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Drawing;
 using System.Xml;
-using QAliber.RemotingModel;
 
 namespace QAliber.Logger.Controls
 {

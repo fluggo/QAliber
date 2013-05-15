@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -42,13 +43,13 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			Icon = null;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			int range = (int)((maxVal - minVal) / step);
 			int rndVal = new Random().Next(0, range);
 			generatedNum = minVal + rndVal * step;
 			Log.Info("The generated number is " + generatedNum);
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private double minVal = 0;

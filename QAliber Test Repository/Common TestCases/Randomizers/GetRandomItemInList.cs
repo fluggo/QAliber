@@ -45,13 +45,13 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 			Icon = null;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			string[] collection = Scenario.Lists[listName].Value;
 			int index = new Random().Next(collection.Length);
 			generatedItem = collection[index];
 			Log.Info("Item picked = '" + generatedItem + "'");
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string listName = string.Empty;

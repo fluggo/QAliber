@@ -23,7 +23,6 @@ using System.Windows.Forms;
 using QAliber.TestModel;
 using QAliber.Builder.Presentation;
 using Darwen.Windows.Forms.Controls.Docking;
-using QAliber.RemotingModel;
 using System.Diagnostics;
 
 namespace QAliber.Builder.Presentation

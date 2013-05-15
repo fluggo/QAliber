@@ -52,8 +52,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			get { return _resultTable; }
 		}
 
-		public override void Body() {
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+		public override void Body( TestRun run ) {
+			ActualResult = TestCaseResult.Failed;
 			_resultTable = null;
 
 			UIControlBase c = UIControlBase.FindControlByPath( _control );
@@ -96,7 +96,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 			_resultTable = table;
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description {

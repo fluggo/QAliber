@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -50,10 +51,10 @@ namespace QAliber.Repository.CommonTestCases.Registry
 		public override void Setup()
 		{
 			base.Setup();
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 		   
 			switch (regHive)

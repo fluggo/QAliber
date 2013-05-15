@@ -24,7 +24,6 @@ using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Diagnostics;
 using System.Xml.Serialization;
-using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -75,7 +74,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			set { _logControlSearch = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ActualResult = TestCaseResult.Failed;
 

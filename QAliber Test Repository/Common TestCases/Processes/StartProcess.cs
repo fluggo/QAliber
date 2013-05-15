@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -42,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 			Icon = Properties.Resources.StartProcess;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ProcessStartInfo psi = new ProcessStartInfo(filename, argumnets);
 			psi.WorkingDirectory = workDir;
@@ -53,7 +54,7 @@ namespace QAliber.Repository.CommonTestCases.Processes
 				p.WaitForExit();
 			else if (waitForUserInteraction)
 				p.WaitForInputIdle();
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string filename = "";

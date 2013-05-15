@@ -26,7 +26,6 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Reflection;
 using QAliber.Logger;
-using QAliber.RemotingModel;
 using System.Globalization;
 
 namespace QAliber.Logger.Controls

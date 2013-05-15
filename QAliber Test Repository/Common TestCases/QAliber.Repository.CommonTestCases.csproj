@@ -265,11 +265,6 @@
       <Name>QAliber.ImageHandling</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\QAliber Engine\RemotingModel\QAliber.RemotingModel.csproj">
-      <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
-      <Name>QAliber.RemotingModel</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\TestModel\QAliber.TestModel.csproj">
       <Project>{21076058-52DA-46EC-ABE6-5E389CBED60C}</Project>
       <Name>QAliber.TestModel</Name>

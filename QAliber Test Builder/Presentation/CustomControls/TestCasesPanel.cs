@@ -22,7 +22,6 @@ using System.Text;
 using System.Windows.Forms;
 using QAliber.TestModel;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 
 namespace QAliber.Builder.Presentation
 {
@@ -36,7 +35,7 @@ namespace QAliber.Builder.Presentation
 		private void FillTree()
 		{
 			typesTreeView.Nodes.Clear();
-			foreach (Type type in TestController.Default.SupportedTypes)
+			foreach (Type type in TestController.SupportedTypes)
 			{
 				string path = "Misc";
 				TestCase testcase = Activator.CreateInstance(type) as TestCase;
@@ -168,7 +167,7 @@ namespace QAliber.Builder.Presentation
 				{
 					try
 					{
-						System.IO.File.Copy(file, TestController.Default.LocalAssemblyPath + "\\" + System.IO.Path.GetFileName(file), true);
+						System.IO.File.Copy(file, TestController.LocalAssemblyPath + "\\" + System.IO.Path.GetFileName(file), true);
 					}
 					catch (Exception ex)
 					{
@@ -176,7 +175,7 @@ namespace QAliber.Builder.Presentation
 					}
 				}
 				//TestController.Default.UserFiles = openFileDialog.FileNames;
-				TestController.Default.RetrieveSupportedTypes();
+				TestController.RetrieveSupportedTypes();
 				FillTree();
 
 			}
@@ -223,7 +222,7 @@ namespace QAliber.Builder.Presentation
 		private void refreshToolStripButton_Click(object sender, EventArgs e)
 		{
 			new AssembliesRetriever(false).CopyRemoteToLocal();
-			TestController.Default.RetrieveSupportedTypes();
+			TestController.RetrieveSupportedTypes();
 			FillTree();
 		}
 

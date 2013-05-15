@@ -123,9 +123,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { _modifierKeys = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
@@ -144,7 +144,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			c.DoubleClick( button, point );
 			LowLevelInput.ReleaseKeys( _modifierKeys );
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 		}
 

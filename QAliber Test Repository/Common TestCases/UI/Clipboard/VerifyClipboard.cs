@@ -18,7 +18,6 @@ using System.Reflection;
 using System.Xml.Serialization;
 using System.Data;
 using System.Globalization;
-using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Clipboard {
 	[Serializable]
@@ -87,7 +86,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Clipboard {
 			return System.Windows.Forms.Clipboard.GetText();
 		}
 
-		public override void Body() {
+		public override void Body( TestRun run ) {
 			ActualResult = TestCaseResult.Failed;
 
 			_foundText = GetText( true );

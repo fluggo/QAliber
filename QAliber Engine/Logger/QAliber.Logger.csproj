@@ -149,12 +149,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RemotingModel\QAliber.RemotingModel.csproj">
-      <Project>{C0B8F43E-6E25-4C22-84A4-8EE1C6244615}</Project>
-      <Name>QAliber.RemotingModel</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

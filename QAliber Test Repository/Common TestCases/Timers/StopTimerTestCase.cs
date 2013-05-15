@@ -21,6 +21,7 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
+using QAliber.TestModel;
 
 namespace QAliber.Repository.CommonTestCases.Timers
 {
@@ -68,7 +69,7 @@ namespace QAliber.Repository.CommonTestCases.Timers
 			set { maxTimeAllowed = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			double val = TimersCollection.StopTimer(key);
 			if (maxTimeAllowed > 0)
@@ -76,12 +77,12 @@ namespace QAliber.Repository.CommonTestCases.Timers
 				if (val > maxTimeAllowed)
 				{
 					LogFailedByExpectedResult("Operation exceeded requested time", string.Format("Maximum = {0}, Actual = {1}", maxTimeAllowed, val));
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 				}
 				else
 				{
 					LogPassedByExpectedResult(string.Format("Operation ended {0}", val), "");
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = TestCaseResult.Passed;
 				}
 			}
 		}

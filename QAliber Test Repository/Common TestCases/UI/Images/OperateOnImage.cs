@@ -52,7 +52,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 
 		
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Bitmap mainImage = Logger.Slideshow.ScreenCapturer.Capture(false);
 			Bitmap subImage = Bitmap.FromFile(file) as Bitmap;
@@ -63,7 +63,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 
 			if( correlation < 0.85 ) {
 				LogFailedByExpectedResult("Couldn't find the image within the desktop", "");
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 			}
 			else
 			{
@@ -91,7 +91,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 						throw new ArgumentException("Can't understand action " + actionType);
 				}
 
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = TestCaseResult.Passed;
 			}
 		}
 

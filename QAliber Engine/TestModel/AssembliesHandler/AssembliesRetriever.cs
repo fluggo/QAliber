@@ -52,7 +52,7 @@ namespace QAliber.TestModel
 					}
 					if (!found)
 					{
-						File.Copy(new Uri(remFile.CodeBase).LocalPath, Path.Combine(TestController.Default.LocalAssemblyPath, Path.GetFileName(new Uri(remFile.CodeBase).LocalPath)), true);
+						File.Copy(new Uri(remFile.CodeBase).LocalPath, Path.Combine(TestController.LocalAssemblyPath, Path.GetFileName(new Uri(remFile.CodeBase).LocalPath)), true);
 					}
 				}
 				catch (IOException)
@@ -76,10 +76,10 @@ namespace QAliber.TestModel
 			}
 			//Copy macro files and xml files
 			ProcessStartInfo psi = new ProcessStartInfo("xcopy",
-				string.Format("\"{0}\\*.macro\" \"{1}\\Macros\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, TestController.Default.LocalAssemblyPath));
+				string.Format("\"{0}\\*.macro\" \"{1}\\Macros\" /c /i /s /y", TestController.RemoteAssemblyDirectory, TestController.LocalAssemblyPath));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;
 			Process.Start(psi).WaitForExit(10000);
-			psi.Arguments =  string.Format("\"{0}\\*.xml\" \"{1}\\Help\" /c /i /s /y", TestController.Default.RemoteAssemblyDirectory, System.Windows.Forms.Application.StartupPath);
+			psi.Arguments =  string.Format("\"{0}\\*.xml\" \"{1}\\Help\" /c /i /s /y", TestController.RemoteAssemblyDirectory, System.Windows.Forms.Application.StartupPath);
 			Process.Start(psi).WaitForExit(10000);
 		}
 
@@ -88,21 +88,21 @@ namespace QAliber.TestModel
 			localAssemblies = new List<AssemblyName>();
 			remoteAssemblies = new List<AssemblyName>();
 			
-			foreach (string path in Directory.GetFiles(TestController.Default.LocalAssemblyPath, "*.dll"))
+			foreach (string path in Directory.GetFiles(TestController.LocalAssemblyPath, "*.dll"))
 			{
 				localAssemblies.Add(TryToGetAssemblyName(path));
 			}
-			foreach (string path in Directory.GetFiles(TestController.Default.LocalAssemblyPath, "*.exe"))
+			foreach (string path in Directory.GetFiles(TestController.LocalAssemblyPath, "*.exe"))
 			{
 				localAssemblies.Add(TryToGetAssemblyName(path));
 			}
 
-			foreach (string path in Directory.GetFiles(TestController.Default.RemoteAssemblyDirectory, "*.dll"))
+			foreach (string path in Directory.GetFiles(TestController.RemoteAssemblyDirectory, "*.dll"))
 			{
 				remoteAssemblies.Add(TryToGetAssemblyName(path));
 
 			}
-			foreach (string path in Directory.GetFiles(TestController.Default.RemoteAssemblyDirectory, "*.exe"))
+			foreach (string path in Directory.GetFiles(TestController.RemoteAssemblyDirectory, "*.exe"))
 			{
 				remoteAssemblies.Add(TryToGetAssemblyName(path));
 			}

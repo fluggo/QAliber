@@ -54,12 +54,12 @@ namespace QAliber.Repository.CommonTestCases.Macros
 			set { filename = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			MacroRecorder recorder = new MacroRecorder();
 			recorder.Load(filename);
 			recorder.Play();
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description

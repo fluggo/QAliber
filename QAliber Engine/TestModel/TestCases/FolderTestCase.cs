@@ -22,7 +22,6 @@ using System.Linq;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 
 namespace QAliber.TestModel
 {
@@ -53,7 +52,7 @@ namespace QAliber.TestModel
 			set { _children = value; }
 		}
 		
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ActualResult = TestCaseResult.Passed;
 			bool stopRunning = false;
@@ -62,7 +61,7 @@ namespace QAliber.TestModel
 			{
 				if( child.MarkedForExecution && (!stopRunning || child.AlwaysRun) )
 				{
-					child.Run();
+					child.Run( run );
 
 					if( stopRunning )
 						continue;

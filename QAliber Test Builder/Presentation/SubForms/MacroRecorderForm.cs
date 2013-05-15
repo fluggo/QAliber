@@ -32,8 +32,8 @@ namespace QAliber.Builder.Presentation.SubForms
 			InitializeComponent();
 			InitDatagrid();
 			InitHotkeys();
-			openFileDialog.InitialDirectory = TestController.Default.RemoteAssemblyDirectory;
-			saveFileDialog.InitialDirectory = TestController.Default.RemoteAssemblyDirectory;
+			openFileDialog.InitialDirectory = TestController.RemoteAssemblyDirectory;
+			saveFileDialog.InitialDirectory = TestController.RemoteAssemblyDirectory;
 			converter = new MacroDataTableConverter(recorder, table);
 
 		}

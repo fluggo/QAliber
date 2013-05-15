@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -50,10 +51,10 @@ namespace QAliber.Repository.CommonTestCases.Registry
 		public override void Setup()
 		{
 			base.Setup();
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Microsoft.Win32.RegistryKey key = null;
 			switch (regHive)
@@ -84,12 +85,12 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			}
 			if (key != null)
 			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = TestCaseResult.Passed;
 				LogPassedByExpectedResult("Key found in registry", "");
 			}
 			else
 			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				LogFailedByExpectedResult("Key was not found in registry", "");
 			}
 

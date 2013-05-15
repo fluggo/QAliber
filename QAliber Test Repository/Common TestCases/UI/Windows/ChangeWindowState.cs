@@ -70,21 +70,21 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 		}
 	
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				throw new InvalidOperationException("Control not found");
 			}
 
 			IWindowPattern window = c.GetControlInterface<IWindowPattern>();
 
 			if( window == null ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				throw new InvalidOperationException( "Control doesn't appear to be a window" );
 			}
 

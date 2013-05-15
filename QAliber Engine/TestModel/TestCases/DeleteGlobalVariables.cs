@@ -25,6 +25,7 @@ using System.Data;
 using QAliber.TestModel.Attributes;
 using QAliber.TestModel.Variables;
 using System.Xml.Serialization;
+using QAliber.Logger;
 
 
 
@@ -45,7 +46,7 @@ namespace QAliber.TestModel
 		public DeleteGlobalVariables() : base( "Delete Variable" ) {
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			switch (variableType)
 			{
@@ -71,7 +72,7 @@ namespace QAliber.TestModel
 					}
 					break;
 			}
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private varTypes variableType;

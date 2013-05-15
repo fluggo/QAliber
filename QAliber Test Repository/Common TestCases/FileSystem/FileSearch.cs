@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -46,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			Icon = Properties.Resources.FileSearch;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			using (StreamReader reader = new StreamReader(sourceFile))
 			{
@@ -60,7 +61,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						{
 							textOutput = line;
 							Log.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
-							ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+							ActualResult = TestCaseResult.Passed;
 							break;
 						}
 					}
@@ -70,17 +71,17 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						{
 							textOutput = line;
 							Log.Info("Pattern '" + pattern + "' was found in line " + lineNumber.ToString(), line);
-							ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+							ActualResult = TestCaseResult.Passed;
 							break;
 						}
 					}
 					line = reader.ReadLine();
 					lineNumber++;
 				}
-				if (ActualResult != QAliber.RemotingModel.TestCaseResult.Passed)
+				if (ActualResult != TestCaseResult.Passed)
 				{
 					Log.Error("Pattern '" + pattern + "' was not found");
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 				}
 			}
 		}

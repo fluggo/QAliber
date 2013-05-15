@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -42,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 			Icon = Properties.Resources.Registry;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			int index = regkey.LastIndexOf('\\');
 			string key = regkey.Substring(0, index);
@@ -50,7 +51,7 @@ namespace QAliber.Repository.CommonTestCases.Registry
 
 			Microsoft.Win32.Registry.SetValue(key, val, regVal);
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string regkey = "";

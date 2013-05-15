@@ -23,6 +23,7 @@ using System.ComponentModel;
 using QAliber.Logger;
 using System.Net;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 namespace QAliber.Repository.CommonTestCases.Networking.Http
 {
@@ -36,7 +37,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 			Icon = Properties.Resources.Http;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			// used on each read operation
 			byte[] buf = new byte[8192];
@@ -64,7 +65,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 			if (response.StatusCode != expectedCode)
 			{
 				Log.Error("Http status code was different than expected", "Actual : " + response.StatusCode + "\nExpected : " + expectedCode);
-				ActualResult = global::QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 			}
 			// we will read data via the response stream
 			Stream resStream = response.GetResponseStream();
@@ -89,7 +90,7 @@ namespace QAliber.Repository.CommonTestCases.Networking.Http
 				}
 				while (count > 0); // any more data to read?
 			}
-			ActualResult = global::QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string url;

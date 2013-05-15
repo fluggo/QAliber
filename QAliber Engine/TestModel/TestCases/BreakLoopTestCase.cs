@@ -54,10 +54,10 @@ namespace QAliber.TestModel
 			set { numOfLoopsToBreak = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			branchesToBreak = numOfLoopsToBreak;
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description

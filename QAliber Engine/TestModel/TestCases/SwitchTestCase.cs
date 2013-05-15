@@ -38,13 +38,13 @@ namespace QAliber.TestModel
 			set { cSharpExpression = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			object conditionResult = null;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Text, out conditionResult);
 			switchConditionValue = conditionResult.ToString();
 			Log.Info("Switch value = " + switchConditionValue);
-			base.Body();
+			base.Body( run );
 		}
 
 		public override string Description

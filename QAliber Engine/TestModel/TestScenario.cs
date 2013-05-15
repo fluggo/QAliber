@@ -103,6 +103,7 @@ namespace QAliber.TestModel
 		#region Global Variables
 		private BindingVariableList<ScenarioVariable<string>, string> variables;
 
+		[Obsolete("Should transfer this to the test context.")]
 		[Browsable(false)]
 		public BindingVariableList<ScenarioVariable<string>, string> Variables
 		{
@@ -112,6 +113,7 @@ namespace QAliber.TestModel
 
 		private BindingVariableList<ScenarioVariable<string[]>, string[]> lists;
 
+		[Obsolete("Should transfer this to the test context.")]
 		[Browsable(false)]
 		public BindingVariableList<ScenarioVariable<string[]>, string[]> Lists
 		{
@@ -121,6 +123,7 @@ namespace QAliber.TestModel
 
 		private BindingVariableList<ScenarioTable, DataTable> tables;
 
+		[Obsolete("Should transfer this to the test context.")]
 		[Browsable(false)]
 		public BindingVariableList<ScenarioTable, DataTable> Tables
 		{
@@ -131,11 +134,11 @@ namespace QAliber.TestModel
 
 		#region Methods
 
-		public void Run()
+		public void Run( TestRun run )
 		{
 			SaveUserVariables();
 			//Log.Default.IndentIn("Scenario '" + name + "'");
-			rootTestCase.Run();
+			rootTestCase.Run( run );
 			//Log.Default.IndentOut();
 			ReloadUserVariables();
 		}
@@ -143,7 +146,7 @@ namespace QAliber.TestModel
 		static XmlSerializer CreateXmlSerializer() {
 			// Pull in all the additional types we need
 			List<Type> extraTypes = new List<Type>();
-			extraTypes.AddRange( TestController.Default.SupportedTypes );
+			extraTypes.AddRange( TestController.SupportedTypes );
 			extraTypes.Add( typeof(DataTable) );
 
 			// Assign System.Windows.Size a different namespace
@@ -185,7 +188,7 @@ namespace QAliber.TestModel
 			List<XmlQualifiedName> namespaceList = new List<XmlQualifiedName>();
 			namespaceList.Add( new XmlQualifiedName( "xsi", "http://www.w3.org/2001/XMLSchema-instance" ) );
 
-			var attrs = TestController.Default.SupportedTypes
+			var attrs = TestController.SupportedTypes
 				.Select( type => type.Assembly )
 				.Distinct()
 				.SelectMany( assem =>

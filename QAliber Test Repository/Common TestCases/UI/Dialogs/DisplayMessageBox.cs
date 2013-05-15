@@ -92,9 +92,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Dialogs
 			get { return dialogResult; }
 		}
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			dialogResult = MessageBox.Show(text, title, buttons);
 			Log.Info("The user pressed '" + dialogResult + "'");
 		}

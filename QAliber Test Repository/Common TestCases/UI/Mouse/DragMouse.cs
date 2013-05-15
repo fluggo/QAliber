@@ -24,7 +24,6 @@ using QAliber.Logger;
 using QAliber.Engine.Controls;
 using System.Xml.Serialization;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
-using QAliber.RemotingModel;
 using QAliber.Engine.Patterns;
 using QAliber.Engine.Win32;
 
@@ -159,9 +158,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { _modifierKeys = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 

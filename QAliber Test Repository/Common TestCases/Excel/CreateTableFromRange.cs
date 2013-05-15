@@ -23,6 +23,8 @@ using System.ComponentModel;
 using System.Data.OleDb;
 using System.Data;
 using System.Xml.Serialization;
+using QAliber.TestModel;
+using QAliber.Logger;
 
 
 
@@ -45,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			Icon = Properties.Resources.Excel;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			OleDbConnection conn = new OleDbConnection(
 				"Provider=Microsoft.Jet.OLEDB.4.0;" +
@@ -64,7 +66,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			Scenario.Tables.Add(table);
 			conn.Close();
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 		}
 

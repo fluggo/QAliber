@@ -21,7 +21,6 @@ using System.Reflection;
 using QAliber.Logger;
 using System.Threading;
 using System.Runtime.Remoting.Messaging;
-using QAliber.RemotingModel;
 
 namespace QAliber.TestModel
 {
@@ -29,33 +28,18 @@ namespace QAliber.TestModel
 	/// <summary>
 	/// Provides a driver for a test scenario, you can load, save, run pause and stop from this class
 	/// </summary>
-	public class TestController : MarshalByRefObject, IController
+	public static class TestController
 	{
-		private TestController()
+		static TestController()
 		{
 			assemblyDir = Environment.CurrentDirectory;
 			//RaiseExecutionStateChanged(ExecutionState.NotExecuted);
 		}
 
 		/// <summary>
-		/// Singleton, the access point to the only TestControler instance
-		/// </summary>
-		public static TestController Default
-		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new TestController();
-				}
-				return instance;
-			}
-		}
-
-		/// <summary>
 		/// The test scenario that is loaded
 		/// </summary>
-		public TestScenario Scenario
+		public static TestScenario Scenario
 		{
 			get
 			{
@@ -66,25 +50,16 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The central directory location from which to update the assemblies containing the test cases
 		/// </summary>
-		public string RemoteAssemblyDirectory
+		public static string RemoteAssemblyDirectory
 		{
 			get { return assemblyDir; }
 			set { assemblyDir = value; }
-		}
-
-		/// <summary>
-		/// Indicates whether to copy the assemblies defined in RemoteAssemblyDirectory, only if newer (if set to false, copies the entire directory)
-		/// </summary>
-		public bool CopyAssembliesIfNewer
-		{
-			get { return copyAssembliesIfNewer; }
-			set { copyAssembliesIfNewer = value; }
 		}
 	
 		/// <summary>
 		/// The path to log the run into
 		/// </summary>
-		public string LogPath
+		public static string LogPath
 		{
 			get { return logPath; }
 			set { logPath = value; }
@@ -93,19 +68,10 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The log directory structure that will be created on top of the LogPath
 		/// </summary>
-		public string LogDirectoryStructure
+		public static string LogDirectoryStructure
 		{
 			get { return logStructure; }
 			set { logStructure = value; }
-		}
-
-		/// <summary>
-		/// Provides a list of user defined assembly locations
-		/// </summary>
-		public string[] UserFiles
-		{
-			get { return userFiles; }
-			set { userFiles = value; }
 		}
 
 		/// <summary>
@@ -113,7 +79,7 @@ namespace QAliber.TestModel
 		/// </summary>
 		/// <remarks>The list is constructed by reflecting all the dlls in the LocalAssemblyPath directory</remarks>
 		[System.ComponentModel.Browsable(false)]
-		public Type[] SupportedTypes
+		public static Type[] SupportedTypes
 		{
 			get
 			{
@@ -128,7 +94,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// The directory where all the test case types are being read from, this is also the directory where the remote assemblies are being copied to
 		/// </summary>
-		public string LocalAssemblyPath
+		public static string LocalAssemblyPath
 		{
 			get
 			{
@@ -151,7 +117,7 @@ namespace QAliber.TestModel
 		/// Runs an entire test scenario by a given file
 		/// </summary>
 		/// <param name="scenarioFile">the filename of the scenario to run</param>
-		public void Run(string scenarioFile)
+		public static void Run(string scenarioFile)
 		{
 			RetrieveSupportedTypes();
 			scenario = TestScenario.Load(scenarioFile);
@@ -165,13 +131,12 @@ namespace QAliber.TestModel
 		/// Runs a single test case and all its children
 		/// </summary>
 		/// <param name="testcase">The test case to run, must inherit from TestCase</param>
-		public void Run(object testcase)
+		public static void Run(TestCase testcase)
 		{
-			TestCase tc = testcase as TestCase;
-			if (tc != null)
+			if (testcase != null)
 			{
-				scenario = tc.Scenario;
-				if (tc.Scenario.RootTestCase.Equals(tc))
+				scenario = testcase.Scenario;
+				if (testcase.Scenario.RootTestCase.Equals(testcase))
 				{
 					
 					executionWorker = new Thread(new ThreadStart(ExecutionWorker));
@@ -180,9 +145,11 @@ namespace QAliber.TestModel
 				}
 				else
 				{
-					executionWorker = new Thread(new ParameterizedThreadStart(TestExecutionWorker));
+					executionWorker = new Thread(() => {
+						TestExecutionWorker( testcase );
+					});
 					executionWorker.SetApartmentState(ApartmentState.STA);
-					executionWorker.Start(testcase);
+					executionWorker.Start();
 				}
 				new Thread(new ThreadStart(RunAsync)).Start();
 			}
@@ -191,7 +158,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Instructs the controller to wake up from a break point
 		/// </summary>
-		public void ContinueFromBreakPoint()
+		public static void ContinueFromBreakPoint()
 		{
 			if (executionWorker != null)
 			{
@@ -205,7 +172,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Pauses a scenario that is being played
 		/// </summary>
-		public void Pause()
+		public static void Pause()
 		{
 			if (executionWorker != null)
 			{
@@ -220,7 +187,7 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Resumes a scenarioo that was paused
 		/// </summary>
-		public void Resume()
+		public static void Resume()
 		{
 			if (executionWorker != null)
 			{
@@ -234,44 +201,44 @@ namespace QAliber.TestModel
 		/// <summary>
 		/// Stops the execution of a scenario
 		/// </summary>
-		public void Stop()
+		public static void Stop()
 		{
 			Log.Warning("Automatic run was aborted by the user", "", EntryVerbosity.Internal);
 			TestCase.ExitTotally = true;
 			new Thread(new ThreadStart(StopAsync)).Start();
 		}
 
-		public event ExecutionStateChangedCallback OnExecutionStateChanged
+		public static event ExecutionStateChangedCallback OnExecutionStateChanged
 		{
 			add { onExecutionStateChanged = value; }
 			remove { onExecutionStateChanged = null; }
 		}
 
-		public event StepResultArrivedCallback OnStepResultArrived
+		public static event StepResultArrivedCallback OnStepResultArrived
 		{
 			add { onStepResultArrived = value; }
 			remove { onStepResultArrived = null; }
 		}
 
-		public event StepStartedCallback OnStepStarted
+		public static event StepStartedCallback OnStepStarted
 		{
 			add { onStepStarted = value; }
 			remove { onStepStarted = null; }
 		}
 
-		public event LogResultArrivedCallback OnLogResultArrived
+		public static event LogResultArrivedCallback OnLogResultArrived
 		{
 			add { onLogResultArrived = value; }
 			remove { onLogResultArrived = null; }
 		}
 
-		public event BreakPointReachedCallback OnBreakPointReached
+		public static event BreakPointReachedCallback OnBreakPointReached
 		{
 			add { onBreakPointReached = value; }
 			remove { onBreakPointReached = null; }
 		}
 
-		public void RaiseExecutionStateChanged(ExecutionState state)
+		public static void RaiseExecutionStateChanged(ExecutionState state)
 		{
 			try
 			{
@@ -284,7 +251,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public void RaiseStepResultArrived(TestCaseResult result)
+		public static void RaiseStepResultArrived(TestCaseResult result)
 		{
 			try
 			{
@@ -297,7 +264,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public void RaiseStepStarted(int id)
+		public static void RaiseStepStarted(int id)
 		{
 			try
 			{
@@ -310,7 +277,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public void RaiseLogResultArrived(string logFile)
+		public static void RaiseLogResultArrived(string logFile)
 		{
 			try
 			{
@@ -323,7 +290,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public void RaiseBreakPointReached()
+		public static void RaiseBreakPointReached()
 		{
 			try
 			{
@@ -336,20 +303,13 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public override object InitializeLifetimeService()
-		{
-			//TODO : Handle lease time
-			return null;
-		}
-
-		public void RetrieveSupportedTypes()
+		public static void RetrieveSupportedTypes()
 		{
 			types = new List<Type>();
 			List<string> allFiles = new List<string>();
 			allFiles.AddRange(Directory.GetFiles(LocalAssemblyPath, "*.dll"));
 			allFiles.AddRange(Directory.GetFiles(LocalAssemblyPath, "*.exe"));
-			if (userFiles != null)
-				allFiles.AddRange(userFiles);
+
 			foreach (string file in allFiles)
 			{
 				try
@@ -380,7 +340,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public string CreateLogDirectory()
+		public static string CreateLogDirectory()
 		{
 			string res = logStructure;
 			string path = "";
@@ -410,16 +370,17 @@ namespace QAliber.TestModel
 			return path;
 		}
 
-		private void ExecutionWorker()
+		private static void ExecutionWorker()
 		{
 			string logfile = CreateLogDirectory() + @"\Run.qlog";
+			TestRun run = new TestRun();
 
 			try {
 				using( Log log = new Log( logfile, scenario.Filename, false ) ) {
 					Log.Current = log;
 					TestCase.ExitTotally = false;
 					TestCase.BranchesToBreak = 0;
-					scenario.Run();
+					scenario.Run( run );
 				}
 			}
 			finally {
@@ -430,46 +391,48 @@ namespace QAliber.TestModel
 			}
 		}
 
-		private void TestExecutionWorker(object testcase)
+		private static void TestExecutionWorker(TestCase testcase)
 		{
-			bool oldEnabled = ((TestCase) testcase).MarkedForExecution;
+			bool oldEnabled = testcase.MarkedForExecution;
 			string logfile = CreateLogDirectory() + @"\Testcase.qlog";
+
+			TestRun run = new TestRun();
 
 			try {
 				using( Log log = new Log( logfile, scenario.Filename, true ) ) {
 					Log.Current = log;
 					TestCase.ExitTotally = false;
 					TestCase.BranchesToBreak = 0;
-					((TestCase) testcase).MarkedForExecution = true;
-					((TestCase)testcase).Run();
+					testcase.MarkedForExecution = true;
+					testcase.Run( run );
 				}
 			}
 			finally {
 				Log.Current = null;
-				((TestCase) testcase).MarkedForExecution = oldEnabled;
+				testcase.MarkedForExecution = oldEnabled;
 				RaiseExecutionStateChanged(ExecutionState.Executed);
 				RaiseLogResultArrived(logfile);
 			}
 		}
 
-		private void RunAsync()
+		private static void RunAsync()
 		{
 			RaiseExecutionStateChanged(ExecutionState.InProgress);
 		}
 
-		private void PauseAsync()
+		private static void PauseAsync()
 		{
 			executionWorker.Suspend();
 			RaiseExecutionStateChanged(ExecutionState.Paused);
 		}
 
-		private void ResumeAsync()
+		private static void ResumeAsync()
 		{
 			executionWorker.Resume();
 			RaiseExecutionStateChanged(ExecutionState.InProgress);
 		}
 
-		private void StopAsync()
+		private static void StopAsync()
 		{
 			if ((executionWorker.ThreadState & (ThreadState.Suspended | ThreadState.SuspendRequested)) > 0)
 			{
@@ -482,7 +445,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		private string EscapeString(string s)
+		private static string EscapeString(string s)
 		{
 			string res = "";
 			foreach (char c in s)
@@ -492,15 +455,12 @@ namespace QAliber.TestModel
 			return res;
 		}
 
-		private Thread executionWorker;
-		private TestScenario scenario;
-		private bool copyAssembliesIfNewer;
-		private string assemblyDir = string.Empty;
-		private string[] userFiles;
-		private string logPath = Environment.CurrentDirectory + "\\Logs";
-		private string logStructure = @"machine\dd-MM-yy HH_mm";
-		private List<Type> types;
-		private static TestController instance;
+		private static Thread executionWorker;
+		private static TestScenario scenario;
+		private static string assemblyDir = string.Empty;
+		private static string logPath = Environment.CurrentDirectory + "\\Logs";
+		private static string logStructure = @"machine\dd-MM-yy HH_mm";
+		private static List<Type> types;
 		private static event ExecutionStateChangedCallback onExecutionStateChanged;
 		private static event StepStartedCallback onStepStarted;
 		private static event StepResultArrivedCallback onStepResultArrived;

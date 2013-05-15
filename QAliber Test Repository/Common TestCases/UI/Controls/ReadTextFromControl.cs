@@ -64,16 +64,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		}
 
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			text = string.Empty;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
 				Logger.Log.Error( "Couldn't find control", control );
-				ActualResult = RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				return;
 			}
 

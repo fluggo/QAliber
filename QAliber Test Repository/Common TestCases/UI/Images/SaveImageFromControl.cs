@@ -62,14 +62,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		}
 
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				throw new InvalidOperationException("Control not found");
 			}
 

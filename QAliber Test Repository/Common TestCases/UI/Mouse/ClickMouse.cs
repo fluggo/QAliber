@@ -124,14 +124,14 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			set { _modifierKeys = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+			ActualResult = TestCaseResult.Failed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( control );
 
 			if( !c.Exists ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				Log.Error( "Control not found" );
 				return;
 			}
@@ -146,7 +146,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Mouse
 			c.Click(button, point);
 			LowLevelInput.ReleaseKeys( _modifierKeys );
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 		}
 

@@ -22,7 +22,6 @@ using QAliber.TestModel.Variables;
 using QAliber.TestModel.TypeEditors;
 using System.Drawing.Design;
 using QAliber.Repository.CommonTestCases.UITypeEditors;
-using QAliber.RemotingModel;
 using System.ComponentModel.Design;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls {
@@ -105,7 +104,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			return list.CaptureList();
 		}
 
-		public override void Body() {
+		public override void Body( TestRun run ) {
 			ActualResult = TestCaseResult.Failed;
 			_resultList = null;
 

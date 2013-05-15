@@ -79,4 +79,23 @@ namespace QAliber.Logger
 		/// </summary>
 		Critical
 	}
+
+	/// <summary>
+	/// The test case result
+	/// </summary>
+	public enum TestCaseResult
+	{
+		/// <summary>
+		/// Don't care about the result
+		/// </summary>
+		None,
+		/// <summary>
+		/// The test case passed
+		/// </summary>
+		Passed,
+		/// <summary>
+		/// The test case failed
+		/// </summary>
+		Failed
+	}
 }

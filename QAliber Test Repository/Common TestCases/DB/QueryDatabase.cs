@@ -23,6 +23,8 @@ using System.ComponentModel;
 using System.Data.OleDb;
 using System.Data;
 using System.Xml.Serialization;
+using QAliber.Logger;
+using QAliber.TestModel;
 
 
 
@@ -41,7 +43,7 @@ namespace QAliber.Repository.CommonTestCases.DB
 			Icon = Properties.Resources.DatabaseQuery;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			OleDbConnection conn = new OleDbConnection(connectionString);
 			OleDbCommand cmd = new OleDbCommand(sqlQuery, conn);
@@ -54,7 +56,7 @@ namespace QAliber.Repository.CommonTestCases.DB
 			dataSet.WriteXml(outFile, XmlWriteMode.IgnoreSchema);
 
 			conn.Close();
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 
 		}

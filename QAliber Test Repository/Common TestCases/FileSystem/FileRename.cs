@@ -21,6 +21,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using QAliber.TestModel;
+using QAliber.Logger;
 
 
 
@@ -39,10 +41,10 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			Icon = Properties.Resources.File;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			File.Move(sourceFile, destFile);
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		private string sourceFile = "";

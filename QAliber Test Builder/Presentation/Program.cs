@@ -20,7 +20,6 @@ using QAliber.TestModel;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
-using QAliber.RemotingModel;
 using QAliber.Builder.Presentation;
 using System.Xml;
 using System.IO;
@@ -89,7 +88,7 @@ namespace QAliber.Builder.Presentation
 		private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
 		{
 			
-				string file = TestModel.TestController.Default.LocalAssemblyPath + @"\" + args.Name.Split(',')[0] + ".dll";
+				string file = TestController.LocalAssemblyPath + @"\" + args.Name.Split(',')[0] + ".dll";
 				if (File.Exists(file))
 				{
 					try
@@ -102,7 +101,7 @@ namespace QAliber.Builder.Presentation
 				}
 				else
 				{
-					file = TestModel.TestController.Default.LocalAssemblyPath + @"\" + args.Name.Split(',')[0] + ".exe";
+					file = TestController.LocalAssemblyPath + @"\" + args.Name.Split(',')[0] + ".exe";
 					if (File.Exists(file))
 					{
 						try
@@ -137,9 +136,9 @@ namespace QAliber.Builder.Presentation
 				Properties.Settings.Default.LogLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\QAliber\Log";
 			}
 
-			TestController.Default.RemoteAssemblyDirectory = Properties.Settings.Default.TestCasesAssemblyDir;
-			TestController.Default.LogDirectoryStructure = Properties.Settings.Default.LogStructure;
-			TestController.Default.LogPath = Properties.Settings.Default.LogLocation;
+			TestController.RemoteAssemblyDirectory = Properties.Settings.Default.TestCasesAssemblyDir;
+			TestController.LogDirectoryStructure = Properties.Settings.Default.LogStructure;
+			TestController.LogPath = Properties.Settings.Default.LogLocation;
 
 
 			try {

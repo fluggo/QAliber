@@ -21,7 +21,6 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 
 namespace QAliber.TestModel
 {
@@ -53,11 +52,11 @@ namespace QAliber.TestModel
 			set { errorToCatch = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ActualResult = TestCaseResult.Passed;
 			if (!string.IsNullOrEmpty(TryTestCase.lastError) && TryTestCase.lastError.Contains(errorToCatch))
-				base.Body();
+				base.Body( run );
 			else
 				Log.Info("Recovery is not needed");
 		}

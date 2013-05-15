@@ -72,7 +72,7 @@ namespace QAliber.TestModel
 			set { _prefixTableName = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			Log log = Log.Current;
 			ScenarioVariable<DataTable> table = Scenario.Tables[_tableName];
@@ -102,7 +102,7 @@ namespace QAliber.TestModel
 				if( log != null )
 					log.StartFolder( "Iteration on row '" + j + "'", extra.ToString() );
 
-				base.Body();
+				base.Body( run );
 
 				if( log != null )
 					log.EndFolder();

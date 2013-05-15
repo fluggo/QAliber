@@ -16,7 +16,6 @@ using System.Diagnostics;
 using QAliber.Engine;
 using System.Reflection;
 using System.Xml.Serialization;
-using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls {
 	[Serializable]
@@ -72,7 +71,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			}
 		}
 
-		public override void Body() {
+		public override void Body( TestRun run ) {
 			ActualResult = TestCaseResult.Failed;
 
 			Stopwatch watch = new Stopwatch();

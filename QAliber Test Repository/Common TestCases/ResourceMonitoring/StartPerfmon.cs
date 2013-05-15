@@ -24,6 +24,7 @@ using QAliber.Logger;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -40,9 +41,9 @@ namespace QAliber.Repository.CommonTestCases.ResourceMonitoring
 		public StartPerfmon() : base( "Start Performance Monitor" ) {
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			ProcessStartInfo psi = new ProcessStartInfo("logman",
 				string.Format("update {0} -f csv -o \"{1}\\perflog.csv\"", perfname, Log.Current.Path));
 			psi.WindowStyle = ProcessWindowStyle.Hidden;

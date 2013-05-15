@@ -48,6 +48,29 @@ namespace QAliber.TestModel
 	}
 
 	/// <summary>
+	/// The execution state of a test scenario
+	/// </summary>
+	public enum ExecutionState
+	{
+		/// <summary>
+		/// The test scenario was not executed (after load or new)
+		/// </summary>
+		NotExecuted,
+		/// <summary>
+		/// The test scenario is paused
+		/// </summary>
+		Paused,
+		/// <summary>
+		/// The test scenario is currently running
+		/// </summary>
+		InProgress,
+		/// <summary>
+		/// The test scenario was executed
+		/// </summary>
+		Executed
+	}
+
+	/// <summary>
 	/// Defines the settings to record 'video' during an automated run
 	/// </summary>
 	[TypeConverter(typeof(ExpandableObjectConverter))]

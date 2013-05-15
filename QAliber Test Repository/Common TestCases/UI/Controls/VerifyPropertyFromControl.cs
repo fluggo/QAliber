@@ -97,8 +97,8 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			set { _foundValue = value; }
 		}
 
-		public override void Body() {
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+		public override void Body( TestRun run ) {
+			ActualResult = TestCaseResult.Failed;
 			_foundValue = string.Empty;
 
 			// Build the regex if we have one
@@ -112,7 +112,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			UIControlBase c = UIControlBase.FindControlByPath( _control );
 
 			if( c == null || !c.Exists ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				Log.Error( "Control not found", "Could not find control " + _control );
 				return;
 			}
@@ -125,7 +125,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 				string.Join( ", ", properties.Cast<PropertyDescriptor>().Select( p => p.Name ) ) );
 
 			if( prop == null ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				Log.Warning( _property + " property not found",
 					"Could not find property " + _property + " on control " + _control );
 
@@ -140,20 +140,20 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			// Verify it
 			if( regex != null ) {
 				if( !regex.IsMatch( _foundValue ) ) {
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 					throw new ArgumentException( "The property's value didn't match the regular expression." );
 				}
 			}
 			else if( _caseSensitive && _foundValue != _expectedValue ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				throw new ArgumentException( "The property's value didn't match the specified text." );
 			}
 			else if( !_caseSensitive && StringComparer.CurrentCultureIgnoreCase.Compare( _foundValue, _expectedValue ) != 0 ) {
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				throw new ArgumentException( "The property's value didn't match the specified text." );
 			}
 
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description {

@@ -22,7 +22,6 @@ using System.Windows;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Drawing;
-using QAliber.RemotingModel;
 using QAliber.ImageHandling;
 using System.Diagnostics;
 using System.Xml.Serialization;
@@ -96,7 +95,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Images
 		}
 
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			// Fix up a relative path
 			string path = Path.Combine( Path.GetDirectoryName( Scenario.Filename ), file );

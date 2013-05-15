@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using QAliber.Logger;
 using System.Xml.Serialization;
+using QAliber.TestModel;
 
 
 
@@ -46,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			Icon = Properties.Resources.FileCompare;
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			using (StreamReader reader1 = new StreamReader(sourceFile))
 			{
@@ -57,7 +58,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 					if (reader1.BaseStream.Length != reader2.BaseStream.Length)
 					{
 						Log.Error("Sizes are different", reader1.BaseStream.Length + "\n" + reader2.BaseStream.Length);
-						ActualResult = global::QAliber.RemotingModel.TestCaseResult.Failed;
+						ActualResult = TestCaseResult.Failed;
 					}
 					int lineNumber = 1;
 					while (line1 != null && line2 != null)
@@ -65,7 +66,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 						if (string.Compare(line1, line2, true) != 0)
 						{
 							Log.Error("Difference at line " + lineNumber, line1 + "\n" + line2);
-							ActualResult = global::QAliber.RemotingModel.TestCaseResult.Failed;
+							ActualResult = TestCaseResult.Failed;
 						}
 						line1 = reader1.ReadLine();
 						line2 = reader2.ReadLine();
@@ -73,10 +74,10 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 					}
 				}
 			}
-			if (ActualResult != global::QAliber.RemotingModel.TestCaseResult.Failed)
+			if (ActualResult != TestCaseResult.Failed)
 			{
 				Log.Info("Files are identical");
-				ActualResult = global::QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = TestCaseResult.Passed;
 			}
 		}
 

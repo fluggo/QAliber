@@ -96,16 +96,16 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			set { keystrokes = value; OnDefaultNameChanged(); }
 		}
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 
 			try
 			{
 				UIControlBase c = UIControlBase.FindControlByPath( control );
 
 				if( !c.Exists ) {
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
 
@@ -113,7 +113,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Keyboard
 			}
 			catch (System.Reflection.TargetInvocationException)
 			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 			}
 
 		}

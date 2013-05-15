@@ -67,7 +67,7 @@ namespace QAliber.TestModel
 		}
 	
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
@@ -80,7 +80,7 @@ namespace QAliber.TestModel
 					Log.Warning("While loop exited after timeout of " + timeout + " milliseconds");
 					break;
 				}
-				base.Body();
+				base.Body( run );
 				if (branchesToBreak > 0)
 				{
 					branchesToBreak--;

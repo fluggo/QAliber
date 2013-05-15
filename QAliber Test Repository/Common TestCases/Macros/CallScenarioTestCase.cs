@@ -21,7 +21,6 @@ using System.Xml.Serialization;
 using QAliber.Logger;
 using System.Drawing;
 using QAliber.TestModel.Attributes;
-using QAliber.RemotingModel;
 using QAliber.TestModel;
 
 namespace QAliber.Repository.CommonTestCases.Macros
@@ -49,11 +48,12 @@ namespace QAliber.Repository.CommonTestCases.Macros
 			set { sourceFile = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ActualResult = TestCaseResult.Passed;
 			TestScenario scenario = TestScenario.Load(sourceFile);
-			scenario.Run();
+			#warning Variables will need to be considered for this transfer
+			scenario.Run( run );
 		}
 
 		

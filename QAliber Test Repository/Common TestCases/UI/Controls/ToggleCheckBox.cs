@@ -11,7 +11,6 @@ using QAliber.Engine.Patterns;
 using QAliber.Logger;
 using System.Threading;
 using System.Xml.Serialization;
-using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls {
 	public enum ToggleAction {
@@ -91,7 +90,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			}
 		}
 
-		public override void Body() {
+		public override void Body( TestRun run ) {
 			ActualResult = TestCaseResult.Failed;
 
 			UIControlBase c = UIControlBase.FindControlByPath( _control );
@@ -144,7 +143,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 						break;
 				}
 
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+				ActualResult = TestCaseResult.Passed;
 			}
 			else if( invoke != null ) {
 				if( _action != ToggleAction.Toggle ) {

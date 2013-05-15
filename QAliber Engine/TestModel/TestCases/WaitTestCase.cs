@@ -77,10 +77,10 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			System.Threading.Thread.Sleep(delay);
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 		}
 
 		public override string Description

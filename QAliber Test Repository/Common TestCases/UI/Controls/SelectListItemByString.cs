@@ -28,7 +28,6 @@ using QAliber.Engine.Controls.Web;
 using QAliber.Engine.Patterns;
 using System.Diagnostics;
 using System.Xml.Serialization;
-using QAliber.RemotingModel;
 
 namespace QAliber.Repository.CommonTestCases.UI.Controls
 {
@@ -81,7 +80,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 			}
 		}
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			ActualResult = TestCaseResult.Failed;
 			UIControlBase c = UIControlBase.FindControlByPath( control );

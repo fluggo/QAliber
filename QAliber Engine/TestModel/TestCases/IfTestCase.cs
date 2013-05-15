@@ -53,17 +53,17 @@ namespace QAliber.TestModel
 			set { cSharpExpression = value; }
 		}
 
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			object conditionResult = null;
 			ifConditionValue = false;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Boolean, out conditionResult);
 			ifConditionValue = (bool)conditionResult;
-			ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+			ActualResult = TestCaseResult.Passed;
 			if ((bool)conditionResult)
 			{
 				Log.Info(cSharpExpression + " = true");
-				base.Body();
+				base.Body( run );
 			}
 			else
 			{

@@ -163,7 +163,7 @@ namespace QAliber.Builder.Presentation
 							string file = typeNode.Tag as string;
 							if (file != null)
 							{
-								foreach (Type type in TestController.Default.SupportedTypes)
+								foreach (Type type in TestController.SupportedTypes)
 								{
 									if (type.Name == "PlayMacroTestCase")
 									{

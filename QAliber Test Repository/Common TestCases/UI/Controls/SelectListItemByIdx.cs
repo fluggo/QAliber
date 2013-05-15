@@ -69,7 +69,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 		
 	
 	
-		public override void Body()
+		public override void Body( TestRun run )
 		{
 			try
 			{
@@ -77,7 +77,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 			   if (!c.Exists)
 				{
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 					throw new InvalidOperationException("Control not found");
 				}
 
@@ -85,23 +85,23 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls
 
 				if( selectorPattern != null ) {
 					selectorPattern.Select( index );
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = TestCaseResult.Passed;
 				}
 				else if (c is HTMLSelect)
 				{
 					((HTMLSelect)c).SelectItem(index);
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Passed;
+					ActualResult = TestCaseResult.Passed;
 				}
 				else
 				{
-					ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+					ActualResult = TestCaseResult.Failed;
 					throw new InvalidOperationException("Control is not list type control");
 				}
 
 			}
 			catch (Exception ex)
 			{
-				ActualResult = QAliber.RemotingModel.TestCaseResult.Failed;
+				ActualResult = TestCaseResult.Failed;
 				throw ex;
 			}
 		}
