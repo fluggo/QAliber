@@ -269,15 +269,15 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		protected override void OnStepStarted(int id)
+		protected override void OnStepStarted(TestCase step)
 		{
 			if (control != null)
 			{
 				if (control.InvokeRequired)
-					control.Invoke(new StepStartedCallback(OnStepStarted), id);
+					control.Invoke(new StepStartedCallback(OnStepStarted), step);
 				else
 					if (control != null && control.currentPlayingScenarioControl != null)
-						control.currentPlayingScenarioControl.OnStepStarted(id);
+						control.currentPlayingScenarioControl.OnStepStarted(step);
 			}
 		}
 

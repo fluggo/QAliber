@@ -68,11 +68,11 @@ namespace QAliber.TestModel
 				if( log != null )
 					log.EndFolder();
 
-				if (exitTotally)
+				if (run.Canceled)
 					break;
-				if (branchesToBreak > 0)
+				if (run.BranchesToBreak > 0)
 				{
-					branchesToBreak--;
+					run.BranchesToBreak--;
 					break;
 				}
 			}

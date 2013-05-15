@@ -28,7 +28,7 @@ namespace QAliber.TestModel
 	 */
 
 	public delegate void ExecutionStateChangedCallback(ExecutionState state);
-	public delegate void StepStartedCallback(int id);
+	public delegate void StepStartedCallback(TestCase step);
 	public delegate void StepResultArrivedCallback(TestCaseResult result);
 	public delegate void LogResultArrivedCallback(string logFile);
 	public delegate void BreakPointReachedCallback();
@@ -46,9 +46,9 @@ namespace QAliber.TestModel
 			OnStepResultArrived(result);
 		}
 
-		public void FireStepStartedCallback(int id)
+		public void FireStepStartedCallback(TestCase step)
 		{
-			OnStepStarted(id);
+			OnStepStarted(step);
 		}
 
 		public void FireLogResultArrivedCallback(string logFile)
@@ -63,7 +63,7 @@ namespace QAliber.TestModel
 
 		protected abstract void OnExecutionStateChanged(ExecutionState state);
 		protected abstract void OnStepResultArrived(TestCaseResult result);
-		protected abstract void OnStepStarted(int id);
+		protected abstract void OnStepStarted(TestCase step);
 		protected abstract void OnLogResultArrived(string logFile);
 		protected abstract void OnBreakPointReached();
 	}

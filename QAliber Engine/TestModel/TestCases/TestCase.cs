@@ -396,23 +396,6 @@ namespace QAliber.TestModel
 			get { return _hasBreakPoint; }
 			set { _hasBreakPoint = value; }
 		}
-	
-		/// <summary>
-		/// A static property which indicates the QAliber runner to stop all subsequent test cases execution, setting this to true, should lead to an end of the test scenario
-		/// </summary>
-		[Obsolete("Should transfer this to the test context.")]
-		public static bool ExitTotally
-		{
-			get { return exitTotally; }
-			set { exitTotally = value; }
-		}
-
-		[Obsolete("Should transfer this to the test context.")]
-		public static uint BranchesToBreak
-		{
-			get { return branchesToBreak; }
-			set { branchesToBreak = value; }
-		}
 		#endregion
 
 		#region Test Case Descriptors
@@ -555,25 +538,6 @@ namespace QAliber.TestModel
 			set { _outputProperties = value; }
 		}
 
-		private int _id;
-
-		/// <summary>
-		/// A unique identifier of the test case, when in a scenario
-		/// </summary>
-		[Browsable(false)]
-		[XmlIgnore]
-		public int ID
-		{
-			get 
-			{
-				return _id;
-			}
-			set 
-			{ 
-				_id = value;
-			}
-		}
-
 		private Bitmap _icon;
 
 		/// <summary>
@@ -619,7 +583,6 @@ namespace QAliber.TestModel
 			result._outputProperties = null;
 			result._changedProperties = new Dictionary<string,string>();
 			result._videoOptions = (VideoOptions) _videoOptions.Clone();
-			result.UpdateIDs();
 
 			return result;
 		}
@@ -627,25 +590,14 @@ namespace QAliber.TestModel
 		#endregion
 
 		/// <summary>
-		/// The current test case being run by the QAliber runner
-		/// </summary>
-		[Obsolete("Should transfer this to the test context.")]
-		public static TestCase Current
-		{
-			get { return currenTestCase; }
-			set { currenTestCase = value; }
-		}
-
-		/// <summary>
 		/// The method that executes the entire test case with all its parts (Setup, Body and Cleanup)
 		/// </summary>
 		/// <param name="run">The current test context.</param>
 		public void Run( TestRun run )
 		{
-			if (!_markedForExecution || exitTotally)
+			if (!_markedForExecution || run.Canceled)
 				return;
-			currenTestCase = this;
-			TestController.RaiseStepStarted(_id);
+			TestController.RaiseStepStarted(this);
 			if (_hasBreakPoint)
 			{
 				try
@@ -776,24 +728,6 @@ namespace QAliber.TestModel
 			}
 			System.Windows.Forms.Application.DoEvents();
 		}
-
-		private void UpdateIDs()
-		{
-			_id = maxID;
-			maxID++;
-			if (this is FolderTestCase)
-			{
-				foreach (TestCase child in ((FolderTestCase)this).Children)
-				{
-					child.UpdateIDs();
-				}
-			}
-		}
-
-		protected static uint branchesToBreak;
-		protected static bool exitTotally;
-		private static TestCase currenTestCase;
-		internal static int maxID = 1;
 
 		private OutputPropertiesMap _outputProperties;
 		private Dictionary<string, string> _changedProperties = new Dictionary<string,string>();

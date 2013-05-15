@@ -249,7 +249,6 @@ namespace QAliber.TestModel
 
 		private void SetDependantsRecursively(TestCase testcase)
 		{
-			testcase.ID = TestCase.maxID++;
 			FolderTestCase folder = testcase as FolderTestCase;
 			if (folder != null && folder.Children != null)
 			{

@@ -16,7 +16,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <PublishUrl>http://localhost/QAliber Test Runner/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -31,6 +31,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -154,13 +155,13 @@
       <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
       <Name>QAliber.Logger</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\QAliber Engine\TestModel\QAliber.TestModel.csproj">
-      <Project>{21076058-52DA-46EC-ABE6-5E389CBED60C}</Project>
-      <Name>QAliber.TestModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\QAliber Engine\DAL\QAliber.DAL.csproj">
       <Project>{F093C084-10D1-4B2A-B88C-5C0BA76856AA}</Project>
       <Name>QAliber.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QAliber Engine\TestModel\QAliber.TestModel.csproj">
+      <Project>{21076058-52DA-46EC-ABE6-5E389CBED60C}</Project>
+      <Name>QAliber.TestModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

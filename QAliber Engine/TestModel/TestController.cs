@@ -47,6 +47,12 @@ namespace QAliber.TestModel
 			}
 		}
 
+		static TestRun _currentRun;
+
+		public static TestRun CurrentRun {
+			get { return _currentRun; }
+		}
+
 		/// <summary>
 		/// The central directory location from which to update the assemblies containing the test cases
 		/// </summary>
@@ -203,8 +209,11 @@ namespace QAliber.TestModel
 		/// </summary>
 		public static void Stop()
 		{
-			Log.Warning("Automatic run was aborted by the user", "", EntryVerbosity.Internal);
-			TestCase.ExitTotally = true;
+			if( _currentRun != null ) {
+				Log.Warning("Automatic run was aborted by the user", "", EntryVerbosity.Internal);
+				_currentRun.Cancel();
+			}
+
 			new Thread(new ThreadStart(StopAsync)).Start();
 		}
 
@@ -264,12 +273,12 @@ namespace QAliber.TestModel
 			}
 		}
 
-		public static void RaiseStepStarted(int id)
+		public static void RaiseStepStarted(TestCase step)
 		{
 			try
 			{
 				if (onStepStarted != null)
-					onStepStarted(id);
+					onStepStarted(step);
 			}
 			catch (System.Net.Sockets.SocketException)
 			{
@@ -373,18 +382,18 @@ namespace QAliber.TestModel
 		private static void ExecutionWorker()
 		{
 			string logfile = CreateLogDirectory() + @"\Run.qlog";
-			TestRun run = new TestRun();
 
 			try {
 				using( Log log = new Log( logfile, scenario.Filename, false ) ) {
 					Log.Current = log;
-					TestCase.ExitTotally = false;
-					TestCase.BranchesToBreak = 0;
-					scenario.Run( run );
+					_currentRun = new TestRun();
+
+					scenario.Run( _currentRun );
 				}
 			}
 			finally {
 				Log.Current = null;
+				_currentRun = null;
 
 				RaiseExecutionStateChanged( ExecutionState.Executed );
 				RaiseLogResultArrived( logfile );
@@ -396,19 +405,19 @@ namespace QAliber.TestModel
 			bool oldEnabled = testcase.MarkedForExecution;
 			string logfile = CreateLogDirectory() + @"\Testcase.qlog";
 
-			TestRun run = new TestRun();
-
 			try {
 				using( Log log = new Log( logfile, scenario.Filename, true ) ) {
 					Log.Current = log;
-					TestCase.ExitTotally = false;
-					TestCase.BranchesToBreak = 0;
+					_currentRun = new TestRun();
+
 					testcase.MarkedForExecution = true;
-					testcase.Run( run );
+					testcase.Run( _currentRun );
 				}
 			}
 			finally {
 				Log.Current = null;
+				_currentRun = null;
+
 				testcase.MarkedForExecution = oldEnabled;
 				RaiseExecutionStateChanged(ExecutionState.Executed);
 				RaiseLogResultArrived(logfile);

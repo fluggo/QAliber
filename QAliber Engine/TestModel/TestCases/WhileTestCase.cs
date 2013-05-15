@@ -81,9 +81,9 @@ namespace QAliber.TestModel
 					break;
 				}
 				base.Body( run );
-				if (branchesToBreak > 0)
+				if (run.BranchesToBreak > 0)
 				{
-					branchesToBreak--;
+					run.BranchesToBreak--;
 					break;
 				}
 				RestoreVariables();

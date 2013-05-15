@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using QAliber.RemotingModel;
+using QAliber.TestModel;
 
 namespace QAliber.Runner
 {

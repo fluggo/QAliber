@@ -101,7 +101,7 @@ namespace QAliber.Builder.Presentation
 				if( variable != null && variable.TestStep != null ) {
 					if (sc != null && sc.TestScenario != null)
 					{
-						sc.SelectNodeByID( variable.TestStep.ID );
+						sc.SelectNodeByID( variable.TestStep );
 					}
 				}
 			}
@@ -157,7 +157,7 @@ namespace QAliber.Builder.Presentation
 				if( variable != null && variable.TestStep != null ) {
 					if (sc != null && sc.TestScenario != null)
 					{
-						sc.SelectNodeByID( variable.TestStep.ID );
+						sc.SelectNodeByID( variable.TestStep );
 					}
 				}
 			}
@@ -204,7 +204,7 @@ namespace QAliber.Builder.Presentation
 				if( variable != null && variable.TestStep != null ) {
 					if (sc != null && sc.TestScenario != null)
 					{
-						sc.SelectNodeByID( variable.TestStep.ID );
+						sc.SelectNodeByID( variable.TestStep );
 					}
 				}
 			}

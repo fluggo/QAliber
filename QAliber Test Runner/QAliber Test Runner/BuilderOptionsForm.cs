@@ -41,9 +41,9 @@ namespace QAliber.Runner
 			Properties.Settings.Default.BlockUserInput = QAliber.Engine.PlayerConfig.Default.BlockUserInput;
 			Properties.Settings.Default.Save();
 
-			TestController.Default.LogDirectoryStructure = Properties.Settings.Default.LogStructure;
-			TestController.Default.LogPath = Properties.Settings.Default.LogLocation;
-			TestController.Default.RemoteAssemblyDirectory = Properties.Settings.Default.TestCasesAssemblyDir;
+			TestController.LogDirectoryStructure = Properties.Settings.Default.LogStructure;
+			TestController.LogPath = Properties.Settings.Default.LogLocation;
+			TestController.RemoteAssemblyDirectory = Properties.Settings.Default.TestCasesAssemblyDir;
 
 			Close();
 		}

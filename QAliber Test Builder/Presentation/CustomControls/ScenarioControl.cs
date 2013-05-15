@@ -86,9 +86,9 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		internal void SelectNodeByID(int id)
+		internal void SelectNodeByID(TestCase step)
 		{
-			TreeNode node = GetNodeByID((QAliberTreeNode)scenarioTreeView.Nodes[0], id);
+			TreeNode node = GetNodeByID((QAliberTreeNode)scenarioTreeView.Nodes[0], step);
 			if (node != null)
 			{
 				node.EnsureVisible();
@@ -174,18 +174,18 @@ namespace QAliber.Builder.Presentation
 			}
 		}
 
-		private TreeNode GetNodeByID(QAliberTreeNode node, int id)
+		private TreeNode GetNodeByID(QAliberTreeNode node, TestCase step)
 		{
 			TestCase testcase = node.Testcase as TestCase;
 			if (testcase != null)
 			{
-				if (testcase.ID == id)
+				if (testcase == step)
 					return node;
 				else
 				{
 					foreach (QAliberTreeNode child in node.Nodes)
 					{
-						TreeNode res = GetNodeByID(child, id);
+						TreeNode res = GetNodeByID(child, step);
 						if (res != null)
 							return res;
 					}
@@ -521,9 +521,9 @@ namespace QAliber.Builder.Presentation
 			OnScenarioChanged();
 		}
 
-		internal void OnStepStarted(int id)
+		internal void OnStepStarted(TestCase step)
 		{
-			TreeNode node = GetNodeByID((QAliberTreeNode)scenarioTreeView.Nodes[0], id);
+			TreeNode node = GetNodeByID((QAliberTreeNode)scenarioTreeView.Nodes[0], step);
 			if (node != null)
 			{
 				playingNodes.Push(node);

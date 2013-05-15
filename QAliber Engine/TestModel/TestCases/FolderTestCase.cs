@@ -72,7 +72,7 @@ namespace QAliber.TestModel
 						if (child.ExitOnError)
 						{
 							Log.Error("Stop on error was requested for this step, exiting");
-							exitTotally = true;
+							run.Cancel();
 							break;
 						}
 						if (child.ExitBranchOnError)
@@ -81,14 +81,14 @@ namespace QAliber.TestModel
 							stopRunning = true;
 						}
 					}
-					if (branchesToBreak > 0)
+					if (run.BranchesToBreak > 0)
 					{
-						branchesToBreak--;
+						run.BranchesToBreak--;
 						stopRunning = true;
 					}
-					if (exitTotally)
+					if (run.Canceled)
 						stopRunning = true;
-					
+
 				}
 				
 				

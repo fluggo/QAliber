@@ -38,7 +38,7 @@ namespace QAliber.TestModel
 			Icon = Properties.Resources.BreakFolder;
 		}
 
-		protected uint numOfLoopsToBreak = 1;
+		protected int numOfLoopsToBreak = 1;
 
 		/// <summary>
 		/// The number of levels up the tree you want to go back
@@ -48,7 +48,7 @@ namespace QAliber.TestModel
 		[Category("Test Case Flow Control")]
 		[DisplayName("Number Of Branches To Cut")]
 		[Description("How many levels up the tree do you want to break to ?\n e.g. '1' will exit the current branch")]
-		public uint NumOfLoopsToBreak
+		public int NumOfLoopsToBreak
 		{
 			get { return numOfLoopsToBreak; }
 			set { numOfLoopsToBreak = value; }
@@ -56,7 +56,7 @@ namespace QAliber.TestModel
 
 		public override void Body( TestRun run )
 		{
-			branchesToBreak = numOfLoopsToBreak;
+			run.BranchesToBreak = numOfLoopsToBreak;
 			ActualResult = TestCaseResult.Passed;
 		}
 

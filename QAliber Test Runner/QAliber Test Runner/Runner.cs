@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using QAliber.RemotingModel;
 using System.Windows.Forms;
 using QAliber.TestModel;
+using QAliber.Logger;
 
 namespace QAliber.Runner
 {
@@ -14,11 +14,11 @@ namespace QAliber.Runner
 			
 			sink = new NotifySink();
 			sink.Control = notifier;
-			TestController.Default.OnExecutionStateChanged += new ExecutionStateChangedCallback(sink.FireExecutionStateChangedCallback);
-			TestController.Default.OnStepStarted += new StepStartedCallback(sink.FireStepStartedCallback);
-			TestController.Default.OnStepResultArrived += new StepResultArrivedCallback(sink.FireStepResultArrivedCallback);
-			TestController.Default.OnLogResultArrived += new LogResultArrivedCallback(sink.FireLogResultArrivedCallback);
-			TestController.Default.OnBreakPointReached += new BreakPointReachedCallback(sink.FireBreakPointReachedCallback);
+			TestController.OnExecutionStateChanged += new ExecutionStateChangedCallback(sink.FireExecutionStateChangedCallback);
+			TestController.OnStepStarted += new StepStartedCallback(sink.FireStepStartedCallback);
+			TestController.OnStepResultArrived += new StepResultArrivedCallback(sink.FireStepResultArrivedCallback);
+			TestController.OnLogResultArrived += new LogResultArrivedCallback(sink.FireLogResultArrivedCallback);
+			TestController.OnBreakPointReached += new BreakPointReachedCallback(sink.FireBreakPointReachedCallback);
 
 
 		}
@@ -170,11 +170,11 @@ namespace QAliber.Runner
 			}
 		}
 
-		protected override void OnStepStarted(int id)
+		protected override void OnStepStarted(TestCase step)
 		{
 			DAL.TestCase tc = new QAliber.DAL.TestCase();
-			tc.Name = TestCase.Current.GetType().ToString();
-			tc.AssemblyName = TestCase.Current.GetType().AssemblyQualifiedName;
+			tc.Name = step.GetType().ToString();
+			tc.AssemblyName = step.GetType().AssemblyQualifiedName;
 			tc.StartTime = DateTime.Now;
 			tc.Errors = string.Empty;
 			tc.Warnings = string.Empty;
