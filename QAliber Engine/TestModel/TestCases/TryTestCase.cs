@@ -53,9 +53,7 @@ namespace QAliber.TestModel
 			if( currentLog != null )
 				currentLog.BeforeErrorIsPosted += new EventHandler<LogEventArgs>(BeforeErrorIsPosted);
 
-			TestRun childRun = new TestRun( run );
-
-			base.Body( childRun );
+			base.Body( run );
 
 			if (ActualResult == TestCaseResult.Failed)
 				lastError = errListener;

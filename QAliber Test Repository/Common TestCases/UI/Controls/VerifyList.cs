@@ -74,7 +74,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			get { return _resultList; }
 		}
 
-		protected abstract string[] GetTestList();
+		protected abstract string[] GetTestList( TestRun run );
 
 		public static string[] CaptureList( string control, bool logErrors ) {
 			// Capture the list
@@ -108,7 +108,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			ActualResult = TestCaseResult.Failed;
 			_resultList = null;
 
-			string[] testList = GetTestList();
+			string[] testList = GetTestList( run );
 
 			if( testList == null )
 				return;
@@ -276,9 +276,9 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			VerifyItems = new int[0];
 		}
 
-		protected override string[] GetTestList() {
+		protected override string[] GetTestList( TestRun run ) {
 			// Get the variable we're testing against
-			ScenarioVariable<string[]> testListVar = Scenario.Lists[_variable];
+			ScenarioVariable<string[]> testListVar = run.Lists[_variable];
 
 			if( testListVar == null ) {
 				Log.Error( "Could not find variable \"" + _variable + "\"" );
@@ -335,7 +335,7 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 			}
 		}
 
-		protected override string[] GetTestList() {
+		protected override string[] GetTestList( TestRun run ) {
 			// Test list could either have \r\n line endings (from UI) or \n endings (from XML)
 			return Array.ConvertAll( _list.TrimEnd().Split( '\n' ), str => str.TrimEnd( '\r' ) );
 		}

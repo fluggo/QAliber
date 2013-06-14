@@ -84,7 +84,7 @@ namespace QAliber.TestModel
 		/// </summary>
 		public virtual void Cleanup() { }
 
-		protected virtual void SetVariables()
+		protected virtual void SetVariables( TestRun run )
 		{
 			if (_scenario != null)
 			{
@@ -105,31 +105,31 @@ namespace QAliber.TestModel
 							ICollection list = val as ICollection;
 
 							if( table != null ) {
-								ScenarioVariable<DataTable> tableVar = _scenario.Tables[variableName];
+								ScenarioVariable<DataTable> tableVar = run.Tables[variableName];
 
 								if( tableVar != null )
 									tableVar.Value = table;
 								else
-									_scenario.Tables.AddOrReplace( new ScenarioTable( variableName, table, this ) );
+									run.Tables.AddOrReplace( new ScenarioTable( variableName, table, this ) );
 							}
 							else if( list != null ) {
 								string[] stringList = list.Cast<object>().Select(
 									obj => (obj == null) ? "(null)" : obj.ToString() ).ToArray();
 
-								ScenarioVariable<string[]> l = _scenario.Lists[variableName];
+								ScenarioVariable<string[]> l = run.Lists[variableName];
 								if (l != null)
 									l.Value = stringList;
 								else
-									_scenario.Lists.AddOrReplace(new ScenarioVariable<string[]>(variableName, stringList, this));
+									run.Lists.AddOrReplace(new ScenarioVariable<string[]>(variableName, stringList, this));
 
 							}
 							else if (val != null)
 							{
-								ScenarioVariable<string> v = _scenario.Variables[variableName];
+								ScenarioVariable<string> v = run.Variables[variableName];
 								if (v != null)
 									v.Value = val.ToString();
 								else
-									_scenario.Variables.AddOrReplace(new ScenarioVariable<string>(variableName, val.ToString(), this));
+									run.Variables.AddOrReplace(new ScenarioVariable<string>(variableName, val.ToString(), this));
 							}
 
 						}
@@ -138,7 +138,7 @@ namespace QAliber.TestModel
 			}
 		}
 
-		protected virtual void GetVariables()
+		protected virtual void GetVariables( TestRun run )
 		{
 			if (_scenario != null)
 			{
@@ -151,7 +151,7 @@ namespace QAliber.TestModel
 					if (val != null)
 					{
 						string strVal = val.ToString();
-						string replacementVal = _scenario.ReplaceAllVars(strVal);
+						string replacementVal = run.ReplaceAllVars(strVal);
 						if (string.Compare(replacementVal, strVal) != 0)
 						{
 							if (prop.PropertyType.Equals(typeof(string)))
@@ -611,7 +611,7 @@ namespace QAliber.TestModel
 			}
 			try
 			{
-				InitRun();
+				InitRun( run );
 				Setup();
 				Body( run );
 				Cleanup();
@@ -682,10 +682,10 @@ namespace QAliber.TestModel
 
 		}
 
-		private void InitRun()
+		private void InitRun( TestRun run )
 		{
 			_actualResult = TestCaseResult.None;
-			GetVariables();
+			GetVariables( run );
 
 			string name = Name;
 
@@ -714,7 +714,7 @@ namespace QAliber.TestModel
 		private void FinalizeRun( TestRun run )
 		{
 			HandleResult( run );
-			SetVariables();
+			SetVariables( run );
 			RestoreVariables();
 			TestController.RaiseStepResultArrived(expectedVsActual);
 			if (_capturing)

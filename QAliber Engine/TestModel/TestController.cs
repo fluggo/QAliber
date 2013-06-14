@@ -386,7 +386,7 @@ namespace QAliber.TestModel
 			try {
 				using( Log log = new Log( logfile, scenario.Filename, false ) ) {
 					Log.Current = log;
-					_currentRun = new TestRun();
+					_currentRun = new TestRun( scenario );
 
 					scenario.Run( _currentRun );
 				}
@@ -408,7 +408,7 @@ namespace QAliber.TestModel
 			try {
 				using( Log log = new Log( logfile, scenario.Filename, true ) ) {
 					Log.Current = log;
-					_currentRun = new TestRun();
+					_currentRun = new TestRun( scenario );
 
 					testcase.MarkedForExecution = true;
 					testcase.Run( _currentRun );

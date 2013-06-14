@@ -47,7 +47,7 @@ namespace QAliber.Repository.CommonTestCases.Randomizers
 
 		public override void Body( TestRun run )
 		{
-			string[] collection = Scenario.Lists[listName].Value;
+			string[] collection = run.Lists[listName].Value;
 			int index = new Random().Next(collection.Length);
 			generatedItem = collection[index];
 			Log.Info("Item picked = '" + generatedItem + "'");

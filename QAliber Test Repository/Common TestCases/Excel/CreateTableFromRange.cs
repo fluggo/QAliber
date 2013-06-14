@@ -63,7 +63,7 @@ namespace QAliber.Repository.CommonTestCases.FileSystem
 			dataTable.TableName = "Table from Excel (" + sourceFile + ")";
 			QAliber.TestModel.Variables.ScenarioTable table = new QAliber.TestModel.Variables.ScenarioTable(rangeName, dataTable, this);
 			
-			Scenario.Tables.Add(table);
+			run.Tables.Add(table);
 			conn.Close();
 
 			ActualResult = TestCaseResult.Passed;

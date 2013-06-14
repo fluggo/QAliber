@@ -87,7 +87,7 @@ namespace QAliber.TestModel
 					break;
 				}
 				RestoreVariables();
-				GetVariables();
+				GetVariables( run );
 				Eval.CodeEvaluator.Evaluate(CSharpExpression, QAliber.TestModel.Eval.ReturnCodeType.Boolean, out conditionResult);
 			   
 			}

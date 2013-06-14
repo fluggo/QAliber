@@ -52,12 +52,10 @@ namespace QAliber.Repository.CommonTestCases.Macros
 		{
 			ActualResult = TestCaseResult.Passed;
 			TestScenario scenario = TestScenario.Load(sourceFile);
-			#warning Variables will need to be considered for this transfer
-			scenario.Run( run );
-		}
 
-		
-		
+			TestRun newRun = new TestRun( scenario );
+			scenario.Run( newRun );
+		}
 	}
 	
 }

@@ -23,6 +23,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using QAliber.TestModel.Variables;
+using QAliber.TestModel;
 
 namespace QAliber.Builder.Presentation
 {
@@ -33,6 +34,9 @@ namespace QAliber.Builder.Presentation
 			Visible = false;
 			this.tabbedScenarioControl = tabbedScenarioControl;
 			this.tabbedScenarioControl.tabbedDocumentControl.SelectedControlChanged += new EventHandler(tabbedDocumentControl_SelectedControlChanged);
+			TestController.OnExecutionStateChanged += (state) => {
+				UpdateVariablesList();
+			};
 			InitializeComponent();
 			InitColumns();
 		}
@@ -46,13 +50,26 @@ namespace QAliber.Builder.Presentation
 
 		private void tabbedDocumentControl_SelectedControlChanged(object sender, EventArgs e)
 		{
+			UpdateVariablesList();
+		}
+
+		private void UpdateVariablesList() {
 			sc = tabbedScenarioControl.tabbedDocumentControl.SelectedControl as ScenarioControl;
 			if (sc != null && sc.TestScenario != null)
 			{
 				Visible = true;
-				varsDataGridView.DataSource = sc.TestScenario.Variables;
-				listsDataGridView.DataSource = sc.TestScenario.Lists;
-				tablesDataGridView.DataSource = sc.TestScenario.Tables;
+
+				if( TestController.CurrentRun != null && TestController.CurrentRun.Scenario == sc.TestScenario ) {
+					// We're in the middle of a run, show the current variables
+					varsDataGridView.DataSource = TestController.CurrentRun.Variables;
+					listsDataGridView.DataSource = TestController.CurrentRun.Lists;
+					tablesDataGridView.DataSource = TestController.CurrentRun.Tables;
+				}
+				else {
+					varsDataGridView.DataSource = sc.TestScenario.Variables;
+					listsDataGridView.DataSource = sc.TestScenario.Lists;
+					tablesDataGridView.DataSource = sc.TestScenario.Tables;
+				}
 			}
 			else
 				Visible = false;

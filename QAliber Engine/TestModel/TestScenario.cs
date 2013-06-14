@@ -103,7 +103,6 @@ namespace QAliber.TestModel
 		#region Global Variables
 		private BindingVariableList<ScenarioVariable<string>, string> variables;
 
-		[Obsolete("Should transfer this to the test context.")]
 		[Browsable(false)]
 		public BindingVariableList<ScenarioVariable<string>, string> Variables
 		{
@@ -113,7 +112,6 @@ namespace QAliber.TestModel
 
 		private BindingVariableList<ScenarioVariable<string[]>, string[]> lists;
 
-		[Obsolete("Should transfer this to the test context.")]
 		[Browsable(false)]
 		public BindingVariableList<ScenarioVariable<string[]>, string[]> Lists
 		{
@@ -123,7 +121,6 @@ namespace QAliber.TestModel
 
 		private BindingVariableList<ScenarioTable, DataTable> tables;
 
-		[Obsolete("Should transfer this to the test context.")]
 		[Browsable(false)]
 		public BindingVariableList<ScenarioTable, DataTable> Tables
 		{
@@ -136,11 +133,9 @@ namespace QAliber.TestModel
 
 		public void Run( TestRun run )
 		{
-			SaveUserVariables();
 			//Log.Default.IndentIn("Scenario '" + name + "'");
 			rootTestCase.Run( run );
 			//Log.Default.IndentOut();
-			ReloadUserVariables();
 		}
 
 		static XmlSerializer CreateXmlSerializer() {
@@ -265,43 +260,7 @@ namespace QAliber.TestModel
 
 		#region Variables Parsing Methods
 
-		private void SaveUserVariables()
-		{
-			variablesCopy = new BindingVariableList<ScenarioVariable<string>, string>();
-			listsCopy = new BindingVariableList<ScenarioVariable<string[]>, string[]>();
-			tablesCopy = new BindingVariableList<ScenarioTable, DataTable>();
-
-			foreach (ScenarioVariable<string> var in variables)
-			{
-				variablesCopy.Add(new ScenarioVariable<string>(
-					var.Name, var.Value.ToString(), var.TestStep));
-			}
-
-			foreach (ScenarioVariable<string[]> var in lists)
-			{
-				ICollection vals = var.Value as ICollection;
-				string[] copyList= new string[vals.Count];
-				vals.CopyTo(copyList, 0);
-				listsCopy.Add(new ScenarioVariable<string[]>(
-					var.Name, copyList, var.TestStep));
-			}
-
-			foreach (ScenarioTable var in tables)
-			{
-				DataTable table = var.Value as DataTable;
-				DataTable copyTable = table.Copy();
-				tablesCopy.Add(new ScenarioTable(
-					var.Name, copyTable, var.TestStep));
-			}
-		}
-
-		private void ReloadUserVariables()
-		{
-			ReloadUserVariables( variables, variablesCopy );
-			ReloadUserVariables( lists, listsCopy );
-			ReloadUserVariables( tables, tablesCopy );
-		}
-
+		[Obsolete("Should be moved to TestRun")]
 		private void ReloadUserVariables<TVar, TValue>( BindingVariableList<TVar, TValue> list, BindingVariableList<TVar, TValue> savedList )
 				where TVar : ScenarioVariable<TValue> {
 			list.RaiseListChangedEvents = false;
@@ -314,115 +273,7 @@ namespace QAliber.TestModel
 			list.ResetBindings();
 		}
 
-		internal string ReplaceAllVars(string input)
-		{
-			Regex regex = new Regex(@"\$([^\$\[\]]+)\$");
-			string res = regex.Replace(input, new MatchEvaluator(ReplaceVarForMatch));
-			regex = new Regex(@"\$([^\$]+)\[([0-9]+)\]\$");
-			res = regex.Replace(res, new MatchEvaluator(ReplaceListForMatch));
-			regex = new Regex(@"\$([^\$]+)\[([0-9]+),([0-9]+)\]\$");
-			res = regex.Replace(res, new MatchEvaluator(ReplaceTableForMatch));
-			regex = new Regex(@"\$([^\$]+)\.([a-zA-Z]+)\$");
-			res = regex.Replace(res, new MatchEvaluator(ReplacePropertyForMatch));
-
-			return res;
-		}
-
-		private string ReplaceVarForMatch(Match match)
-		{
-			string key = match.Value.Trim('$');
-			var var = variables[key];
-			if (var != null)
-				return var.Value.ToString();
-			else
-				return match.Value;
-		}
-
-		private string ReplaceListForMatch(Match match)
-		{
-			string key = match.Groups[1].Value;
-			var list = lists[key];
-			if (lists != null)
-			{
-				IList val = list.Value as IList;
-				if (val != null)
-				{
-					int index = val.Count;
-					if (int.TryParse(match.Groups[2].Value, out index))
-					{
-						if (index < val.Count)
-							return val[index].ToString();
-					}
-				}
-			}
-			return match.Value;
-		}
-
-		private string ReplacePropertyForMatch(Match match)
-		{
-			string key = match.Groups[1].Value;
-			var list = lists[key];
-			if (lists != null)
-			{
-				IList val = list.Value as IList;
-				if (val != null)
-				{
-					switch (match.Groups[2].Value.ToLower())
-					{
-						case "length":
-							return val.Count.ToString();
-						default:
-							break;
-					}
-					
-				}
-			}
-			var table = tables[key];
-			if (table != null)
-			{
-				DataTable val = table.Value as DataTable;
-				if (val != null)
-				{
-					switch (match.Groups[2].Value.ToLower())
-					{
-						case "numberofrows":
-							return val.Rows.Count.ToString();
-						case "numberofcolumns":
-							return val.Columns.Count.ToString();
-						default:
-							break;
-					}
-
-				}
-			}
-			return match.Value;
-		}
-
-		private string ReplaceTableForMatch(Match match)
-		{
-			string key = match.Groups[1].Value;
-			ScenarioVariable<DataTable> table = tables[key];
-			if (table != null)
-			{
-				DataTable dataTable = table.Value as DataTable;
-				if (dataTable != null)
-				{
-					int rowIndex = dataTable.Rows.Count, colIndex = dataTable.Columns.Count;
-					if (int.TryParse(match.Groups[2].Value, out rowIndex)
-						&& int.TryParse(match.Groups[3].Value, out colIndex))
-					{
-						if (rowIndex < dataTable.Rows.Count && colIndex < dataTable.Columns.Count)
-							return dataTable.Rows[rowIndex][colIndex].ToString();
-					}
-				}
-			}
-			return match.Value;
-		}
 		#endregion
-
-		private BindingVariableList<ScenarioVariable<string>, string> variablesCopy;
-		private BindingVariableList<ScenarioVariable<string[]>, string[]> listsCopy;
-		private BindingVariableList<ScenarioTable, DataTable> tablesCopy;
 	}
 
 	sealed class DeserializationBinder : SerializationBinder

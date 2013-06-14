@@ -58,7 +58,7 @@ namespace QAliber.TestModel
 
 			for (int i = 0; i < numOfLoops; i++)
 			{
-				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
+				run.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>("CurrentLoopNumber", ((int)(i+1)).ToString(), this));
 
 				if( log != null )
 					log.StartFolder( Name + " - Loop #" + (int)(i + 1), null );

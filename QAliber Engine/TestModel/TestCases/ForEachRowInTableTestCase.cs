@@ -75,7 +75,7 @@ namespace QAliber.TestModel
 		public override void Body( TestRun run )
 		{
 			Log log = Log.Current;
-			ScenarioVariable<DataTable> table = Scenario.Tables[_tableName];
+			ScenarioVariable<DataTable> table = run.Tables[_tableName];
 
 			if (table == null)
 				throw new ArgumentException("Table '" + _tableName + "' is not recognized");
@@ -94,7 +94,7 @@ namespace QAliber.TestModel
 					if( _prefixTableName )
 						name = _tableName + "." + name;
 
-					Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(name, row[i].ToString(), this));
+					run.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(name, row[i].ToString(), this));
 
 					extra.AppendFormat( "   {0}: {1}", name, row[i].ToString() ).AppendLine();
 				}

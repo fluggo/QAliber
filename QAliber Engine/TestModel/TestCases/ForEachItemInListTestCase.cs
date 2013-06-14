@@ -59,7 +59,7 @@ namespace QAliber.TestModel
 		public override void Body( TestRun run )
 		{
 			Log log = Log.Current;
-			ScenarioVariable<string[]> list = Scenario.Lists[listName];
+			ScenarioVariable<string[]> list = run.Lists[listName];
 
 			if (list == null)
 				throw new ArgumentException("List '" + listName + "' is not recognized");
@@ -67,7 +67,7 @@ namespace QAliber.TestModel
 			string[] vals = list.Value;
 			foreach (string obj in vals)
 			{
-				Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
+				run.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(listName + ".Current", obj, this));
 
 				if( log != null )
 					log.StartFolder( "Iteration on item '" + obj.ToString() + "'", null );

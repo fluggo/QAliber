@@ -51,24 +51,24 @@ namespace QAliber.TestModel
 			switch (variableType)
 			{
 				case varTypes.Variables:
-					for (int idx = 0; idx < Scenario.Variables.Count; idx++)
+					for (int idx = 0; idx < run.Variables.Count; idx++)
 					{
-						if (Scenario.Variables[idx].Name == variableName)
-							Scenario.Variables.RemoveAt(idx);
+						if (run.Variables[idx].Name == variableName)
+							run.Variables.RemoveAt(idx);
 					}
 					break;
 				case varTypes.Lists:
-					for (int idx = 0; idx < Scenario.Lists.Count; idx++)
+					for (int idx = 0; idx < run.Lists.Count; idx++)
 					{
-						if (Scenario.Lists[idx].Name == variableName)
-							Scenario.Lists.RemoveAt(idx);
+						if (run.Lists[idx].Name == variableName)
+							run.Lists.RemoveAt(idx);
 					}
 					break;
 				case varTypes.Tables:
-					for (int idx = 0; idx < Scenario.Tables.Count; idx++)
+					for (int idx = 0; idx < run.Tables.Count; idx++)
 					{
-						if (Scenario.Tables[idx].Name == variableName)
-							Scenario.Tables.RemoveAt(idx);
+						if (run.Tables[idx].Name == variableName)
+							run.Tables.RemoveAt(idx);
 					}
 					break;
 			}

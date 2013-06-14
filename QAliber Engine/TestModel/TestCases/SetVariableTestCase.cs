@@ -87,7 +87,7 @@ namespace QAliber.TestModel
 			object retVal = null;
 			ActualResult = TestCaseResult.Passed;
 			Eval.CodeEvaluator.Evaluate(cSharpExpression, retType, out retVal);
-			Scenario.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(
+			run.Variables.AddOrReplace(new QAliber.TestModel.Variables.ScenarioVariable<string>(
 				varName, retVal.ToString(), this));
 
 		}
