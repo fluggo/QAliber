@@ -124,6 +124,7 @@
     <Compile Include="UI\Clipboard\SetClipboard.cs" />
     <Compile Include="UI\Clipboard\VerifyClipboard.cs" />
     <Compile Include="UI\Controls\CaptureGrid.cs" />
+    <Compile Include="UI\Controls\VerifyCheckBox.cs" />
     <Compile Include="UI\Controls\VerifyList.cs" />
     <Compile Include="UI\Controls\VerifyGrid.cs" />
     <Compile Include="UI\Controls\VerifyPropertyFromControl.cs" />
