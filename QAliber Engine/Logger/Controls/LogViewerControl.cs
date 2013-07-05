@@ -675,12 +675,14 @@ namespace QAliber.Logger.Controls
 					result = new LogEntry();
 					result.Message = node["Message"].InnerText;
 					result.ExtendedMessage = node["Details"].InnerText;
-					result.Link = node["Link"].InnerText;
+					result.Link = (node.Attributes["Link"] != null) ? node.Attributes["link"].Value : null;
 					result.Time = DateTime.ParseExact( node.Attributes["timeUtc"].Value, "s", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal );
-					result.Body = (BodyType)Enum.Parse(typeof(BodyType), node["Body"].InnerText);
+
+					if( node.Attributes["bodyType"] != null )
+						result.Body = (BodyType)Enum.Parse(typeof(BodyType), node.Attributes["bodyType"].Value);
 
 					if( node.Attributes["verbosity"] != null )
-						result.Verbosity = (EntryVerbosity)Enum.Parse(typeof(EntryVerbosity), node.Attributes["Verbosity"].Value);
+						result.Verbosity = (EntryVerbosity)Enum.Parse(typeof(EntryVerbosity), node.Attributes["verbosity"].Value);
 
 					result.Type = (EntryType)Enum.Parse(typeof(EntryType), node.Attributes["type"].Value);
 				}
