@@ -90,19 +90,33 @@ namespace QAliber.Repository.CommonTestCases.UI.Controls {
 
 			IListPattern list = c.GetControlInterface<IListPattern>();
 
-			if( list == null ) {
-				// Try one control up; we could be on the combo box's edit or button controls
-				c = c.Parent;
+			if( list != null )
+				return list.CaptureList();
 
-				if( c == null || (list = c.GetControlInterface<IListPattern>()) == null ) {
-					if( logErrors )
-						Log.Error( "Couldn't find a way to read the list." );
+			ISelector selector = c.GetControlInterface<ISelector>();
 
-					return null;
-				}
+			if( selector != null )
+				return selector.Items;
+
+			// Try one control up; we could be on the combo box's edit or button controls
+			c = c.Parent;
+
+			if( c != null ) {
+				list = c.GetControlInterface<IListPattern>();
+
+				if( list != null )
+					return list.CaptureList();
+
+				selector = c.GetControlInterface<ISelector>();
+
+				if( selector != null )
+					return selector.Items;
 			}
 
-			return list.CaptureList();
+			if( logErrors )
+				Log.Error( "Couldn't find a way to read the list." );
+
+			return null;
 		}
 
 		public override void Body() {
