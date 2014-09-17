@@ -673,8 +673,8 @@ namespace QAliber.Logger.Controls
 				if (node.Name == "LogEntry")
 				{
 					result = new LogEntry();
-					result.Message = node["Message"].InnerText;
-					result.ExtendedMessage = node["Details"].InnerText;
+					result.Message = (node["Message"] != null) ? node["Message"].InnerText : null;
+					result.ExtendedMessage = (node["Details"] != null) ? node["Details"].InnerText : null;
 					result.Link = (node.Attributes["Link"] != null) ? node.Attributes["link"].Value : null;
 					result.Time = DateTime.ParseExact( node.Attributes["timeUtc"].Value, "s", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal );
 
