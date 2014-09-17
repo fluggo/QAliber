@@ -644,7 +644,7 @@ namespace QAliber.Engine.Controls.UIA
 			}
 
 			if( type == typeof(ISelector) ) {
-				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsScrollPatternAvailableProperty )) &&
+				if( !((bool) automationElement.GetCachedPropertyValue( AutomationElement.IsSelectionPatternAvailableProperty )) &&
 						automationElement.Cached.ControlType != ControlType.ComboBox &&
 						automationElement.Cached.ControlType != ControlType.Menu &&
 						automationElement.Cached.ControlType != ControlType.MenuBar &&
