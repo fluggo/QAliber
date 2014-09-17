@@ -39,6 +39,9 @@ namespace QAliber.TestModel
 				{
 					foreach (AssemblyName locFile in localAssemblies)
 					{
+						if(locFile == null)
+							continue;
+
 						if (string.Compare(remFile.Name, Path.GetFileName(locFile.Name), true) == 0)
 						{
 							found = true;
