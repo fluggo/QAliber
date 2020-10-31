@@ -101,9 +101,6 @@
     <Compile Include="Controls\Web\HTMLTextArea.cs" />
     <Compile Include="Controls\Web\WebPage.cs" />
     <Compile Include="Controls\Web\WebRoot.cs" />
-    <Compile Include="Controls\WPF\WPFAUTHelpers.cs" />
-    <Compile Include="Controls\WPF\WPFRoot.cs" />
-    <Compile Include="Controls\WPF\WPFWindow.cs" />
     <Compile Include="EngineOptionsPane.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,7 +144,6 @@
     <Compile Include="Controls\Web\WebControl.cs" />
     <Compile Include="Win32\Helpers.cs" />
     <Compile Include="Win32\SendInput.cs" />
-    <Compile Include="Controls\WPF\WPFControl.cs" />
     <Compile Include="XPath.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,10 +161,6 @@
     <ProjectReference Include="..\Logger\QAliber.Logger.csproj">
       <Project>{14967935-0971-4882-9058-99B3D884651A}</Project>
       <Name>QAliber.Logger</Name>
-    </ProjectReference>
-    <ProjectReference Include="ManagedInjector\ManagedInjector.vcxproj">
-      <Project>{BC121AD2-9609-4A39-9F20-849C7C57C539}</Project>
-      <Name>QAliberManagedInjector</Name>
     </ProjectReference>
     <ProjectReference Include="ManagedWinAPI\ManagedWinapi.csproj">
       <Project>{FBD3EC1E-47E2-4D2D-81C9-D6506125A09A}</Project>

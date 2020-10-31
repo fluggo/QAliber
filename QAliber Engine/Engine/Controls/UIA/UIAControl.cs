@@ -27,7 +27,6 @@ using ManagedWinapi.Windows;
 using QAliber.Engine.Patterns;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using ManagedInjector;
 using System.Threading;
 using System.Linq;
 using QAliber.Logger;
@@ -542,36 +541,6 @@ namespace QAliber.Engine.Controls.UIA
 			idIndex = -1;
 			_codePath = null;
 			_parent = null;
-		}
-
-		/// <summary>
-		/// Applicable only on WinFormsControl (you can query it by the IsWinForms property), gets the serializable properties of the control with types that are commonly references
-		/// </summary>
-		public void GetWinFormsProperties()
-		{
-			if (IsWinForms)
-			{
-				File.Delete(UIControlBase.tmpFile);
-				Injector.Launch(new IntPtr(UIAutomationElement.Cached.NativeWindowHandle),
-							this.GetType().Assembly.Location, 
-							typeof(UIAControl).FullName, "QueryWinForms",
-							UIAutomationElement.Cached.NativeWindowHandle.ToString());
-				int i = 0;
-				while (!File.Exists(UIControlBase.tmpFile))
-				{
-					i++;
-					if (i > 20)
-						return;
-					Thread.Sleep(100);
-				}
-				using (FileStream fs = File.Open(UIControlBase.tmpFile, FileMode.Open))
-				{
-					BinaryFormatter bf = new BinaryFormatter();
-					bf.Binder = new WPF.AllowAllAssemblyVersionsDeserializationBinder();
-					_extendedProperties = bf.Deserialize(fs) as Dictionary<string, object>;
-
-				}
-			}
 		}
 
 		public override PropertyDescriptorCollection GetProperties( Attribute[] attributes ) {

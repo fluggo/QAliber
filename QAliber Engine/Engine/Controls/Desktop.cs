@@ -21,7 +21,6 @@ using System.Windows.Automation;
 using System.Windows.Forms;
 using QAliber.Engine.Controls.Web;
 using QAliber.Engine.Controls.UIA;
-using QAliber.Engine.Controls.WPF;
 using QAliber.Engine.Controls.Watin;
 using QAliber.Engine.Win32;
 using QAliber.Logger;
@@ -59,19 +58,6 @@ namespace QAliber.Engine.Controls
 			}
 		}
 
-		/// <summary>
-		/// Maps the desktop as a father for all WPF applications, only WPF processes will be visible under it's sub tree
-		/// </summary>
-		public static WPFRoot WPF
-		{
-			get
-			{
-				if (wpfRoot == null)
-					wpfRoot = new WPFRoot();
-				return wpfRoot;
-			}
-		}
-
 		public static WatinRoot Watin
 		{
 			get
@@ -82,7 +68,6 @@ namespace QAliber.Engine.Controls
 			}
 		}
 
-		private static WPFRoot wpfRoot = null;
 		private static UIARoot uiaRoot = null;
 		private static WebRoot webRoot = null;
 		private static WatinRoot watinRoot = null;
